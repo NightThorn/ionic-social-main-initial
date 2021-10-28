@@ -54,12 +54,7 @@
     }
   }
   
-  .white {
-    background: #ffffff;
-    border-radius: 16px 16px 0 0;
-    position: absolute;
-    bottom: 0;
-  }
+ 
   
   ion-grid {
     width: 100%;
@@ -71,7 +66,6 @@
   }
   
   ion-input {
-    --background: #e4e4e4;
     border-radius: 6px;
     --box-shadow: none;
     --placeholder-color: cvar(--ion-color-medium);

@@ -1,5 +1,4 @@
 ion-input {
-  --background: #f9f9f9;
   border-radius: 6px;
   --box-shadow: none;
   --placeholder-color: var(--ion-color-medium);
@@ -9,24 +8,7 @@ ion-input {
 }
 
 ion-footer {
-  background: rgb(255, 255, 255);
-  background: -moz-linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 1) 80%,
-    rgba(255, 255, 255, 0.8998949921765581) 100%
-  );
-  background: -webkit-linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 1) 80%,
-    rgba(255, 255, 255, 0.8998949921765581) 100%
-  );
-  background: linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 1) 80%,
-    rgba(255, 255, 255, 0.8998949921765581) 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#ffffff",GradientType=1);
-  padding: 0 16px 16px 16px;
+ padding: 0 16px 16px 16px;
 }
 
 ion-item {
@@ -78,14 +60,12 @@ ion-item {
   }
   .time {
     text-align: right;
-    color: var(--ion-color-light);
   }
 }
 
 .left-bubble {
-  background: var(--ion-color-medium);
   border-radius: 0 14px 14px 14px;
-
+background-color: gray;
 
 }
 
