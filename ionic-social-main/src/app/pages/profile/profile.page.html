@@ -1,0 +1,116 @@
+<ion-content [fullscreen]="true">
+  <ion-grid
+    class="ion-no-padding ion-no-margin background-opts"
+    [ngStyle]="background"
+  >
+    <ion-row>
+      <ion-col class="header-container">
+        <ion-header class="ion-no-border">
+          <ion-toolbar>
+            <ion-buttons slot="end">
+              <ion-button (click)="goToSettings()">
+                <ion-icon class="white-icon" slot="icon-only" name="options"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <div class="profile ion-padding">
+          <div class="profile-user">
+            <ion-thumbnail>
+              <img
+                src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/photos/2021/08/gg_d93e3dde48889b1d84c6403ee8072954.jpg"
+              />
+            </ion-thumbnail>
+            <ul class="profile-text ion-padding-horizontal">
+              <li>GoodnightPanda</li>
+              <li>CEO</li>
+            </ul>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="ion-padding-horizontal borders">
+    <ion-row class="">
+      <ion-col>
+        <div class="numbers">
+          <ul>
+            <li>4102</li>
+            <li>Following</li>
+          </ul>
+          <ul>
+            <li>4405</li>
+            <li>Followers</li>
+          </ul>
+          <ul>
+            <li>200</li>
+            <li>Posts</li>
+          </ul>
+          <ion-button class="follow-btn">Follow</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-segment [(ngModel)]="tabType" color="dark" mode="md">
+          <ion-segment-button value="posts">
+            <div class="tab-container">
+              <ion-icon name="document"></ion-icon>
+              <span>Posts</span>
+            </div>
+          </ion-segment-button>
+          <ion-segment-button value="photos">
+            <div class="tab-container">
+              <ion-icon name="images"></ion-icon>
+              <span>Photos</span>
+            </div>
+          </ion-segment-button>
+          <ion-segment-button value="groups">
+            <div class="tab-container">
+              <ion-icon name="people"></ion-icon>
+              <span>Groups</span>
+            </div>
+          </ion-segment-button>
+        </ion-segment>
+        <div [ngSwitch]="tabType">
+          <ion-row *ngSwitchCase="'posts'" class="ion-no-padding">
+            <ion-col>
+              <app-feed-card
+                *ngFor="let item of feeds"
+                [avatar]="item.avatar"
+                [name]="item.name"
+                [date]="item.date"
+                [images]="item.images"
+                [likes]="item.likes"
+                [comments]="item.comments"
+                [separator]="false"
+              >
+              </app-feed-card>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngSwitchCase="'photos'" class="ion-padding-vertical">
+            <ion-col>
+              <div class="grid-gallery">
+                <img
+                  *ngFor="let pic of pictures"
+                  class="image-element"
+                  [src]="pic"
+                  (click)="openModal(pic)"
+                />
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngSwitchCase="'groups'" class="ion-no-padding">
+            <ion-col size="6" *ngFor="let item of groups">
+              <app-group-card
+                [name]="item.name"
+                [image]="item.image"
+                [members]="item.members"
+              ></app-group-card>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

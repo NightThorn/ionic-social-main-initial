@@ -1,0 +1,150 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-thumbnail><a href="tabs/explore"><img src="assets/images/logo.jpg"></a></ion-thumbnail> 
+    <ion-buttons slot="end">
+      <ion-button (click)="goToNotifications()">
+        <ion-icon
+          slot="icon-only"
+          name="notifications"
+          color="light"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding-horizontal">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-padding-vertical">
+        <ion-slides [options]="usersConfig">
+          <ion-slide>
+            <ion-button class="story-button" fill="clear" shape="round">
+              <ion-icon slot="icon-only" name="add"></ion-icon>
+            </ion-button>
+          </ion-slide>
+          <ion-slide *ngFor="let item of users; index as i">
+            <app-story-avatar
+              [avatar]="item.userPicture"
+              [name]="item.userName"
+              [live]="!item.seen"
+              [active]="item.active"
+              (click)="viewStory(i)"
+            ></app-story-avatar>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-no-padding half-padding">
+        <ion-item lines="none" class="section">
+          <ion-text color="light">
+            <h5 class="section-title">Recent Stories</h5>
+          </ion-text>
+          <a slot="end" [routerLink]="">See All</a>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-no-padding">
+        <ion-slides [options]="storiesConfig">
+          <ion-slide *ngFor="let item of stories">
+            <app-story-card
+              [image]="item.image"
+              [avatar]="item.avatar"
+              [name]="item.name"
+              [date]="item.date"
+            >
+            </app-story-card>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-no-padding half-padding">
+        <ion-item lines="none" class="section">
+          <ion-text color="light">
+            <h5 class="section-title">Recent Posts</h5>
+          </ion-text>
+          <a slot="end" [routerLink]="">See All</a>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col
+        size-sm="12"
+        size-md="6"
+        size-lg="4"
+        size-lg="4"
+        *ngFor="let item of feeds"
+      >
+        <app-feed-card
+          (click)="navigateToDetail()"
+          [avatar]="item.avatar"
+          [name]="item.name"
+          [date]="item.date"
+          [images]="item.images"
+          [likes]="item.likes"
+          [comments]="item.comments"
+          [separator]="false"
+        >
+        </app-feed-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-no-padding half-padding">
+        <ion-item lines="none" class="section">
+          <ion-text color="light">
+            <h5 class="section-title">Suggested for you</h5>
+          </ion-text>
+          <a slot="end" [routerLink]="">See All</a>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-no-padding">
+        <ion-slides [options]="followConfig">
+          <ion-slide *ngFor="let item of follow">
+            <app-follow-card
+              [image]="item.image"
+              [name]="item.name"
+              [location]="item.location"
+            >
+            </app-follow-card>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-no-padding half-padding">
+        <ion-item lines="none" class="section">
+          <ion-text color="light">
+            <h5 class="section-title">Recent Events</h5>
+          </ion-text>
+          <a slot="end" routerLink="/tabs/events">See All</a>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col
+        size-sm="12"
+        size-md="6"
+        size-lg="4"
+        size-lg="4"
+        *ngFor="let item of events"
+      >
+        <app-event-card
+          [image]="item.image"
+          [name]="item.name"
+          [from]="item.from"
+          [to]="item.to"
+          [date]="item.date"
+          [location]="item.location"
+          [avatars]="item.attend.avatars"
+          [total]="item.attend.total"
+          (click)="eventDetail(item)"
+        ></app-event-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

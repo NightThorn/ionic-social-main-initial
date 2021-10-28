@@ -1,0 +1,95 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/profile" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding-horizontal">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list class="ion-no-padding">
+          <ion-list-header>
+            <ion-label>Account settings</ion-label>
+          </ion-list-header>
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="icon-bg">
+              <ion-icon name="person-outline"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2>Personal Information</h2>
+              <p>Your personal data</p>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="icon-bg">
+              <ion-icon name="lock-closed-outline"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2>Change Password</h2>
+              <p>Change your current password</p>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="icon-bg">
+              <ion-icon name="log-out-outline"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2>Log out</h2>
+              <p>Farewell dear friend</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-list class="ion-no-padding">
+          <ion-list-header>
+            <ion-label>Notifications settings</ion-label>
+          </ion-list-header>      
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="icon-bg">
+              <ion-icon name="notifications-outline"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2>Push Notifications</h2>
+              <p>Personalize your app notifications</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-list class="ion-no-padding">
+          <ion-list-header>
+            <ion-label>General Settings</ion-label>
+          </ion-list-header>
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="icon-bg">
+              <ion-icon name="help-buoy-outline"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2>Help center</h2>
+              <p>All the help you need</p>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="icon-bg">
+              <ion-icon name="mail-outline"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2>Contact us</h2>
+              <p>24/7 support assistance</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

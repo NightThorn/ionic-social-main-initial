@@ -1,0 +1,66 @@
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <ion-grid
+      class="ion-padding-horizontal background-opts"
+      [ngStyle]="background"
+    >
+      <ion-row class="ion-no-padding">
+        <ion-col class="ion-no-padding">
+          <ion-header class="ion-no-border">
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-button (click)="goBack()" class="back-btn">
+                  <ion-icon
+                    slot="icon-only"
+                    name="arrow-back-outline"
+                  ></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid class="ion-padding white">
+      <ion-row class="ion-padding-horizontal">
+        <ion-col class="ion-padding-vertical">
+          <h1 class="title ion-no-padding ion-no-margin">Sign Up</h1>
+          <ion-text color="light">Provide your information to continue</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding-horizontal">
+        <ion-col class="">
+          
+            <ion-grid>
+              <ion-row color="primary" justify-content-center>
+                <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+                 
+                  <div padding>
+                    
+                    <ion-item>
+                      <ion-input  [(ngModel)]="user_name" type="text" placeholder="Userame"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-input [(ngModel)]="user_email" type="email" placeholder="Email"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-input [(ngModel)]="user_password" type="password" placeholder="Password"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-input [(ngModel)]="user_password_confirm" type="password" placeholder="Confirm Password"></ion-input>
+                    </ion-item>
+                    
+                   
+                  </div>
+                  <div padding>
+                    <ion-button  size="large" type="submit" (click)="tryRegister()" expand="block">Register</ion-button>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+         
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
