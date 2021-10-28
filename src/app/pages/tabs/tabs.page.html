@@ -9,19 +9,8 @@
       <ion-icon name="chatbubble-ellipses"></ion-icon>
     </ion-tab-button>
     
-    
-      <ion-fab-button>
-        <ion-icon name="share"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-list side="top">
-        <ion-fab-button><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
-      </ion-fab-list>
-      <ion-fab-list side="start">
-        <ion-fab-button><ion-icon name="logo-instagram"></ion-icon></ion-fab-button>
-      </ion-fab-list>
-      <ion-fab-list side="end">
-        <ion-fab-button><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
-      </ion-fab-list>
+    <ion-tab-button></ion-tab-button>
+
 
     <ion-tab-button tab="events">
       <ion-icon name="calendar"></ion-icon>
@@ -33,3 +22,20 @@
   </ion-tab-bar>
 
 </ion-tabs>
+
+<ion-fab vertical="bottom" horizontal="center" slot="fixed" edge="false">
+  <ion-fab-button type="button">
+      <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="top">
+    <ion-fab-list side="top">
+      <ion-fab-button><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+    
+    <ion-fab-list side="start">
+      <ion-fab-button><ion-icon name="logo-instagram"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+    <ion-fab-list side="end">
+      <ion-fab-button><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
+    </ion-fab-list> </ion-fab-list>
+</ion-fab>
