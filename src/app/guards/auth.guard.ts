@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,8 @@ export class AuthGuard implements CanLoad {
   
   canLoad(): Observable<boolean> {
     return this.authService.isAuthenticated.pipe(
+      filter(val => val !== null),
+      take(1),
       map(isAuthenticated => {
 console.log('GUARD: ', isAuthenticated);
 if (isAuthenticated) {
