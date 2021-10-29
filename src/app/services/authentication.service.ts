@@ -31,7 +31,7 @@ token = '';
           }
         }
 login(loginForm: {email, password}): Observable<any>{
-return this.http.post(`https://ggs.tv/api/v1/applogin.php`, loginForm).pipe(
+return this.http.post(`https://ggs.tv/applogin.php`, loginForm).pipe(
 
 
 map((data: any) => data.token),
