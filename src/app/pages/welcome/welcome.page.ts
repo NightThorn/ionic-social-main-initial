@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Plugins } from '@capacitor/core';
+import { INTRO_KEY } from 'src/app/guards/intro.guard';
+const { Storage } = Plugins;
 
 @Component({
   selector: 'app-welcome',
@@ -8,20 +11,21 @@ import { Router } from '@angular/router';
 })
 export class WelcomePage implements OnInit {
 
-  background = {
-    backgroundImage: 'url(https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1049&q=80)'
-  };
+ 
 
   constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
-  goToLogin() {
+  async goToLogin() {
+    await Storage.set({key: INTRO_KEY, value: 'true'});
     this.router.navigate(['/login']);
   }
 
-  goToRegister() {
+  async goToRegister() {
+    await Storage.set({key: INTRO_KEY, value: 'true'});
+
     this.router.navigate(['/register']);
   }
 
