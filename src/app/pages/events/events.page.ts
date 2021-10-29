@@ -10,7 +10,7 @@ import { DataService } from 'src/app/services/data.service';
 export class EventsPage implements OnInit {
 
 
-  events: unknown;
+  events: any;
 
   constructor(private router: Router, private dataService: DataService) { }
 

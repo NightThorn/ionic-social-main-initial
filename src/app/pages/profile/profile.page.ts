@@ -17,9 +17,9 @@ export class ProfilePage implements OnInit {
 
   tabType = 'posts';
 
-  feeds: unknown;
-  events: unknown;
-  groups: unknown;
+  feeds: any;
+  events: any;
+  groups: any;
 
   pictures = [
     'https://images.unsplash.com/photo-1592486058517-36236ba247c8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80',

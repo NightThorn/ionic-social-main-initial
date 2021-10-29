@@ -9,7 +9,7 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class MessagesPage implements OnInit {
 
-  messages: unknown;
+  messages: any;
 
   constructor(private router: Router, private dataService: DataService) { }
 

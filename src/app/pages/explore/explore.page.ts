@@ -9,12 +9,12 @@ import { HttpClientModule } from '@angular/common/http';
   styleUrls: ['./explore.page.scss'],
 })
 export class ExplorePage implements OnInit {
-  articles: unknown;
-  users: unknown;
-  feeds: unknown;
-  stories: unknown;
-  follow: unknown;
-  events: unknown;
+  articles: any;
+  users: any;
+  feeds: any;
+  stories: any;
+  follow: any;
+  events: any;
 
   storiesConfig = {
     initialSlide: 0,

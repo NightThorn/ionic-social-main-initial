@@ -8,7 +8,7 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./contacts.page.scss'],
 })
 export class ContactPage implements OnInit {
-  users: unknown;
+  users: any;
 
   constructor(private router: Router, private dataService: DataService) {}
 

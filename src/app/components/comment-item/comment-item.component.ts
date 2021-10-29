@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CommentItemComponent implements OnInit {
 
-  @Input() comment: unknown;
+  @Input() comment: any;
   @Input() light: boolean;
   
   isActive = false;

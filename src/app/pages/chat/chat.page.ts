@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./chat.page.scss'],
 })
 export class ChatPage implements OnInit {
-  data: unknown;
+  data: any;
   messageForm: FormGroup;
   currentUser = 'johnatan';
   messages = [

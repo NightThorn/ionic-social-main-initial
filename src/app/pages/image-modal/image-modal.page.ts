@@ -11,7 +11,7 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./image-modal.page.scss'],
 })
 export class ImageModalPage implements OnInit {
-  @Input() data: unknown;
+  @Input() data: any;
 
   background = null;
 

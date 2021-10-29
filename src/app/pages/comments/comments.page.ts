@@ -9,7 +9,7 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class CommentsPage implements OnInit {
   isActive = false;
-  comments: unknown;
+  comments: any;
   commentForm: FormGroup;
 
   constructor(private fb: FormBuilder, private dataService: DataService) {}

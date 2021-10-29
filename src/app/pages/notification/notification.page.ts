@@ -8,7 +8,7 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class NotificationPage implements OnInit {
 
-  notifications: unknown;
+  notifications: any;
   
   constructor(private dataService: DataService) { }
 
