@@ -33,22 +33,13 @@ export class ExplorePage implements OnInit {
     spaceBetween: 10,
     slidesPerView: 2.6,
   };
-  anggota: any;
-  username: any;
+  
+  
 
   constructor(private router: Router, private storage: Storage, private dataService: DataService) {}
 
 
-  ionViewWillEnter(){
-
-    this.storage.get('session_storage').then((res) => {
-
-      this.anggota = res;
-      this.username = this.anggota.username;
-
-    })
-
-  }
+  
   ngOnInit() {
     this.articles = this.dataService.getArticles();
     this.users = this.dataService.getSeenFirtsHistories();

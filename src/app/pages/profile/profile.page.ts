@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { ImageModalPage } from '../image-modal/image-modal.page';
-
+import { ProfileService } from 'src/app/services/profile.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -16,10 +16,11 @@ export class ProfilePage implements OnInit {
   };
 
   tabType = 'posts';
-
+  Users: any = [];
   feeds: any;
   events: any;
   groups: any;
+  $user = window.localStorage.getItem('user');
 
   pictures = [
     'https://images.unsplash.com/photo-1592486058517-36236ba247c8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80',
@@ -34,6 +35,7 @@ export class ProfilePage implements OnInit {
   ];
 
   constructor(
+    private profileService: ProfileService,
     private dataService: DataService,
     private modalController: ModalController,
     private router: Router
@@ -45,6 +47,11 @@ export class ProfilePage implements OnInit {
     this.groups = this.dataService.getGroups();
   }
 
+  ionViewDidEnter() {
+    this.profileService.getUser('$user').subscribe((response) => {
+      this.Users = response;
+    })
+  }
   async openModal(imgUrl) {
     const modal = await this.modalController.create({
       component: ImageModalPage,
