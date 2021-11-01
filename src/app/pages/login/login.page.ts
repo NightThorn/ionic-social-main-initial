@@ -7,7 +7,7 @@ import { passwordValidator } from 'src/app/validators/password.validator';
 import { Toast } from '@capacitor/core';
 import { async } from 'rxjs';
 import { AccessProviders } from '../../providers/access-providers';
-
+import { Storage } from '@ionic/storage-angular';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -31,6 +31,7 @@ export class LoginPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private storage: Storage,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private accsPrvds: AccessProviders,
@@ -46,6 +47,8 @@ export class LoginPage implements OnInit {
   }
 
   async signIn() {
+    await this.storage.create();
+
     const loading = await this.loadingController.create();
     await loading.present();
     
@@ -57,9 +60,12 @@ export class LoginPage implements OnInit {
 
       }
       console.log(body);
-    this.accsPrvds.postData(body, 'applogin.php').subscribe((res:any)=>{
+    this.accsPrvds.postData(body, 'applogin.php').subscribe( async (res:any)=>{
       if(res['success'] === true) {
         loading.dismiss();  
+        localStorage.setItem('token', res['message']['token']);
+        localStorage.setItem('user_id', res['message']['id']);
+
         console.log(res);      
         this.router.navigateByUrl('/tabs/explore', { replaceUrl: true });
       }

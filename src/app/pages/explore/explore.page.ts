@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { HttpClientModule } from '@angular/common/http';
-
+import { Storage } from '@ionic/storage-angular';
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.page.html',
@@ -33,9 +33,22 @@ export class ExplorePage implements OnInit {
     spaceBetween: 10,
     slidesPerView: 2.6,
   };
+  anggota: any;
+  username: any;
 
-  constructor(private router: Router, private dataService: DataService) {}
+  constructor(private router: Router, private storage: Storage, private dataService: DataService) {}
 
+
+  ionViewWillEnter(){
+
+    this.storage.get('session_storage').then((res) => {
+
+      this.anggota = res;
+      this.username = this.anggota.username;
+
+    })
+
+  }
   ngOnInit() {
     this.articles = this.dataService.getArticles();
     this.users = this.dataService.getSeenFirtsHistories();
