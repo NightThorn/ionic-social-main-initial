@@ -13,5 +13,7 @@ export class SettingsPage implements OnInit {
   ngOnInit() {
   }
 
-
+  async logout(){
+    this.router.navigateByUrl('/', {replaceUrl: true});
+      }
 }
