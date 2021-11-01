@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { emailValidator } from 'src/app/validators/email.validators';
 import { passwordValidator } from 'src/app/validators/password.validator';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Toast } from '@capacitor/core';
 import { async } from 'rxjs';
 import { AccessProviders } from '../../providers/access-providers';
@@ -37,7 +36,6 @@ export class LoginPage implements OnInit {
     private accsPrvds: AccessProviders,
     private alertController: AlertController,
     public loadingController: LoadingController,
-    private authService: AuthenticationService
   ) {}
 
   ngOnInit() {
