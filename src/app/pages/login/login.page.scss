@@ -67,6 +67,7 @@ ion-input {
 }
 
 .input-label {
+  margin-left: 10px;
   font-weight: 600;
   margin-bottom: 16px;
 }
@@ -83,6 +84,7 @@ ion-input {
 .errors-container {
   font-size: 12px;
   font-weight: 500;
+  margin-left: 10px;
   color: var(--ion-color-danger);
   margin-top: 4px;
   animation: fadeIn 0.5s;

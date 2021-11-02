@@ -60,7 +60,9 @@ export class ExplorePage implements OnInit {
   goToNotifications() {
     this.router.navigate(['notifications']);
   }
-
+  goToSettings() {
+    this.router.navigate(['settings']);
+  }
   eventDetail(item) {
     let navigationExtras: NavigationExtras = {
       state: {

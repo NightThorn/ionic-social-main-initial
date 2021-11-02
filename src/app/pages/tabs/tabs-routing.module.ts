@@ -16,8 +16,8 @@ const routes: Routes = [
         loadChildren: () => import('../messages/messages.module').then( m => m.MessagesPageModule)
       },
       {
-        path: 'events',
-        loadChildren: () => import('../events/events.module').then( m => m.EventsPageModule)
+        path: 'notification',
+        loadChildren: () => import('../notification/notification.module').then( m => m.NotificationPageModule)
       },
       {
         path: 'profile',

@@ -16,6 +16,7 @@ ion-avatar {
 
 ion-list-header {
   padding: 0;
+  margin-left: 5px;
 
   ion-label {
     text-transform: uppercase;
@@ -24,11 +25,11 @@ ion-list-header {
     line-height: 22px;
     margin: 0;
     letter-spacing: 0.2px;
-    color: var(--ion-color-light);
   }
 }
 
 ion-item {
+  margin-left: 10px;
   --padding-start: 0;
   --inner-padding-end: 0;
 
@@ -36,13 +37,11 @@ ion-item {
     font-weight: 500;
     font-size: 15px;
     line-height: 20px;
-    color: var(--ion-color-dark);
   }
 
   p {
     font-size: 13px;
     line-height: 18px;
-    color: var(--ion-color-light);
   }
 }
 
