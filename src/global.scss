@@ -39,3 +39,10 @@
  .custom-icon-image {
     content:url("assets/images/logo.jpg");
   }
+  
+  ion-fab-button.md.ion-activatable.ion-focusable.hydrated{
+
+
+    --background:  var(--color);
+  
+  }
