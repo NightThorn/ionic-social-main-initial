@@ -30,13 +30,13 @@
   <ion-fab-list side="top">
     <div class="fab-backdrop"></div>
     <ion-fab-list side="top">
-      <ion-fab-button><ion-icon style="fill: darkgoldenrod" name="trophy-sharp"></ion-icon></ion-fab-button>
+      <ion-fab-button><ion-icon style="fill: darkgoldenrod"  tab="tournaments" name="trophy-sharp" (click)="goToTournaments()"></ion-icon></ion-fab-button>
     </ion-fab-list>
     
     <ion-fab-list side="start">
-      <ion-fab-button><ion-icon style="fill: white" name="shuffle-outline"></ion-icon></ion-fab-button>
+      <ion-fab-button><ion-icon style="fill: white" name="shuffle-outline" (click)="goToRandom()"></ion-icon></ion-fab-button>
     </ion-fab-list>
     <ion-fab-list side="end">
-      <ion-fab-button><ion-icon style="fill: red" name="videocam-sharp"></ion-icon></ion-fab-button>
+      <ion-fab-button><ion-icon style="fill: red" name="videocam-sharp" (click)="goToStreams()"></ion-icon></ion-fab-button>
     </ion-fab-list> </ion-fab-list>
 </ion-fab>

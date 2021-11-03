@@ -54,6 +54,7 @@ const routes: Routes = [
     path: 'event-detail',
     loadChildren: () => import('./pages/event-detail/event-detail.module').then( m => m.EventDetailPageModule)
   },
+ 
   {
     path: 'settings',
     loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
@@ -62,6 +63,22 @@ const routes: Routes = [
     path: '',
     redirectTo: '/login',
     pathMatch: 'full'
+  },
+  {
+    path: 'tournaments',
+    loadChildren: () => import('./pages/tournaments/tournaments.module').then( m => m.TournamentsPageModule)
+  },
+  {
+    path: 'random',
+    loadChildren: () => import('./pages/random/random.module').then( m => m.RandomPageModule)
+  },
+  {
+    path: 'streams',
+    loadChildren: () => import('./pages/streams/streams.module').then( m => m.StreamsPageModule)
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./pages/user/user.module').then( m => m.UserPageModule)
   }
 ];
 @NgModule({
