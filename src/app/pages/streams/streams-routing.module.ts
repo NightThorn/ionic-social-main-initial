@@ -8,11 +8,7 @@ const routes: Routes = [
     path: '',
     component: StreamsPage, 
     children: [
-      {
-        path: '',
-        redirectTo: '/streams/pro',
-        pathMatch: 'full'
-      },
+      
   {
     path: 'pro',
     loadChildren: () => import('./pro/pro.module').then( m => m.ProPageModule)
@@ -21,7 +17,12 @@ const routes: Routes = [
     path: 'all',
     loadChildren: () => import('./all/all.module').then( m => m.AllPageModule)
   
-}]
+},
+{
+  path: '',
+  redirectTo: '/streams/pro',
+  pathMatch: 'full'
+},]
   }
 ];
 
