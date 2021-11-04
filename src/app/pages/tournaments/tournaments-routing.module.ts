@@ -20,8 +20,16 @@ const routes: Routes = [
       {
         path: 'create',
         loadChildren: () => import('./create/create.module').then( m => m.CreatePageModule)
+      },
+      {
+        path: 'tournament-details',
+        loadChildren: () => import('./tournament-details/tournament-details.module').then( m => m.TournamentDetailsPageModule)
       }
     ]
+  },
+  {
+    path: 'tournament-details',
+    loadChildren: () => import('./tournament-details/tournament-details.module').then( m => m.TournamentDetailsPageModule)
   },
  
 ];
