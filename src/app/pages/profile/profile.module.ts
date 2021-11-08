@@ -11,6 +11,7 @@ import { ProfilePage } from './profile.page';
 import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ImageModalPageModule } from '../image-modal/image-modal.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @NgModule({
   entryComponents: [ImageModalPage],
@@ -19,6 +20,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     IonicModule,
     HttpClientModule,
+    ProfileService,
     ProfilePageRoutingModule,
     ImageModalPageModule,
     ComponentsModule

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { ImageModalPage } from '../image-modal/image-modal.page';
+import { ProfileService } from 'src/app/services/profile.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -20,6 +21,7 @@ export class ProfilePage implements OnInit {
   events: any;
   groups: any;
 
+
   pictures = [
     'https://images.unsplash.com/photo-1592486058517-36236ba247c8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80',
     'https://images.unsplash.com/photo-1588774069410-84ae30757c8e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80',
@@ -31,18 +33,23 @@ export class ProfilePage implements OnInit {
     'https://images.unsplash.com/photo-1592431690191-c74f7e004198?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80',
     'https://images.unsplash.com/photo-1587613990444-68fe88ee970a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80',
   ];
-
+  profile: any;
+  storage: any;
   constructor(
     private dataService: DataService,
+    private profileService: ProfileService,
     private modalController: ModalController,
     private router: Router
   ) {}
+  x = localStorage.getItem("user_id");
 
   ngOnInit() {
+    this.profile = this.profileService.fetchProfile(this.x);
     this.feeds = this.dataService.getFeed();
     this.events = this.dataService.getEvents();
     this.groups = this.dataService.getGroups();
   }
+  
 
  
   async openModal(imgUrl) {

@@ -60,7 +60,7 @@ export class LoginPage implements OnInit {
 
       }
       console.log(body);
-    this.accsPrvds.postData(body, 'api/v1/auth.php?controller=login').subscribe( async (res:any)=>{
+    this.accsPrvds.postData(body, 'applogin.php').subscribe( async (res:any)=>{
       if(res['success'] === true) {
         loading.dismiss();  
         localStorage.setItem('token', res['message']['token']);

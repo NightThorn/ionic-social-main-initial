@@ -1,74 +1,52 @@
-import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of, Subject} from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
 
-@Injectable({
-    providedIn: 'root'
-  })
-  export class User {
-    user_id: number;
-    user_name: string;
-    user_email: string;
-    user_photo: string;
+
+ class User {
+  constructor(
+
+    public user_id: number,
+    public user_name: string,
+    public user_picture: string,
+    public user_cover: string
+  ){}
   }
-
   export class ProfileService {
 
-    endpoint = 'https://ggs.tv/api/v1/usersapi.php';
-  
+    endpoint = 'https://ggs.tv/api/v1/profile.php?user_id=${userId}';
+  profile = [];
     httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
   
     constructor(private httpClient: HttpClient) { }
   
-    createUser(user: User): Observable<any> {
-      return this.httpClient.post<User>(this.endpoint, JSON.stringify(user), this.httpOptions)
-        .pipe(
-          catchError(this.handleError<User>('Error occured'))
-        );
+    fetchProfile(user_id: string) {
+      const promise = new Promise<void>((resolve, reject) => {
+        this.httpClient
+          .get<User[]>(`https://ggs.tv/api/v1/profile.php?user_id=${user_id}`)
+          .toPromise()
+          .then((res: any) => {
+            this.profile = res.map((res: any) => {
+              return new User(
+                res.user_id,
+                res.user_name,
+                res.user_picture,
+                res.user_cover
+                
+              );
+            });
+            resolve();
+          },
+            err => {
+              reject(err);
+            }
+          );
+      });
+      return promise;
     }
+         
+      
   
-    getUser(id): Observable<User[]> {
-      return this.httpClient.get<User[]>(this.endpoint + '?user_id=' + id)
-        .pipe(
-          tap(_ => console.log(`User fetched: ${id}`)),
-          catchError(this.handleError<User[]>(`Get user id=${id}`))
-        );
-    }
-  
-    getUsers(): Observable<User[]> {
-      return this.httpClient.get<User[]>(this.endpoint)
-        .pipe(
-          tap(users => console.log('Users retrieved!')),
-          catchError(this.handleError<User[]>('Get user', []))
-        );
-    }
-  
-    updateUser(id, user: User): Observable<any> {
-      return this.httpClient.put(this.endpoint + '/' + id, JSON.stringify(user), this.httpOptions)
-        .pipe(
-          tap(_ => console.log(`User updated: ${id}`)),
-          catchError(this.handleError<User[]>('Update user'))
-        );
-    }
-  
-    deleteUser(id): Observable<User[]> {
-      return this.httpClient.delete<User[]>(this.endpoint + '/' + id, this.httpOptions)
-        .pipe(
-          tap(_ => console.log(`User deleted: ${id}`)),
-          catchError(this.handleError<User[]>('Delete user'))
-        );
-    }
-  
-  
-    private handleError<T>(operation = 'operation', result?: T) {
-      return (error: any): Observable<T> => {
-        console.error(error);
-        console.log(`${operation} failed: ${error.message}`);
-        return of(result as T);
-      };
-    }  
+    
     
   }
