@@ -1,4 +1,5 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 
  class User {
@@ -10,43 +11,21 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
     public user_cover: string
   ){}
   }
+  @Injectable()
   export class ProfileService {
 
     endpoint = 'https://ggs.tv/api/v1/profile.php?user_id=${userId}';
   profile = [];
     httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      headers: new HttpHeaders({'x-auth-token':JSON.stringify(localStorage.getItem('token'))})
     };
+    data: any;
   
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient) {
+     }
   
-    fetchProfile(user_id: string) {
-      const promise = new Promise<void>((resolve, reject) => {
-        this.httpClient
-          .get<User[]>(`https://ggs.tv/api/v1/profile.php?user_id=${user_id}`)
-          .toPromise()
-          .then((res: any) => {
-            this.profile = res.map((res: any) => {
-              return new User(
-                res.user_id,
-                res.user_name,
-                res.user_picture,
-                res.user_cover
-                
-              );
-            });
-            resolve();
-          },
-            err => {
-              reject(err);
-            }
-          );
-      });
-      return promise;
-    }
-         
-      
-  
-    
-    
+    async fetchProfile(user_id: string) {
+        const response = await this.httpClient.get(`https://ggs.tv/api/v1/profile/${user_id}`);
+        console.log(response);    
+         }
   }

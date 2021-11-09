@@ -20,7 +20,6 @@ import { ProfileService } from 'src/app/services/profile.service';
     FormsModule,
     IonicModule,
     HttpClientModule,
-    ProfileService,
     ProfilePageRoutingModule,
     ImageModalPageModule,
     ComponentsModule

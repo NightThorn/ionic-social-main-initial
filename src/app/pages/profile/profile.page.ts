@@ -34,17 +34,21 @@ export class ProfilePage implements OnInit {
     'https://images.unsplash.com/photo-1587613990444-68fe88ee970a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80',
   ];
   profile: any;
+  data: any;
+
   storage: any;
   constructor(
     private dataService: DataService,
     private profileService: ProfileService,
     private modalController: ModalController,
     private router: Router
-  ) {}
+  ) {
+
+  }
   x = localStorage.getItem("user_id");
 
   ngOnInit() {
-    this.profile = this.profileService.fetchProfile(this.x);
+    this.data = this.profileService.fetchProfile(this.x);
     this.feeds = this.dataService.getFeed();
     this.events = this.dataService.getEvents();
     this.groups = this.dataService.getGroups();
