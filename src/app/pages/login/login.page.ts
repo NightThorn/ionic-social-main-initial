@@ -8,6 +8,7 @@ import { Toast } from '@capacitor/core';
 import { async } from 'rxjs';
 import { AccessProviders } from '../../providers/access-providers';
 import { Storage } from '@ionic/storage-angular';
+import {AuthenticationService} from "../../services/authentication.service";
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -26,7 +27,7 @@ export class LoginPage implements OnInit {
   email: any;
   password: any;
   accessProviders: any;
-  
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,9 +38,17 @@ export class LoginPage implements OnInit {
     private accsPrvds: AccessProviders,
     private alertController: AlertController,
     public loadingController: LoadingController,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit() {
+
+    this.authService.activeToken.subscribe((token:string) => {
+      if(token !== '') {
+        this.router.navigateByUrl('/tabs/explore', { replaceUrl: true });
+      }
+    });
+
     this.loginForm = this.formBuilder.group({
       email: [null, [Validators.required, emailValidator]],
       password: [null, [Validators.required, passwordValidator]],
@@ -51,50 +60,80 @@ export class LoginPage implements OnInit {
 
     const loading = await this.loadingController.create();
     await loading.present();
-    
-    return new Promise(resolve=>{
 
-      let body = {
-            user_email: this.email,
-            user_password: this.password
+    this.authService.doLogin(this.email, this.password).subscribe((data:any) => {
+      console.log("LOGINPAGE:DATA:", data);
+      if(data['code'] !== 200) {
+        // error toast
+        let msg = '';
+        if(data['message'] !== '') {
+          msg = data['message'];
+        } else if (data['errors'].length > 0) {
+          msg = data['errors'][0];
+        }
 
-      }
-      console.log(body);
-    this.accsPrvds.postData(body, 'applogin.php').subscribe( async (res:any)=>{
-      if(res['success'] === true) {
-        loading.dismiss();  
-        localStorage.setItem('token', res['message']['token']);
-        localStorage.setItem('user_id', res['message']['id']);
+        if(msg !== '') {
+          msg = 'Could not log in, please try again';
+        }
 
-        console.log(res);      
-        this.router.navigateByUrl('/tabs/explore', { replaceUrl: true });
-      }
-      else{
+        this.presentToast(msg);
         loading.dismiss();
-        this.presentToast(res.message);
 
-      
+        return;
       }
+
+      let userData = data['data']['login'];
+      this.authService.updateToken(userData['token']);
+      this.authService.updateUserId(userData['user_id']);
+
+      loading.dismiss();
+      this.router.navigateByUrl('/tabs/explore', { replaceUrl: true });
     });
 
-  })
-}
-async presentToast(a){
-  const toast = await this.toastCtrl.create({
-    message: a,
-    duration: 1500,
-    position: 'top'
-  });
-  toast.present();
+    // return new Promise(resolve=>{
+    //
+    //   let body = {
+    //         user_email: this.email,
+    //         user_password: this.password
+    //
+    //   }
+    //   console.log(body);
+    // this.accsPrvds.postData(body, 'applogin.php').subscribe( async (res:any)=>{
+    //   if(res['success'] === true) {
+    //     loading.dismiss();
+    //     localStorage.setItem('token', res['message']['token']);
+    //     localStorage.setItem('user_id', res['message']['id']);
+    //
+    //     console.log(res);
+    //     this.router.navigateByUrl('/tabs/explore', { replaceUrl: true });
+    //   }
+    //   else{
+    //     loading.dismiss();
+    //     this.presentToast(res.message);
+    //
+    //
+    //   }
+    // });
+  //})
+  }
+
+  async presentToast(a){
+    const toast = await this.toastCtrl.create({
+      message: a,
+      duration: 1500,
+      position: 'top'
+    });
+
+    await toast.present();
   }
 
   goBack() {
     this.router.navigate(['/welcome']);
   }
- 
+
   async presentLoading() {
     this.loading = await this.loadingController.create({
-      cssClass: 'loader-container', 
+      cssClass: 'loader-container',
       message:
         '<span class="loader"><span class="loader-inner"></span></span><p class="loader-text">Loading</p>',
       duration: 2000,
