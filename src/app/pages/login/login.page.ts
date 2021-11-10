@@ -9,6 +9,7 @@ import { async } from 'rxjs';
 import { AccessProviders } from '../../providers/access-providers';
 import { Storage } from '@ionic/storage-angular';
 import {AuthenticationService} from "../../services/authentication.service";
+import {StoredUser} from "../../models/stored-user";
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -28,7 +29,7 @@ export class LoginPage implements OnInit, OnDestroy {
   password: any;
   accessProviders: any;
 
-  activeTokenSubscription$;
+  activeStoredUserSubscription$;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,10 +45,10 @@ export class LoginPage implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.activeTokenSubscription$ = this.authService.activeToken.subscribe((token:string) => {
-      console.log("LOGIN:PAGE:AUTHSUB:TOKEN", token);
-      if(token !== '' && token !== null) {
-        console.log("LOGIN:PAGE:AUTHSUB:TOKEN:ALLGOOD", token, "MOVE TO TABS");
+    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser:StoredUser) => {
+      console.log("LOGIN:PAGE:AUTHSUB:StoredUser", storedUser);
+      if(storedUser !== null) {
+        console.log("LOGIN:PAGE:AUTHSUB:TOKEN:ALLGOOD", storedUser, "MOVE TO TABS");
         this.router.navigate(['tabs/explore']);
       }
     });
@@ -59,7 +60,7 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.activeTokenSubscription$.unsubscribe();
+    this.activeStoredUserSubscription$.unsubscribe();
   }
 
   async signIn() {
@@ -90,9 +91,8 @@ export class LoginPage implements OnInit, OnDestroy {
       }
 
       let userData = data['data']['login'];
-      this.authService.updateToken(userData['token']);
-      this.authService.updateUserId(userData['user_id']);
-     
+      this.authService.updateStoredUser(userData['token'], userData['user_id']);
+
       loading.dismiss();
     });
 

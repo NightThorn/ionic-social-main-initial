@@ -4,6 +4,7 @@ import 'rxjs-compat/add/operator/timeout';
 import 'rxjs-compat/add/operator/map';
 import {BehaviorSubject} from "rxjs";
 import {Storage} from "@ionic/storage-angular";
+import {StoredUser} from "../models/stored-user";
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,11 @@ export class AuthenticationService {
 
   key_token = 'auth_token';
   key_user_id = 'auth_user_id';
+  key_stored_user = 'auth_stored_user';
 
   private _storage:Storage;
 
-  activeToken: BehaviorSubject<string> = new BehaviorSubject<string>("");
-  activeUserId: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  activeStoredUser: BehaviorSubject<StoredUser> = new BehaviorSubject<StoredUser>(null);
 
   server: string = 'https://ggs.tv/api/v1/';
 
@@ -35,32 +36,25 @@ export class AuthenticationService {
   async reload() {
     console.log("Reload");
 
-    let token:string = await this._storage.get(this.key_token);
-    let userId:number = await this._storage.get(this.key_user_id);
+    let storedUser: StoredUser = await this._storage.get(this.key_stored_user);
 
-    console.log("Reload:Token: ", token);
-    console.log("Reload:UserId: ", userId);
+    console.log("Reload:StoredUser: ", storedUser);
 
-    if(token !== this.activeToken.getValue()) {
-      console.log("Reload:NewToken");
-      this.activeToken.next( token );
-      this.activeUserId.next( userId );
+    if((this.activeStoredUser.getValue() === null) || storedUser.Token !== this.activeStoredUser.getValue().Token) {
+      console.log("Reload:NewStoredUser");
+      this.activeStoredUser.next(storedUser);
     }
   }
 
-  async updateToken(token:string) {
-    await this.storage.set(this.key_token, token);
-    this.reload();
-  }
-
-  async updateUserId(userId:number) {
-    await this.storage.set(this.key_user_id,userId);
+  async updateStoredUser(token:string, userId:number) {
+    await this.storage.set(this.key_stored_user,  {
+      Token: token,
+      UserID: userId});
     this.reload();
   }
 
   async destroy() {
-    await this.storage.remove(this.key_user_id);
-    await this.storage.remove(this.key_token);
+    await this.storage.remove(this.key_stored_user);
     this.reload();
   }
 
@@ -70,5 +64,4 @@ export class AuthenticationService {
       user_password: password
     })
   }
-
 }

@@ -21,9 +21,9 @@
                 src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/photos/2021/08/gg_d93e3dde48889b1d84c6403ee8072954.jpg"
               />
             </ion-thumbnail>
-            <ul class="profile-text ion-padding-horizontal">
-              <li >{{data.user_name}}</li>
-              <li>CEO</li>
+            <ul class="profile-text ion-padding-horizontal" *ngIf="fetchedProfile">
+              <li >{{ fetchedProfile.user_name }}</li>
+              <li>Witty Subtitle</li>
             </ul>
           </div>
         </div>

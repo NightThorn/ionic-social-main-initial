@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ProfileService } from 'src/app/services/profile.service';
+import {AuthenticationService} from "../../services/authentication.service";
+import {StoredUser} from "../../models/stored-user";
+import {ProfileModel} from "../../models/profile-model";
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage implements OnInit, OnDestroy {
   background = {
     backgroundImage:
       'url(https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/photos/2021/08/gg_baec4903318d885d14ce76fdda9bfecb_cropped.png)',
@@ -37,25 +40,59 @@ export class ProfilePage implements OnInit {
   data: any;
 
   storage: any;
+
+  activeStoredUserSubscription$;
+  fetchedProfileSubscription$;
+
+  fetchedProfile: ProfileModel;
+
   constructor(
     private dataService: DataService,
     private profileService: ProfileService,
     private modalController: ModalController,
-    private router: Router
+    private router: Router,
+    private authService: AuthenticationService,
+    private activeRoute: ActivatedRoute
   ) {
 
   }
-  x = localStorage.getItem("user_id");
+  // x = localStorage.getItem("user_id");
 
   ngOnInit() {
-    this.data = this.profileService.fetchProfile(this.x);
-    this.feeds = this.dataService.getFeed();
-    this.events = this.dataService.getEvents();
-    this.groups = this.dataService.getGroups();
-  }
-  
 
- 
+    this.activeRoute.params.subscribe(params => {
+      console.log("PROFILEPAGE:ACTIVEROUTESUB:PARAMS", params);
+
+      this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser:StoredUser) => {
+        if(storedUser !== null) {
+          console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
+          console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+
+          console.log("PROFILEPAGE:ACTIVE_TOKEN_SUB:INVOKING FETCH PROFILE");
+          this.profileService.fetchProfile( storedUser.UserID );
+        }
+      });
+
+      this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile:ProfileModel) => {
+        this.fetchedProfile = profile;
+
+        console.log("PROFILEPAGE:FETCHED_PROFILE_SUB:GOT", this.fetchedProfile);
+      });
+
+      // this.data = this.profileService.fetchProfile(this.x);
+      this.feeds = this.dataService.getFeed();
+      this.events = this.dataService.getEvents();
+      this.groups = this.dataService.getGroups();
+    });
+
+
+  }
+
+  ngOnDestroy() {
+    this.activeStoredUserSubscription$.unsubscribe();
+  }
+
+
   async openModal(imgUrl) {
     const modal = await this.modalController.create({
       component: ImageModalPage,
