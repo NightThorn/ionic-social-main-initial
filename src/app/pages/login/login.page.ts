@@ -92,7 +92,7 @@ export class LoginPage implements OnInit, OnDestroy {
       let userData = data['data']['login'];
       this.authService.updateToken(userData['token']);
       this.authService.updateUserId(userData['user_id']);
-
+     
       loading.dismiss();
     });
 

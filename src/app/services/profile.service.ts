@@ -1,31 +1,34 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthenticationService } from './authentication.service';
 
 
- class User {
-  constructor(
-
-    public user_id: number,
-    public user_name: string,
-    public user_picture: string,
-    public user_cover: string
-  ){}
-  }
-  @Injectable()
+@Injectable()
   export class ProfileService {
-
-    endpoint = 'https://ggs.tv/api/v1/profile.php?user_id=${userId}';
   profile = [];
-    httpOptions = {
-      headers: new HttpHeaders({'x-auth-token':JSON.stringify(localStorage.getItem('token'))})
-    };
-    data: any;
-  
-    constructor(private httpClient: HttpClient) {
-     }
-  
-    async fetchProfile(user_id: string) {
-        const response = await this.httpClient.get(`https://ggs.tv/api/v1/profile/${user_id}`);
-        console.log(response);    
+  data: any;
+  URL = "https://ggs.tv/api/v1/profile/";
+  private _storage:Storage;
+
+  key_token = 'auth_token';
+  key_user_id = 'auth_user_id';
+
+    constructor(private httpClient: HttpClient, private authService: AuthenticationService
+      ) {}
+    async fetchProfile(user_id) {
+      
+      let token:string = this._storage.get(this.key_token);
+      let userId:number = this._storage.get(this.key_user_id);
+
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'X-AUTH-TOKEN':  token
+        })
+      };
+        const response = await this.httpClient.get(this.URL + user_id, httpOptions).subscribe(response => {
+          console.log(response);    
+          this.data = response;
+
+        });
          }
-  }
+        }
