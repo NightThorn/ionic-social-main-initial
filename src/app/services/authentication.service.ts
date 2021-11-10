@@ -58,6 +58,12 @@ export class AuthenticationService {
     this.reload();
   }
 
+  async destroy() {
+    await this.storage.remove(this.key_user_id);
+    await this.storage.remove(this.key_token);
+    this.reload();
+  }
+
   doLogin(email, password) {
     return this.http.post(this.server + "/auth/login", {
       user_email: email,

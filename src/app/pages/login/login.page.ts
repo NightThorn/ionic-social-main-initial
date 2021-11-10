@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
@@ -14,7 +14,7 @@ import {AuthenticationService} from "../../services/authentication.service";
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, OnDestroy {
   loginForm: FormGroup;
   loading: any;
 
@@ -28,6 +28,7 @@ export class LoginPage implements OnInit {
   password: any;
   accessProviders: any;
 
+  activeTokenSubscription$;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,9 +44,11 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
 
-    this.authService.activeToken.subscribe((token:string) => {
-      if(token !== '') {
-        this.router.navigateByUrl('/tabs/explore', { replaceUrl: true });
+    this.activeTokenSubscription$ = this.authService.activeToken.subscribe((token:string) => {
+      console.log("LOGIN:PAGE:AUTHSUB:TOKEN", token);
+      if(token !== '' && token !== null) {
+        console.log("LOGIN:PAGE:AUTHSUB:TOKEN:ALLGOOD", token, "MOVE TO TABS");
+        this.router.navigate(['tabs/explore']);
       }
     });
 
@@ -53,6 +56,10 @@ export class LoginPage implements OnInit {
       email: [null, [Validators.required, emailValidator]],
       password: [null, [Validators.required, passwordValidator]],
     });
+  }
+
+  ngOnDestroy() {
+    this.activeTokenSubscription$.unsubscribe();
   }
 
   async signIn() {
@@ -87,7 +94,6 @@ export class LoginPage implements OnInit {
       this.authService.updateUserId(userData['user_id']);
 
       loading.dismiss();
-      this.router.navigateByUrl('/tabs/explore', { replaceUrl: true });
     });
 
     // return new Promise(resolve=>{
