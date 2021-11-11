@@ -18,8 +18,19 @@
               <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}" />
             </ion-thumbnail>
             <ul class="profile-text ion-padding-horizontal" *ngIf="fetchedProfile">
-              <li>{{ fetchedProfile.user_name }}</li>
-              <li>{{ fetchedProfile.user_biography }}</li>
+              <li>{{ fetchedProfile.user_name }} <span *ngIf="fetchedProfile.user_verified === '1'"
+                  style="color: lime;">
+                  <ion-icon name="checkmark-circle"></ion-icon>
+                </span>
+                <span *ngIf="fetchedProfile.user_staff === '1'">
+                  <ion-badge color="success">Staff</ion-badge>
+                </span>
+                <span *ngIf="fetchedProfile.user_sponsored === '1'">
+                  <ion-badge color="success">Sponsored</ion-badge>
+                </span>
+              </li>
+
+              <li>LFG: {{ fetchedProfile.lfg_text }}</li>
             </ul>
           </div>
         </div>
@@ -58,8 +69,8 @@
               <ion-fab-button>
                 <ion-icon name="close">Block</ion-icon>
               </ion-fab-button>
-              
-              
+
+
             </ion-fab-list>
           </ion-fab>
         </ul>
