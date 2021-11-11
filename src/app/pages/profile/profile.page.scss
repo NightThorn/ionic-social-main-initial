@@ -80,8 +80,9 @@ ion-header ion-toolbar {
   border-radius: 10px;
   text-transform: capitalize;
   font-weight: 400;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 2px;
 }
 
 .numbers {

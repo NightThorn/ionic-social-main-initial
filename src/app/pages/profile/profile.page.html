@@ -1,8 +1,6 @@
 <ion-content [fullscreen]="true">
-  <ion-grid
-    class="ion-no-padding ion-no-margin background-opts"
-    [ngStyle]="background"
-  >
+  <ion-grid class="ion-no-padding ion-no-margin background-opts"
+    style.background-image="url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_cover }}')">
     <ion-row>
       <ion-col class="header-container">
         <ion-header class="ion-no-border">
@@ -17,13 +15,11 @@
         <div class="profile ion-padding">
           <div class="profile-user">
             <ion-thumbnail>
-              <img
-                src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/photos/2021/08/gg_d93e3dde48889b1d84c6403ee8072954.jpg"
-              />
+              <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}" />
             </ion-thumbnail>
             <ul class="profile-text ion-padding-horizontal" *ngIf="fetchedProfile">
-              <li >{{ fetchedProfile.user_name }}</li>
-              <li>Witty Subtitle</li>
+              <li>{{ fetchedProfile.user_name }}</li>
+              <li>{{ fetchedProfile.user_biography }}</li>
             </ul>
           </div>
         </div>
@@ -43,11 +39,30 @@
             <li>Followers</li>
           </ul>
           <ul>
-            <li>200</li>
-            <li>Posts</li>
+            <li>{{ fetchedProfile.total_xp }}</li>
+            <li>XP Earned</li>
           </ul>
-          <ion-button class="follow-btn">Follow</ion-button>
+
         </div>
+        <ul>
+          <ion-button class="follow-btn">Add Friend</ion-button>
+          <ion-button class="follow-btn">Follow</ion-button>
+          <ion-fab horizontal="end" edge slot="fixed">
+            <ion-fab-button>
+              <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-list side="top">
+              <ion-fab-button>
+                <ion-icon name="warning">Report</ion-icon>
+              </ion-fab-button>
+              <ion-fab-button>
+                <ion-icon name="close">Block</ion-icon>
+              </ion-fab-button>
+              
+              
+            </ion-fab-list>
+          </ion-fab>
+        </ul>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -75,42 +90,31 @@
         <div [ngSwitch]="tabType">
           <ion-row *ngSwitchCase="'posts'" class="ion-no-padding">
             <ion-col>
-              <app-feed-card
-                *ngFor="let item of feeds"
-                [avatar]="item.avatar"
-                [name]="item.name"
-                [date]="item.date"
-                [images]="item.images"
-                [likes]="item.likes"
-                [comments]="item.comments"
-                [separator]="false"
-              >
+              <app-feed-card *ngFor="let item of feeds" [avatar]="item.avatar" [name]="item.name" [date]="item.date"
+                [images]="item.images" [likes]="item.likes" [comments]="item.comments" [separator]="false">
               </app-feed-card>
             </ion-col>
           </ion-row>
           <ion-row *ngSwitchCase="'photos'" class="ion-padding-vertical">
             <ion-col>
               <div class="grid-gallery">
-                <img
-                  *ngFor="let pic of pictures"
-                  class="image-element"
-                  [src]="pic"
-                  (click)="openModal(pic)"
-                />
+                <img *ngFor="let pic of pictures" class="image-element" [src]="pic" (click)="openModal(pic)" />
               </div>
             </ion-col>
           </ion-row>
           <ion-row *ngSwitchCase="'groups'" class="ion-no-padding">
             <ion-col size="6" *ngFor="let item of groups">
-              <app-group-card
-                [name]="item.name"
-                [image]="item.image"
-                [members]="item.members"
-              ></app-group-card>
+              <app-group-card [name]="item.name" [image]="item.image" [members]="item.members"></app-group-card>
             </ion-col>
           </ion-row>
         </div>
       </ion-col>
     </ion-row>
+
   </ion-grid>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="chatbubbles"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

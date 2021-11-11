@@ -13,7 +13,7 @@ import {ProfileModel} from "../../models/profile-model";
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit, OnDestroy {
-  background = {
+  cover = {
     backgroundImage:
       'url(https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/photos/2021/08/gg_baec4903318d885d14ce76fdda9bfecb_cropped.png)',
   };
