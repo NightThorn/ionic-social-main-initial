@@ -119,7 +119,11 @@ ion-header ion-toolbar {
     padding-right: 8px;
   }
 }
+ion-segment{
 
+contain: initial;
+
+}
 .grid-gallery {
   columns: 3;
   column-gap: 16px;

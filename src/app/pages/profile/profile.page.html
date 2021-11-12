@@ -28,6 +28,12 @@
                 <span *ngIf="fetchedProfile.user_sponsored === '1'">
                   <ion-badge color="success">Sponsored</ion-badge>
                 </span>
+                <span *ngIf="fetchedProfile.user_mod === '1'">
+                  <ion-badge color="danger">Mod</ion-badge>
+                </span>
+                <span *ngIf="fetchedProfile.user_subscribed === '1'">
+                  <ion-icon style="color: red;" name="flash"></ion-icon>
+                </span>
               </li>
 
               <li>LFG: {{ fetchedProfile.lfg_text }}</li>
@@ -88,13 +94,19 @@
           <ion-segment-button value="photos">
             <div class="tab-container">
               <ion-icon name="images"></ion-icon>
-              <span>Photos</span>
+              <span>Media</span>
             </div>
           </ion-segment-button>
           <ion-segment-button value="groups">
             <div class="tab-container">
               <ion-icon name="people"></ion-icon>
               <span>Groups</span>
+            </div>
+          </ion-segment-button>
+          <ion-segment-button value="about">
+            <div class="tab-container">
+              <ion-icon name="person"></ion-icon>
+              <span>About</span>
             </div>
           </ion-segment-button>
         </ion-segment>
@@ -116,6 +128,29 @@
           <ion-row *ngSwitchCase="'groups'" class="ion-no-padding">
             <ion-col size="6" *ngFor="let item of groups">
               <app-group-card [name]="item.name" [image]="item.image" [members]="item.members"></app-group-card>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngSwitchCase="'about'" class="ion-no-padding">
+            <ion-col size="12">
+              <ion-card>
+                <ion-card-header>
+                  <ion-card-subtitle>About</ion-card-subtitle>
+                  <ion-card-title>Basic Info</ion-card-title>
+                </ion-card-header>
+
+                <ion-card-content>
+                  {{ fetchedProfile.user_biography }}
+                  <li>{{ fetchedProfile.user_hometown }}</li>
+                  <li *ngIf="fetchedProfile.user_gender === '1'"> Male </li>
+                  <li *ngIf="fetchedProfile.user_gender === '2'"> Female </li>
+                  <li *ngIf="fetchedProfile.user_gender === '3'"> Other </li>
+                  <li *ngIf="fetchedProfile.user_gender === '4'"> Non-Binary </li>
+                  <li *ngIf="fetchedProfile.user_gender === '5'"> Fluid </li>
+
+                  <li>{{ fetchedProfile.user_relationship }}</li>
+
+                </ion-card-content>
+              </ion-card>
             </ion-col>
           </ion-row>
         </div>
