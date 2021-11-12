@@ -38,13 +38,11 @@ export class ProfilePage implements OnInit, OnDestroy {
   ];
   profile: any;
   data: any;
-
   storage: any;
-
   activeStoredUserSubscription$;
   fetchedProfileSubscription$;
-
   fetchedProfile: ProfileModel;
+  bday: string;
 
   constructor(
     private dataService: DataService,
@@ -73,8 +71,11 @@ export class ProfilePage implements OnInit, OnDestroy {
         }
       });
 
-      this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile:ProfileModel) => {
+      this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
         this.fetchedProfile = profile;
+        const newDate = new Date(this.fetchedProfile.user_birthdate);
+        this.bday= newDate.toDateString();
+        
 
         console.log("PROFILEPAGE:FETCHED_PROFILE_SUB:GOT", this.fetchedProfile);
       });
@@ -87,6 +88,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
 
   }
+  
 
   ngOnDestroy() {
     this.activeStoredUserSubscription$.unsubscribe();

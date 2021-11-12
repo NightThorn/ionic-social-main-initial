@@ -77,7 +77,7 @@ export interface ProfileModel {
   user_failed_login_ip: string
   user_first_failed_login: string
   user_firstname: string
-  user_gender: string
+  user_gender: number
   user_group: string
   user_hometown: string
   user_id: string

@@ -140,15 +140,33 @@
 
                 <ion-card-content>
                   {{ fetchedProfile.user_biography }}
-                  <li>{{ fetchedProfile.user_hometown }}</li>
-                  <li *ngIf="fetchedProfile.user_gender === '1'"> Male </li>
-                  <li *ngIf="fetchedProfile.user_gender === '2'"> Female </li>
-                  <li *ngIf="fetchedProfile.user_gender === '3'"> Other </li>
-                  <li *ngIf="fetchedProfile.user_gender === '4'"> Non-Binary </li>
-                  <li *ngIf="fetchedProfile.user_gender === '5'"> Fluid </li>
-
-                  <li>{{ fetchedProfile.user_relationship }}</li>
-
+                  <ul class="aboutLI">
+                    <li>
+                      <ion-icon name="home" style="color: green;"></ion-icon> {{ fetchedProfile.user_hometown }}
+                    </li>
+                    <li *ngIf="fetchedProfile.user_gender == 1">
+                      <ion-icon name="male-female" style="color: white;"></ion-icon> Male
+                    </li>
+                    <li *ngIf="fetchedProfile.user_gender == 2">
+                      <ion-icon name="male-female" style="color: white;"></ion-icon> Female
+                    </li>
+                    <li *ngIf="fetchedProfile.user_gender == 3">
+                      <ion-icon name="male-female" style="color: white;"></ion-icon> Other
+                    </li>
+                    <li *ngIf="fetchedProfile.user_gender == 4">
+                      <ion-icon name="male-female" style="color: white;"></ion-icon> Non-Binary
+                    </li>
+                    <li *ngIf="fetchedProfile.user_gender == 5">
+                      <ion-icon name="male-female" style="color: white;"></ion-icon> Fluid
+                    </li>
+                    <li>
+                      <ion-icon name="heart-circle" style="color: red;"></ion-icon> {{
+                      fetchedProfile.user_relationship}}
+                    </li>
+                    <li>
+                      <ion-icon name="arrow-up-circle" style="color: gold;"></ion-icon> {{ bday }}
+                    </li>
+                  </ul>
                 </ion-card-content>
               </ion-card>
             </ion-col>

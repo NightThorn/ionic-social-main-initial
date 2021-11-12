@@ -107,7 +107,11 @@ ion-header ion-toolbar {
     }
   }
 }
+.aboutLI li {
 
+display: block;
+
+}
 .tab-container {
   display: flex;
   justify-content: center;
