@@ -107,9 +107,23 @@ ion-header ion-toolbar {
     }
   }
 }
+li{
+display: block;
+
+
+}
+ion-card-content li{
+
+padding-top: 6px;
+
+}
+ion-card-content span {
+  padding: 20px;
+}
 .aboutLI li {
 
 display: block;
+padding: 10px;
 
 }
 .tab-container {

@@ -49,11 +49,11 @@
         <div class="numbers">
           <ul>
             <li>4102</li>
-            <li>Following</li>
+            <li>Friends</li>
           </ul>
           <ul>
-            <li>4405</li>
-            <li>Followers</li>
+            <li>44</li>
+            <li>Badges</li>
           </ul>
           <ul>
             <li>{{ fetchedProfile.total_xp }}</li>
@@ -166,7 +166,83 @@
                     <li>
                       <ion-icon name="arrow-up-circle" style="color: gold;"></ion-icon> {{ bday }}
                     </li>
+                    <li *ngIf="fetchedProfile.user_website">
+                      <ion-icon name="earth" style="color: whitesmoke;"></ion-icon> <a
+                        href="{{ fetchedProfile.user_website }}">{{ fetchedProfile.user_website }}</a>
+                    </li>
                   </ul>
+                </ion-card-content>
+              </ion-card>
+              <ion-card>
+                <ion-card-header>
+                  <ion-card-subtitle>Connect</ion-card-subtitle>
+                  <ion-card-title>Social Links</ion-card-title>
+                </ion-card-header>
+
+                <ion-card-content>
+                  <span *ngIf="fetchedProfile.user_social_twitch">
+                    <a href="{{ fetchedProfile.user_social_twitch }}">
+                      <ion-icon name="logo-twitch" style="color: purple;"></ion-icon>
+                    </a>
+                  </span>
+                  <span *ngIf="fetchedProfile.user_social_instagram">
+
+                    <a href="{{ fetchedProfile.user_social_instagram }}">
+                      <ion-icon name="logo-instagram" style="color: rgb(226, 60, 151);"></ion-icon>
+                    </a>
+                  </span>
+                  <span *ngIf="fetchedProfile.user_social_twitter">
+
+                    <a href="{{ fetchedProfile.user_social_twitter }}">
+                      <ion-icon name="logo-twitter" style="color: blue;"></ion-icon>
+                    </a>
+                  </span>
+                  <span *ngIf="fetchedProfile.user_social_tiktok">
+
+                    <a href="{{ fetchedProfile.user_social_tiktok }}">
+                      <ion-icon name="logo-tiktok" style="color: red;"></ion-icon>
+                    </a>
+                  </span>
+
+                  <span *ngIf="fetchedProfile.user_social_facebook">
+
+                    <a href="{{ fetchedProfile.user_social_facebook }}">
+                      <ion-icon name="logo-facebook" style="color: blue;"></ion-icon>
+                    </a>
+                  </span>
+
+                  <span *ngIf="fetchedProfile.user_social_youtube">
+
+                    <a href="{{ fetchedProfile.user_social_youtube}}">
+                      <ion-icon name="logo-youtube" style="color: crimson;"></ion-icon>
+                    </a>
+                  </span>
+                  <li>
+                    <span *ngIf="fetchedProfile.user_social_discord">
+
+                      <ion-icon name="logo-discord" style="color: cornflowerblue;"></ion-icon> {{
+                      fetchedProfile.user_social_discord }}
+                    </span>
+                  </li>
+                  <li>
+                    <span *ngIf="fetchedProfile.user_social_playstation">
+
+                      <ion-icon name="logo-playstation" style="color: blue;"></ion-icon> {{
+                      fetchedProfile.user_social_playstation }}
+                    </span>
+                  </li>
+                  <li>
+                    <span *ngIf="fetchedProfile.user_social_xbox">
+
+                      <ion-icon name="logo-xbox" style="color: green;"></ion-icon> {{ fetchedProfile.user_social_xbox }}
+                    </span>
+                  </li>
+                  <li>
+                    <span *ngIf="fetchedProfile.user_social_steam">
+
+                      <ion-icon name="logo-steam"></ion-icon> {{ fetchedProfile.user_social_steam }}
+                    </span>
+                  </li>
                 </ion-card-content>
               </ion-card>
             </ion-col>
