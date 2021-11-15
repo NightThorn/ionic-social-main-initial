@@ -1,32 +1,24 @@
-<ion-card >
+<ion-card>
   <ion-card-title>
-    <ion-item lines="none" >
+    <ion-item lines="none">
       <ion-avatar slot="start">
-        <img
-          [src]="avatar"
-        />
+        <img [src]="avatar" />
       </ion-avatar>
       <ion-label>
         <h2 class="item-title">{{ name }}</h2>
         <p class="item-subtitle">{{ date | humanizeDate }}</p>
       </ion-label>
-      <ion-button
-        slot="end"
-        fill="clear"
-        size="small"
-        shape="round"
-      >
-        <ion-icon
-          slot="icon-only"
-          name="ellipsis-horizontal"
-        ></ion-icon>
+      <ion-button slot="end" fill="clear" size="small" shape="round">
+        <ion-icon slot="icon-only" name="ellipsis-horizontal"></ion-icon>
       </ion-button>
     </ion-item>
   </ion-card-title>
   <ion-card-content class="ion-no-padding">
+    <ion-item>{{ text }}
+    </ion-item>
     <ion-slides pager="true" [options]="imgConfig">
       <ion-slide *ngFor="let item of images">
-        <img src="{{ item }}"/>
+        <img src="{{ item }}" />
       </ion-slide>
     </ion-slides>
 
@@ -41,18 +33,13 @@
           </li>
           <li>
             <ion-item lines="none">
-              <ion-icon  name="chatbubble"></ion-icon>
+              <ion-icon name="chatbubble"></ion-icon>
               <ion-label>{{ comments }}</ion-label>
             </ion-item>
           </li>
         </ul>
       </div>
-      <ion-button
-        slot="end"
-        fill="clear"
-        size="small"
-        shape="round"
-      >
+      <ion-button slot="end" fill="clear" size="small" shape="round">
         <ion-icon slot="icon-only" name="arrow-redo"></ion-icon>
       </ion-button>
     </div>

@@ -11,6 +11,7 @@ export class FeedCardComponent implements OnInit {
   @Input() date: string;
   @Input() images: string[];
   @Input() likes: number;
+  @Input() text: string;
   @Input() comments: number;
   @Input() separator: boolean;
 

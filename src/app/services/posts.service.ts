@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import {Subject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import { Post } from '../models/post';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostsService {
 
-  RequestedPosts = new Subject<Post[]>();
+  
+  RequestedPosts: Subject<Post> = new Subject<Post>();
 
   constructor(
     private http: HttpClient
@@ -37,7 +39,8 @@ export class PostsService {
             Content: post.text
           } as Post)
         }
-        this.RequestedPosts.next(posts);
+        this.RequestedPosts.next(data['data']['timeline']);
+
       })
   }
 }

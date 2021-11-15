@@ -113,8 +113,9 @@
         <div [ngSwitch]="tabType">
           <ion-row *ngSwitchCase="'posts'" class="ion-no-padding">
             <ion-col>
-              <app-feed-card *ngFor="let item of feeds" [avatar]="item.avatar" [name]="item.name" [date]="item.date"
-                [images]="item.images" [likes]="item.likes" [comments]="item.comments" [separator]="false">
+              <app-feed-card *ngFor="let item of fetchedPosts"  [avatar]="item.avatar" [name]="item.user_id"
+                [date]="item.time.date" [images]="item.images" [text]="item.text" [likes]="item.reaction_like_count"
+                [comments]="item.comments" [separator]="false">
               </app-feed-card>
             </ion-col>
           </ion-row>
@@ -131,7 +132,7 @@
             </ion-col>
           </ion-row>
           <ion-row *ngSwitchCase="'about'" class="ion-no-padding">
-            <ion-col >
+            <ion-col>
               <ion-card>
                 <ion-card-header>
                   <ion-card-subtitle>Basic Info</ion-card-subtitle>

@@ -1,12 +1,14 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ProfileService } from 'src/app/services/profile.service';
-import {AuthenticationService} from "../../services/authentication.service";
-import {StoredUser} from "../../models/stored-user";
-import {ProfileModel} from "../../models/profile-model";
+import { AuthenticationService } from "../../services/authentication.service";
+import { StoredUser } from "../../models/stored-user";
+import { ProfileModel } from "../../models/profile-model";
+import { Post } from 'src/app/models/post';
+import { PostsService } from 'src/app/services/posts.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -37,16 +39,18 @@ export class ProfilePage implements OnInit, OnDestroy {
     'https://images.unsplash.com/photo-1587613990444-68fe88ee970a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80',
   ];
   profile: any;
-  data: any;
   storage: any;
   activeStoredUserSubscription$;
   fetchedProfileSubscription$;
   fetchedProfile: ProfileModel;
+  fetchedPosts: any =[];
   bday: string;
+  fetchedPostsSub;
 
   constructor(
     private dataService: DataService,
     private profileService: ProfileService,
+    private postsService: PostsService,
     private modalController: ModalController,
     private router: Router,
     private authService: AuthenticationService,
@@ -61,34 +65,39 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.activeRoute.params.subscribe(params => {
       console.log("PROFILEPAGE:ACTIVEROUTESUB:PARAMS", params);
 
-      this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser:StoredUser) => {
-        if(storedUser !== null) {
+      this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
+        if (storedUser !== null) {
           console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
           console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
 
           console.log("PROFILEPAGE:ACTIVE_TOKEN_SUB:INVOKING FETCH PROFILE");
-          this.profileService.fetchProfile( storedUser.UserID );
+          this.profileService.fetchProfile(storedUser.UserID);
+          this.profileService.fetchPosts(storedUser.UserID);
+
+
         }
       });
 
       this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
         this.fetchedProfile = profile;
         const newDate = new Date(this.fetchedProfile.user_birthdate);
-        this.bday= newDate.toDateString();
-        
-
+        this.bday = newDate.toDateString();
         console.log("PROFILEPAGE:FETCHED_PROFILE_SUB:GOT", this.fetchedProfile);
       });
 
+      this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
+        this.fetchedPosts = data;
+        console.log("PROFILEPAGE:FETCHED_Posts_SUB:GOT", this.fetchedPosts);
+
+      })
       // this.data = this.profileService.fetchProfile(this.x);
-      this.feeds = this.dataService.getFeed();
       this.events = this.dataService.getEvents();
       this.groups = this.dataService.getGroups();
     });
 
 
   }
-  
+
 
   ngOnDestroy() {
     this.activeStoredUserSubscription$.unsubscribe();
@@ -110,3 +119,5 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.router.navigate(['settings']);
   }
 }
+
+
