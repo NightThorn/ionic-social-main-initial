@@ -118,6 +118,15 @@ export class ProfilePage implements OnInit, OnDestroy {
   goToSettings() {
     this.router.navigate(['settings']);
   }
+  badges() {
+    
+    this.router.navigate(['badges']);
+  }
+
+  friends() {
+
+    this.router.navigate(['friends']);
+  }
 }
 
 

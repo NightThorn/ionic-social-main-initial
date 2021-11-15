@@ -79,6 +79,14 @@ const routes: Routes = [
   {
     path: 'user',
     loadChildren: () => import('./pages/user/user.module').then( m => m.UserPageModule)
+  },
+  {
+    path: 'badges',
+    loadChildren: () => import('./pages/badges/badges.module').then( m => m.BadgesPageModule)
+  },
+  {
+    path: 'friends',
+    loadChildren: () => import('./pages/friends/friends.module').then( m => m.FriendsPageModule)
   }
 ];
 @NgModule({

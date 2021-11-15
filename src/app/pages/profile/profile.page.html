@@ -47,13 +47,13 @@
     <ion-row class="">
       <ion-col>
         <div class="numbers">
-          <ul>
+          <ul (click)="friends()">
             <li>4102</li>
             <li>Friends</li>
           </ul>
-          <ul>
+          <ul (click)="badges()">
             <li>44</li>
-            <li>Badges</li>
+            <li >Badges</li>
           </ul>
           <ul>
             <li>{{ fetchedProfile.total_xp }}</li>
