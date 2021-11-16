@@ -5,15 +5,18 @@ import { Subject } from "rxjs";
 import { ProfileModel } from "../models/profile-model";
 import { environment } from "../../environments/environment";
 import { Post } from "../models/post";
+import { filter, map } from 'rxjs/operators';
 
 
 @Injectable()
 export class ProfileService {
   profile = [];
-  data: any;
+
   URL = "https://ggs.tv/api/v1/profile/";
   fetchedProfile: Subject<ProfileModel> = new Subject<ProfileModel>();
   fetchedPosts: Subject<Post> = new Subject<Post>();
+  fetchedBadges: any;
+  response: any;
 
   constructor(
     private httpClient: HttpClient,
@@ -40,10 +43,26 @@ export class ProfileService {
       this.fetchedProfile.next(response['data']['user']);
     });
   }
+  fetchBadges(user_id: number) {
+
+    return this.httpClient.get(`https://ggs.tv/api/v1/badges.php?user=${user_id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+
+
+
 
   public fetchPosts(user_id: number) {
     this.httpClient.get(`https://ggs.tv/api/v1/posts.php?controller=user&user=${user_id}`).subscribe(response => {
-      console.log("PROFILESERVICE:fetchposts:RESPONSE", response);
+      console.log(response);
 
       this.fetchedPosts.next(response['data']['timeline']);
     });

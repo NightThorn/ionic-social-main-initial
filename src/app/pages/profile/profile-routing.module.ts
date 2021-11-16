@@ -11,6 +11,7 @@ const routes: Routes = [
       {
         path: ':user_id',
         component: ProfilePage
+        
       }
     ]
   }

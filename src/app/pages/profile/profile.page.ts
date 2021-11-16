@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ModalController, NavController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -27,6 +27,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   groups: any;
 
 
+
   pictures = [
     'https://images.unsplash.com/photo-1592486058517-36236ba247c8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80',
     'https://images.unsplash.com/photo-1588774069410-84ae30757c8e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80',
@@ -46,6 +47,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   fetchedPosts: any =[];
   bday: string;
   fetchedPostsSub;
+  user_id: any;
 
   constructor(
     private dataService: DataService,
@@ -53,6 +55,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     private postsService: PostsService,
     private modalController: ModalController,
     private router: Router,
+    public nav: NavController,
     private authService: AuthenticationService,
     private activeRoute: ActivatedRoute
   ) {
@@ -118,10 +121,18 @@ export class ProfilePage implements OnInit, OnDestroy {
   goToSettings() {
     this.router.navigate(['settings']);
   }
-  badges() {
-    
-    this.router.navigate(['badges']);
+
+  badges(id) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(id)
+      }
+    };
+    this.router.navigate(['badges'], navigationExtras);
   }
+   
+  
+  
 
   friends() {
 
