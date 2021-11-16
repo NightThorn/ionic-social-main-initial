@@ -57,9 +57,48 @@ export class ProfileService {
     );
   }
 
+  fetchGroups(user_id: number) {
+
+    return this.httpClient.get(`https://ggs.tv/api/v1/groups.php?user=${user_id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
 
 
+  fetchMedia(user_id: number) {
 
+    return this.httpClient.get(`https://ggs.tv/api/v1/media.php?user=${user_id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+
+  fetchFriends(user_id: number) {
+
+    return this.httpClient.get(`https://ggs.tv/api/v1/friends.php?user=${user_id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   public fetchPosts(user_id: number) {
     this.httpClient.get(`https://ggs.tv/api/v1/posts.php?controller=user&user=${user_id}`).subscribe(response => {
       console.log(response);
