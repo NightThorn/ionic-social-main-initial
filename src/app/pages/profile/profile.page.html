@@ -53,7 +53,7 @@
           </ul>
           <ul (click)="badges(fetchedProfile.user_id)">
             <li>44</li>
-            <li >Badges</li>
+            <li>Badges</li>
           </ul>
           <ul>
             <li>{{ fetchedProfile.total_xp }}</li>
@@ -113,7 +113,7 @@
         <div [ngSwitch]="tabType">
           <ion-row *ngSwitchCase="'posts'" class="ion-no-padding">
             <ion-col>
-              <app-feed-card *ngFor="let item of fetchedPosts"  [avatar]="item.avatar" [name]="item.user_id"
+              <app-feed-card *ngFor="let item of fetchedPosts" [avatar]="item.avatar" [name]="item.user_id"
                 [date]="item.time.date" [images]="item.images" [text]="item.text" [likes]="item.reaction_like_count"
                 [comments]="item.comments" [separator]="false">
               </app-feed-card>
@@ -128,7 +128,8 @@
           </ion-row>
           <ion-row *ngSwitchCase="'groups'" class="ion-no-padding">
             <ion-col size="6" *ngFor="let item of groups">
-              <app-group-card [name]="item.name" [image]="item.image" [members]="item.members"></app-group-card>
+              <app-group-card [name]="item.group_name" [image]="item.group_picture" [members]="item.group_members">
+              </app-group-card>
             </ion-col>
           </ion-row>
           <ion-row *ngSwitchCase="'about'" class="ion-no-padding">

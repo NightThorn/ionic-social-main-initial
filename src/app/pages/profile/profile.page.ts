@@ -44,7 +44,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   activeStoredUserSubscription$;
   fetchedProfileSubscription$;
   fetchedProfile: ProfileModel;
-  fetchedPosts: any =[];
+  fetchedPosts: any = [];
   bday: string;
   fetchedPostsSub;
   user_id: any;
@@ -76,30 +76,34 @@ export class ProfilePage implements OnInit, OnDestroy {
           console.log("PROFILEPAGE:ACTIVE_TOKEN_SUB:INVOKING FETCH PROFILE");
           this.profileService.fetchProfile(storedUser.UserID);
           this.profileService.fetchPosts(storedUser.UserID);
+          this.profileService.fetchGroups(storedUser.UserID).subscribe(res => {
+            this.groups = res.message;
+            console.log("PROFILEPAGE:groups", this.groups);
 
-
+          });
         }
-      });
-
-      this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
-        this.fetchedProfile = profile;
-        const newDate = new Date(this.fetchedProfile.user_birthdate);
-        this.bday = newDate.toDateString();
-        console.log("PROFILEPAGE:FETCHED_PROFILE_SUB:GOT", this.fetchedProfile);
-      });
-
-      this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
-        this.fetchedPosts = data;
-        console.log("PROFILEPAGE:FETCHED_Posts_SUB:GOT", this.fetchedPosts);
-
       })
-      // this.data = this.profileService.fetchProfile(this.x);
-      this.events = this.dataService.getEvents();
-      this.groups = this.dataService.getGroups();
     });
 
+    this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
+      this.fetchedProfile = profile;
+      const newDate = new Date(this.fetchedProfile.user_birthdate);
+      this.bday = newDate.toDateString();
+      console.log("PROFILEPAGE:FETCHED_PROFILE_SUB:GOT", this.fetchedProfile);
+    });
 
-  }
+    this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
+      this.fetchedPosts = data;
+      console.log("PROFILEPAGE:FETCHED_Posts_SUB:GOT", this.fetchedPosts);
+
+    })
+    // this.data = this.profileService.fetchProfile(this.x);
+    this.events = this.dataService.getEvents();
+
+  };
+
+
+
 
 
   ngOnDestroy() {
@@ -130,9 +134,9 @@ export class ProfilePage implements OnInit, OnDestroy {
     };
     this.router.navigate(['badges'], navigationExtras);
   }
-   
-  
-  
+
+
+
 
   friends(id) {
     let navigationExtras: NavigationExtras = {
