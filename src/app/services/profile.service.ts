@@ -6,6 +6,7 @@ import { ProfileModel } from "../models/profile-model";
 import { environment } from "../../environments/environment";
 import { Post } from "../models/post";
 import { filter, map } from 'rxjs/operators';
+import { NavigationExtras } from '@angular/router';
 
 
 @Injectable()
@@ -43,6 +44,30 @@ export class ProfileService {
       this.fetchedProfile.next(response['data']['user']);
     });
   }
+
+
+  public fetchUser(user_id: number) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(user_id)
+      }
+    };
+    const token = this.authService.activeStoredUser.getValue().Token;
+    if (token === '' || token === null) {
+      return;
+    }
+    console.log("PROFILESERVICE:fetchProfile:TOKEN", token);
+    console.log("PROFILESERVICE:fetchProfile:URL", this.URL + user_id);
+    this.httpClient.get(this.URL + user_id + "?auth_token=" + token).subscribe(response => {
+      console.log("PROFILESERVICE:fetchProfile:RESPONSE", response);
+      if (response['code'] !== 200) {
+        // error state
+        return;
+      }
+      this.fetchedProfile.next(response['data']['user']);
+    });
+  }
+
   fetchBadges(user_id: number) {
 
     return this.httpClient.get(`https://ggs.tv/api/v1/badges.php?user=${user_id}`).pipe(map((res: any) => {
@@ -87,7 +112,11 @@ export class ProfileService {
   }
 
   fetchFriends(user_id: number) {
-
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(user_id)
+      }
+    };
     return this.httpClient.get(`https://ggs.tv/api/v1/friends.php?user=${user_id}`).pipe(map((res: any) => {
 
       console.log(res);
@@ -99,10 +128,10 @@ export class ProfileService {
       })
     );
 
-    
+
   }
 
-  
+
   public fetchPosts(user_id: number) {
     this.httpClient.get(`https://ggs.tv/api/v1/posts.php?controller=user&user=${user_id}`).subscribe(response => {
       console.log(response);

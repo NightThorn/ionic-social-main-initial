@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
@@ -56,6 +56,17 @@ export class FriendsPage implements OnInit {
     return this.friends.filter(item => {
       return item.user_name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
     });
+  }
+
+
+  user(id) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        id: JSON.stringify(id)
+      }
+    };
+    this.router.navigate(['user'], navigationExtras);
+    
   }
 
 }
