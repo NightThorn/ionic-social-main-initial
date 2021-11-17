@@ -17,6 +17,7 @@ export class FriendsPage implements OnInit {
   public items: any;
   private topLimit: number = 15;
   public dataList: any = [];
+  navCtrl: any;
   constructor(private route: ActivatedRoute, private profileService: ProfileService, private router: Router) {
 
     this.route.queryParams.subscribe(params => {
@@ -33,7 +34,7 @@ export class FriendsPage implements OnInit {
     this.profileService.fetchFriends(this.data).subscribe(res => {
       this.friends = res.message;
       this.dataList = this.friends.slice(0, this.topLimit);
-     
+
     });
 
   }
@@ -66,7 +67,6 @@ export class FriendsPage implements OnInit {
       }
     };
     this.router.navigate(['user'], navigationExtras);
-    
   }
 
 }

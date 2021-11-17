@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'tabs',
@@ -12,52 +12,52 @@ const routes: Routes = [
   },
   {
     path: 'onboarding',
-    loadChildren: () => import('./pages/onboarding/onboarding.module').then( m => m.OnboardingPageModule)
+    loadChildren: () => import('./pages/onboarding/onboarding.module').then(m => m.OnboardingPageModule)
   },
   {
     path: 'welcome',
-    loadChildren: () => import('./pages/welcome/welcome.module').then( m => m.WelcomePageModule)
+    loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule)
   },
   {
     path: 'register',
-    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule)
   },
   {
     path: 'chat',
-    loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
+    loadChildren: () => import('./pages/chat/chat.module').then(m => m.ChatPageModule)
   },
   {
     path: 'story/:id',
-    loadChildren: () => import('./pages/story-viewer/story-viewer.module').then( m => m.StoryViewerPageModule)
+    loadChildren: () => import('./pages/story-viewer/story-viewer.module').then(m => m.StoryViewerPageModule)
   },
   {
     path: 'post-detail',
-    loadChildren: () => import('./pages/post-detail/post-detail.module').then( m => m.PostDetailPageModule)
+    loadChildren: () => import('./pages/post-detail/post-detail.module').then(m => m.PostDetailPageModule)
   },
   {
     path: 'contacts',
-    loadChildren: () => import('./pages/contacts/contacts.module').then( m => m.ContactPageModule)
+    loadChildren: () => import('./pages/contacts/contacts.module').then(m => m.ContactPageModule)
   },
   {
     path: 'notifications',
-    loadChildren: () => import('./pages/notification/notification.module').then( m => m.NotificationPageModule)
+    loadChildren: () => import('./pages/notification/notification.module').then(m => m.NotificationPageModule)
   },
   {
     path: 'comments',
-    loadChildren: () => import('./pages/comments/comments.module').then( m => m.CommentsPageModule)
+    loadChildren: () => import('./pages/comments/comments.module').then(m => m.CommentsPageModule)
   },
   {
     path: 'events',
-    loadChildren: () => import('./pages/events/events.module').then( m => m.EventsPageModule)
+    loadChildren: () => import('./pages/events/events.module').then(m => m.EventsPageModule)
   },
   {
     path: 'event-detail',
-    loadChildren: () => import('./pages/event-detail/event-detail.module').then( m => m.EventDetailPageModule)
+    loadChildren: () => import('./pages/event-detail/event-detail.module').then(m => m.EventDetailPageModule)
   },
- 
+
   {
     path: 'settings',
-    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
+    loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
   },
   {
     path: '',
@@ -66,27 +66,27 @@ const routes: Routes = [
   },
   {
     path: 'tournaments',
-    loadChildren: () => import('./pages/tournaments/tournaments.module').then( m => m.TournamentsPageModule)
+    loadChildren: () => import('./pages/tournaments/tournaments.module').then(m => m.TournamentsPageModule)
   },
   {
     path: 'random',
-    loadChildren: () => import('./pages/random/random.module').then( m => m.RandomPageModule)
+    loadChildren: () => import('./pages/random/random.module').then(m => m.RandomPageModule)
   },
   {
     path: 'streams',
-    loadChildren: () => import('./pages/streams/streams.module').then( m => m.StreamsPageModule)
+    loadChildren: () => import('./pages/streams/streams.module').then(m => m.StreamsPageModule)
   },
   {
     path: 'user',
-    loadChildren: () => import('./pages/user/user.module').then( m => m.UserPageModule)
+    loadChildren: () => import('./pages/user/user.module').then(m => m.UserPageModule)
   },
   {
     path: 'badges',
-    loadChildren: () => import('./pages/badges/badges.module').then( m => m.BadgesPageModule)
+    loadChildren: () => import('./pages/badges/badges.module').then(m => m.BadgesPageModule)
   },
   {
     path: 'friends',
-    loadChildren: () => import('./pages/friends/friends.module').then( m => m.FriendsPageModule)
+    loadChildren: () => import('./pages/friends/friends.module').then(m => m.FriendsPageModule)
   }
 ];
 @NgModule({
@@ -95,4 +95,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
