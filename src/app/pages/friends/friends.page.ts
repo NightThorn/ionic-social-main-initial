@@ -13,6 +13,8 @@ export class FriendsPage implements OnInit {
   public friends: any = [];
   activatedroute: any;
   data: any;
+  public searchTerm: string = "";
+  public items: any;
   private topLimit: number = 15;
   public dataList: any = [];
   constructor(private route: ActivatedRoute, private profileService: ProfileService, private router: Router) {
@@ -26,13 +28,12 @@ export class FriendsPage implements OnInit {
 
   }
   ngOnInit() {
+    this.setFilteredItems();
 
     this.profileService.fetchFriends(this.data).subscribe(res => {
       this.friends = res.message;
       this.dataList = this.friends.slice(0, this.topLimit);
-      console.log("datalist", this.dataList);
-
-      console.log("logggg", this.friends[0]);
+     
     });
 
   }
@@ -48,5 +49,13 @@ export class FriendsPage implements OnInit {
 
   }
 
+  setFilteredItems() {
+    this.dataList = this.filterItems(this.searchTerm);
+  }
+  filterItems(searchTerm) {
+    return this.friends.filter(item => {
+      return item.user_name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+    });
+  }
 
 }

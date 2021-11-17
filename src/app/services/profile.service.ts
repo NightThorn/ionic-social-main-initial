@@ -98,7 +98,11 @@ export class ProfileService {
         return true;
       })
     );
+
+    
   }
+
+  
   public fetchPosts(user_id: number) {
     this.httpClient.get(`https://ggs.tv/api/v1/posts.php?controller=user&user=${user_id}`).subscribe(response => {
       console.log(response);
