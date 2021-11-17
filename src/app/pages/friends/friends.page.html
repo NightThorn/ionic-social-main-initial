@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
-<ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
   <ion-list>
     <ion-item (click)="user(item.user_id)" *ngFor="let item of dataList">
 
@@ -15,11 +15,11 @@
         <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}">
 
       </ion-thumbnail>
-      
-        <ion-label>
-          {{ item.user_name }}
-        </ion-label>
-      
+
+      <ion-label>
+        {{ item.user_name }}
+      </ion-label>
+
     </ion-item>
   </ion-list>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">

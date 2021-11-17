@@ -1,260 +1,261 @@
-<ion-content [fullscreen]="true">
-  <ion-grid class="ion-no-padding ion-no-margin background-opts"
-    style.background-image="url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_cover }}')">
-    <ion-row>
-      <ion-col class="header-container">
-        <ion-header class="ion-no-border">
-          <ion-toolbar>
-            <ion-buttons slot="end">
-              <ion-button (click)="goToSettings()">
-                <ion-icon class="white-icon" slot="icon-only" name="options"></ion-icon>
-              </ion-button>
-            </ion-buttons>
-          </ion-toolbar>
-        </ion-header>
-        <div class="profile ion-padding">
-          <div class="profile-user">
-            <ion-thumbnail>
-              <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}" />
-            </ion-thumbnail>
-            <ul class="profile-text ion-padding-horizontal" *ngIf="fetchedProfile">
-              <li>{{ fetchedProfile.user_name }} <span *ngIf="fetchedProfile.user_verified === '1'"
-                  style="color: lime;">
-                  <ion-icon name="checkmark-circle"></ion-icon>
-                </span>
-                <span *ngIf="fetchedProfile.user_staff === '1'">
-                  <ion-badge color="success">Staff</ion-badge>
-                </span>
-                <span *ngIf="fetchedProfile.user_sponsored === '1'">
-                  <ion-badge color="success">Sponsored</ion-badge>
-                </span>
-                <span *ngIf="fetchedProfile.user_mod === '1'">
-                  <ion-badge color="danger">Mod</ion-badge>
-                </span>
-                <span *ngIf="fetchedProfile.user_subscribed === '1'">
-                  <ion-icon style="color: red;" name="flash"></ion-icon>
-                </span>
-              </li>
+  <ion-content [fullscreen]="true">
+    <ion-grid class="ion-no-padding ion-no-margin background-opts"
+      style.background-image="url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_cover }}')">
+      <ion-row>
+        <ion-col class="header-container">
+          <ion-header class="ion-no-border">
+            <ion-toolbar>
+              <ion-buttons slot="end">
+                <ion-button (click)="goToSettings()">
+                  <ion-icon class="white-icon" slot="icon-only" name="options"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <div class="profile ion-padding">
+            <div class="profile-user">
+              <ion-thumbnail>
+                <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}" />
+              </ion-thumbnail>
+              <ul class="profile-text ion-padding-horizontal" *ngIf="fetchedProfile">
+                <li>{{ fetchedProfile.user_name }} <span *ngIf="fetchedProfile.user_verified === '1'"
+                    style="color: lime;">
+                    <ion-icon name="checkmark-circle"></ion-icon>
+                  </span>
+                  <span *ngIf="fetchedProfile.user_staff === '1'">
+                    <ion-badge color="success">Staff</ion-badge>
+                  </span>
+                  <span *ngIf="fetchedProfile.user_sponsored === '1'">
+                    <ion-badge color="success">Sponsored</ion-badge>
+                  </span>
+                  <span *ngIf="fetchedProfile.user_mod === '1'">
+                    <ion-badge color="danger">Mod</ion-badge>
+                  </span>
+                  <span *ngIf="fetchedProfile.user_subscribed === '1'">
+                    <ion-icon style="color: red;" name="flash"></ion-icon>
+                  </span>
+                </li>
 
-              <li>LFG: {{ fetchedProfile.lfg_text }}</li>
-            </ul>
+                <li>LFG: {{ fetchedProfile.lfg_text }}</li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-grid class="ion-padding-horizontal borders">
-    <ion-row class="">
-      <ion-col>
-        <div class="numbers">
-          <ul (click)="friends(fetchedProfile.user_id)">
-            <li>4102</li>
-            <li>Friends</li>
-          </ul>
-          <ul (click)="badges(fetchedProfile.user_id)">
-            <li>44</li>
-            <li>Badges</li>
-          </ul>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid class="ion-padding-horizontal borders">
+      <ion-row class="">
+        <ion-col>
+          <div class="numbers">
+            <ul [routerLink]="['/tabs/profile', fetchedProfile.user_id, 'friends']" routerLinkActive="active">
+              <li>4102</li>
+              <li>Friends</li>
+            </ul>
+            <ul [routerLink]="['/tabs/profile', fetchedProfile.user_id, 'badges']" routerLinkActive="active">
+              <li>44</li>
+              <li>Badges</li>
+            </ul>
+            <ul>
+              <li>{{ fetchedProfile.total_xp }}</li>
+              <li>XP Earned</li>
+            </ul>
+
+          </div>
           <ul>
-            <li>{{ fetchedProfile.total_xp }}</li>
-            <li>XP Earned</li>
+            <ion-button class="follow-btn">Add Friend</ion-button>
+            <ion-button class="follow-btn">Follow</ion-button>
+            <ion-fab horizontal="end" edge slot="fixed">
+              <ion-fab-button>
+                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+              </ion-fab-button>
+              <ion-fab-list side="top">
+                <ion-fab-button>
+                  <ion-icon name="warning">Report</ion-icon>
+                </ion-fab-button>
+                <ion-fab-button>
+                  <ion-icon name="close">Block</ion-icon>
+                </ion-fab-button>
+
+
+              </ion-fab-list>
+            </ion-fab>
           </ul>
-
-        </div>
-        <ul>
-          <ion-button class="follow-btn">Add Friend</ion-button>
-          <ion-button class="follow-btn">Follow</ion-button>
-          <ion-fab horizontal="end" edge slot="fixed">
-            <ion-fab-button>
-              <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-            </ion-fab-button>
-            <ion-fab-list side="top">
-              <ion-fab-button>
-                <ion-icon name="warning">Report</ion-icon>
-              </ion-fab-button>
-              <ion-fab-button>
-                <ion-icon name="close">Block</ion-icon>
-              </ion-fab-button>
-
-
-            </ion-fab-list>
-          </ion-fab>
-        </ul>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-segment [(ngModel)]="tabType" mode="md">
-          <ion-segment-button value="posts">
-            <div class="tab-container">
-              <ion-icon name="document"></ion-icon>
-              <span>Posts</span>
-            </div>
-          </ion-segment-button>
-          <ion-segment-button value="photos">
-            <div class="tab-container">
-              <ion-icon name="images"></ion-icon>
-              <span>Media</span>
-            </div>
-          </ion-segment-button>
-          <ion-segment-button value="groups">
-            <div class="tab-container">
-              <ion-icon name="people"></ion-icon>
-              <span>Groups</span>
-            </div>
-          </ion-segment-button>
-          <ion-segment-button value="about">
-            <div class="tab-container">
-              <ion-icon name="person"></ion-icon>
-              <span>About</span>
-            </div>
-          </ion-segment-button>
-        </ion-segment>
-        <div [ngSwitch]="tabType">
-          <ion-row *ngSwitchCase="'posts'" class="ion-no-padding">
-            <ion-col>
-              <app-feed-card *ngFor="let item of fetchedPosts" [avatar]="item.avatar" [name]="item.user_id"
-                [date]="item.time.date" [images]="item.images" [text]="item.text" [likes]="item.reaction_like_count"
-                [comments]="item.comments" [separator]="false">
-              </app-feed-card>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngSwitchCase="'photos'" class="ion-padding-vertical">
-            <ion-col>
-              <div class="grid-gallery">
-                <img *ngFor="let pic of pictures" class="image-element" [src]="pic" (click)="openModal(pic)" />
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-segment [(ngModel)]="tabType" mode="md">
+            <ion-segment-button value="posts">
+              <div class="tab-container">
+                <ion-icon name="document"></ion-icon>
+                <span>Posts</span>
               </div>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngSwitchCase="'groups'" class="ion-no-padding">
-            <ion-col size="6" *ngFor="let item of groups">
-              <app-group-card [name]="item.group_name" [image]="item.group_picture" [members]="item.group_members">
-              </app-group-card>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngSwitchCase="'about'" class="ion-no-padding">
-            <ion-col>
-              <ion-card>
-                <ion-card-header>
-                  <ion-card-subtitle>Basic Info</ion-card-subtitle>
-                </ion-card-header>
+            </ion-segment-button>
+            <ion-segment-button value="photos">
+              <div class="tab-container">
+                <ion-icon name="images"></ion-icon>
+                <span>Media</span>
+              </div>
+            </ion-segment-button>
+            <ion-segment-button value="groups">
+              <div class="tab-container">
+                <ion-icon name="people"></ion-icon>
+                <span>Groups</span>
+              </div>
+            </ion-segment-button>
+            <ion-segment-button value="about">
+              <div class="tab-container">
+                <ion-icon name="person"></ion-icon>
+                <span>About</span>
+              </div>
+            </ion-segment-button>
+          </ion-segment>
+          <div [ngSwitch]="tabType">
+            <ion-row *ngSwitchCase="'posts'" class="ion-no-padding">
+              <ion-col>
+                <app-feed-card *ngFor="let item of fetchedPosts" [avatar]="item.avatar" [name]="item.user_id"
+                  [date]="item.time.date" [images]="item.images" [text]="item.text" [likes]="item.reaction_like_count"
+                  [comments]="item.comments" [separator]="false">
+                </app-feed-card>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngSwitchCase="'photos'" class="ion-padding-vertical">
+              <ion-col>
+                <div class="grid-gallery">
+                  <img *ngFor="let pic of pictures" class="image-element" [src]="pic" (click)="openModal(pic)" />
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngSwitchCase="'groups'" class="ion-no-padding">
+              <ion-col size="6" *ngFor="let item of groups">
+                <app-group-card [name]="item.group_name" [image]="item.group_picture" [members]="item.group_members">
+                </app-group-card>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngSwitchCase="'about'" class="ion-no-padding">
+              <ion-col>
+                <ion-card>
+                  <ion-card-header>
+                    <ion-card-subtitle>Basic Info</ion-card-subtitle>
+                  </ion-card-header>
 
-                <ion-card-content>
-                  {{ fetchedProfile.user_biography }}
-                  <ul class="aboutLI">
+                  <ion-card-content>
+                    {{ fetchedProfile.user_biography }}
+                    <ul class="aboutLI">
+                      <li>
+                        <ion-icon name="home" style="color: green;"></ion-icon> {{ fetchedProfile.user_hometown }}
+                      </li>
+                      <li *ngIf="fetchedProfile.user_gender == 1">
+                        <ion-icon name="male-female" style="color: white;"></ion-icon> Male
+                      </li>
+                      <li *ngIf="fetchedProfile.user_gender == 2">
+                        <ion-icon name="male-female" style="color: white;"></ion-icon> Female
+                      </li>
+                      <li *ngIf="fetchedProfile.user_gender == 3">
+                        <ion-icon name="male-female" style="color: white;"></ion-icon> Other
+                      </li>
+                      <li *ngIf="fetchedProfile.user_gender == 4">
+                        <ion-icon name="male-female" style="color: white;"></ion-icon> Non-Binary
+                      </li>
+                      <li *ngIf="fetchedProfile.user_gender == 5">
+                        <ion-icon name="male-female" style="color: white;"></ion-icon> Fluid
+                      </li>
+                      <li>
+                        <ion-icon name="heart-circle" style="color: red;"></ion-icon> {{
+                        fetchedProfile.user_relationship}}
+                      </li>
+                      <li>
+                        <ion-icon name="arrow-up-circle" style="color: gold;"></ion-icon> {{ bday }}
+                      </li>
+                      <li *ngIf="fetchedProfile.user_website">
+                        <ion-icon name="earth" style="color: whitesmoke;"></ion-icon> <a
+                          href="{{ fetchedProfile.user_website }}">{{ fetchedProfile.user_website }}</a>
+                      </li>
+                    </ul>
+                  </ion-card-content>
+                </ion-card>
+                <ion-card>
+                  <ion-card-header>
+                    <ion-card-subtitle>Connect</ion-card-subtitle>
+                  </ion-card-header>
+
+                  <ion-card-content>
+                    <span *ngIf="fetchedProfile.user_social_twitch">
+                      <a href="{{ fetchedProfile.user_social_twitch }}">
+                        <ion-icon name="logo-twitch" style="color: purple;"></ion-icon>
+                      </a>
+                    </span>
+                    <span *ngIf="fetchedProfile.user_social_instagram">
+
+                      <a href="{{ fetchedProfile.user_social_instagram }}">
+                        <ion-icon name="logo-instagram" style="color: rgb(226, 60, 151);"></ion-icon>
+                      </a>
+                    </span>
+                    <span *ngIf="fetchedProfile.user_social_twitter">
+
+                      <a href="{{ fetchedProfile.user_social_twitter }}">
+                        <ion-icon name="logo-twitter" style="color: blue;"></ion-icon>
+                      </a>
+                    </span>
+                    <span *ngIf="fetchedProfile.user_social_tiktok">
+
+                      <a href="{{ fetchedProfile.user_social_tiktok }}">
+                        <ion-icon name="logo-tiktok" style="color: red;"></ion-icon>
+                      </a>
+                    </span>
+
+                    <span *ngIf="fetchedProfile.user_social_facebook">
+
+                      <a href="{{ fetchedProfile.user_social_facebook }}">
+                        <ion-icon name="logo-facebook" style="color: blue;"></ion-icon>
+                      </a>
+                    </span>
+
+                    <span *ngIf="fetchedProfile.user_social_youtube">
+
+                      <a href="{{ fetchedProfile.user_social_youtube}}">
+                        <ion-icon name="logo-youtube" style="color: crimson;"></ion-icon>
+                      </a>
+                    </span>
                     <li>
-                      <ion-icon name="home" style="color: green;"></ion-icon> {{ fetchedProfile.user_hometown }}
-                    </li>
-                    <li *ngIf="fetchedProfile.user_gender == 1">
-                      <ion-icon name="male-female" style="color: white;"></ion-icon> Male
-                    </li>
-                    <li *ngIf="fetchedProfile.user_gender == 2">
-                      <ion-icon name="male-female" style="color: white;"></ion-icon> Female
-                    </li>
-                    <li *ngIf="fetchedProfile.user_gender == 3">
-                      <ion-icon name="male-female" style="color: white;"></ion-icon> Other
-                    </li>
-                    <li *ngIf="fetchedProfile.user_gender == 4">
-                      <ion-icon name="male-female" style="color: white;"></ion-icon> Non-Binary
-                    </li>
-                    <li *ngIf="fetchedProfile.user_gender == 5">
-                      <ion-icon name="male-female" style="color: white;"></ion-icon> Fluid
+                      <span *ngIf="fetchedProfile.user_social_discord">
+
+                        <ion-icon name="logo-discord" style="color: cornflowerblue;"></ion-icon> {{
+                        fetchedProfile.user_social_discord }}
+                      </span>
                     </li>
                     <li>
-                      <ion-icon name="heart-circle" style="color: red;"></ion-icon> {{
-                      fetchedProfile.user_relationship}}
+                      <span *ngIf="fetchedProfile.user_social_playstation">
+
+                        <ion-icon name="logo-playstation" style="color: blue;"></ion-icon> {{
+                        fetchedProfile.user_social_playstation }}
+                      </span>
                     </li>
                     <li>
-                      <ion-icon name="arrow-up-circle" style="color: gold;"></ion-icon> {{ bday }}
+                      <span *ngIf="fetchedProfile.user_social_xbox">
+
+                        <ion-icon name="logo-xbox" style="color: green;"></ion-icon> {{ fetchedProfile.user_social_xbox
+                        }}
+                      </span>
                     </li>
-                    <li *ngIf="fetchedProfile.user_website">
-                      <ion-icon name="earth" style="color: whitesmoke;"></ion-icon> <a
-                        href="{{ fetchedProfile.user_website }}">{{ fetchedProfile.user_website }}</a>
+                    <li>
+                      <span *ngIf="fetchedProfile.user_social_steam">
+
+                        <ion-icon name="logo-steam"></ion-icon> {{ fetchedProfile.user_social_steam }}
+                      </span>
                     </li>
-                  </ul>
-                </ion-card-content>
-              </ion-card>
-              <ion-card>
-                <ion-card-header>
-                  <ion-card-subtitle>Connect</ion-card-subtitle>
-                </ion-card-header>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-col>
+      </ion-row>
 
-                <ion-card-content>
-                  <span *ngIf="fetchedProfile.user_social_twitch">
-                    <a href="{{ fetchedProfile.user_social_twitch }}">
-                      <ion-icon name="logo-twitch" style="color: purple;"></ion-icon>
-                    </a>
-                  </span>
-                  <span *ngIf="fetchedProfile.user_social_instagram">
-
-                    <a href="{{ fetchedProfile.user_social_instagram }}">
-                      <ion-icon name="logo-instagram" style="color: rgb(226, 60, 151);"></ion-icon>
-                    </a>
-                  </span>
-                  <span *ngIf="fetchedProfile.user_social_twitter">
-
-                    <a href="{{ fetchedProfile.user_social_twitter }}">
-                      <ion-icon name="logo-twitter" style="color: blue;"></ion-icon>
-                    </a>
-                  </span>
-                  <span *ngIf="fetchedProfile.user_social_tiktok">
-
-                    <a href="{{ fetchedProfile.user_social_tiktok }}">
-                      <ion-icon name="logo-tiktok" style="color: red;"></ion-icon>
-                    </a>
-                  </span>
-
-                  <span *ngIf="fetchedProfile.user_social_facebook">
-
-                    <a href="{{ fetchedProfile.user_social_facebook }}">
-                      <ion-icon name="logo-facebook" style="color: blue;"></ion-icon>
-                    </a>
-                  </span>
-
-                  <span *ngIf="fetchedProfile.user_social_youtube">
-
-                    <a href="{{ fetchedProfile.user_social_youtube}}">
-                      <ion-icon name="logo-youtube" style="color: crimson;"></ion-icon>
-                    </a>
-                  </span>
-                  <li>
-                    <span *ngIf="fetchedProfile.user_social_discord">
-
-                      <ion-icon name="logo-discord" style="color: cornflowerblue;"></ion-icon> {{
-                      fetchedProfile.user_social_discord }}
-                    </span>
-                  </li>
-                  <li>
-                    <span *ngIf="fetchedProfile.user_social_playstation">
-
-                      <ion-icon name="logo-playstation" style="color: blue;"></ion-icon> {{
-                      fetchedProfile.user_social_playstation }}
-                    </span>
-                  </li>
-                  <li>
-                    <span *ngIf="fetchedProfile.user_social_xbox">
-
-                      <ion-icon name="logo-xbox" style="color: green;"></ion-icon> {{ fetchedProfile.user_social_xbox }}
-                    </span>
-                  </li>
-                  <li>
-                    <span *ngIf="fetchedProfile.user_social_steam">
-
-                      <ion-icon name="logo-steam"></ion-icon> {{ fetchedProfile.user_social_steam }}
-                    </span>
-                  </li>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-          </ion-row>
-        </div>
-      </ion-col>
-    </ion-row>
-
-  </ion-grid>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon name="chatbubbles"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-</ion-content>
+    </ion-grid>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="chatbubbles"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ion-content>

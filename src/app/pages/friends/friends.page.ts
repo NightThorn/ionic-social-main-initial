@@ -18,6 +18,7 @@ export class FriendsPage implements OnInit {
   private topLimit: number = 15;
   public dataList: any = [];
   navCtrl: any;
+  id;
   constructor(private route: ActivatedRoute, private profileService: ProfileService, private router: Router) {
 
     this.route.queryParams.subscribe(params => {
@@ -26,12 +27,12 @@ export class FriendsPage implements OnInit {
       }
     });
 
-
   }
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
     this.setFilteredItems();
 
-    this.profileService.fetchFriends(this.data).subscribe(res => {
+    this.profileService.fetchFriends(this.id).subscribe(res => {
       this.friends = res.message;
       this.dataList = this.friends.slice(0, this.topLimit);
 

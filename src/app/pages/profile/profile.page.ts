@@ -82,6 +82,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
           });
         }
+        
       })
     });
 
@@ -139,12 +140,8 @@ export class ProfilePage implements OnInit, OnDestroy {
 
 
   friends(id) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-    this.router.navigate(['friends'], navigationExtras);
+   
+    this.router.navigate(['/tabs/profile', id, 'friends']);
   }
 }
 
