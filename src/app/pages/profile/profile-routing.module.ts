@@ -9,10 +9,10 @@ const routes: Routes = [
   {
     path: '',
     component: ProfilePage,
+    
     children: [
       {
-        path: ':user_id',
-        component: ProfilePage,
+        path: ':user_id', 
             children: [
               {
                 path: 'friends',
