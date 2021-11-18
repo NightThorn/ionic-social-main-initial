@@ -30,13 +30,13 @@ export class FriendsPage implements OnInit {
   }
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.setFilteredItems();
 
     this.profileService.fetchFriends(this.data).subscribe(res => {
       this.friends = res.message;
       this.dataList = this.friends.slice(0, this.topLimit);
 
     });
+    this.setFilteredItems();
 
   }
   loadData(event) {
@@ -65,7 +65,7 @@ export class FriendsPage implements OnInit {
         special: JSON.stringify(id)
       }
     };
-    this.router.navigate(['user'], navigationExtras);
+    this.router.navigate(['/user/'], navigationExtras);
 
   }
 

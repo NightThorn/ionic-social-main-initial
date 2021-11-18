@@ -12,9 +12,18 @@ const routes: Routes = [
     children: [
       {
         path: ':user_id',
-        component: ProfilePage
-
+        component: ProfilePage,
+            children: [
+              {
+                path: 'friends',
+                component: FriendsPage
+              },
+              {
+                path: 'badges',
+                component: BadgesPage
+              }]
       }
+      
     ]
   }
 
