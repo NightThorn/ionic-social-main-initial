@@ -12,6 +12,7 @@ export class BadgesPage implements OnInit {
   activatedroute: any;
   fetchedBadges: any;
   data: any;
+  id: any;
 
   constructor(private route: ActivatedRoute, private profileService: ProfileService, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -19,8 +20,11 @@ export class BadgesPage implements OnInit {
         this.data = JSON.parse(params.special);
       }
     });
+
   }
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
+
     this.profileService.fetchBadges(this.data).subscribe(res => {
       this.badges = res.message;
       console.log("logggg", this.badges[0]);

@@ -12,20 +12,8 @@ const routes: Routes = [
     children: [
       {
         path: ':user_id',
-        component: ProfilePage,
-        children: [
+        component: ProfilePage
 
-          {
-            path: ':friends',
-            component: FriendsPage
-
-          },
-          {
-            path: ':badges',
-            component: BadgesPage
-            
-          }
-        ]
       }
     ]
   }
@@ -36,4 +24,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ProfilePageRoutingModule {}
+export class ProfilePageRoutingModule { }

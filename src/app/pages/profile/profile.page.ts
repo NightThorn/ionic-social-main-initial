@@ -136,12 +136,13 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.router.navigate(['badges'], navigationExtras);
   }
 
-
-
-
   friends(id) {
-   
-    this.router.navigate(['/tabs/profile', id, 'friends']);
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(id)
+      }
+    };
+    this.router.navigate(['friends'], navigationExtras);
   }
 }
 

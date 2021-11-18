@@ -51,6 +51,7 @@ export class UserPage implements OnInit {
   fetchedPostsSub;
   user_id: any;
   data: any;
+  id: any;
 
   constructor(
     private dataService: DataService,
@@ -68,11 +69,12 @@ export class UserPage implements OnInit {
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe(params => {
-      if (params && params.id) {
-        this.data = JSON.parse(params.id);
+      if (params && params.special) {
+        this.data = JSON.parse(params.special);
       }
     });
-    console.log(this.data);
+    this.id = this.activeRoute.snapshot.paramMap.get('id');
+    console.log(this.id);
     this.profileService.fetchUser(this.data);
     this.profileService.fetchPosts(this.data);
     this.profileService.fetchGroups(this.data).subscribe(res => {
@@ -116,7 +118,7 @@ export class UserPage implements OnInit {
     };
     this.router.navigate(['badges'], navigationExtras);
   }
-  
+
   friends(id) {
     let navigationExtras: NavigationExtras = {
       queryParams: {

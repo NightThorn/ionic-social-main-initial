@@ -59,11 +59,7 @@ const routes: Routes = [
     path: 'settings',
     loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
   },
-  {
-    path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
-  },
+
   {
     path: 'tournaments',
     loadChildren: () => import('./pages/tournaments/tournaments.module').then(m => m.TournamentsPageModule)
@@ -87,6 +83,11 @@ const routes: Routes = [
   {
     path: 'friends',
     loadChildren: () => import('./pages/friends/friends.module').then(m => m.FriendsPageModule)
+  },
+  {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
   }
 ];
 @NgModule({

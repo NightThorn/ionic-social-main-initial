@@ -32,7 +32,7 @@ export class FriendsPage implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     this.setFilteredItems();
 
-    this.profileService.fetchFriends(this.id).subscribe(res => {
+    this.profileService.fetchFriends(this.data).subscribe(res => {
       this.friends = res.message;
       this.dataList = this.friends.slice(0, this.topLimit);
 
@@ -59,15 +59,15 @@ export class FriendsPage implements OnInit {
       return item.user_name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
     });
   }
-
-
   user(id) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
-        id: JSON.stringify(id)
+        special: JSON.stringify(id)
       }
     };
     this.router.navigate(['user'], navigationExtras);
+
   }
+
 
 }

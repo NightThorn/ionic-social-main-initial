@@ -47,11 +47,11 @@
       <ion-row class="">
         <ion-col>
           <div class="numbers">
-            <ul [routerLink]="['/tabs/profile', fetchedProfile.user_id, 'friends']" routerLinkActive="active">
+            <ul (click)="friends(fetchedProfile.user_id)">
               <li>4102</li>
               <li>Friends</li>
             </ul>
-            <ul [routerLink]="['/tabs/profile', fetchedProfile.user_id, 'badges']" routerLinkActive="active">
+            <ul (click)="badges(fetchedProfile.user_id)">
               <li>44</li>
               <li>Badges</li>
             </ul>
