@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
-
 const routes: Routes = [
   {
     path: '',
@@ -9,23 +8,25 @@ const routes: Routes = [
     children: [
       {
         path: 'explore',
-        loadChildren: () => import('../explore/explore.module').then( m => m.ExplorePageModule)
+        loadChildren: () => import('../explore/explore.module').then(m => m.ExplorePageModule)
       },
       {
         path: 'messages',
-        loadChildren: () => import('../messages/messages.module').then( m => m.MessagesPageModule)
+        loadChildren: () => import('../messages/messages.module').then(m => m.MessagesPageModule)
       },
       {
         path: 'notification',
-        loadChildren: () => import('../notification/notification.module').then( m => m.NotificationPageModule)
+        loadChildren: () => import('../notification/notification.module').then(m => m.NotificationPageModule)
       },
       {
         path: 'profile',
-        loadChildren: () => import('../profile/profile.module').then( m => m.ProfilePageModule)
+        loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
       },
-      
-    
-      
+
+
+
+
+
       {
         path: '',
         redirectTo: '/tabs/explore',
@@ -38,4 +39,4 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }

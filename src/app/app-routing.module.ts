@@ -78,11 +78,11 @@ const routes: Routes = [
   },
   {
     path: 'badges',
-    loadChildren: () => import('./pages/badges/badges.module').then(m => m.BadgesPageModule)
+    loadChildren: () => import('./pages/profile/badges/badges.module').then(m => m.BadgesPageModule)
   },
   {
     path: 'friends',
-    loadChildren: () => import('./pages/friends/friends.module').then(m => m.FriendsPageModule)
+    loadChildren: () => import('./pages/profile/friends/friends.module').then(m => m.FriendsPageModule)
   },
   {
     path: '',
@@ -92,7 +92,7 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules})
   ],
   exports: [RouterModule]
 })
