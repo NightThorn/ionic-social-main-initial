@@ -1,12 +1,12 @@
-<ion-content [fullscreen]="true"  *ngIf="fetchedProfile">
+<ion-content [fullscreen]="true" *ngIf="fetchedProfile">
   <ion-grid class="ion-no-padding ion-no-margin background-opts"
     style.background-image="url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_cover }}')">
     <ion-row>
       <ion-col class="header-container">
-        <ion-header>
+        <ion-header class="ion-no-border">
           <ion-toolbar>
             <ion-buttons slot="start">
-              <ion-back-button></ion-back-button>
+              <ion-back-button defaultHref="/"></ion-back-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
