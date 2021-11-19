@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true"  *ngIf="fetchedProfile">
+<ion-content [fullscreen]="true" *ngIf="fetchedProfile">
   <ion-grid class="ion-no-padding ion-no-margin background-opts"
     style.background-image="url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_cover }}')">
     <ion-row>
@@ -122,9 +122,12 @@
           <ion-row *ngSwitchCase="'photos'" class="ion-padding-vertical">
             <ion-col>
               <div class="grid-gallery">
-                <img *ngFor="let pic of pictures" class="image-element" [src]="pic" (click)="openModal(pic)" />
+                <img *ngFor="let pic of pictures" class="image-element"
+                  src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
+                  (click)="openModal(pic)" />
               </div>
             </ion-col>
+
           </ion-row>
           <ion-row *ngSwitchCase="'groups'" class="ion-no-padding">
             <ion-col size="6" *ngFor="let item of groups">

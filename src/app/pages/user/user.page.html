@@ -120,7 +120,7 @@
           <ion-row *ngSwitchCase="'photos'" class="ion-padding-vertical">
             <ion-col>
               <div class="grid-gallery">
-                <img *ngFor="let pic of pictures" class="image-element" [src]="pic" (click)="openModal(pic)" />
+                <img *ngFor="let pic of pictures" class="image-element" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}" (click)="openModal(pic)" />
               </div>
             </ion-col>
           </ion-row>

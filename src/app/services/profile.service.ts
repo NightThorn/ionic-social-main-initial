@@ -97,9 +97,9 @@ export class ProfileService {
   }
 
 
-  fetchMedia(user_id: number) {
+  fetchPictures(user_id: number) {
 
-    return this.httpClient.get(`https://ggs.tv/api/v1/media.php?user=${user_id}`).pipe(map((res: any) => {
+    return this.httpClient.get(`https://ggs.tv/api/v1/pictures.php?user=${user_id}`).pipe(map((res: any) => {
 
       console.log(res);
       return res;
