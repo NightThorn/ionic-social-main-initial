@@ -3,10 +3,38 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/explore" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>All Live Streams</ion-title>
+    <ion-title>All Streams</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
 
+  <ion-card *ngFor="let item of dataList"
+    style="background-image: url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.user_cover}}'); background-size: 100% auto; background-repeat: no-repeat;">
+    <ion-card-header>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-thumbnail>
+        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.user_picture}}" />
+      </ion-thumbnail>
+      <ion-card-title style="color: lime;"> {{ item.user_name }} <span *ngIf="item.verified === '1'"
+          style="color: lime;">
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </span>
+        <span *ngIf="item.user_staff === '1'">
+          <ion-badge color="success">Staff</ion-badge>
+        </span>
+        <span *ngIf="item.user_sponsored === '1'">
+          <ion-badge color="success">Sponsored</ion-badge>
+        </span>
+        <span *ngIf="item.user_mod === '1'">
+          <ion-badge color="danger">Mod</ion-badge>
+        </span>
+      </ion-card-title>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

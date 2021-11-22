@@ -1,12 +1,59 @@
 import { Injectable } from '@angular/core';
 import mockDataJson from 'src/app/data/data.json';
 import { HttpClient } from '@angular/common/http';
+import { filter, map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
   mockData = mockDataJson;
 
   constructor(private http : HttpClient) { }
+  getTournaments() {
+  
+
+    return this.http.get(`https://ggs.tv/api/v1/tournaments.php`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
+  
+  getAllStreams() {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/streams.php?stream=all`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
+  getProStreams() {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/streams.php?stream=pro`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
 
   getHistories() {
     return this.mockData.histories;

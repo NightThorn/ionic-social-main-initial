@@ -8,5 +8,54 @@
 </ion-header>
 
 <ion-content>
+  <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()" placeholder="Search by game"></ion-searchbar>
 
+  <ion-card *ngFor="let item of dataList">
+    <ion-slides>
+      <ion-slide>
+        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.thumbnail}}" />
+      </ion-slide>
+    </ion-slides>
+    <ion-card-title>
+      <ion-item >
+        <ion-label>
+          <h2 class="item-title" style="color: lime;">{{ item.title }}</h2>
+          <p class="item-subtitle">{{ item.start_date | date:'MMMM d, h:mm a' }} EST</p>
+        </ion-label>
+
+      </ion-item>
+    </ion-card-title>
+    <ion-card-content class="ion-no-padding">
+      <ion-item>{{ item.about }}
+      </ion-item>
+    </ion-card-content>
+
+    <div class="card-footer">
+      <div class="icon-container">
+        <ul>
+          <li>
+            <ion-item>
+              <ion-icon name="cash-outline" style="color: green;"></ion-icon>
+              <ion-label>$ {{ item.price }}</ion-label>
+            </ion-item>
+          </li>
+          <li>
+            <ion-item>
+              <ion-icon name="enter-outline"></ion-icon>
+              <ion-label> ${{ item.join_cost }}</ion-label>
+            </ion-item>
+          </li>
+        </ul>
+      </div>
+      <ion-button slot="end" fill="clear" size="small" shape="round">
+        Register
+        <ion-icon slot="icon-only" name="arrow-redo"></ion-icon>
+      </ion-button>
+    </div>
+    <div></div>
+  </ion-card>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

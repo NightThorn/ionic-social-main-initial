@@ -33,4 +33,4 @@ import { ProfileService } from './services/profile.service';
     AppComponent
   ],
 })
-export class AppModule {}
+export class AppModule { }
