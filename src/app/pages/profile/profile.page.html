@@ -120,12 +120,12 @@
             </ion-col>
           </ion-row>
           <ion-row *ngSwitchCase="'photos'" class="ion-padding-vertical">
-            <ion-col>
-              <div class="grid-gallery">
-                <img *ngFor="let pic of pictures" class="image-element"
+            
+            <ion-col size="6" *ngFor="let pic of dataList" >
+                <img class="image-element"
                   src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
                   (click)="openModal(pic)" />
-              </div>
+              
             </ion-col>
 
           </ion-row>
@@ -261,4 +261,10 @@
       <ion-icon name="chatbubbles"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

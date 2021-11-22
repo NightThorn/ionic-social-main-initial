@@ -19,13 +19,16 @@ export class ProfilePage implements OnInit, OnDestroy {
     backgroundImage:
       'url(https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/photos/2021/08/gg_baec4903318d885d14ce76fdda9bfecb_cropped.png)',
   };
+  public dataL: Array<object> = [];
 
   tabType = 'posts';
   Users: any = [];
   feeds: any;
   events: any;
   groups: any;
-
+public items: any;
+  private topLimit: number = 15;
+  public dataList: any = [];
 
 
   pictures: any = [];
@@ -75,6 +78,8 @@ export class ProfilePage implements OnInit, OnDestroy {
 
           this.profileService.fetchPictures(storedUser.UserID).subscribe(res => {
             this.pictures = res.message;
+            this.dataList = this.pictures.slice(0, this.topLimit);
+
             console.log(this.pictures);
           });
 
@@ -142,6 +147,19 @@ export class ProfilePage implements OnInit, OnDestroy {
       }
     };
     this.router.navigate(['friends'], navigationExtras);
+  }
+
+
+  loadData(event) {
+    setTimeout(() => {
+      this.topLimit += 10;
+      this.dataList = this.pictures.slice(0, this.topLimit);
+      event.target.complete();
+      if (this.dataList.length == this.dataL.length)
+        event.target.disabled = true;
+
+    }, 500);
+
   }
 }
 

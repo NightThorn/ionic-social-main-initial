@@ -28,8 +28,11 @@ export class UserPage implements OnInit {
   events: any;
   groups: any;
 
+  public dataL: Array<object> = [];
 
-
+  public items: any;
+  private topLimit: number = 15;
+  public dataList: any = [];
   pictures: any = [];
   profile: any;
   storage: any;
@@ -74,6 +77,7 @@ export class UserPage implements OnInit {
     });
     this.profileService.fetchPictures(this.data).subscribe(res => {
       this.pictures = res.message;
+      this.dataList = this.pictures.slice(0, this.topLimit);
 
     });
     this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
@@ -120,6 +124,18 @@ export class UserPage implements OnInit {
       }
     };
     this.router.navigate(['friends'], navigationExtras);
+  }
+
+  loadData(event) {
+    setTimeout(() => {
+      this.topLimit += 10;
+      this.dataList = this.pictures.slice(0, this.topLimit);
+      event.target.complete();
+      if (this.dataList.length == this.dataL.length)
+        event.target.disabled = true;
+
+    }, 500);
+
   }
 }
 
