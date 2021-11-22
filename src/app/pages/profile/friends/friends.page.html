@@ -17,7 +17,18 @@
       </ion-thumbnail>
 
       <ion-label>
-        {{ item.user_name }}
+        {{ item.user_name }} <span *ngIf="item.user_verified === '1'" style="color: lime;">
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </span>
+        <span *ngIf="item.user_staff === '1'">
+          <ion-badge color="success">Staff</ion-badge>
+        </span>
+        <span *ngIf="item.user_sponsored === '1'">
+          <ion-badge color="success">Sponsored</ion-badge>
+        </span>
+        <span *ngIf="item.user_mod === '1'">
+          <ion-badge color="danger">Mod</ion-badge>
+        </span>
       </ion-label>
 
     </ion-item>
