@@ -10,7 +10,8 @@ export class GroupCardComponent implements OnInit {
   @Input() image: string;
   @Input() name: string;
   @Input() members: number;
-  
+  @Input() description: string;
+  @Input() verified: string;
   constructor() { }
 
   ngOnInit() {}
