@@ -24,6 +24,8 @@ export class DataService {
 
   }
   
+  
+
   getAllStreams() {
 
 
@@ -55,6 +57,53 @@ export class DataService {
 
   }
 
+  getRandomClip() {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/random.php?tab=video`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
+
+  getRandomUser() {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/random.php?tab=user`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
+
+  getRandomStream() {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/random.php?tab=stream`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
   getHistories() {
     return this.mockData.histories;
   }

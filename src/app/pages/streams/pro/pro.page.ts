@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class ProPage implements OnInit {
   private topLimit: number = 15;
   public dataList: any = [];
   public dataL: Array<object> = [];
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private router: Router) { }
 
 
   ngOnInit() {
@@ -33,5 +34,13 @@ export class ProPage implements OnInit {
 
     }, 500);
 
+  }
+  stream(twitch) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(twitch)
+      }
+    };
+    this.router.navigate(['streams/single'], navigationExtras);
   }
 }

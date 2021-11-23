@@ -23,12 +23,15 @@
     "@capacitor/android": "^2.4.6",
     "@capacitor/core": "2.4.6",
     "@capacitor/ios": "^2.4.6",
+    "@ionic-native/video-player": "^5.36.0",
     "@ionic/angular": "^5.5.2",
     "@ionic/storage-angular": "^3.0.6",
+    "cordova-plugin-video-player": "github:moust/cordova-plugin-videoplayer",
     "date-fns": "^2.17.0",
     "rxjs": "~6.6.0",
     "rxjs-compat": "^6.6.7",
     "tslib": "^2.0.0",
+    "twitch-js": "^2.0.0-beta.42",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

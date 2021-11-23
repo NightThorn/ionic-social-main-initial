@@ -23,6 +23,10 @@ const routes: Routes = [
   redirectTo: '/streams/pro',
   pathMatch: 'full'
 },]
+  },
+  {
+    path: 'single',
+    loadChildren: () => import('./single/single.module').then( m => m.SinglePageModule)
   }
 ];
 

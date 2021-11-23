@@ -1,12 +1,23 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/explore" text=""></ion-back-button>
-    </ion-buttons>
-    <ion-title>Random</ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
 
 </ion-content>
+<ion-tabs>
+
+  <ion-tab-bar slot="bottom">
+
+    <ion-tab-button tab="clips">
+<ion-icon name="film-outline"></ion-icon>
+      <ion-label>Clips</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="user">
+      <ion-icon name="person"></ion-icon>
+      <ion-label>Users</ion-label>
+    </ion-tab-button>
+<ion-tab-button tab="stream">
+<ion-icon name="radio-button-on-outline" style="color: red;"></ion-icon>  <ion-label>Streams</ion-label>
+</ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>

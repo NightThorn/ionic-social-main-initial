@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content>
 
-  <ion-card *ngFor="let item of dataList"
+  <ion-card (click)="stream(item.user_social_twitch)" *ngFor="let item of dataList"
     style="background-image: url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.user_cover}}'); background-size: 100% auto; background-repeat: no-repeat;">
     <ion-card-header>
     </ion-card-header>

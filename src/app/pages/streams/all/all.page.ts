@@ -1,5 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class AllPage implements OnInit {
   private topLimit: number = 15;
   public dataList: any = [];
   public dataL: Array<object> = [];
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private router: Router,
+) { }
 
 
   ngOnInit() {
@@ -34,5 +36,14 @@ export class AllPage implements OnInit {
 
     }, 500);
 
+  }
+
+  stream(id) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(id)
+      }
+    };
+    this.router.navigate(['single'], navigationExtras);
   }
 }

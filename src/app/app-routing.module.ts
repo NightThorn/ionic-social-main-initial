@@ -72,6 +72,7 @@ const routes: Routes = [
     path: 'streams',
     loadChildren: () => import('./pages/streams/streams.module').then(m => m.StreamsPageModule)
   },
+  
   {
     path: 'user',
     loadChildren: () => import('./pages/user/user.module').then(m => m.UserPageModule)
