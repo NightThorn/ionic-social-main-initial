@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
 import 'rxjs-compat/add/operator/timeout';
 import 'rxjs-compat/add/operator/map';
-import {BehaviorSubject} from "rxjs";
-import {Storage} from "@ionic/storage-angular";
-import {StoredUser} from "../models/stored-user";
+import { BehaviorSubject } from "rxjs";
+import { Storage } from "@ionic/storage-angular";
+import { StoredUser } from "../models/stored-user";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class AuthenticationService {
   key_user_id = 'auth_user_id';
   key_stored_user = 'auth_stored_user';
 
-  private _storage:Storage;
+  private _storage: Storage;
 
   activeStoredUser: BehaviorSubject<StoredUser> = new BehaviorSubject<StoredUser>(null);
 
@@ -29,8 +29,8 @@ export class AuthenticationService {
   }
 
   async init() {
-      this._storage = await this.storage.create();
-      this.reload();
+    this._storage = await this.storage.create();
+    this.reload();
   }
 
   async reload() {
@@ -40,16 +40,17 @@ export class AuthenticationService {
 
     console.log("Reload:StoredUser: ", storedUser);
 
-    if((this.activeStoredUser.getValue() === null) || storedUser.Token !== this.activeStoredUser.getValue().Token) {
+    if ((this.activeStoredUser.getValue() === null) || storedUser.Token !== this.activeStoredUser.getValue().Token) {
       console.log("Reload:NewStoredUser");
       this.activeStoredUser.next(storedUser);
     }
   }
 
-  async updateStoredUser(token:string, userId:number) {
-    await this.storage.set(this.key_stored_user,  {
+  async updateStoredUser(token: string, userId: number) {
+    await this.storage.set(this.key_stored_user, {
       Token: token,
-      UserID: userId});
+      UserID: userId
+    });
     this.reload();
   }
 
@@ -63,5 +64,13 @@ export class AuthenticationService {
       user_email: email,
       user_password: password
     })
+  }
+
+  addViews(post_id) {
+    
+    return this.http.post(this.server + "random.php", {
+      post_id: post_id
+    })
+      
   }
 }
