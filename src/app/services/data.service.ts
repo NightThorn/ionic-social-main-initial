@@ -7,9 +7,9 @@ import { filter, map } from 'rxjs/operators';
 export class DataService {
   mockData = mockDataJson;
 
-  constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) { }
   getTournaments() {
-  
+
 
     return this.http.get(`https://ggs.tv/api/v1/tournaments.php`).pipe(map((res: any) => {
 
@@ -23,8 +23,8 @@ export class DataService {
     );
 
   }
-  
-  
+
+
 
   getAllStreams() {
 
@@ -72,7 +72,6 @@ export class DataService {
     );
 
   }
-
   getRandomUser() {
 
 
@@ -88,7 +87,6 @@ export class DataService {
     );
 
   }
-
   getRandomStream() {
 
 
@@ -127,7 +125,7 @@ export class DataService {
   }
 
   getFeed() {
-    
+
     return this.mockData.feeds;
   }
 
