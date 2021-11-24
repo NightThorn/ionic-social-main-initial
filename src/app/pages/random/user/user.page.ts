@@ -1,13 +1,15 @@
 
 import { Component, OnInit } from '@angular/core';
 
-import { NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { ImageModalPage } from '../../image-modal/image-modal.page';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ProfileModel } from "../../../models/profile-model";
 import { Post } from 'src/app/models/post';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { StoredUser } from 'src/app/models/stored-user';
 @Component({
   selector: 'app-user',
   templateUrl: './user.page.html',
@@ -47,46 +49,58 @@ export class UserPage implements OnInit {
     private dataService: DataService,
     private profileService: ProfileService,
     private modalController: ModalController,
-    private router: Router
+    private router: Router,
+    private authService: AuthenticationService,
+    private activeRoute: ActivatedRoute
   ) {
 
   }
 
   ngOnInit() {
-    this.dataService.getRandomUser().subscribe(res => {
-      this.user = res.message;
-      console.log("igasdiehjgbakgjags:groups", this.user);
+    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
+      if (storedUser !== null) {
+        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
+        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
 
+        this.dataService.getRandomUser(storedUser.UserID).subscribe(res => {
+          this.user = res.message;
+          this.data = res.message['0']['user_id'];
+
+          console.log("igasdiehjgbakgjags:groups", this.user);
+          console.log("igasdiehjgbakgjags:data", this.data);
+
+
+          this.profileService.fetchUser(this.data);
+
+          this.profileService.fetchPosts(this.data);
+          this.profileService.fetchGroups(this.data).subscribe(res => {
+            this.groups = res.message;
+            console.log("PROFILEPAGE:fetch posts and groups", this.groups);
+
+          });
+          this.profileService.fetchPictures(this.data).subscribe(res => {
+            this.pictures = res.message;
+            this.dataList = this.pictures.slice(0, this.topLimit);
+
+          });
+          this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
+            this.fetchedProfile = profile;
+            const newDate = new Date(this.fetchedProfile.user_birthdate);
+            this.bday = newDate.toDateString();
+            console.log("PROFILEPAGE:FETCHED_PROFILE_SUB:GOT", this.fetchedProfile);
+          });
+
+          this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
+            this.fetchedPosts = data;
+            console.log("PROFILEPAGE:FETCHED_Posts_SUB:GOT", this.fetchedPosts);
+
+          })
+          // this.data = this.profileService.fetchProfile(this.x);
+          this.events = this.dataService.getEvents();
+        });
+      }
     });
-    console.log('yurrr', this.user);
-
-    this.profileService.fetchPosts(this.data);
-    this.profileService.fetchGroups(this.data).subscribe(res => {
-      this.groups = res.message;
-      console.log("PROFILEPAGE:groups", this.groups);
-
-    });
-    this.profileService.fetchPictures(this.data).subscribe(res => {
-      this.pictures = res.message;
-      this.dataList = this.pictures.slice(0, this.topLimit);
-
-    });
-    this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
-      this.fetchedProfile = profile;
-      const newDate = new Date(this.fetchedProfile.user_birthdate);
-      this.bday = newDate.toDateString();
-      console.log("PROFILEPAGE:FETCHED_PROFILE_SUB:GOT", this.fetchedProfile);
-    });
-
-    this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
-      this.fetchedPosts = data;
-      console.log("PROFILEPAGE:FETCHED_Posts_SUB:GOT", this.fetchedPosts);
-
-    })
-    // this.data = this.profileService.fetchProfile(this.x);
-    this.events = this.dataService.getEvents();
-
-  };
+  }
 
   async openModal(imgUrl) {
     const modal = await this.modalController.create({
@@ -115,6 +129,59 @@ export class UserPage implements OnInit {
       }
     };
     this.router.navigate(['friends'], navigationExtras);
+  }
+
+  doRefresh(event) {
+    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
+      if (storedUser !== null) {
+        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
+        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+
+        this.dataService.getRandomUser(storedUser.UserID).subscribe(res => {
+          this.user = res.message;
+          this.data = res.message['0']['user_id'];
+
+          console.log("igasdiehjgbakgjags:groups", this.user);
+          console.log("igasdiehjgbakgjags:data", this.data);
+
+
+          this.profileService.fetchUser(this.data);
+
+          this.profileService.fetchPosts(this.data);
+          this.profileService.fetchGroups(this.data).subscribe(res => {
+            this.groups = res.message;
+            console.log("PROFILEPAGE:fetch posts and groups", this.groups);
+
+          });
+          this.profileService.fetchPictures(this.data).subscribe(res => {
+            this.pictures = res.message;
+            this.dataList = this.pictures.slice(0, this.topLimit);
+
+          });
+          this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
+            this.fetchedProfile = profile;
+            const newDate = new Date(this.fetchedProfile.user_birthdate);
+            this.bday = newDate.toDateString();
+            console.log("PROFILEPAGE:FETCHED_PROFILE_SUB:GOT", this.fetchedProfile);
+          });
+
+          this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
+            this.fetchedPosts = data;
+            console.log("PROFILEPAGE:FETCHED_Posts_SUB:GOT", this.fetchedPosts);
+
+          })
+          // this.data = this.profileService.fetchProfile(this.x);
+          this.events = this.dataService.getEvents();
+        });
+      }
+    });
+  
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+  }
+  presentToast(msg: string) {
+    throw new Error('Method not implemented.');
   }
 
   loadData(event) {

@@ -30,7 +30,7 @@ export class ClipsPage implements OnInit {
       window.onbeforeunload = () => this.ionViewWillLeave();
     })
   }
-
+ 
   doRefresh(event) {
     console.log('Begin async operation');
     this.dataService.getRandomClip().subscribe(res => {

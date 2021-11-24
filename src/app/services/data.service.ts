@@ -72,10 +72,10 @@ export class DataService {
     );
 
   }
-  getRandomUser() {
+  getRandomUser(user_id: number) {
 
 
-    return this.http.get(`https://ggs.tv/api/v1/random.php?tab=user`).pipe(map((res: any) => {
+    return this.http.get(`https://ggs.tv/api/v1/random.php?tab=user&userid=${user_id}`).pipe(map((res: any) => {
 
       console.log(res);
       return res;
