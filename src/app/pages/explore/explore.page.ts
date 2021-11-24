@@ -3,6 +3,9 @@ import { NavigationExtras, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Storage } from '@ionic/storage-angular';
+import { ImageModalPage } from '../image-modal/image-modal.page';
+import { ModalController } from '@ionic/angular';
+import { ModalPage } from '../modal/modal.page';
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.page.html',
@@ -33,13 +36,13 @@ export class ExplorePage implements OnInit {
     spaceBetween: 10,
     slidesPerView: 2.6,
   };
-  
-  
-
-  constructor(private router: Router, private storage: Storage, private dataService: DataService) {}
 
 
-  
+
+  constructor(private router: Router, private modalController: ModalController, private storage: Storage, private dataService: DataService) { }
+
+
+
   ngOnInit() {
     this.articles = this.dataService.getArticles();
     this.users = this.dataService.getSeenFirtsHistories();
@@ -70,5 +73,16 @@ export class ExplorePage implements OnInit {
       },
     };
     this.router.navigate(['event-detail'], navigationExtras);
+  }
+
+  async openModalPost() {
+
+    const modal = await this.modalController.create({
+      component: ModalPage,
+      cssClass: 'modal',
+      backdropDismiss: false
+
+    });
+    modal.present();
   }
 }
