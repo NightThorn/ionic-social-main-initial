@@ -9,6 +9,7 @@ import { StoredUser } from "../../models/stored-user";
 import { ProfileModel } from "../../models/profile-model";
 import { Post } from 'src/app/models/post';
 import { PostsService } from 'src/app/services/posts.service';
+import { ModalPage } from '../modal/modal.page';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -41,7 +42,7 @@ public items: any;
   bday: string;
   fetchedPostsSub;
   user_id: any;
-
+  value = 0;
   constructor(
     private dataService: DataService,
     private profileService: ProfileService,
@@ -160,6 +161,18 @@ public items: any;
 
     }, 500);
 
+  }
+
+
+  async openModalPost() {
+    
+    const modal = await this.modalController.create({
+      component: ModalPage,
+      cssClass: 'modal',
+      backdropDismiss: false
+
+    });
+    modal.present();
   }
 }
 

@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { ProfileService } from './services/profile.service';
+import { PopoverPageModule } from './pages/popover/popover.module';
+import { ModalPageModule } from './pages/modal/modal.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { ProfileService } from './services/profile.service';
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     HttpClientModule,
+    ModalPageModule,
+    PopoverPageModule,
     AppRoutingModule,
     IonicStorageModule.forRoot(),
   ],
