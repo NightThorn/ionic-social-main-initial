@@ -56,7 +56,21 @@ export class DataService {
     );
 
   }
+  getNotis(user_id) {
 
+
+    return this.http.get(`https://ggs.tv/api/v1/notifications.php?user=${user_id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
   getRandomClip() {
 
 
@@ -145,8 +159,19 @@ export class DataService {
     return this.mockData.users;
   }
 
-  getMessages() {
-    return this.mockData.messages;
+  getMessages(user_id) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/messages.php?user=${user_id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
   }
   getNotifications() {
     return this.mockData.notifications;

@@ -1,7 +1,7 @@
 <div class="notif-container">
   <div class="notif-avatar">
     <ion-thumbnail>
-      <img [src]="avatar" />
+      <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{avatar}}" />
     </ion-thumbnail>
   </div>
   <div class="notif-area">
@@ -12,16 +12,8 @@
     <span class="time">{{ time }}</span>
   </div>
   <div class="notif-button">
-    <ion-button
-      fill="clear"
-      size="small"
-      shape="round"
-      
-    >
-      <ion-icon
-        slot="icon-only"
-        name="close"
-      ></ion-icon>
+    <ion-button fill="clear" size="small" shape="round">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
     </ion-button>
   </div>
 </div>

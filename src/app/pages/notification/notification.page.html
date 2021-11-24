@@ -12,8 +12,8 @@
     <ion-row>
       <ion-col class="ion-no-padding">
         <ion-item lines="none" class="section">
-          <ion-text >
-            <h5 class="section-title">New Notifications</h5>
+          <ion-text>
+            <h5 class="section-title">Latest Notifications</h5>
           </ion-text>
         </ion-item>
       </ion-col>
@@ -21,35 +21,8 @@
     <ion-row>
       <ion-col class="ion-no-padding">
         <ion-list class="ion-no-padding">
-          <app-notification-item
-            *ngFor="let item of notifications"
-            [avatar]="item.avatar"
-            [username]="item.username"
-            [time]="item.time | humanizeDate"
-            [message]="item.message"
-          ></app-notification-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="ion-no-padding">
-        <ion-item lines="none" class="section">
-          <ion-text >
-            <h5 class="section-title">Earlier Notifications</h5>
-          </ion-text>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="ion-no-padding">
-        <ion-list class="ion-no-padding">
-          <app-notification-item
-            *ngFor="let item of notifications"
-            [avatar]="item.avatar"
-            [username]="item.username"
-            [time]="item.time | humanizeDate"
-            [message]="item.message"
-          ></app-notification-item>
+          <app-notification-item *ngFor="let item of notifications" [avatar]="item.user_picture"
+            [username]="item.user_name" [time]="item.time" [message]="item.action"></app-notification-item>
         </ion-list>
       </ion-col>
     </ion-row>
