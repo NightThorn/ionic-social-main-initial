@@ -3,22 +3,26 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
-import * as moment from 'moment';
 import { TimeagoModule } from 'ngx-timeago';
+import moment from 'moment';
+
+
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.page.html',
   styleUrls: ['./notification.page.scss'],
 })
+
 export class NotificationPage implements OnInit {
 
-  notifications: any;
+  notifications: any = [];
   activeStoredUserSubscription$;
   date: string;
-  time: any;
+  time: any = [];
+  myTime: Date;
+  myDate: any;
+  offset: number;
 
-  newDate: Date;
-  today = new Date();
   constructor(private dataService: DataService, private router: Router,
     private authService: AuthenticationService,
     private activeRoute: ActivatedRoute) { }
@@ -30,15 +34,15 @@ export class NotificationPage implements OnInit {
         console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
         this.dataService.getNotis(storedUser.UserID).subscribe(res => {
           this.notifications = res.message;
-          this.time = moment.utc(this.notifications.time).fromNow();
+          for (let i = 0; i < this.notifications.length; i++) {
+            this.offset = moment().utcOffset();
 
-
-          console.log(moment(this.time).fromNow());
-
-
-          console.log(this.notifications);
-        });        
-      }});
+            this.notifications[i]['time'] = moment.utc(this.notifications[i]['time']).fromNow();
+          }
+          console.log("we see this!....", this.notifications); // <-- what do we see in this
+        });
+      }
+    });
   }
 
 }
