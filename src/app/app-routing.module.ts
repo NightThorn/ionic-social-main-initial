@@ -3,6 +3,11 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },
+  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
@@ -72,7 +77,7 @@ const routes: Routes = [
     path: 'streams',
     loadChildren: () => import('./pages/streams/streams.module').then(m => m.StreamsPageModule)
   },
-  
+
   {
     path: 'user',
     loadChildren: () => import('./pages/user/user.module').then(m => m.UserPageModule)
@@ -92,17 +97,13 @@ const routes: Routes = [
   {
     path: 'friends',
     loadChildren: () => import('./pages/profile/friends/friends.module').then(m => m.FriendsPageModule)
-  },
-  {
-    path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
   }
- 
+
+
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules})
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule]
 })

@@ -48,11 +48,11 @@
       <ion-col>
         <div class="numbers">
           <ul (click)="friends(fetchedProfile.user_id)">
-            <li>4102</li>
+            <li>{{friendCount}}</li>
             <li>Friends</li>
           </ul>
           <ul (click)="badges(fetchedProfile.user_id)">
-            <li>44</li>
+            <li>{{badgeCount}}</li>
             <li>Badges</li>
           </ul>
           <ul>
@@ -119,18 +119,18 @@
             </ion-col>
           </ion-row>
           <ion-row *ngSwitchCase="'photos'" class="ion-padding-vertical">
-            
-            <ion-col size="6" *ngFor="let pic of dataList" >
-                <img class="image-element"
-                  src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
-                  (click)="openModal(pic)" />
-              
+
+            <ion-col size="6" *ngFor="let pic of dataList">
+              <img class="image-element" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
+                (click)="openModal(pic)" />
+
             </ion-col>
 
           </ion-row>
           <ion-row *ngSwitchCase="'groups'" class="ion-no-padding">
             <ion-col size="12" *ngFor="let item of groups">
-              <app-group-card [name]="item.group_title" [verified]="item.group_verified" [description]="item.group_description" [image]="item.group_picture" [members]="item.group_members">
+              <app-group-card [name]="item.group_title" [verified]="item.group_verified"
+                [description]="item.group_description" [image]="item.group_picture" [members]="item.group_members">
               </app-group-card>
             </ion-col>
           </ion-row>

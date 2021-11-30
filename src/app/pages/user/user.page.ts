@@ -46,6 +46,10 @@ export class UserPage implements OnInit {
   data: any;
   id: any;
   special: any;
+  userBadges: any;
+  badgeCount: any;
+  userFriends: any;
+  friendCount: any;
 
   constructor(
     private dataService: DataService,
@@ -69,9 +73,22 @@ export class UserPage implements OnInit {
       }
     });
 
-  
+    this.profileService.fetchFriends(this.data).subscribe(res => {
+      this.userFriends = res.message;
+      this.friendCount = this.userFriends.length;
+    });
     this.profileService.fetchUser(this.data);
     this.profileService.fetchPosts(this.data);
+    this.profileService.fetchBadges(this.data).subscribe(res => {
+      this.userBadges = res.message;
+      this.badgeCount = this.userBadges.length;
+    });
+    
+    this.profileService.fetchGroups(this.data).subscribe(res => {
+      this.groups = res.message;
+      console.log("PROFILEPAGE:groups", this.groups);
+
+    });
     this.profileService.fetchGroups(this.data).subscribe(res => {
       this.groups = res.message;
       console.log("PROFILEPAGE:groups", this.groups);

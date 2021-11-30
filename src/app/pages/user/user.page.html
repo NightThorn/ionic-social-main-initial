@@ -46,11 +46,11 @@
       <ion-col>
         <div class="numbers">
           <ul (click)="friends(fetchedProfile.user_id)">
-            <li>4102</li>
+            <li>{{friendCount}}</li>
             <li>Friends</li>
           </ul>
           <ul (click)="badges(fetchedProfile.user_id)">
-            <li>44</li>
+            <li>{{badgeCount}}</li>
             <li>Badges</li>
           </ul>
           <ul>

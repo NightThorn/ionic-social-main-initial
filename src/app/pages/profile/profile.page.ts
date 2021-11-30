@@ -27,7 +27,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   feeds: any;
   events: any;
   groups: any;
-public items: any;
+  public items: any;
   private topLimit: number = 15;
   public dataList: any = [];
 
@@ -43,6 +43,10 @@ public items: any;
   fetchedPostsSub;
   user_id: any;
   value = 0;
+  userBadges: any;
+  badgeCount: any;
+  friendCount: any;
+  userFriends: any;
   constructor(
     private dataService: DataService,
     private profileService: ProfileService,
@@ -76,7 +80,14 @@ public items: any;
             console.log("PROFILEPAGE:groups", this.groups);
 
           });
-
+          this.profileService.fetchFriends(storedUser.UserID).subscribe(res => {
+            this.userFriends = res.message;
+            this.friendCount = this.userFriends.length;
+          });
+          this.profileService.fetchBadges(storedUser.UserID).subscribe(res => {
+            this.userBadges = res.message;
+            this.badgeCount = this.userBadges.length;
+          });
           this.profileService.fetchPictures(storedUser.UserID).subscribe(res => {
             this.pictures = res.message;
             this.dataList = this.pictures.slice(0, this.topLimit);
@@ -165,7 +176,7 @@ public items: any;
 
 
   async openModalPost() {
-    
+
     const modal = await this.modalController.create({
       component: ModalPage,
       cssClass: 'modal',
