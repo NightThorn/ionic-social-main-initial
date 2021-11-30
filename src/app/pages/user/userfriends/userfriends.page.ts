@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
-
 @Component({
-  selector: 'app-friends',
-  templateUrl: './friends.page.html',
-  styleUrls: ['./friends.page.scss'],
+  selector: 'app-userfriends',
+  templateUrl: './userfriends.page.html',
+  styleUrls: ['./userfriends.page.scss'],
 })
-export class FriendsPage implements OnInit {
+export class UserfriendsPage implements OnInit {
+
+ 
   res: any = [];
   public dataL: Array<object> = [];
   public friends: any = [];
@@ -65,7 +66,7 @@ export class FriendsPage implements OnInit {
         special: JSON.stringify(id)
       }
     };
-    this.router.navigate(['/user'], navigationExtras);
+    this.router.navigate(['user'], navigationExtras)
 
   }
 

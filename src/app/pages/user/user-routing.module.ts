@@ -13,6 +13,14 @@ const routes: Routes = [
         component: UserPage
       }
     ]
+  },
+  {
+    path: 'userfriends',
+    loadChildren: () => import('./userfriends/userfriends.module').then( m => m.UserfriendsPageModule)
+  },
+  {
+    path: 'userbadges',
+    loadChildren: () => import('./userbadges/userbadges.module').then( m => m.UserbadgesPageModule)
   }
  
 ];

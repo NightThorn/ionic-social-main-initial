@@ -45,6 +45,7 @@ export class UserPage implements OnInit {
   user_id: any;
   data: any;
   id: any;
+  special: any;
 
   constructor(
     private dataService: DataService,
@@ -64,17 +65,18 @@ export class UserPage implements OnInit {
     this.activeRoute.queryParams.subscribe(params => {
       if (params && params.special) {
         this.data = JSON.parse(params.special);
+        console.log("uhhhhh huh", this.data);
       }
     });
-    this.id = this.activeRoute.snapshot.paramMap.get('id');
-    console.log(this.id);
+
+  
     this.profileService.fetchUser(this.data);
     this.profileService.fetchPosts(this.data);
     this.profileService.fetchGroups(this.data).subscribe(res => {
       this.groups = res.message;
       console.log("PROFILEPAGE:groups", this.groups);
 
-    });
+    }); 
     this.profileService.fetchPictures(this.data).subscribe(res => {
       this.pictures = res.message;
       this.dataList = this.pictures.slice(0, this.topLimit);
@@ -114,16 +116,19 @@ export class UserPage implements OnInit {
         special: JSON.stringify(id)
       }
     };
-    this.router.navigate(['badges'], navigationExtras);
+    this.router.navigate(['/userbadges'], navigationExtras);
   }
 
   friends(id) {
+
     let navigationExtras: NavigationExtras = {
       queryParams: {
         special: JSON.stringify(id)
       }
     };
-    this.router.navigate(['friends'], navigationExtras);
+    this.router.navigate(['/userfriends'], navigationExtras).then(() => {
+      window.location.reload();
+    });
   }
 
   loadData(event) {

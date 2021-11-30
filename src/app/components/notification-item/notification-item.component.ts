@@ -11,6 +11,7 @@ export class NotificationItemComponent implements OnInit {
   @Input() username: string;
   @Input() message: string;
   @Input() time: string;
+  @Input() url: string;
 
   constructor() { }
 

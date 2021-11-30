@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -45,5 +45,11 @@ export class NotificationPage implements OnInit {
     });
   }
 
+
+
+  notification(url) {
+   
+    this.router.navigateByUrl('/' + url);
+  }
 }
 

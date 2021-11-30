@@ -22,7 +22,7 @@
       <ion-col class="ion-no-padding">
         <ion-list class="ion-no-padding">
           <app-notification-item *ngFor="let item of notifications" [avatar]="item.user_picture"
-            [username]="item.user_name" [time]="item.time" [message]="item.action"></app-notification-item>
+            [username]="item.user_name" [time]="item.time" [message]="item.message" (click)="notification(item.url)"></app-notification-item>
         </ion-list>
       </ion-col>
     </ion-row>

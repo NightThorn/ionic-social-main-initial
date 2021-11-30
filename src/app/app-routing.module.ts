@@ -82,6 +82,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/profile/badges/badges.module').then(m => m.BadgesPageModule)
   },
   {
+    path: 'userbadges',
+    loadChildren: () => import('./pages/user/userbadges/userbadges.module').then(m => m.UserbadgesPageModule)
+  },
+  {
+    path: 'userfriends',
+    loadChildren: () => import('./pages/user/userfriends/userfriends.module').then(m => m.UserfriendsPageModule)
+  },
+  {
     path: 'friends',
     loadChildren: () => import('./pages/profile/friends/friends.module').then(m => m.FriendsPageModule)
   },
