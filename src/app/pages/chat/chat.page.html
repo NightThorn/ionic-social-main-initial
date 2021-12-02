@@ -18,26 +18,16 @@
   <ion-grid>
     <ion-row *ngFor="let message of chat">
       <ion-col size="9" *ngIf="currentUser != message.user_id" class="message left-bubble">
-        <ion-item>
-          <ion-thumbnail slot="start">
-            <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{message.user_picture}}" />
-          </ion-thumbnail>
-          <ion-label>{{message.user_name}}</ion-label><span *ngIf="message.user_verified === '1'" style="color: lime;">
-            <ion-icon name="checkmark-circle"></ion-icon>
-          </span>
-        </ion-item>
+        <ion-thumbnail>
+          <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{message.user_picture}}" />
+        </ion-thumbnail>
+        <ion-label>{{message.user_name}}</ion-label><span *ngIf="message.user_verified === '1'" style="color: lime;">
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </span>
         <p>{{ message.message }}</p>
         <p class="time">{{ message.time | humanizeDate }}</p>
       </ion-col>
       <ion-col size="9" offset="3" *ngIf="currentUser == message.user_id" class="message right-bubble">
-        <ion-item >
-          <ion-thumbnail slot="end">
-            <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{message.user_picture}}" />
-          </ion-thumbnail>
-          <ion-label style="text-align: end;">Me</ion-label><span *ngIf="message.user_verified === '1'" style="color: lime;">
-            <ion-icon name="checkmark-circle"></ion-icon>
-          </span>
-        </ion-item>
         <p>{{ message.message }}</p>
         <p class="time">{{ message.time | humanizeDate }}</p>
       </ion-col>
