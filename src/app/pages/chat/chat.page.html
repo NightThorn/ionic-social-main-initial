@@ -14,7 +14,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding-horizontal">
+<ion-content [fullscreen]="true" #scrollElement class="ion-padding-horizontal">
   <ion-grid>
     <ion-row *ngFor="let message of chat">
       <ion-col size="9" *ngIf="currentUser != message.user_id" class="message left-bubble">

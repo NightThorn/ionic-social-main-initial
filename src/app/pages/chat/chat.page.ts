@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IonContent } from '@ionic/angular';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -12,6 +13,8 @@ import { ProfileService } from 'src/app/services/profile.service';
   styleUrls: ['./chat.page.scss'],
 })
 export class ChatPage implements OnInit {
+  @ViewChild("scrollElement") content: IonContent;
+
   messageForm: FormGroup;
   chat = [];
   messages: any;
@@ -41,14 +44,21 @@ export class ChatPage implements OnInit {
         this.chat = res.message;
         this.currentUser = storedUser.UserID;
         console.log(this.chat);
+        setTimeout(() => {
+          this.updateScroll();
+        }, 500);
       });
+
       this.messageForm = this.fb.group({
         message: [null],
       });
     });
 
   }
-
+  updateScroll() {
+    this.content.scrollToBottom();
+  }
+  
   submitMessage() {
     this.messageForm.reset();
   }
