@@ -133,10 +133,10 @@ export class ProfileService {
 
 
   public fetchPosts(user_id: number) {
-    this.httpClient.get(`https://ggs.tv/api/v1/posts.php?controller=user&user=${user_id}`).subscribe(response => {
-      console.log(response);
+    this.httpClient.get(`https://ggs.tv/api/v1/timeline.php?timeline=profile&user=${user_id}`).subscribe(response => {
+      console.log("sgfsdg",response);
 
-      this.fetchedPosts.next(response['data']['timeline']);
+      this.fetchedPosts.next(response['message']);
     });
   }
 }

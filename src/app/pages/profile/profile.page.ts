@@ -139,6 +139,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
+  
   goToSettings() {
     this.router.navigate(['settings']);
   }
