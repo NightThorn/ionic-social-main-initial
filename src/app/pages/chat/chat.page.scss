@@ -12,8 +12,8 @@ ion-footer {
 }
 
 ion-item {
-  --inner-padding-end: 0;
-  --padding-start: 0;
+    --border-radius: 10px;
+
 }
 
 .circle-btn {
@@ -53,11 +53,9 @@ ion-item {
   padding: 10px;
   font-size: 13px;
   color: #fff;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 
-  p {
-    margin: 0 !important;
-  }
+  
   .time {
     text-align: right;
   }
@@ -70,6 +68,11 @@ background-color: gray;
 }
 
 .right-bubble {
-  background: var(--ion-color-primary);
+  background: limegreen;
   border-radius: 14px 0 14px 14px;
+}
+ion-thumbnail{
+ width: 50px;
+    height: 50px;
+  --border-radius: 10px;
 }

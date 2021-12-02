@@ -173,6 +173,20 @@ export class DataService {
       })
     );
   }
+  getChat(id) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/chat.php?chat=${id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   getNotifications() {
     return this.mockData.notifications;
   }

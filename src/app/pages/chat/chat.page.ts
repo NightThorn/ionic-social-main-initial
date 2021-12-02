@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StoredUser } from 'src/app/models/stored-user';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DataService } from 'src/app/services/data.service';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-chat',
@@ -8,22 +12,41 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./chat.page.scss'],
 })
 export class ChatPage implements OnInit {
-  data: any;
   messageForm: FormGroup;
-  currentUser = 'johnatan';
-  
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
-    this.route.queryParams.subscribe(() => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.data = this.router.getCurrentNavigation().extras.state.user;
+  chat = [];
+  messages: any;
+  data: any;
+  activeStoredUserSubscription$;
+  currentUser: number;
+  id: any;
+
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private profileService: ProfileService, private authService: AuthenticationService, private dataService: DataService, private router: Router) {
+
+    this.route.queryParams.subscribe(params => {
+      if (params && params.chat) {
+        this.id = JSON.parse(params.chat);
       }
     });
+
   }
 
   ngOnInit() {
-    this.messageForm = this.fb.group({
-      message: [null],
+    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
+      if (storedUser !== null) {
+        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
+        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+
+      }
+      this.dataService.getChat(this.id).subscribe(res => {
+        this.chat = res.message;
+        this.currentUser = storedUser.UserID;
+        console.log(this.chat);
+      });
+      this.messageForm = this.fb.group({
+        message: [null],
+      });
     });
+
   }
 
   submitMessage() {

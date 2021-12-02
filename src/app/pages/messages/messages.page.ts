@@ -35,7 +35,7 @@ export class MessagesPage implements OnInit {
 
           this.messages = res.message;
           this.dataList = this.messages.slice(0, this.topLimit);
- for (let i = 0; i < this.dataList.length; i++) {
+          for (let i = 0; i < this.dataList.length; i++) {
             this.offset = moment().utcOffset();
 
             this.dataList[i]['time'] = moment.utc(this.dataList[i]['time']).fromNow();
@@ -72,14 +72,14 @@ export class MessagesPage implements OnInit {
     this.router.navigate(['contacts']);
   }
 
-  navigateToChat(item) {
+  navigateToChat(id) {
     let navigationExtras: NavigationExtras = {
-      state: {
-        chat: item
+      queryParams: {
+        chat: JSON.stringify(id)
       }
     };
     this.router.navigate(['chat'], navigationExtras);
   }
-  
+
 
 }
