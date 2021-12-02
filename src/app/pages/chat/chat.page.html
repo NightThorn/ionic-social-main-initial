@@ -24,7 +24,7 @@
         <ion-label>{{message.user_name}}</ion-label><span *ngIf="message.user_verified === '1'" style="color: lime;">
           <ion-icon name="checkmark-circle"></ion-icon>
         </span>
-        <p>{{ message.message }}</p>
+        <div [innerHTML]="message.message"></div>
         <p class="time">{{ message.time | humanizeDate }}</p>
       </ion-col>
       <ion-col size="9" offset="3" *ngIf="currentUser == message.user_id" class="message right-bubble">

@@ -14,7 +14,8 @@
     </ion-item>
   </ion-card-title>
   <ion-card-content class="ion-no-padding">
-    <ion-item>{{ text }}
+    <ion-item><div [innerHTML]="text"></div>
+
     </ion-item>
     <ion-slides pager="true" [options]="imgConfig">
       <ion-slide *ngFor="let item of images">

@@ -9,7 +9,8 @@
         <ion-icon name="checkmark-circle"></ion-icon>
       </span></ion-card-title>
     <ion-card-subtitle style="color: white;">{{members}} Members</ion-card-subtitle>
-    <ion-card-subtitle>{{description}} </ion-card-subtitle>
+    <ion-card-subtitle><div [innerHTML]="description"></div>
+ </ion-card-subtitle>
 
   </ion-card-content>
 </ion-card>

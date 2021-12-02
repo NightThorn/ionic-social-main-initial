@@ -1,6 +1,6 @@
 <ion-item lines="none" class="ion-no-padding">
   <ion-thumbnail slot="start" [ngClass]="{ active: active }">
-      <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{avatar}}" />
+    <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{avatar}}" />
   </ion-thumbnail>
   <ion-label class="ion-no-margin">
     <div class="text-container">
@@ -8,7 +8,8 @@
       <span>{{ time }}</span>
     </div>
     <div class="text-container">
-      <p class="item-subtitle">{{ message }}</p>
+      <p [innerHTML]="message" class="item-subtitle">
+      </p>
       <ion-badge color="success" mode="ios" *ngIf="messageCount">{{ messageCount }}</ion-badge>
     </div>
   </ion-label>
