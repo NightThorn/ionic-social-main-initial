@@ -8,17 +8,14 @@
   <ion-grid>
     <ion-row>
       <ion-col class="ion-padding-bottom">
-        <ion-searchbar
-          class="ion-no-padding"
-          animated
-          placeholder="Filter messages"
-        ></ion-searchbar>
+          <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()" class="ion-no-padding"></ion-searchbar>
+
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col class="ion-no-padding">
         <ion-list>
-          <ion-item-sliding *ngFor="let item of messages">
+          <ion-item-sliding *ngFor="let item of dataList">
             <ion-item-options side="start">
               <ion-item-option>
                 <ion-button
@@ -34,13 +31,13 @@
               ></ion-item-option>
             </ion-item-options>
             <app-message-list-item
-              [avatar]="item.avatar"
-              [user]="item.user"
+              [avatar]="item.user_picture"
+              [user]="item.user_name"
               [time]="item.time"
               [message]="item.message"
-              [active]="item.active"
-              [messageCount]="item.messageCount"
-              (click)="navigateToChat(item)"
+              [active]="item.seen"
+              [messageCount]="item.seen"
+              (click)="navigateToChat(item.conversation_id)"
             ></app-message-list-item>
             <ion-item-options side="end">
               <ion-item-option>
@@ -65,4 +62,8 @@
       <ion-icon name="chatbubbles"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
