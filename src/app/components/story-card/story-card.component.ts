@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-story-card',
@@ -6,14 +7,35 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./story-card.component.scss'],
 })
 export class StoryCardComponent implements OnInit {
-
-  @Input() image: string;
+  @ViewChild('video') myVideo: ElementRef;
+  @Input() source: string;
   @Input() avatar: string;
   @Input() name: string;
+  @Input() id: number;
   @Input() date: string;
-
-  constructor() { }
+  
+  constructor(private router: Router) { }
 
   ngOnInit() {}
+  videoSet() {
+    if (this.myVideo.nativeElement.paused) {
+      this.myVideo.nativeElement.play();
+    } else {
 
+      this.myVideo.nativeElement.pause();
+
+    }
+
+
+  }
+
+  user(id) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(id)
+      }
+    };
+    this.router.navigate(['/user'], navigationExtras);
+
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -6,19 +6,23 @@ import { Storage } from '@ionic/storage-angular';
 import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ModalController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
+import { StoredUser } from 'src/app/models/stored-user';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.page.html',
   styleUrls: ['./explore.page.scss'],
 })
 export class ExplorePage implements OnInit {
+  @ViewChild('video') myVideo: ElementRef;
+
   articles: any;
   users: any;
   feeds: any;
   stories: any;
   follow: any;
   events: any;
-
+  latest: any;
   storiesConfig = {
     initialSlide: 0,
     spaceBetween: 10,
@@ -36,21 +40,32 @@ export class ExplorePage implements OnInit {
     spaceBetween: 10,
     slidesPerView: 2.6,
   };
+  activeStoredUserSubscription$;
 
 
 
-  constructor(private router: Router, private modalController: ModalController, private storage: Storage, private dataService: DataService) { }
+  constructor(private router: Router, private authService: AuthenticationService, private modalController: ModalController, private storage: Storage, private dataService: DataService) { }
 
 
 
   ngOnInit() {
-    this.articles = this.dataService.getArticles();
-    this.users = this.dataService.getSeenFirtsHistories();
-    this.feeds = this.dataService.getFeed();
-    this.follow = this.dataService.getFollow();
-    this.events = this.dataService.getEvents();
-    this.stories = this.dataService.getStories();
-  }
+    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
+      if (storedUser !== null) {
+        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
+        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+        this.articles = this.dataService.getArticles();
+        this.users = this.dataService.getSeenFirtsHistories();
+        this.feeds = this.dataService.getFeed();
+        this.follow = this.dataService.getFollow();
+        this.events = this.dataService.getEvents();
+
+        this.dataService.getLatestVid(storedUser.UserID).subscribe(res => {
+          this.latest = res.message;
+        });
+      
+      }
+    });
+      }
 
   viewStory(index) {
     this.router.navigate(['story', index]);
@@ -84,5 +99,17 @@ export class ExplorePage implements OnInit {
 
     });
     modal.present();
+  }
+
+  videoSet() {
+    if (this.myVideo.nativeElement.paused) {
+      this.myVideo.nativeElement.play();
+    } else {
+
+      this.myVideo.nativeElement.pause();
+
+    }
+
+
   }
 }

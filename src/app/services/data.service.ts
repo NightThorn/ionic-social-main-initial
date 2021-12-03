@@ -143,10 +143,32 @@ export class DataService {
     return this.mockData.feeds;
   }
 
-  getStories() {
-    return this.mockData.stories;
-  }
+  getStories(id) {
 
+    return this.http.get(`https://ggs.tv/api/v1/stories.php?user=${id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }  
+getLatestVid(id) {
+
+  return this.http.get(`https://ggs.tv/api/v1/followingvids.php?user=${id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }  
   getGroups() {
     return this.mockData.groups;
   }

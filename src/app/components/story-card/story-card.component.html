@@ -1,11 +1,13 @@
-<ion-card class="ion-no-margin">
+<ion-card class="ion-no-margin" (click)="videoSet()">
   <ion-card-content class="ion-no-padding">
-    <img [src]="image" />
+    <video #video loop  > <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{source}}" /> </video>
     <div class="data-container">
-      <img class="avatar" [src]="avatar" />
+      <img class="avatar" (click)="user(id)" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{avatar}}" />
+ 
       <ul>
         <li class="text">{{ name }}</li>
         <li class="caption">{{ date | humanizeDate }}</li>
+
       </ul>
     </div>
   </ion-card-content>

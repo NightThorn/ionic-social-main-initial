@@ -12,61 +12,33 @@
 
 <ion-content [fullscreen]="true" class="ion-padding-horizontal">
   <ion-grid>
-    <ion-row>
-      <ion-col class="ion-padding-vertical">
-        <ion-slides [options]="usersConfig">
-          <ion-slide>
-            <ion-button class="story-button" fill="clear" shape="round">
-              <ion-icon slot="icon-only" name="add"></ion-icon>
-            </ion-button>
-          </ion-slide>
-          <ion-slide *ngFor="let item of users; index as i">
-            <app-story-avatar
-              [avatar]="item.userPicture"
-              [name]="item.userName"
-              [live]="!item.seen"
-              [active]="item.active"
-              (click)="viewStory(i)"
-            ></app-story-avatar>
-          </ion-slide>
-        </ion-slides>
-      </ion-col>
-    </ion-row>
+    
     <ion-row>
       <ion-col class="ion-no-padding half-padding">
         <ion-item lines="none" class="section">
           <ion-text >
-            <h5 class="section-title">Recent Stories</h5>
+            <h5 class="section-title">Most Recent Uploads</h5>
           </ion-text>
-          <a slot="end" [routerLink]="[]">See All</a>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col class="ion-no-padding">
-        <ion-slides [options]="storiesConfig">
-          <ion-slide *ngFor="let item of stories">
-            <app-story-card
-              [image]="item.image"
-              [avatar]="item.avatar"
-              [name]="item.name"
+        <ion-slides [options]="storiesConfig" >
+          <ion-slide *ngFor="let item of latest">
+            <app-story-card 
+              [source]="item.source"
+              [avatar]="item.user_picture"
+              [name]="item.author"
               [date]="item.date"
+              [id]="item.user_id"
             >
             </app-story-card>
           </ion-slide>
         </ion-slides>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col class="ion-no-padding half-padding">
-        <ion-item lines="none" class="section">
-          <ion-text >
-            <h5 class="section-title">Recent Posts</h5>
-          </ion-text>
-          <a slot="end" [routerLink]="[]">See All</a>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+    
     <ion-row>
       <ion-col
         size-sm="12"
