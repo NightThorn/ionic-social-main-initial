@@ -110,7 +110,19 @@ export class ProfileService {
       })
     );
   }
+  checkFollow(user: number) {
 
+    return this.httpClient.get(`https://ggs.tv/api/v1/connection.php?user=${user}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   fetchFriends(user_id: number) {
     let navigationExtras: NavigationExtras = {
       queryParams: {

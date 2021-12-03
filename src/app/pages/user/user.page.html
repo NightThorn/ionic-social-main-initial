@@ -60,8 +60,15 @@
 
         </div>
         <ul>
-          <ion-button class="follow-btn">Add Friend</ion-button>
-          <ion-button class="follow-btn">Follow</ion-button>
+          <ion-button *ngIf="isFriends; else addFriend" class="follow-btn">Friends</ion-button>
+          <ng-template #addFriend>
+            <ion-button class="follow-btn">Add Friend</ion-button>
+          </ng-template>
+          <ion-button *ngIf="isFollowing; else follow" class="follow-btn">UnFollow
+          </ion-button>
+          <ng-template #follow>
+            <ion-button class="follow-btn">Follow</ion-button>
+          </ng-template>
           <ion-fab horizontal="end" edge slot="fixed">
             <ion-fab-button>
               <ion-icon name="ellipsis-vertical-outline"></ion-icon>

@@ -48,8 +48,14 @@ export class UserPage implements OnInit {
   special: any;
   userBadges: any;
   badgeCount: any;
-  userFriends: any;
+  userFriends: any = [];
   friendCount: any;
+  me: any;
+  isFollowing: boolean = false;
+  isFriends: boolean = false;
+  storedUser: any;
+  following: any =[];
+  follow: number;
 
   constructor(
     private dataService: DataService,
@@ -61,7 +67,7 @@ export class UserPage implements OnInit {
     private authService: AuthenticationService,
     private activeRoute: ActivatedRoute
   ) {
-    
+
   }
   // x = localStorage.getItem("user_id");
 
@@ -72,48 +78,67 @@ export class UserPage implements OnInit {
         console.log("uhhhhh huh", this.data);
       }
     });
+    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
+      if (storedUser !== null) {
+        this.me = storedUser.UserID;
+        this.profileService.checkFollow(this.me).subscribe(res => {
+          this.following = res.message;
+          if (this.data in this.following) {
+            this.isFollowing = true;
+          }
+          console.log("isfollowing?", this.isFollowing)
+          console.log("ighttt", this.following)
+        });
 
-    this.profileService.fetchFriends(this.data).subscribe(res => {
-      this.userFriends = res.message;
-      this.friendCount = this.userFriends.length;
+
+        this.profileService.fetchFriends(this.data).subscribe(res => {
+          this.userFriends = res.message;
+          console.log("friends??", this.userFriends)
+
+          this.friendCount = this.userFriends.length;
+          if (this.me in this.userFriends) {
+            this.isFriends = true;
+          }
+        });
+
+        this.profileService.fetchUser(this.data);
+        this.profileService.fetchPosts(this.data);
+        this.profileService.fetchBadges(this.data).subscribe(res => {
+          this.userBadges = res.message;
+          this.badgeCount = this.userBadges.length;
+        });
+
+        this.profileService.fetchGroups(this.data).subscribe(res => {
+          this.groups = res.message;
+          console.log("PROFILEPAGE:groups", this.groups);
+
+        });
+        this.profileService.fetchGroups(this.data).subscribe(res => {
+          this.groups = res.message;
+          console.log("PROFILEPAGE:groups", this.groups);
+
+        });
+        this.profileService.fetchPictures(this.data).subscribe(res => {
+          this.pictures = res.message;
+          this.dataList = this.pictures.slice(0, this.topLimit);
+
+        });
+        this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
+          this.fetchedProfile = profile;
+          const newDate = new Date(this.fetchedProfile.user_birthdate);
+          this.bday = newDate.toDateString();
+          console.log("PROFILEPAGE:FETCHED_PROFILE_SUB:GOT", this.fetchedProfile);
+        });
+
+        this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
+          this.fetchedPosts = data;
+          console.log("PROFILEPAGE:FETCHED_Posts_SUB:GOT", this.fetchedPosts);
+
+        })
+        // this.data = this.profileService.fetchProfile(this.x);
+        this.events = this.dataService.getEvents();
+      }
     });
-    this.profileService.fetchUser(this.data);
-    this.profileService.fetchPosts(this.data);
-    this.profileService.fetchBadges(this.data).subscribe(res => {
-      this.userBadges = res.message;
-      this.badgeCount = this.userBadges.length;
-    });
-    
-    this.profileService.fetchGroups(this.data).subscribe(res => {
-      this.groups = res.message;
-      console.log("PROFILEPAGE:groups", this.groups);
-
-    });
-    this.profileService.fetchGroups(this.data).subscribe(res => {
-      this.groups = res.message;
-      console.log("PROFILEPAGE:groups", this.groups);
-
-    }); 
-    this.profileService.fetchPictures(this.data).subscribe(res => {
-      this.pictures = res.message;
-      this.dataList = this.pictures.slice(0, this.topLimit);
-
-    });
-    this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
-      this.fetchedProfile = profile;
-      const newDate = new Date(this.fetchedProfile.user_birthdate);
-      this.bday = newDate.toDateString();
-      console.log("PROFILEPAGE:FETCHED_PROFILE_SUB:GOT", this.fetchedProfile);
-    });
-
-    this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
-      this.fetchedPosts = data;
-      console.log("PROFILEPAGE:FETCHED_Posts_SUB:GOT", this.fetchedPosts);
-
-    })
-    // this.data = this.profileService.fetchProfile(this.x);
-    this.events = this.dataService.getEvents();
-
   };
 
   async openModal(imgUrl) {

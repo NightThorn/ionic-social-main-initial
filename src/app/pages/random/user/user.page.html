@@ -47,14 +47,14 @@
     <ion-row class="">
       <ion-col>
         <div class="numbers">
-          <ul (click)="friends(fetchedProfile.user_id)">
-            <li>4102</li>
-            <li>Friends</li>
-          </ul>
-          <ul (click)="badges(fetchedProfile.user_id)">
-            <li>44</li>
-            <li>Badges</li>
-          </ul>
+            <ul (click)="friends(fetchedProfile.user_id)">
+              <li>{{friendCount}}</li>
+              <li>Friends</li>
+            </ul>
+            <ul (click)="badges(fetchedProfile.user_id)">
+              <li>{{badgeCount}}</li>
+              <li>Badges</li>
+            </ul>
           <ul>
             <li>{{ fetchedProfile.total_xp }}</li>
             <li>XP Earned</li>
@@ -113,7 +113,7 @@
         <div [ngSwitch]="tabType">
           <ion-row *ngSwitchCase="'posts'" class="ion-no-padding">
             <ion-col>
-              <app-feed-card *ngFor="let item of fetchedPosts" [avatar]="item.avatar" [name]="item.user_id"
+              <app-feed-card *ngFor="let item of fetchedPosts" [avatar]="item.user_picture" [name]="item.user_name"
                 [date]="item.time.date" [images]="item.images" [text]="item.text" [likes]="item.reaction_like_count"
                 [comments]="item.comments" [separator]="false">
               </app-feed-card>

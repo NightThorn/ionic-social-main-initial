@@ -42,6 +42,11 @@ export class UserPage implements OnInit {
   fetchedPostsSub;
   user_id: any;
   id: any;
+  special: any;
+  userBadges: any;
+  badgeCount: any;
+  userFriends: any;
+  friendCount: any;
   data: any;
   user: any;
 
@@ -82,6 +87,14 @@ export class UserPage implements OnInit {
             this.pictures = res.message;
             this.dataList = this.pictures.slice(0, this.topLimit);
 
+          });
+          this.profileService.fetchFriends(this.data).subscribe(res => {
+            this.userFriends = res.message;
+            this.friendCount = this.userFriends.length;
+          });
+          this.profileService.fetchBadges(this.data).subscribe(res => {
+            this.userBadges = res.message;
+            this.badgeCount = this.userBadges.length;
           });
           this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
             this.fetchedProfile = profile;
@@ -146,7 +159,14 @@ export class UserPage implements OnInit {
 
 
           this.profileService.fetchUser(this.data);
-
+          this.profileService.fetchFriends(this.data).subscribe(res => {
+            this.userFriends = res.message;
+            this.friendCount = this.userFriends.length;
+          });
+          this.profileService.fetchBadges(this.data).subscribe(res => {
+            this.userBadges = res.message;
+            this.badgeCount = this.userBadges.length;
+          });
           this.profileService.fetchPosts(this.data);
           this.profileService.fetchGroups(this.data).subscribe(res => {
             this.groups = res.message;
