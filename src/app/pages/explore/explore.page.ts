@@ -118,6 +118,8 @@ export class ExplorePage implements OnInit {
     const modal = await this.modalController.create({
       component: VideoModalPage,
       backdropDismiss: false,
+      cssClass: 'modal',
+
       componentProps: {
         'source': source
       }
