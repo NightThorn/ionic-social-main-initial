@@ -51,10 +51,10 @@ export class UserPage implements OnInit {
   userFriends: any = [];
   friendCount: any;
   me: any;
-  isFollowing: boolean = false;
-  isFriends: boolean = false;
+  isFollowing: any;
+  isFriends: any;
   storedUser: any;
-  following: any =[];
+  following: any = [];
   follow: number;
 
   constructor(
@@ -83,7 +83,9 @@ export class UserPage implements OnInit {
         this.me = storedUser.UserID;
         this.profileService.checkFollow(this.me).subscribe(res => {
           this.following = res.message;
-          if (this.data in this.following) {
+          var follow = this.following.find(message => message.following_id == this.data)
+
+          if (follow) {
             this.isFollowing = true;
           }
           console.log("isfollowing?", this.isFollowing)
@@ -96,9 +98,15 @@ export class UserPage implements OnInit {
           console.log("friends??", this.userFriends)
 
           this.friendCount = this.userFriends.length;
-          if (this.me in this.userFriends) {
-            this.isFriends = true;
+          var target = this.userFriends.find(message => message.user_id == this.me)
+
+          if (target) {
+            this.isFriends = "1";
+          } else {
+
+            this.isFriends = "0";
           }
+          console.log("friends? orrr", this.isFriends);
         });
 
         this.profileService.fetchUser(this.data);

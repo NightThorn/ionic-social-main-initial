@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons (click)="dismissModal()" slot="end">
+      <ion-icon name="close-outline"></ion-icon>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <ion-item style="height: 100%;">
+    <video style="height: 100%; width: -webkit-fill-available;" #video autoplay="true" webkit-playsinline preload="auto" loop (click)="videoSet()">
+      <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ source }}" />
+    </video>
+  </ion-item>
+
+
+
+</ion-content>

@@ -97,6 +97,10 @@ const routes: Routes = [
   {
     path: 'friends',
     loadChildren: () => import('./pages/profile/friends/friends.module').then(m => m.FriendsPageModule)
+  },
+  {
+    path: 'video-modal',
+    loadChildren: () => import('./pages/video-modal/video-modal.module').then( m => m.VideoModalPageModule)
   }
 
 

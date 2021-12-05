@@ -17,17 +17,7 @@ export class StoryCardComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {}
-  videoSet() {
-    if (this.myVideo.nativeElement.paused) {
-      this.myVideo.nativeElement.play();
-    } else {
-
-      this.myVideo.nativeElement.pause();
-
-    }
-
-
-  }
+  
 
   user(id) {
     let navigationExtras: NavigationExtras = {

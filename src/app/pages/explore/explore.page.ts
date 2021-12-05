@@ -8,6 +8,7 @@ import { ModalController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { VideoModalPage } from '../video-modal/video-modal.page';
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.page.html',
@@ -62,10 +63,10 @@ export class ExplorePage implements OnInit {
         this.dataService.getLatestVid(storedUser.UserID).subscribe(res => {
           this.latest = res.message;
         });
-      
+
       }
     });
-      }
+  }
 
   viewStory(index) {
     this.router.navigate(['story', index]);
@@ -101,6 +102,7 @@ export class ExplorePage implements OnInit {
     modal.present();
   }
 
+
   videoSet() {
     if (this.myVideo.nativeElement.paused) {
       this.myVideo.nativeElement.play();
@@ -109,7 +111,17 @@ export class ExplorePage implements OnInit {
       this.myVideo.nativeElement.pause();
 
     }
+  }
 
 
+  async openVideoModal(source) {
+    const modal = await this.modalController.create({
+      component: VideoModalPage,
+      backdropDismiss: false,
+      componentProps: {
+        'source': source
+      }
+    });
+    modal.present();
   }
 }
