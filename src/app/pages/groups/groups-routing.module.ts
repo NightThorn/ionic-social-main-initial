@@ -6,11 +6,27 @@ import { GroupsPage } from './groups.page';
 const routes: Routes = [
   {
     path: '',
-    component: GroupsPage
-  },
-  {
-    path: 'group',
-    loadChildren: () => import('./group/group.module').then( m => m.GroupPageModule)
+    component: GroupsPage,
+    children: [
+      {
+        path: '',
+        redirectTo: '/groups/discover',
+        pathMatch: 'full'
+      },
+      
+      {
+        path: 'discover',
+        loadChildren: () => import('./discover/discover.module').then(m => m.DiscoverPageModule)
+      },
+      {
+        path: 'joined',
+        loadChildren: () => import('./joined/joined.module').then(m => m.JoinedPageModule)
+      },
+      {
+        path: 'me',
+        loadChildren: () => import('./me/me.module').then(m => m.MePageModule)
+      }
+    ]
   }
 ];
 

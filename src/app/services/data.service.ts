@@ -169,8 +169,8 @@ getLatestVid(id) {
       })
     );
   }  
-  getGroups(filter) {
-    return this.http.get(`https://ggs.tv/api/v1/groups.php?filter=${filter}`).pipe(map((res: any) => {
+  getJoinedGroups(user) {
+    return this.http.get(`https://ggs.tv/api/v1/getgroups.php?filter=joined&user=${user}`).pipe(map((res: any) => {
 
       console.log(res);
       return res;

@@ -101,10 +101,15 @@ const routes: Routes = [
   {
     path: 'video-modal',
     loadChildren: () => import('./pages/video-modal/video-modal.module').then( m => m.VideoModalPageModule)
-  },  {
+  },
+  {
     path: 'groups',
     loadChildren: () => import('./pages/groups/groups.module').then( m => m.GroupsPageModule)
+  },  {
+    path: 'group',
+    loadChildren: () => import('./pages/group/group.module').then( m => m.GroupPageModule)
   }
+
 
 
 

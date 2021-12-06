@@ -13,7 +13,7 @@ const routes: Routes = [
         redirectTo: '/random/clips',
         pathMatch: 'full'
       },
-      {
+      { 
         path: 'user',
         loadChildren: () => import('./user/user.module').then(m => m.UserPageModule)
       },
