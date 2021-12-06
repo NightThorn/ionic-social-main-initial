@@ -13,8 +13,11 @@ ion-fab .fab-list-active .fab-backdrop {
 
 ion-fab .fab-button-in-list.ion-activatable.ion-focusable.hydrated.fab-button-show{
 
-width: 100%;
-height: 50px;
+width: 50px;
+border: 2px solid rgb(226, 228, 225);
+border-radius: 50%;
+height: 50px; 
+
 
 }
 .section {

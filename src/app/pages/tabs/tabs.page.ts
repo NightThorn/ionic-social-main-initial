@@ -19,6 +19,9 @@ export class TabsPage {
   goToStreams() {
     this.router.navigate(['streams']);
   }
+  goToGroups() {
+    this.router.navigate(['groups']);
+  }
   onClick($event) {
     this.isClicked = !this.isClicked;
   }

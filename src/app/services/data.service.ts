@@ -169,10 +169,32 @@ getLatestVid(id) {
       })
     );
   }  
-  getGroups() {
-    return this.mockData.groups;
-  }
+  getGroups(filter) {
+    return this.http.get(`https://ggs.tv/api/v1/groups.php?filter=${filter}`).pipe(map((res: any) => {
 
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }  
+  getGroup(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/group.php?group=${id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   getComments() {
     return this.mockData.comments;
   }

@@ -8,11 +8,11 @@
     <ion-tab-button tab="messages">
       <ion-icon name="chatbubble-ellipses"></ion-icon>
     </ion-tab-button>
-    
+
     <ion-tab-button></ion-tab-button>
 
 
-    <ion-tab-button tab="notification" >
+    <ion-tab-button tab="notification">
       <ion-icon name="notifications"></ion-icon>
     </ion-tab-button>
 
@@ -25,18 +25,30 @@
 
 <ion-fab vertical="bottom" horizontal="center" slot="fixed" edge="false">
   <ion-fab-button type="button">
-    <img class="custom-icon-image" style="max-width: 90%;"/>
+    <img class="custom-icon-image" style="max-width: 90%;" />
   </ion-fab-button>
-  <ion-fab-list side="top">
+  <ion-fab-list style="margin-bottom: 140px;" side="top">
     <div class="fab-backdrop"></div>
     <ion-fab-list side="top">
-      <ion-fab-button><ion-icon style="fill: darkgoldenrod"  tab="tournaments" name="trophy-sharp" (click)="goToTournaments()"></ion-icon></ion-fab-button>
+      <ion-fab-button>
+        <ion-icon style="fill: rgb(223, 170, 36);" tab="tournaments" name="trophy-sharp" (click)="goToTournaments()">
+        </ion-icon>
+      </ion-fab-button>
     </ion-fab-list>
-    
+    <ion-fab-list side="bottom">
+      <ion-fab-button>
+        <ion-icon name="people" style="fill: rgb(13, 187, 13);" (click)="goToGroups()"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
     <ion-fab-list side="start">
-      <ion-fab-button><ion-icon style="fill: white" name="shuffle-outline" (click)="goToRandom()"></ion-icon></ion-fab-button>
+      <ion-fab-button>
+        <ion-icon style="fill: rgb(2, 2, 122);" name="shuffle" (click)="goToRandom()"></ion-icon>
+      </ion-fab-button>
     </ion-fab-list>
     <ion-fab-list side="end">
-      <ion-fab-button><ion-icon style="fill: red" name="videocam-sharp" (click)="goToStreams()"></ion-icon></ion-fab-button>
-    </ion-fab-list> </ion-fab-list>
+      <ion-fab-button>
+        <ion-icon style="fill: red;" name="videocam-sharp" (click)="goToStreams()"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab-list>
 </ion-fab>
