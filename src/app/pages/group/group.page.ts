@@ -11,6 +11,8 @@ import { ModalPage } from '../modal/modal.page';
 })
 export class GroupPage implements OnInit {
   data: any;
+  tabType = 'posts';
+
   group: any;
 
   constructor(private activeRoute: ActivatedRoute, private modalController: ModalController,

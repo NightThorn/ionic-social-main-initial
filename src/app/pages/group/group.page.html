@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true" *ngIf="group">
+<ion-content [fullscreen]="true" *ngFor="let group of group">
   <ion-grid class="ion-no-padding ion-no-margin background-opts"
     style.background-image="url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ group.group_cover }}')">
     <ion-row>
@@ -123,8 +123,5 @@
   </ion-fab>
 
 
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+ 
 </ion-content>
