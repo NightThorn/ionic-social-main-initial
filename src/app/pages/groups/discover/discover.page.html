@@ -3,9 +3,24 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/explore" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>Discover Groups</ion-title>
+    <ion-title> Discover Groups</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
 
+<ion-content>
+    <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
+
+  <ion-row class="ion-no-padding">
+    <ion-col size="6" *ngFor="let item of dataList">
+      <app-group-card (click)="goToGroup(item.group_id)" [name]="item.group_title" [verified]="item.group_verified"
+        [image]="item.group_picture" [members]="item.group_members">
+      </app-group-card>
+    </ion-col>
+  </ion-row>
+
+
+  <ion-infinite-scroll threshold="10px" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

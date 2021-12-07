@@ -5,7 +5,7 @@
     <ion-thumbnail>
       <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{image}}" />
     </ion-thumbnail>
-    <ion-card-title style="color: lime;" > {{ name }} <span *ngIf= "verified === '1'" style="color: lime;" >
+    <ion-card-title style="color: lime;" > <div [innerHTML]="name"></div> <span *ngIf= "verified === '1'" style="color: lime;" >
         <ion-icon name="checkmark-circle"></ion-icon>
       </span></ion-card-title>
     <ion-card-subtitle style="color: white;">{{members}} Members</ion-card-subtitle>
