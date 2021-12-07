@@ -5,9 +5,10 @@
       <ion-col class="header-container">
         <ion-header class="ion-no-border">
           <ion-toolbar>
-            <ion-buttons slot="end">
-              
+            <ion-buttons slot="start">
+              <ion-back-button defaultHref="/groups" text=""></ion-back-button>
             </ion-buttons>
+
           </ion-toolbar>
         </ion-header>
         <div class="profile ion-padding">
@@ -16,12 +17,14 @@
               <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ group.group_picture }}" />
             </ion-thumbnail>
             <ul class="profile-text ion-padding-horizontal" *ngIf="group">
-              <li>{{ group.group_title }} <span *ngIf="group.group_verified === '1'"
+              <li>
+                <span [innerHTML]="group.group_title"> </span><span *ngIf="group.group_verified === '1'"
                   style="color: lime;">
                   <ion-icon name="checkmark-circle"></ion-icon>
                 </span>
-                
               </li>
+              <li style="font-weight: 400; color: lime;">Org Type</li>
+              <li style="font-weight: 800;">{{group.group_members}} Members</li>
 
             </ul>
           </div>
@@ -32,16 +35,16 @@
   <ion-grid class="ion-padding-horizontal borders">
     <ion-row class="">
       <ion-col>
-        <div class="numbers">
-          <ul >
-            <li>434</li>
-            <li>Members</li>
-          </ul>
-         
 
-        </div>
         <ul>
-          <ion-button class="follow-btn">Edit Profile</ion-button>
+          <ion-button *ngIf="admin == 1" class="follow-btn">Edit Group</ion-button>
+          <ion-button *ngIf="admin == 0 && group.group_category != 19 && joined == 0" class="follow-btn">Join
+          </ion-button>
+          <ion-button *ngIf="admin == 0 && group.group_category != 19 && joined == 1" class="unfollow-btn">Leave
+          </ion-button>
+
+          <ion-button *ngIf="admin == 0 && group.group_category == 19" class="follow-btn">Apply</ion-button>
+
           <ion-fab horizontal="end" edge slot="fixed">
             <ion-fab-button>
               <ion-icon name="ellipsis-vertical-outline"></ion-icon>
@@ -75,7 +78,7 @@
               <span>Media</span>
             </div>
           </ion-segment-button>
-        
+
           <ion-segment-button value="about">
             <div class="tab-container">
               <ion-icon name="person"></ion-icon>
@@ -86,11 +89,11 @@
         <div [ngSwitch]="tabType">
           <ion-row *ngSwitchCase="'posts'" class="ion-no-padding">
             <ion-col>
-              
+
             </ion-col>
           </ion-row>
-         
-         
+
+
           <ion-row *ngSwitchCase="'about'" class="ion-no-padding">
             <ion-col>
               <ion-card>
@@ -99,7 +102,7 @@
                 </ion-card-header>
 
                 <ion-card-content>
-          
+
                 </ion-card-content>
               </ion-card>
               <ion-card>
@@ -107,7 +110,7 @@
                   <ion-card-subtitle>Connect</ion-card-subtitle>
                 </ion-card-header>
 
-               
+
               </ion-card>
             </ion-col>
           </ion-row>
@@ -123,5 +126,5 @@
   </ion-fab>
 
 
- 
+
 </ion-content>

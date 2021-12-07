@@ -155,7 +155,41 @@ contain: initial;
     margin-bottom: 8px;
   }
 }
+.unfollow-btn {
+  --background: radial-gradient(
+    circle at top left,
+    var(--ion-color-danger-shade),
+    var(--ion-color-danger)
+  );
+  --box-shadow: none;
+  border-radius: 10px;
+  text-transform: capitalize;
+  font-weight: 400;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 2px;
+}
 
+.profile-user{
+border-radius: 50%;
+    background-color: #000000;
+        margin-right: 40px;
+
+}
+.rules-btn {
+  --background: radial-gradient(
+    circle at top left,
+    var(--ion-color-tertiary-shade),
+    var(--ion-color-tertiary-tint)
+  );
+  --box-shadow: none;
+  border-radius: 10px;
+  text-transform: capitalize;
+  font-weight: 400;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 2px;
+}
 .white-icon {
   color: #ffffff;
 }
