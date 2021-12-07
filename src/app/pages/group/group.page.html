@@ -23,7 +23,11 @@
                   <ion-icon name="checkmark-circle"></ion-icon>
                 </span>
               </li>
-              <li style="font-weight: 400; color: lime;">Org Type</li>
+              <li style="font-weight: 400; color: lime;" *ngIf="group.group_category == 19">Esports</li>
+              <li style="font-weight: 400; color: lime;" *ngIf="group.group_category == 21">Organization</li>
+              <li style="font-weight: 400; color: lime;" *ngIf="group.group_category == 20">Community</li>
+              <li style="font-weight: 400; color: lime;" *ngIf="group.group_category == 7">Community</li>
+
               <li style="font-weight: 800;">{{group.group_members}} Members</li>
 
             </ul>

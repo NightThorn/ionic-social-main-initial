@@ -14,5 +14,20 @@
         [image]="item.group_picture" [members]="item.group_members">
       </app-group-card>
     </ion-col>
+    <ion-col size="6">
+      <ion-card (click)="createGroup()" class="ion-text-center">
+
+        <ion-card-content style="text-align: -webkit-center;">
+          <ion-thumbnail>
+            <ion-icon style="font-size: 50px; " name="add-circle-outline"></ion-icon>
+          </ion-thumbnail>
+          <ion-card-title style="color: lime;">
+
+          </ion-card-title>
+
+
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
   </ion-row>
 </ion-content>

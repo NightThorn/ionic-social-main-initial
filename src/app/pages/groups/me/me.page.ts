@@ -44,4 +44,9 @@ export class MePage implements OnInit {
     this.router.navigate(['group'], navigationExtras);
   }
 
+  createGroup() {
+    
+    
+  }
+
 }
