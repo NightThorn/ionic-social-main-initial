@@ -9,6 +9,7 @@ import { ModalPage } from '../modal/modal.page';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { VideoModalPage } from '../video-modal/video-modal.page';
+import moment from 'moment';
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.page.html',
@@ -17,31 +18,30 @@ import { VideoModalPage } from '../video-modal/video-modal.page';
 export class ExplorePage implements OnInit {
   @ViewChild('video') myVideo: ElementRef;
 
-  articles: any;
-  users: any;
   feeds: any;
-  stories: any;
-  follow: any;
-  events: any;
   latest: any;
   storiesConfig = {
     initialSlide: 0,
     spaceBetween: 10,
     slidesPerView: 2.8,
   };
+  public dataL: Array<object> = [];
 
   usersConfig = {
     initialSlide: 0,
     spaceBetween: 2,
     slidesPerView: 5,
   };
-
+  public items: any;
+  private topLimit: number = 15;
+  public dataList: any = [];
   followConfig = {
     initialSlide: 0,
     spaceBetween: 10,
     slidesPerView: 2.6,
   };
   activeStoredUserSubscription$;
+  offset: number;
 
 
 
@@ -54,12 +54,16 @@ export class ExplorePage implements OnInit {
       if (storedUser !== null) {
         console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
         console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
-        this.articles = this.dataService.getArticles();
-        this.users = this.dataService.getSeenFirtsHistories();
-        this.feeds = this.dataService.getFeed();
-        this.follow = this.dataService.getFollow();
-        this.events = this.dataService.getEvents();
+        this.dataService.getFeed(storedUser.UserID).subscribe(res => {
+          this.feeds = res.message;
+          for (let i = 0; i < this.feeds.length; i++) {
+            this.offset = moment().utcOffset();
 
+            this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
+          }
+          this.dataList = this.feeds.slice(0, this.topLimit);
+
+        });
         this.dataService.getLatestVid(storedUser.UserID).subscribe(res => {
           this.latest = res.message;
         });
@@ -67,7 +71,17 @@ export class ExplorePage implements OnInit {
       }
     });
   }
+  loadData(event) {
+    setTimeout(() => {
+      this.topLimit += 10;
+      this.dataList = this.feeds.slice(0, this.topLimit);
+      event.target.complete();
+      if (this.dataList.length == this.dataL.length)
+        event.target.disabled = true;
 
+    }, 500);
+
+  }
   viewStory(index) {
     this.router.navigate(['story', index]);
   }

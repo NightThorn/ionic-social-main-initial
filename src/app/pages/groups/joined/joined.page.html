@@ -10,7 +10,7 @@
 <ion-content>
  <ion-row class="ion-no-padding">
             <ion-col size="6" *ngFor="let item of groups">
-              <app-group-card (click)="goToGroup(item.group_id)" [name]="item.group_title" [verified]="item.group_verified" [image]="item.group_picture" [members]="item.group_members">
+              <app-group-card (click)="goToGroup(item.group_id)" [cover]="item.group_cover" [name]="item.group_title" [verified]="item.group_verified" [image]="item.group_picture" [members]="item.group_members">
               </app-group-card>
             </ion-col>
           </ion-row>

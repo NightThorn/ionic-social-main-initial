@@ -12,6 +12,8 @@ export class GroupCardComponent implements OnInit {
   @Input() members: number;
   @Input() description: string;
   @Input() verified: string;
+  @Input() cover: string;
+
   constructor() { }
 
   ngOnInit() {}

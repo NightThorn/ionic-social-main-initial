@@ -1,12 +1,16 @@
 ion-card {
   box-shadow: none !important;
 }
-
+ion-item{
+  font-size: 13px;
+  font-weight: 100;
+  word-spacing: normal;
+}
 ion-card-content {
   p {
-    margin-bottom: 16px;
-    font-size: 1em;
-    line-height: 22px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    line-height: 12px;
   }
 
   img {

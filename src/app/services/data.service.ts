@@ -24,7 +24,19 @@ export class DataService {
 
   }
 
+  getFeed(user) {
+    return this.http.get(`https://ggs.tv/api/v1/feed.php?filter=recent&user=${user}`).pipe(map((res: any) => {
 
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
 
   getAllStreams() {
 
@@ -138,10 +150,7 @@ export class DataService {
     return this.mockData.follow;
   }
 
-  getFeed() {
-
-    return this.mockData.feeds;
-  }
+  
 
   getStories(id) {
 
