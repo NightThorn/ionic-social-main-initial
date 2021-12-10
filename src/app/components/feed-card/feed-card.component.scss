@@ -6,6 +6,7 @@ ion-item{
   font-weight: 100;
   word-spacing: normal;
 }
+
 ion-card-content {
   p {
     margin-bottom: 12px;
@@ -36,10 +37,9 @@ ion-card-content {
       vertical-align: middle;
 
       ion-item {
-        --padding-start: 0;
         --padding-end: 0.8em;
       }
-
+      
       ion-label {
         font-size: 13px;
       }

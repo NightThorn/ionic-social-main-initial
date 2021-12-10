@@ -14,7 +14,8 @@
     </ion-item>
   </ion-card-title>
   <ion-card-content class="ion-no-padding">
-    <ion-item><div [innerHTML]="text"></div>
+    <ion-item>
+      <div [innerHTML]="text"></div>
 
     </ion-item>
     <ion-slides pager="true" [options]="imgConfig">
@@ -28,7 +29,7 @@
         <ul>
           <li>
             <ion-item lines="none">
-              <ion-icon color="danger" name="heart"></ion-icon>
+              <img style="height: 20px; width: 50px; padding: 10px; margin: 5px;" src="./assets/images/ggsgray.png" />
               <ion-label>{{ likes }}</ion-label>
             </ion-item>
           </li>
