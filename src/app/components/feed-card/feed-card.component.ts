@@ -9,7 +9,10 @@ export class FeedCardComponent implements OnInit {
   @Input() avatar: string;
   @Input() name: string;
   @Input() date: string;
-  @Input() images: string[];
+  @Input() type: string;
+  @Input() video: string;
+  @Input() picture: string;
+  @Input() link: string;
   @Input() likes: number;
   @Input() text: string;
   @Input() comments: number;

@@ -1,17 +1,16 @@
-
 <ion-content [fullscreen]="true" *ngIf="fetchedProfile">
   <ion-grid class="ion-no-padding ion-no-margin background-opts"
     style.background-image="url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_cover }}')">
     <ion-row>
       <ion-col class="header-container">
-      <ion-header class="ion-no-border">
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-back-button defaultHref="/tabs/explore" text=""></ion-back-button>
-          </ion-buttons>
-          <ion-title>Random User</ion-title>
-        </ion-toolbar>
-      </ion-header>
+        <ion-header class="ion-no-border">
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-back-button defaultHref="/tabs/explore" text=""></ion-back-button>
+            </ion-buttons>
+            <ion-title>Random User</ion-title>
+          </ion-toolbar>
+        </ion-header>
         <div class="profile ion-padding">
           <div class="profile-user">
             <ion-thumbnail>
@@ -47,14 +46,14 @@
     <ion-row class="">
       <ion-col>
         <div class="numbers">
-            <ul (click)="friends(fetchedProfile.user_id)">
-              <li>{{friendCount}}</li>
-              <li>Friends</li>
-            </ul>
-            <ul (click)="badges(fetchedProfile.user_id)">
-              <li>{{badgeCount}}</li>
-              <li>Badges</li>
-            </ul>
+          <ul (click)="friends(fetchedProfile.user_id)">
+            <li>{{friendCount}}</li>
+            <li>Friends</li>
+          </ul>
+          <ul (click)="badges(fetchedProfile.user_id)">
+            <li>{{badgeCount}}</li>
+            <li>Badges</li>
+          </ul>
           <ul>
             <li>{{ fetchedProfile.total_xp }}</li>
             <li>XP Earned</li>
@@ -114,7 +113,7 @@
           <ion-row *ngSwitchCase="'posts'" class="ion-no-padding">
             <ion-col>
               <app-feed-card *ngFor="let item of fetchedPosts" [avatar]="item.user_picture" [name]="item.user_name"
-                [date]="item.time.date" [images]="item.images" [text]="item.text" [likes]="item.reaction_like_count"
+                [date]="item.time.date" [type]="item.post_type" [text]="item.text" [likes]="item.reaction_like_count"
                 [comments]="item.comments" [separator]="false">
               </app-feed-card>
             </ion-col>

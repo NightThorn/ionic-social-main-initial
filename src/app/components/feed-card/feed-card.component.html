@@ -18,18 +18,25 @@
       <div [innerHTML]="text"></div>
 
     </ion-item>
-    <ion-slides pager="true" [options]="imgConfig">
-      <ion-slide *ngFor="let item of images">
-        <img src="{{ item }}" />
-      </ion-slide>
-    </ion-slides>
+    <ion-item *ngIf="type === 'video'">
+      <video controls  style="width: 100%; height: 400px;">
+        <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{video}}" />
+      </video>
+
+    </ion-item>
+    <ion-item *ngIf="type === 'photos'">
+        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
+    
+    </ion-item>
+    
 
     <div class="card-footer">
       <div class="icon-container">
         <ul>
           <li>
             <ion-item lines="none">
-              <img src="./assets/images/ggsgray.png" style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
+              <img src="./assets/images/ggsgray.png"
+                style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
               <ion-label>{{ likes }}</ion-label>
             </ion-item>
           </li>
