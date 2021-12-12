@@ -37,7 +37,7 @@
       <ion-col size-sm="12" size-md="6" size-lg="4" size-lg="4" *ngFor="let item of dataList">
         <app-feed-card (click)="navigateToDetail()" [avatar]="item.user_picture" [name]="item.user_name"
           [date]="item.time" [text]="item.text" [picture]="item.picture_source" [video]="item.source" [type]="item.post_type"
-          [likes]="item.reaction_like_count" [comments]="item.comments" [separator]="true">
+          [likes]="item.reaction_like_count" [comments]="item.comments" [shares]="item.shares" [separator]="true">
         </app-feed-card>
       </ion-col>
     </ion-row>

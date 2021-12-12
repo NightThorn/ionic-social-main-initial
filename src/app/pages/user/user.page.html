@@ -120,7 +120,7 @@
             <ion-col>
               <app-feed-card *ngFor="let item of fetchedPosts" [avatar]="item.user_picture" [name]="item.user_name"
                 [date]="item.time.date" [type]="item.post_type" [text]="item.text" [likes]="item.reaction_like_count"
-                [comments]="item.comments" [separator]="false">
+                [comments]="item.comments" [shares]="item.shares" [separator]="false">
               </app-feed-card>
             </ion-col>
           </ion-row>
