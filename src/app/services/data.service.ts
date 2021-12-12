@@ -150,7 +150,7 @@ export class DataService {
     return this.mockData.follow;
   }
 
-  
+
 
   getStories(id) {
 
@@ -164,10 +164,10 @@ export class DataService {
         return true;
       })
     );
-  }  
-getLatestVid(id) {
+  }
+  getLatestVid(id) {
 
-  return this.http.get(`https://ggs.tv/api/v1/followingvids.php?user=${id}`).pipe(map((res: any) => {
+    return this.http.get(`https://ggs.tv/api/v1/followingvids.php?user=${id}`).pipe(map((res: any) => {
 
       console.log(res);
       return res;
@@ -177,7 +177,7 @@ getLatestVid(id) {
         return true;
       })
     );
-  }  
+  }
   getJoinedGroups(user) {
     return this.http.get(`https://ggs.tv/api/v1/getgroups.php?filter=joined&user=${user}`).pipe(map((res: any) => {
 
@@ -230,14 +230,40 @@ getLatestVid(id) {
       })
     );
   }
-  getComments() {
-    return this.mockData.comments;
-  }
+  
 
   getUsers() {
     return this.mockData.users;
   }
+  getPostDetails(post_id) {
 
+
+    return this.http.get(`https://ggs.tv/api/v1/getpost.php?post=${post_id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+
+  getPostComments(post_id) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/postcomments.php?post=${post_id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   getMessages(user_id) {
 
 

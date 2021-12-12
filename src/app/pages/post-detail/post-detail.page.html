@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding-horizontal">
+<ion-content *ngFor="let item of post" [fullscreen]="true" class="ion-padding-horizontal">
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -20,27 +20,21 @@
           <ion-card-title>
             <ion-item lines="none" class="ion-no-padding">
               <ion-avatar slot="start">
-                <img [src]="post.avatar" />
+                <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}" />
               </ion-avatar>
               <ion-label>
-                <h2 class="item-title">{{ post.name }}</h2>
-                <p class="item-subtitle">{{ post.date | humanizeDate }}</p>
+                <h2 class="item-title">{{ item.user_name }}</h2>
+                <p class="item-subtitle">{{ item.time | humanizeDate }}</p>
               </ion-label>
-              <ion-button
-                slot="end"
-                fill="outline"
-                size="small"
-                color="primary"
-              >
+              <ion-button slot="end" fill="outline" size="small" color="primary">
                 Follow
               </ion-button>
             </ion-item>
           </ion-card-title>
-          <ion-card-content class="ion-no-padding">
-            <ion-slides pager="true" [options]="imgConfig">
-              <ion-slide *ngFor="let item of post.images">
-                <img src="{{ item }}" />
-              </ion-slide>
+          <ion-card-content>
+            {{ item.text }}
+            <ion-slides pager="true">
+
             </ion-slides>
             <div class="card-footer">
               <div class="icon-container">
@@ -48,38 +42,23 @@
                   <li>
                     <ion-item lines="none">
                       <ion-icon color="danger" name="heart"></ion-icon>
-                      <ion-label>{{ post.likes }}</ion-label>
+                      <ion-label>{{ item.reaction_like_count }}</ion-label>
                     </ion-item>
                   </li>
                   <li>
                     <ion-item lines="none">
-                      <ion-icon  name="chatbubble"></ion-icon>
-                      <ion-label>{{ post.comments.total }}</ion-label>
+                      <ion-icon name="chatbubble"></ion-icon>
+                      <ion-label>{{ item.comments }}</ion-label>
                     </ion-item>
                   </li>
-                  <li>
-                    <ion-item lines="none">
-                      <ion-icon  name="eye"></ion-icon>
-                      <ion-label>{{ post.views }}</ion-label>
-                    </ion-item>
-                  </li>
+
                 </ul>
               </div>
               <ion-buttons slot="end">
-                <ion-button
-                  class="circle-btn"
-                  fill="clear"
-                  size="small"
-                  shape="round"
-                >
+                <ion-button class="circle-btn" fill="clear" size="small" shape="round">
                   <ion-icon slot="icon-only" name="bookmark"></ion-icon>
                 </ion-button>
-                <ion-button
-                  class="circle-btn"
-                  fill="clear"
-                  size="small"
-                  shape="round"
-                >
+                <ion-button class="circle-btn" fill="clear" size="small" shape="round">
                   <ion-icon slot="icon-only" name="arrow-redo"></ion-icon>
                 </ion-button>
               </ion-buttons>
@@ -89,11 +68,17 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col class="ion-no-padding">
+      <ion-col>
 
-        <ion-list class="ion-no-padding">
-          <ion-item lines="none" *ngFor="let cm of post.comments.latest_comments">
-            <ion-text class="comment"><span class="user-comment">{{cm.user}}</span>  <span>{{cm.comment}}</span></ion-text>
+        <ion-list>
+          <ion-item lines="none" *ngFor="let cm of comments">
+            <ion-avatar slot="start"><img
+                src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{cm.user_picture}}">
+            </ion-avatar>
+            <ion-text class="comment"><span class="user-comment">{{cm.user_name}}</span> <br><span
+                class="user-comment-text">{{cm.text}}</span>
+            </ion-text>
+
           </ion-item>
         </ion-list>
       </ion-col>
@@ -101,23 +86,10 @@
   </ion-grid>
 </ion-content>
 <ion-footer class="ion-no-border">
-  <ion-button fill="clear" size="small" (click)="navigateToComments()">View all comments</ion-button>
   <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
     <ion-item lines="none">
-      <ion-input
-        type="text"
-        placeholder="Write your comment"
-        formControlName="comment"
-      ></ion-input>
-      <ion-button
-        slot="end"
-        class="circle-btn"
-        fill="clear"
-        size="small"
-        shape="round"
-        color="primary"
-        type="submit"
-      >
+      <ion-input type="text" placeholder="Write your comment" formControlName="comment"></ion-input>
+      <ion-button slot="end" class="circle-btn" fill="clear" size="small" shape="round" color="primary" type="submit">
         <ion-icon slot="icon-only" name="paper-plane"></ion-icon>
       </ion-button>
     </ion-item>

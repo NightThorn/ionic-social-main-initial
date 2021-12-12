@@ -19,7 +19,6 @@ export class CommentsPage implements OnInit {
       comment: [null],
     });
 
-    this.comments = this.dataService.getComments();
   }
 
   submitComment() {
