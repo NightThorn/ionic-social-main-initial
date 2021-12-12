@@ -41,7 +41,7 @@
             </ion-item>
           </li>
           <li>
-            <ion-item lines="none">
+            <ion-item (click)="navigateToDetail(post_id)" lines="none">
               <ion-icon name="chatbubble"></ion-icon>
               <ion-label>{{ comments }}</ion-label>
             </ion-item>

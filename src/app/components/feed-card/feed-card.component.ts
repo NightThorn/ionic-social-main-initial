@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-feed-card',
@@ -15,6 +16,8 @@ export class FeedCardComponent implements OnInit {
   @Input() link: string;
   @Input() likes: number;
   @Input() shares: number;
+  @Input() post_id: number;
+
 
   @Input() text: string;
   @Input() comments: number;
@@ -26,7 +29,22 @@ export class FeedCardComponent implements OnInit {
     centeredSlides: true,
   };
 
-  constructor() {}
+  constructor(private router: Router,
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
+
+  navigateToDetail(id) {
+
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(id)
+      }
+    };
+    this.router.navigate(['post-detail'], navigationExtras);
+
+  }
+
+
+
 }
