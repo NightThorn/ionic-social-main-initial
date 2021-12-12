@@ -34,17 +34,17 @@
       <div class="icon-container">
         <ul>
           <li>
-            <ion-item lines="none">
+            <ion-button fill="clear" size="small" shape="round">
               <img src="./assets/images/ggsgray.png"
                 style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
               <ion-label>{{ likes }}</ion-label>
-            </ion-item>
+            </ion-button>
           </li>
           <li>
-            <ion-item (click)="navigateToDetail(post_id)" lines="none">
+            <ion-button (click)="navigateToDetail(post_id)" fill="clear" size="small" shape="round">
               <ion-icon name="chatbubble"></ion-icon>
               <ion-label>{{ comments }}</ion-label>
-            </ion-item>
+            </ion-button>
           </li>
         </ul>
       </div>

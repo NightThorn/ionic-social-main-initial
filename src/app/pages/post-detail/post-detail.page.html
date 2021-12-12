@@ -19,20 +19,18 @@
         <ion-card class="ion-no-margin">
           <ion-card-title>
             <ion-item lines="none" class="ion-no-padding">
-              <ion-avatar slot="start">
+              <ion-avatar (click)="user(item.user_id)" slot="start">
                 <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}" />
               </ion-avatar>
-              <ion-label>
+              <ion-label (click)="user(item.user_id)">
                 <h2 class="item-title">{{ item.user_name }}</h2>
-                <p class="item-subtitle">{{ item.time | humanizeDate }}</p>
+                <p class="item-subtitle">{{ item.time  }}</p>
               </ion-label>
-              <ion-button slot="end" fill="outline" size="small" color="primary">
-                Follow
-              </ion-button>
+              
             </ion-item>
           </ion-card-title>
           <ion-card-content>
-            {{ item.text }}
+          <div style="color: white !important;" [innerHTML]="item.text"></div>  
             <ion-slides pager="true">
 
             </ion-slides>
@@ -40,10 +38,10 @@
               <div class="icon-container">
                 <ul>
                   <li>
-                    <ion-item lines="none">
-                      <ion-icon color="danger" name="heart"></ion-icon>
-                      <ion-label>{{ item.reaction_like_count }}</ion-label>
-                    </ion-item>
+                  <ion-button fill="clear" size="small" shape="round">
+                    <img src="./assets/images/ggsgray.png" style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
+                    <ion-label>{{ item.reaction_like_count }}</ion-label>
+                  </ion-button>
                   </li>
                   <li>
                     <ion-item lines="none">
@@ -72,11 +70,11 @@
 
         <ion-list>
           <ion-item lines="none" *ngFor="let cm of comments">
-            <ion-avatar slot="start"><img
+            <ion-avatar (click)="user(cm.user_id)" slot="start"><img
                 src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{cm.user_picture}}">
             </ion-avatar>
-            <ion-text class="comment"><span class="user-comment">{{cm.user_name}}</span> <br><span
-                class="user-comment-text">{{cm.text}}</span>
+            <ion-text class="comment"><span (click)="user(cm.user_id)" class="user-comment">{{cm.user_name}}</span> <span class="item-subtitle">{{ item.time }}</span>
+<br><br><span class="user-comment-text"><div [innerHTML]="cm.text"></div></span>
             </ion-text>
 
           </ion-item>
