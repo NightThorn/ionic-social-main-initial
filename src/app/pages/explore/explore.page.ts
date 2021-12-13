@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -10,14 +10,16 @@ import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { VideoModalPage } from '../video-modal/video-modal.page';
 import moment from 'moment';
+
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.page.html',
   styleUrls: ['./explore.page.scss'],
 })
 export class ExplorePage implements OnInit {
-  @ViewChild('video') myVideo: ElementRef;
-
+  @ViewChild('myvideo') myVideo: ElementRef;
+  @ViewChildren('player')videoPlayers: QueryList<any>;
+  currentPlaying = null;
   feeds: any;
   latest: any;
   storiesConfig = {
@@ -117,16 +119,31 @@ export class ExplorePage implements OnInit {
   }
 
 
-  videoSet() {
-    if (this.myVideo.nativeElement.paused) {
-      this.myVideo.nativeElement.play();
-    } else {
+  
+  isElementInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
 
-      this.myVideo.nativeElement.pause();
-
-    }
   }
 
+  didScroll() {
+    if (this.currentPlaying && this.isElementInViewport(this.currentPlaying)) return;
+    else if (this.currentPlaying && !this.isElementInViewport(this.currentPlaying)) {
+      
+      this.currentPlaying.pause();
+      this.currentPlaying = null;
+    }
+this.videoPlayers.forEach(player => {
+  console.log('player', player);
+});
+
+
+
+
+
+  }
 
   async openVideoModal(source) {
     const modal = await this.modalController.create({

@@ -1,12 +1,15 @@
-<ion-header class="ion-no-border">
+<ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/explore" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>Random Group</ion-title>
+    <ion-title>Discover Groups</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher-content>
+  </ion-refresher-content>
+</ion-refresher>
 </ion-content>

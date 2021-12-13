@@ -22,10 +22,11 @@ const routes: Routes = [
         loadChildren: () => import('./clips/clips.module').then(m => m.ClipsPageModule)
       },
       {
-        path: 'stream',
-        loadChildren: () => import('./stream/stream.module').then(m => m.StreamPageModule)
+        path: 'group',
+        loadChildren: () => import('./group/group.module').then(m => m.GroupPageModule)
       }]
   }
+  
 ];
 
 @NgModule({

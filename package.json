@@ -29,6 +29,7 @@
     "cordova-plugin-video-player": "github:moust/cordova-plugin-videoplayer",
     "date-fns": "^2.17.0",
     "moment": "^2.29.1",
+    "ng-in-viewport": "^6.1.5",
     "ngx-timeago": "^2.0.0",
     "rxjs": "~6.6.0",
     "rxjs-compat": "^6.6.7",

@@ -113,6 +113,21 @@ export class DataService {
     );
 
   }
+  getRandomGroup() {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/random.php?tab=group`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
   getRandomStream() {
 
 

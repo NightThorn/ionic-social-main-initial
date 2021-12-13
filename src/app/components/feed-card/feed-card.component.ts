@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
@@ -11,7 +11,7 @@ export class FeedCardComponent implements OnInit {
   @Input() name: string;
   @Input() date: string;
   @Input() type: string;
-  @Input() video: string;
+  @Input() videosrc: string;
   @Input() picture: string;
   @Input() link: string;
   @Input() likes: number;
@@ -45,6 +45,6 @@ export class FeedCardComponent implements OnInit {
 
   }
 
-
+  
 
 }
