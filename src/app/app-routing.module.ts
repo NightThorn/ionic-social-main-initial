@@ -103,9 +103,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/video-modal/video-modal.module').then( m => m.VideoModalPageModule)
   },
   {
+    path: 'image-modal',
+    loadChildren: () => import('./pages/image-modal/image-modal.module').then(m => m.ImageModalPageModule)
+  },
+  {
     path: 'groups',
     loadChildren: () => import('./pages/groups/groups.module').then( m => m.GroupsPageModule)
-  },  {
+  },
+  {
     path: 'group',
     loadChildren: () => import('./pages/group/group.module').then( m => m.GroupPageModule)
   }

@@ -11,6 +11,7 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class GroupPage implements OnInit {
   group: any;
+  tabType = 'posts';
 
   constructor(private dataService: DataService, private router: Router, public loadingController: LoadingController, private auth: AuthenticationService) { }
 

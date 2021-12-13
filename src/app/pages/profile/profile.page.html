@@ -113,7 +113,7 @@
           <ion-row *ngSwitchCase="'posts'" class="ion-no-padding">
             <ion-col>
               <app-feed-card *ngFor="let item of fetchedPosts" [post_id]="item.post_id" [avatar]="item.user_picture"
-                [name]="item.user_name" [date]="item.time.date" [type]="item.post_type" [text]="item.text"
+                [name]="item.user_name" [date]="item.time.date" [user_id]="item.user_id" [type]="item.post_type" [text]="item.text"
                 [likes]="item.reaction_like_count" [comments]="item.comments" [shares]="item.shares"
                 [separator]="false">
               </app-feed-card>

@@ -3,6 +3,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -11,15 +12,18 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./image-modal.page.scss'],
 })
 export class ImageModalPage implements OnInit {
-  @Input() data: any;
+  @Input() source: any;
 
   background = null;
 
-  constructor(private modalController: ModalController) {}
+  constructor(private modalController: ModalController, private route: ActivatedRoute) {
+ 
+  }
 
   ngOnInit(): void {
     this.background = {
-      backgroundImage: `url(${this.data})`
+      backgroundImage: `url(https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/${this.source})`
+      
     }
   }
 

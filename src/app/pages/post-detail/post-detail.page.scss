@@ -15,7 +15,6 @@ ion-card-content {
   img {
     object-fit: cover;
     width: 100%;
-    height: 250px;
     border-radius: 10px;
   }
 }
@@ -95,11 +94,4 @@ ion-text{
 
   border-bottom: 1px solid gray;
 }
-@media only screen and (max-device-height: 640px) and (orientation: portrait) {
-  /* Styles */
-  ion-card-content {
-    img {
-      height: 180px;
-    }
-  }
-}
+

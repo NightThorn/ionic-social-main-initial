@@ -31,19 +31,17 @@
           </ion-card-title>
           <ion-card-content>
             <div style="color: white !important;" [innerHTML]="item.text"></div>
-            <ion-slides pager="true">
 
-              <ion-item *ngIf="item.post_type == 'video'">
-                <video controls style="width: 100%; height: 400px;">
-                  <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.src}}" />
-                </video>
+            <ion-item *ngIf="item.post_type == 'video'">
+              <video controls style="width: 100%; height: 400px;">
+                <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.src}}" />
+              </video>
 
-              </ion-item>
-              <ion-item *ngIf="item.post_type == 'photos'">
-                <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.src}}" />
+            </ion-item>
+            <ion-item (click)="navigateToModal(item.source)" *ngIf="item.post_type == 'photos'">
+              <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.source}}" />
 
-              </ion-item>
-            </ion-slides>
+            </ion-item>
             <div class="card-footer">
               <div class="icon-container">
                 <ul>

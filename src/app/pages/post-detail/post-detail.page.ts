@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import moment from 'moment';
 import { DataService } from 'src/app/services/data.service';
+import { ImageModalPage } from '../image-modal/image-modal.page';
+import { VideoModalPage } from '../video-modal/video-modal.page';
 
 @Component({
   selector: 'app-post-detail',
@@ -19,7 +22,7 @@ export class PostDetailPage implements OnInit {
   comments: any;
   offset: number;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private dataService: DataService, private router: Router) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private modalController: ModalController, private dataService: DataService, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params && params.special) {
         this.data = JSON.parse(params.special);
@@ -61,5 +64,19 @@ export class PostDetailPage implements OnInit {
     };
     this.router.navigate(['/user'], navigationExtras);
 
+  }
+ 
+
+  async navigateToModal(source) {
+    const modal = await this.modalController.create({
+      component: ImageModalPage,
+      backdropDismiss: false,
+      cssClass: 'modal',
+
+      componentProps: {
+        'source': source
+      }
+    });
+    modal.present();
   }
 }

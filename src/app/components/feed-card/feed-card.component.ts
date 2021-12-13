@@ -17,6 +17,7 @@ export class FeedCardComponent implements OnInit {
   @Input() likes: number;
   @Input() shares: number;
   @Input() post_id: number;
+  @Input() user_id: number;
 
 
   @Input() text: string;
@@ -45,6 +46,14 @@ export class FeedCardComponent implements OnInit {
 
   }
 
-  
+  user(id) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(id)
+      }
+    };
+    this.router.navigate(['/user'], navigationExtras);
+
+  }
 
 }
