@@ -24,24 +24,35 @@
               </ion-avatar>
               <ion-label (click)="user(item.user_id)">
                 <h2 class="item-title">{{ item.user_name }}</h2>
-                <p class="item-subtitle">{{ item.time  }}</p>
+                <p class="item-subtitle">{{ item.time }}</p>
               </ion-label>
-              
+
             </ion-item>
           </ion-card-title>
           <ion-card-content>
-          <div style="color: white !important;" [innerHTML]="item.text"></div>  
+            <div style="color: white !important;" [innerHTML]="item.text"></div>
             <ion-slides pager="true">
 
+              <ion-item *ngIf="item.post_type == 'video'">
+                <video controls style="width: 100%; height: 400px;">
+                  <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.src}}" />
+                </video>
+
+              </ion-item>
+              <ion-item *ngIf="item.post_type == 'photos'">
+                <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.src}}" />
+
+              </ion-item>
             </ion-slides>
             <div class="card-footer">
               <div class="icon-container">
                 <ul>
                   <li>
-                  <ion-button fill="clear" size="small" shape="round">
-                    <img src="./assets/images/ggsgray.png" style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
-                    <ion-label>{{ item.reaction_like_count }}</ion-label>
-                  </ion-button>
+                    <ion-button fill="clear" size="small" shape="round">
+                      <img src="./assets/images/ggsgray.png"
+                        style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
+                      <ion-label>{{ item.reaction_like_count }}</ion-label>
+                    </ion-button>
                   </li>
                   <li>
                     <ion-item lines="none">
@@ -53,9 +64,7 @@
                 </ul>
               </div>
               <ion-buttons slot="end">
-                <ion-button class="circle-btn" fill="clear" size="small" shape="round">
-                  <ion-icon slot="icon-only" name="bookmark"></ion-icon>
-                </ion-button>
+
                 <ion-button class="circle-btn" fill="clear" size="small" shape="round">
                   <ion-icon slot="icon-only" name="arrow-redo"></ion-icon>
                 </ion-button>
@@ -73,8 +82,31 @@
             <ion-avatar (click)="user(cm.user_id)" slot="start"><img
                 src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{cm.user_picture}}">
             </ion-avatar>
-            <ion-text class="comment"><span (click)="user(cm.user_id)" class="user-comment">{{cm.user_name}}</span> <span class="item-subtitle">{{ item.time }}</span>
-<br><br><span class="user-comment-text"><div [innerHTML]="cm.text"></div></span>
+            <ion-text class="comment"><span (click)="user(cm.user_id)" class="user-comment">{{cm.user_name}}</span>
+              <span class="item-subtitle">{{ item.time }}</span>
+              <br><br><span class="user-comment-text">
+                <div [innerHTML]="cm.text"></div>
+              </span>
+              <div class="card-footer">
+                <div class="icon-container">
+                  <ul>
+                    <li>
+                      <ion-button fill="clear" size="small" shape="round">
+                        <img src="./assets/images/ggsgray.png"
+                          style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
+                        <ion-label>{{ cm.reaction_like_count }}</ion-label>
+                      </ion-button>
+                    </li>
+                    <li>
+                      <ion-item lines="none">
+                        <ion-icon name="chatbubble"></ion-icon>
+                        <ion-label>{{ cm.comments }}</ion-label>
+                      </ion-item>
+                    </li>
+
+                  </ul>
+                </div>
+              </div>
             </ion-text>
 
           </ion-item>

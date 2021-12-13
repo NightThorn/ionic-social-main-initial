@@ -2,8 +2,8 @@ ion-card {
   box-shadow: none !important;
 }
 ion-avatar{
-  margin-left: 6px;
-  padding-left: 6px;
+ margin: 16px 16px 8px 0;
+        margin-bottom: auto;
 }
 ion-card-content {
   p {
@@ -91,7 +91,10 @@ border-top: 1px solid black;
     font-weight: 100;
   }
 }
+ion-text{
 
+  border-bottom: 1px solid gray;
+}
 @media only screen and (max-device-height: 640px) and (orientation: portrait) {
   /* Styles */
   ion-card-content {

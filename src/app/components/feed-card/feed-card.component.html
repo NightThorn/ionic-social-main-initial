@@ -15,20 +15,18 @@
   </ion-card-title>
   <ion-card-content class="ion-no-padding">
     <ion-item>
-      <div [innerHTML]="text"></div>
-
+      <div style="width: -webkit-fill-available; margin-bottom: 10px;" [innerHTML]="text"></div>
     </ion-item>
     <ion-item *ngIf="type === 'video'">
-      <video controls  style="width: 100%; height: 400px;">
+      <video controls style="width: 100%; height: 400px;">
         <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{video}}" />
       </video>
 
     </ion-item>
     <ion-item *ngIf="type === 'photos'">
-        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
-    
+      <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
+
     </ion-item>
-    
 
     <div class="card-footer">
       <div class="icon-container">
@@ -50,10 +48,10 @@
       </div>
       <ion-button slot="end" fill="clear" size="small" shape="round">
         <ion-icon slot="icon-only" name="arrow-redo"></ion-icon>
-                      <ion-label>{{ shares }}</ion-label>
+        <ion-label>{{ shares }}</ion-label>
 
       </ion-button>
     </div>
   </ion-card-content>
-</ion-card>
+</ion-card><br><br>
 <div *ngIf="separator" class="separator ion-margin-top"></div>
