@@ -21,7 +21,7 @@ export class SettingsPage implements OnInit {
 
   async logout() {
     await this.authService.destroy();
-    this.router.navigateByUrl('/', {replaceUrl: true});
+    this.router.navigateByUrl('/login', {replaceUrl: true});
   }
 
 }

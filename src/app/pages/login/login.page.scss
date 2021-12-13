@@ -25,7 +25,6 @@ ion-header ion-toolbar {
 h1.title {
   font-weight: 600;
   font-size: 20px;
-  margin-bottom: 8px;
 }
 
 ion-text {
@@ -56,10 +55,12 @@ ion-grid {
 ion-item {
   --inner-padding-end: 0 !important;
   min-height: 104px;
+    border-radius: 10px;
+
 }
 
 ion-input {
-  border-radius: 6px;
+  border-radius: 10px;
   --box-shadow: none;
   --placeholder-color: cvar(--ion-color-medium);
   padding: 2px 10px !important;
@@ -68,8 +69,8 @@ ion-input {
 
 .input-label {
   margin-left: 10px;
+  border-radius: 10px;
   font-weight: 600;
-  margin-bottom: 16px;
 }
 
 

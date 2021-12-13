@@ -38,12 +38,7 @@ export class AllPage implements OnInit {
 
   }
 
-  stream(id) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-    this.router.navigate(['single'], navigationExtras);
+stream(twitch) {
+    window.open('twitch://twitch.tv/' + twitch);
   }
 }

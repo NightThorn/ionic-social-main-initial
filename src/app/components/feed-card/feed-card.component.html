@@ -15,7 +15,7 @@
   </ion-card-title>
   <ion-card-content class="ion-no-padding">
     <ion-item>
-      <div (click)="navigateToDetail(post_id)" style="width: -webkit-fill-available; margin-bottom: 10px;"
+      <div (click)="navigateToDetail(post_id)" style="max-width: 400px; max-height: 250px; font-weight: 400; overflow: scroll; margin-bottom: 10px;"
         [innerHTML]="text"></div>
     </ion-item>
     <ion-item *ngIf="type === 'video'">

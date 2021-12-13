@@ -36,11 +36,6 @@ export class ProPage implements OnInit {
 
   }
   stream(twitch) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(twitch)
-      }
-    };
-    this.router.navigate(['streams/single'], navigationExtras);
+    window.open('twitch://twitch.tv/' + twitch);
   }
 }
