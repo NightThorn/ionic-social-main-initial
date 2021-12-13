@@ -64,4 +64,8 @@ body{
   -webkit-user-select: text;
   user-select: text;
 }
-  
+.ion-padding-horizontal{
+--padding-end: none;
+  --padding-start: none;
+  --ion-grid-column-padding: none;
+}

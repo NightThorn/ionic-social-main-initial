@@ -19,6 +19,7 @@ ion-card-content {
   img {
     object-fit: cover;
     width: 100%;
+    margin: 2px;
     height: 220px;
     border-radius: 10px;
   }
@@ -56,7 +57,7 @@ ion-card-content {
 }
 
 ion-item {
-  --inner-padding-end: 0;
+  --inner-padding-end: 10px;
 }
 
 ion-button {
