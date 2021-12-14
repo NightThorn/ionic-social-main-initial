@@ -35,7 +35,7 @@
   </ion-grid>
 </ion-content>
 <ion-footer class="ion-no-border">
-  <form [formGroup]="messageForm" (ngSubmit)="submitMessage()">
+  <form [formGroup]="messageForm" (ngSubmit)="submitMessage(id, me, messageForm.value)">
     <ion-item lines="none">
       <ion-input type="text" placeholder="Write your message" formControlName="message"></ion-input>
       <ion-button slot="end" class="circle-btn" fill="clear" size="small" shape="round" color="primary" type="submit">

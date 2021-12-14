@@ -1,7 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
+import { now } from 'moment';
+import { interval } from 'rxjs';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -22,15 +25,21 @@ export class ChatPage implements OnInit {
   activeStoredUserSubscription$;
   currentUser: number;
   id: any;
+  me: number;
+  myMessage: Object;
+  latest: any;
+  lastMessageID: any;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private profileService: ProfileService, private authService: AuthenticationService, private dataService: DataService, private router: Router) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private route: ActivatedRoute, private profileService: ProfileService, private authService: AuthenticationService, private dataService: DataService, private router: Router) {
 
     this.route.queryParams.subscribe(params => {
       if (params && params.chat) {
         this.id = JSON.parse(params.chat);
       }
     });
-
+    this.lastMessageID = interval(5000).subscribe((func => {
+      this.getLastMessage(this.id);
+    }))
   }
 
   ngOnInit() {
@@ -40,8 +49,10 @@ export class ChatPage implements OnInit {
         console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
 
       }
+      this.me = storedUser.UserID;
       this.dataService.getChat(this.id).subscribe(res => {
         this.chat = res.message;
+
         this.currentUser = storedUser.UserID;
         console.log(this.chat);
         setTimeout(() => {
@@ -58,8 +69,45 @@ export class ChatPage implements OnInit {
   updateScroll() {
     this.content.scrollToBottom();
   }
-  
-  submitMessage() {
-    this.messageForm.reset();
+  getLastMessage(id) {
+    this.dataService.getLatestChat(id).subscribe(res => {
+      this.latest = res.message;
+      var last = this.chat.find(message => message.message_id == this.latest[0]['message_id'])
+      console.log("latest id", this.latest[0]['message_id']);
+      console.log("last var", last);
+      if (last) {
+        console.log("yes");
+      } else {
+        
+        this.dataService.getChat(this.id).subscribe(res => {
+          this.chat = res.message;
+          console.log(this.chat);
+          setTimeout(() => {
+            this.updateScroll();
+          }, 500);
+        });
+}
+    });
+
   }
+  submitMessage(id, user, text) {
+    let time = new Date(Date.now())
+    let data = {
+      "conversation_id": id,
+      "user_id": user,
+      "message": text,
+      "time": time
+    };
+
+    this.http.post('https://ggs.tv/api/v1/sendmessage.php', JSON.stringify(data)).subscribe(res => {
+      console.log(res);
+    });
+
+    this.messageForm.reset();
+
+
+
+  }
+
+
 }
