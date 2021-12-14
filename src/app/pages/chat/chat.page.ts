@@ -37,7 +37,7 @@ export class ChatPage implements OnInit {
         this.id = JSON.parse(params.chat);
       }
     });
-    this.lastMessageID = interval(5000).subscribe((func => {
+    this.lastMessageID = interval(2000).subscribe((func => {
       this.getLastMessage(this.id);
     }))
   }
@@ -108,6 +108,8 @@ export class ChatPage implements OnInit {
 
 
   }
-
+  ionViewDidLeave() {
+    this.lastMessageID.unsubscribe();
+  }
 
 }
