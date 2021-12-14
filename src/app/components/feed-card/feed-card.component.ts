@@ -1,5 +1,7 @@
 import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import moment from 'moment';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-feed-card',
@@ -19,6 +21,7 @@ export class FeedCardComponent implements OnInit {
   @Input() post_id: number;
   @Input() user_id: number;
 
+  @Input() origin: string;
 
   @Input() text: string;
   @Input() comments: number;
@@ -29,11 +32,27 @@ export class FeedCardComponent implements OnInit {
     slidesPerView: 1,
     centeredSlides: true,
   };
+  shared: any;
+  offset: number;
 
-  constructor(private router: Router,
-  ) { }
+  constructor(private router: Router, private dataService: DataService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (this.type === 'shared') {
+
+      this.dataService.getPostDetails(this.origin).subscribe(res => {
+        this.shared = res.message;
+        for (let i = 0; i < this.shared.length; i++) {
+          this.offset = moment().utcOffset();
+
+          this.shared[i]['time'] = moment.utc(this.shared[i]['time']).fromNow();
+        }
+
+      });
+     }
+
+    
+  }
 
   navigateToDetail(id) {
 
@@ -54,6 +73,11 @@ export class FeedCardComponent implements OnInit {
     };
     this.router.navigate(['/user'], navigationExtras);
 
+  }
+
+  getShared(origin) {
+  
+  
   }
 
 }
