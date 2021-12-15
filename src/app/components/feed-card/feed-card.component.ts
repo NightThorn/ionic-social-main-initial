@@ -1,8 +1,10 @@
 import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NavigationExtras, Router } from '@angular/router';
 import moment from 'moment';
 import { InViewportMetadata } from 'ng-in-viewport';
 import { DataService } from 'src/app/services/data.service';
+import { htmlEncode, htmlDecode } from 'js-htmlencode';
 
 @Component({
   selector: 'app-feed-card',
@@ -33,10 +35,17 @@ export class FeedCardComponent implements OnInit {
     slidesPerView: 1,
     centeredSlides: true,
   };
+  urls: SafeResourceUrl;
+
   shared: any;
   offset: number;
+  media: any;
+  result: any;
+  embed: SafeResourceUrl;
+  results: any;
+  preurl: string;
 
-  constructor(private router: Router, private dataService: DataService) { }
+  constructor(private router: Router, private sanitizer: DomSanitizer, private dataService: DataService) { }
 
   ngOnInit() {
     if (this.type === 'shared') {
@@ -50,9 +59,30 @@ export class FeedCardComponent implements OnInit {
         }
 
       });
-     }
+    }
+    if (this.type === 'media') {
 
-    
+      this.dataService.getMediaPost(this.post_id).subscribe(res => {
+        this.media = res.message;
+        for (let i = 0; i < this.media.length; i++) {
+          this.offset = moment().utcOffset();
+          if (this.media[i]['source_url'].includes('tube')) {
+            this.result = this.media[i]['source_url'].replace("watch?v=", "embed/").replace("&feature=youtu.be", "");
+            this.preurl = htmlDecode(this.result);
+
+            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
+            console.log("test?", this.urls);
+
+          } else {
+            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.media[i]['source_url']);
+
+            this.media[i]['time'] = moment.utc(this.media[i]['time']).fromNow();
+          }
+        }
+
+      });
+    }
+
   }
   onIntersection($event) {
     const { [InViewportMetadata]: { entry }, target } = $event;
@@ -82,6 +112,7 @@ export class FeedCardComponent implements OnInit {
 
   }
 
-  
+
+
 
 }

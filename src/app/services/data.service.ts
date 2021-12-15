@@ -263,7 +263,17 @@ export class DataService {
       })
     );
   }
+  getMediaPost(post_id) {
+    return this.http.get(`https://ggs.tv/api/v1/getmediapost.php?post=${post_id}`).pipe(map((res: any) => {
+      console.log("embed?", res);
+      return res;
+    }),
+      filter((res: any) => {
 
+        return true;
+      })
+    );
+  }
   getPostComments(post_id) {
 
 
