@@ -67,8 +67,8 @@ export class FeedCardComponent implements OnInit {
         for (let i = 0; i < this.media.length; i++) {
           this.offset = moment().utcOffset();
           if (this.media[i]['source_url'].includes('tube')) {
-            this.result = this.media[i]['source_url'].replace("watch?v=", "embed/").replace("&feature=youtu.be", "");
-            this.preurl = htmlDecode(this.result);
+            this.result = this.media[i]['source_url'].replace('watch?v=', 'embed/');
+            this.preurl = htmlDecode(this.result).replace('&feature=youtu.be', '');
 
             this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
             console.log("test?", this.urls);
