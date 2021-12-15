@@ -11,6 +11,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { ProfileService } from './services/profile.service';
 import { PopoverPageModule } from './pages/popover/popover.module';
 import { ModalPageModule } from './pages/modal/modal.module';
+import { InViewportModule } from 'ng-in-viewport';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ModalPageModule } from './pages/modal/modal.module';
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     HttpClientModule,
+    InViewportModule,
     ModalPageModule,
     PopoverPageModule,
     AppRoutingModule,

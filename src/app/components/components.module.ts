@@ -12,6 +12,7 @@ import { NotificationItemComponent } from './notification-item/notification-item
 import { GroupCardComponent } from './group-card/group-card.component';
 import { EventCardComponent } from './event-card/event-card.component';
 import { FollowCardComponent } from './follow-card/follow-card.component';
+import { InViewportModule } from 'ng-in-viewport';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { FollowCardComponent } from './follow-card/follow-card.component';
     EventCardComponent,
     FollowCardComponent
   ],
-  imports: [CommonModule, IonicModule.forRoot(), UtilsModule],
+  imports: [CommonModule, IonicModule.forRoot(), InViewportModule, UtilsModule],
   exports: [
     FeedCardComponent,
     StoryAvatarComponent,
@@ -40,4 +41,4 @@ import { FollowCardComponent } from './follow-card/follow-card.component';
     FollowCardComponent
   ],
 })
-export class ComponentsModule {}
+export class ComponentsModule { }

@@ -255,7 +255,6 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/getpost.php?post=${post_id}`).pipe(map((res: any) => {
 
-      console.log(res);
       return res;
     }),
       filter((res: any) => {
@@ -324,12 +323,6 @@ export class DataService {
   getNotifications() {
     return this.mockData.notifications;
   }
-
-
-
-  //post stuff
-  
-  
 
 }
 

@@ -168,7 +168,16 @@ export class UserPage implements OnInit {
     };
     this.router.navigate(['/userbadges'], navigationExtras);
   }
+  goToGroup(id) {
 
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(id)
+      }
+    };
+    this.router.navigate(['group'], navigationExtras);
+
+  }
   friends(id) {
 
     let navigationExtras: NavigationExtras = {

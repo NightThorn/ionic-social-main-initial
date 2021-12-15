@@ -64,20 +64,15 @@ export class ProfilePage implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.activeRoute.params.subscribe(params => {
-      console.log("PROFILEPAGE:ACTIVEROUTESUB:PARAMS", params);
 
       this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
         if (storedUser !== null) {
-          console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-          console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
 
-          console.log("PROFILEPAGE:ACTIVE_TOKEN_SUB:INVOKING FETCH PROFILE");
           this.profileService.fetchProfile(storedUser.UserID);
           this.profileService.fetchPosts(storedUser.UserID);
 
           this.profileService.fetchGroups(storedUser.UserID).subscribe(res => {
             this.groups = res.message;
-            console.log("PROFILEPAGE:groups", this.groups);
 
           });
           this.profileService.fetchFriends(storedUser.UserID).subscribe(res => {
@@ -92,7 +87,6 @@ export class ProfilePage implements OnInit, OnDestroy {
             this.pictures = res.message;
             this.dataList = this.pictures.slice(0, this.topLimit);
 
-            console.log(this.pictures);
           });
 
 
@@ -106,12 +100,10 @@ export class ProfilePage implements OnInit, OnDestroy {
       this.fetchedProfile = profile;
       const newDate = new Date(this.fetchedProfile.user_birthdate);
       this.bday = newDate.toDateString();
-      console.log("PROFILEPAGE:FETCHED_PROFILE_SUB:GOT", this.fetchedProfile);
     });
 
     this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
       this.fetchedPosts = data;
-      console.log("PROFILEPAGE:FETCHED_Posts_SUB:GOT", this.fetchedPosts);
 
     })
     // this.data = this.profileService.fetchProfile(this.x);
@@ -119,14 +111,9 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   };
 
-
-
-
-
   ngOnDestroy() {
     this.activeStoredUserSubscription$.unsubscribe();
   }
-
 
   async openModal(source) {
     const modal = await this.modalController.create({
@@ -150,7 +137,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     });
     modal.present();
   }
-  
+
   goToSettings() {
     this.router.navigate(['settings']);
   }
@@ -172,7 +159,16 @@ export class ProfilePage implements OnInit, OnDestroy {
     };
     this.router.navigate(['friends'], navigationExtras);
   }
+  goToGroup(id) {
 
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(id)
+      }
+    };
+
+    this.router.navigate(['group'], navigationExtras);
+  }
 
   loadData(event) {
     setTimeout(() => {

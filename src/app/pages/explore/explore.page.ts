@@ -10,6 +10,7 @@ import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { VideoModalPage } from '../video-modal/video-modal.page';
 import moment from 'moment';
+import { InViewportMetadata } from 'ng-in-viewport';
 
 @Component({
   selector: 'app-explore',
@@ -72,6 +73,7 @@ export class ExplorePage implements OnInit {
 
       }
     });
+    
   }
   loadData(event) {
     setTimeout(() => {

@@ -20,20 +20,21 @@
         [innerHTML]="text"></div>
     </ion-item>
     <ion-item *ngIf="type === 'video'">
-      <video #player playsinline preload="auto" loop controls style="width: 100%; height: 400px;">
+      <video muted inViewport [inViewportOptions]="{ threshold: [0, 0.65], partial: true }"
+        (inViewportAction)="onIntersection($event)" #player playsinline preload="auto" loop controls
+        style="width: 100%; height: 400px;">
         <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{videosrc}}" />
       </video>
     </ion-item>
-
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'photos'">
       <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
     </ion-item>
-<ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_picture'">
-  <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
-</ion-item>
-<ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'cover_picture'">
-  <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
-</ion-item>
+    <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_picture'">
+      <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
+    </ion-item>
+    <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'cover_picture'">
+      <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
+    </ion-item>
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'group_cover'">
       <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
     </ion-item>

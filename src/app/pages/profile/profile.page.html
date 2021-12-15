@@ -130,8 +130,9 @@
           </ion-row>
           <ion-row *ngSwitchCase="'groups'" class="ion-no-padding">
             <ion-col size="12" *ngFor="let item of groups">
-              <app-group-card [name]="item.group_title" [verified]="item.group_verified"
-                [description]="item.group_description" [image]="item.group_picture" [members]="item.group_members">
+              <app-group-card (click)="goToGroup(item.group_id)" [name]="item.group_title"
+                [verified]="item.group_verified" [description]="item.group_description" [image]="item.group_picture"
+                [members]="item.group_members">
               </app-group-card>
             </ion-col>
           </ion-row>

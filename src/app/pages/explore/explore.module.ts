@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { ExplorePageRoutingModule } from './explore-routing.module';
+import { InViewportModule } from 'ng-in-viewport';
 
 import { ExplorePage } from './explore.page';
 import { ComponentsModule } from 'src/app/components/components.module';
@@ -14,6 +15,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
+    InViewportModule,
     ExplorePageRoutingModule,
     ComponentsModule
   ],

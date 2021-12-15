@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import moment from 'moment';
+import { InViewportMetadata } from 'ng-in-viewport';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -53,7 +54,13 @@ export class FeedCardComponent implements OnInit {
 
     
   }
+  onIntersection($event) {
+    const { [InViewportMetadata]: { entry }, target } = $event;
+    const ratio = entry.intersectionRatio;
+    const vid = target;
 
+    ratio >= 0.65 ? vid.play() : vid.pause();
+  }
   navigateToDetail(id) {
 
     let navigationExtras: NavigationExtras = {
