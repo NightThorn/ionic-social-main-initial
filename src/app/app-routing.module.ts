@@ -113,7 +113,11 @@ const routes: Routes = [
   {
     path: 'group',
     loadChildren: () => import('./pages/group/group.module').then( m => m.GroupPageModule)
+  },  {
+    path: 'shop',
+    loadChildren: () => import('./pages/shop/shop.module').then( m => m.ShopPageModule)
   }
+
 
 
 

@@ -25,8 +25,7 @@ export class ClipsPage implements OnInit {
     this.dataService.getRandomClip().subscribe(res => {
       this.clip = res.message;
       this.post_id = res.message['0']['post_id'];
-      this.auth.addViews(this.post_id).subscribe((res: any) => {
-      });
+      
       window.onbeforeunload = () => this.ionViewWillLeave();
     })
   }

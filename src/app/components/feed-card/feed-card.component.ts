@@ -75,9 +75,6 @@ export class FeedCardComponent implements OnInit {
 
   }
 
-  getShared(origin) {
   
-  
-  }
 
 }

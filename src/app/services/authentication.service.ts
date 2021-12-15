@@ -66,11 +66,5 @@ export class AuthenticationService {
     })
   }
 
-  addViews(post_id) {
-    
-    return this.http.post(this.server + "random.php", {
-      post_id: post_id
-    })
-      
-  }
+  
 }

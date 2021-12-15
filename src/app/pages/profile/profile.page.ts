@@ -128,17 +128,28 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
 
-  async openModal(imgUrl) {
+  async openModal(source) {
     const modal = await this.modalController.create({
       component: ImageModalPage,
       cssClass: 'modal-container',
       componentProps: {
-        data: imgUrl,
+        'source': source
       },
     });
     return await modal.present();
   }
+  async navigateToModal(source) {
+    const modal = await this.modalController.create({
+      component: ImageModalPage,
+      backdropDismiss: false,
+      cssClass: 'modal',
 
+      componentProps: {
+        'source': source
+      }
+    });
+    modal.present();
+  }
   
   goToSettings() {
     this.router.navigate(['settings']);

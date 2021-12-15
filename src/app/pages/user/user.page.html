@@ -128,7 +128,7 @@
 
             <ion-col size="6" *ngFor="let pic of dataList">
               <img class="image-element" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
-                (click)="openModal(pic)" />
+                (click)="openModal(pic.source)" />
 
             </ion-col>
 
