@@ -23,7 +23,7 @@
                 <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}" />
               </ion-avatar>
               <ion-label (click)="user(item.user_id)">
-                <h2 class="item-title">{{ item.user_name }}</h2>
+                <h2 class="item-title" style="color: limegreen;">{{ item.user_name }}</h2>
                 <p class="item-subtitle">{{ item.time }}</p>
               </ion-label>
 
@@ -77,33 +77,33 @@
 
         <ion-list>
           <ion-item lines="none" *ngFor="let cm of comments">
-            <ion-avatar (click)="user(cm.user_id)" slot="start"><img
+            <ion-avatar (click)="user(cm.user_id)" slot="start" style="margin-left: 5px;"><img
                 src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{cm.user_picture}}">
             </ion-avatar>
-            <ion-text class="comment"><span (click)="user(cm.user_id)" class="user-comment">{{cm.user_name}}</span>
-              <span class="item-subtitle">{{ item.time }}</span>
-              <br><br><span class="user-comment-text">
-                <div [innerHTML]="cm.text"></div>
-              </span>
-              <div class="card-footer">
-                <div class="icon-container">
-                  <ul>
-                    <li>
-                      <ion-button fill="clear" size="small" shape="round">
-                        <img src="./assets/images/ggsgray.png"
-                          style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
-                        <ion-label>{{ cm.reaction_like_count }}</ion-label>
-                      </ion-button>
-                    </li>
-                    <li>
-                      <ion-item lines="none">
-                        <ion-icon name="chatbubble"></ion-icon>
-                        <ion-label>{{ cm.comments }}</ion-label>
-                      </ion-item>
-                    </li>
 
-                  </ul>
-                </div>
+            <ion-text class="comment"><span (click)="user(cm.user_id)" class="user-comment"
+                style="color: limegreen;">{{cm.user_name}}</span>
+              <span class="item-subtitle">{{ item.time }}</span>
+
+              <br><br>
+              <ion-row>
+                <ion-col size="9">
+                  <span class="user-comment-text">
+                    <div [innerHTML]="cm.text"></div>
+                  </span>
+                </ion-col>
+                <ion-col size="3">
+                  <img src="./assets/images/ggsgray.png"
+                    style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
+                </ion-col>
+              </ion-row>
+              <div class="icon-container">
+
+                <ion-item lines="none">
+                  
+                  <ion-label style="font-size: small; color: gray;" >Reply {{ cm.comments }}</ion-label>
+                </ion-item>
+
               </div>
             </ion-text>
 

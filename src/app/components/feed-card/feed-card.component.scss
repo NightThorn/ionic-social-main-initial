@@ -1,16 +1,22 @@
 ion-card {
   box-shadow: none !important;
   margin: 0;
+    background-color: #090909;
+
 }
 ion-item{
   font-size: 14px;
   font-weight: 200;
   word-spacing: 1px;
+    background-color: #090909;
+
 
 }
 
 ion-card-content {
   p {
+      background-color: #090909;
+
     margin-bottom: 12px;
     font-size: 12px;
     line-height: 12px;
@@ -45,7 +51,7 @@ ion-card-content {
       }
       
       ion-label {
-        font-size: 13px;
+        font-size: 12px;
       }
 
       ion-icon {

@@ -1,5 +1,7 @@
 ion-card {
   box-shadow: none !important;
+    background-color: #090909;
+
 }
 ion-avatar{
  margin: 16px 16px 8px 0;
@@ -9,6 +11,8 @@ ion-card-content {
   p {
     margin-bottom: 16px;
     font-size: 1em;
+      background-color: #090909;
+
     line-height: 22px;
   }
 
@@ -24,6 +28,8 @@ ion-card-content {
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
+    background-color: #090909;
+
   padding-top: 8px;
 
   ul {
@@ -80,6 +86,7 @@ ion-input {
 .comment {
   font-size: 12px;
   line-height: 20px;
+  width: 100%;
   padding: 15px;
 border-top: 1px solid black;
   .user-comment {
@@ -90,8 +97,5 @@ border-top: 1px solid black;
     font-weight: 100;
   }
 }
-ion-text{
 
-  border-bottom: 1px solid gray;
-}
 
