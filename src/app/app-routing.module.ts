@@ -116,6 +116,10 @@ const routes: Routes = [
   },  {
     path: 'shop',
     loadChildren: () => import('./pages/shop/shop.module').then( m => m.ShopPageModule)
+  },
+  {
+    path: 'search',
+    loadChildren: () => import('./pages/search/search.module').then( m => m.SearchPageModule)
   }
 
 
