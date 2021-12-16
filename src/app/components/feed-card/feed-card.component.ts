@@ -5,6 +5,7 @@ import moment from 'moment';
 import { InViewportMetadata } from 'ng-in-viewport';
 import { DataService } from 'src/app/services/data.service';
 import { htmlEncode, htmlDecode } from 'js-htmlencode';
+import { HashLocationStrategy } from '@angular/common';
 
 @Component({
   selector: 'app-feed-card',
@@ -23,9 +24,7 @@ export class FeedCardComponent implements OnInit {
   @Input() shares: number;
   @Input() post_id: number;
   @Input() user_id: number;
-
   @Input() origin: string;
-
   @Input() text: string;
   @Input() comments: number;
   @Input() separator: boolean;
@@ -44,10 +43,17 @@ export class FeedCardComponent implements OnInit {
   embed: SafeResourceUrl;
   results: any;
   preurl: string;
+  external: string;
+  decodedtext: any;
 
   constructor(private router: Router, private sanitizer: DomSanitizer, private dataService: DataService) { }
 
   ngOnInit() {
+    if (this.text.includes('#')) {
+      this.decodedtext = htmlDecode(this.text)
+      this.text = this.hashtag(this.decodedtext);
+
+    }
     if (this.type === 'shared') {
 
       this.dataService.getPostDetails(this.origin).subscribe(res => {
@@ -60,6 +66,7 @@ export class FeedCardComponent implements OnInit {
 
       });
     }
+
     if (this.type === 'media') {
 
       this.dataService.getMediaPost(this.post_id).subscribe(res => {
@@ -72,11 +79,13 @@ export class FeedCardComponent implements OnInit {
 
             this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
             console.log("test?", this.urls);
-
+            this.external = "youtube";
           } else {
-            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.media[i]['source_url']);
+            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
 
             this.media[i]['time'] = moment.utc(this.media[i]['time']).fromNow();
+            this.external = "other";
+
           }
         }
 
@@ -101,7 +110,11 @@ export class FeedCardComponent implements OnInit {
     this.router.navigate(['post-detail'], navigationExtras);
 
   }
-
+  hashtag(text) {
+    var repl = text.replace(/#(\w+)/g, '<a href="search/#$1">#$1</a>');
+    
+    return repl;
+  }
   user(id) {
     let navigationExtras: NavigationExtras = {
       queryParams: {

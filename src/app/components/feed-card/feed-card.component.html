@@ -15,7 +15,7 @@
   </ion-card-title>
   <ion-card-content class="ion-no-padding">
     <ion-item>
-      <div (click)="navigateToDetail(post_id)"
+      <div 
         style="max-width: 400px; max-height: 250px; font-weight: 400; overflow: scroll; margin-bottom: 10px;"
         [innerHTML]="text"></div>
     </ion-item>
@@ -44,10 +44,11 @@
     </ion-item>
     <div *ngIf="type === 'media'">
       <ion-item (click)="navigateToDetail(post_id)" *ngFor="let share of media">
-        <ion-card style="border: 2px solid green;">
+        <ion-card *ngIf="external === 'youtube'" style="border: 2px solid green; width: 100%;">
           <iframe frameborder="0" playsinline allowfullscreen width="100%" height="315" [src]="urls">
           </iframe>
         </ion-card>
+        
       </ion-item>
     </div>
     <div *ngIf="type === 'shared'">
