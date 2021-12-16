@@ -6,7 +6,30 @@ import { NotificationPage } from './notification.page';
 const routes: Routes = [
   {
     path: '',
-    component: NotificationPage
+    component: NotificationPage,
+    children: [
+     
+      {
+        path: 'all',
+        loadChildren: () => import('./all/all.module').then(m => m.AllPageModule)
+      },
+      {
+        path: 'comments',
+        loadChildren: () => import('./comments/comments.module').then(m => m.CommentsPageModule)
+      },
+      {
+        path: 'likes',
+        loadChildren: () => import('./likes/likes.module').then(m => m.LikesPageModule)
+      },
+      {
+        path: 'connections',
+        loadChildren: () => import('./connections/connections.module').then(m => m.ConnectionsPageModule)
+      },
+      {
+        path: '',
+        redirectTo: 'tabs/notification/all',
+        pathMatch: 'full'
+      },]
   }
 ];
 
