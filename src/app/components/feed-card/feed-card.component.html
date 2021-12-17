@@ -120,28 +120,43 @@
       </ion-item>
     </div>
     <div class="card-footer">
-      <div class="icon-container">
+      <div style="width: 100%;" class="icon-container">
+
         <ul>
-          <li>
-            <ion-button fill="clear" size="small" shape="round">
-              <img src="./assets/images/ggsgray.png"
-                style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
-              <ion-label>{{ likes }}</ion-label>
-            </ion-button>
-          </li>
-          <li>
-            <ion-button (click)="navigateToDetail(post_id)" fill="clear" size="small" shape="round">
-              <ion-icon name="chatbubble"></ion-icon>
-              <ion-label>{{ comments }}</ion-label>
-            </ion-button>
-          </li>
+          <ion-grid>
+            <ion-row style="text-align: center;">
+              <ion-col size="4">
+                <li>
+                  <ion-button fill="clear" size="small" shape="round">
+                    <img src="./assets/images/ggsgray.png"
+                      style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
+                    <ion-label>{{ likes }}</ion-label>
+                  </ion-button>
+                </li>
+              </ion-col>
+              <ion-col size="4">
+                <li>
+                  <ion-button (click)="navigateToDetail(post_id)" fill="clear" size="small" shape="round">
+                    <ion-icon name="chatbubble-outline"></ion-icon>
+                    <ion-label>{{ comments }}</ion-label>
+                  </ion-button>
+                </li>
+              </ion-col>
+              <ion-col size="4">
+                <li>
+                  <ion-button slot="end" fill="clear" size="small" shape="round">
+                    <ion-icon slot="icon-only" name="arrow-redo-outline"></ion-icon>
+                    <ion-label>{{ shares }}</ion-label>
+
+                  </ion-button>
+
+                </li>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ul>
       </div>
-      <ion-button slot="end" fill="clear" size="small" shape="round">
-        <ion-icon slot="icon-only" name="arrow-redo"></ion-icon>
-        <ion-label>{{ shares }}</ion-label>
 
-      </ion-button>
     </div>
   </ion-card-content>
 </ion-card>
