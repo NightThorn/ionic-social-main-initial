@@ -45,6 +45,7 @@ export class FeedCardComponent implements OnInit {
   preurl: string;
   external: string;
   decodedtext: any;
+  sharedmedia: any;
 
   constructor(private router: Router, private sanitizer: DomSanitizer, private dataService: DataService) { }
 
@@ -65,12 +66,35 @@ export class FeedCardComponent implements OnInit {
         }
 
       });
+      this.dataService.getMediaPost(this.origin).subscribe(res => {
+        this.sharedmedia = res.message;
+        for (let i = 0; i < this.sharedmedia.length; i++) {
+          this.offset = moment().utcOffset();
+          if (this.sharedmedia[i]['source_url'].includes('tube')) {
+            this.result = this.sharedmedia[i]['source_url'].replace('watch?v=', 'embed/');
+            this.preurl = htmlDecode(this.result).replace('&feature=youtu.be', '');
+
+            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
+            console.log("test?", this.urls);
+            this.external = "youtube";
+          } else if (this.sharedmedia[i]['source_url'].includes('twitch')) {
+            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
+
+            this.sharedmedia[i]['time'] = moment.utc(this.sharedmedia[i]['time']).fromNow();
+            this.external = "twitch";
+
+          }
+        }
+
+      });
+
     }
 
     if (this.type === 'media') {
 
       this.dataService.getMediaPost(this.post_id).subscribe(res => {
         this.media = res.message;
+        console.log("asdf", this.media);
         for (let i = 0; i < this.media.length; i++) {
           this.offset = moment().utcOffset();
           if (this.media[i]['source_url'].includes('tube')) {
@@ -80,11 +104,11 @@ export class FeedCardComponent implements OnInit {
             this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
             console.log("test?", this.urls);
             this.external = "youtube";
-          } else {
+          } else if (this.media[i]['source_url'].includes('twitch')) {
             this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
 
             this.media[i]['time'] = moment.utc(this.media[i]['time']).fromNow();
-            this.external = "other";
+            this.external = "twitch";
 
           }
         }
@@ -112,7 +136,7 @@ export class FeedCardComponent implements OnInit {
   }
   hashtag(text) {
     var repl = text.replace(/#(\w+)/g, '<a href="search/#$1">#$1</a>');
-    
+
     return repl;
   }
   user(id) {

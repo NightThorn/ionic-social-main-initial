@@ -15,14 +15,14 @@
   </ion-card-title>
   <ion-card-content class="ion-no-padding">
     <ion-item>
-      <div 
+      <div (click)="navigateToDetail(post_id)"
         style="max-width: 400px; max-height: 250px; font-weight: 400; overflow: scroll; margin-bottom: 10px;"
         [innerHTML]="text"></div>
     </ion-item>
     <ion-item *ngIf="type === 'video'">
       <video muted inViewport [inViewportOptions]="{ threshold: [0, 0.65], partial: true }"
         (inViewportAction)="onIntersection($event)" #player playsinline preload="auto" loop controls
-        style="width: 100%; height: 400px;">
+        style="width: 100%;">
         <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{videosrc}}" />
       </video>
     </ion-item>
@@ -30,6 +30,9 @@
       <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
     </ion-item>
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_picture'">
+      <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
+    </ion-item>
+    <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_cover'">
       <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
     </ion-item>
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'cover_picture'">
@@ -43,16 +46,18 @@
       <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
     </ion-item>
     <div *ngIf="type === 'media'">
-      <ion-item (click)="navigateToDetail(post_id)" *ngFor="let share of media">
+      <ion-item *ngFor="let share of media">
         <ion-card *ngIf="external === 'youtube'" style="border: 2px solid green; width: 100%;">
           <iframe frameborder="0" playsinline allowfullscreen width="100%" height="315" [src]="urls">
           </iframe>
         </ion-card>
-        
+        <ion-card *ngIf="external === 'twitch'">
+          <a href="{{share.source_url}}"> <img src="./assets/images/twitch.jpg"></a>
+        </ion-card>
       </ion-item>
     </div>
     <div *ngIf="type === 'shared'">
-      <ion-item (click)="navigateToDetail(post_id)" *ngFor="let share of shared">
+      <ion-item *ngFor="let share of shared">
         <ion-card style="border: 2px solid green;">
           <ion-card-title>
             <ion-item lines="none">
@@ -70,12 +75,12 @@
           </ion-card-title>
           <ion-card-content class="ion-no-padding">
             <ion-item>
-              <div (click)="navigateToDetail(post_id)"
+              <div (click)="navigateToDetail(share.post_id)"
                 style="max-width: 400px; max-height: 250px; font-weight: 400; overflow: scroll; margin-bottom: 10px;"
                 [innerHTML]="share.text"></div>
             </ion-item>
             <ion-item *ngIf="share.post_type === 'video'">
-              <video #player playsinline preload="auto" loop controls style="width: 100%; height: 400px;">
+              <video #player playsinline preload="auto" loop controls style="width: 100%;">
                 <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.source}}" />
               </video>
             </ion-item>
@@ -97,6 +102,19 @@
             <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'group_picture'">
               <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.group_picture}}" />
             </ion-item>
+            <div *ngIf="share.post_type === 'media'">
+              <ion-item (click)="navigateToDetail(post_id)" *ngFor="let share of sharedmedia">
+                <ion-card *ngIf="external === 'youtube'">
+                  <iframe frameborder="0" playsinline allowfullscreen width="100%" height="315" [src]="urls">
+                  </iframe>
+                </ion-card>
+                <ion-card *ngIf="external === 'twitch'">
+                  <iframe frameborder="0" playsinline allowfullscreen width="100%" height="315" [src]="urls">
+                  </iframe>
+                </ion-card>
+
+              </ion-item>
+            </div>
           </ion-card-content>
         </ion-card>
       </ion-item>
