@@ -3,8 +3,9 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NavigationExtras, Router } from '@angular/router';
 import moment from 'moment';
 import { InViewportMetadata } from 'ng-in-viewport';
-import { DataService } from 'src/app/services/data.service';
 import { htmlEncode, htmlDecode } from 'js-htmlencode';
+
+import { DataService } from 'src/app/services/data.service';
 import { HashLocationStrategy } from '@angular/common';
 
 @Component({

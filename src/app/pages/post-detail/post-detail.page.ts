@@ -21,6 +21,7 @@ export class PostDetailPage implements OnInit {
   post: any;
   comments: any;
   offset: number;
+  replies: any;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private modalController: ModalController, private dataService: DataService, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -41,17 +42,36 @@ export class PostDetailPage implements OnInit {
     })
     this.dataService.getPostComments(this.data).subscribe(res => {
       this.comments = res.message;
+      
       for (let i = 0; i < this.comments.length; i++) {
         this.offset = moment().utcOffset();
+        if (this.comments[i]['replies'] > 0) {
+          this.dataService.getPostCommentReplies(this.comments[i]['comment_id']).subscribe(res => {
+            this.replies = res.message;
+            console.log("this repleis", this.replies);
 
+            for (let i = 0; i < this.replies.length; i++) {
+              this.offset = moment().utcOffset();
+
+              this.replies[i]['time'] = moment.utc(this.replies[i]['time']).fromNow();
+            }
+          })
+}
         this.comments[i]['time'] = moment.utc(this.comments[i]['time']).fromNow();
       }
     })
+    
+   
     this.commentForm = this.fb.group({
       comment: [null]
     });
   }
-
+showReplies(){
+  var element = document.getElementById("repliesContainer");
+  element.classList.toggle("replies");
+}
+  
+  
   submitComment() {
 
   }
@@ -79,4 +99,6 @@ export class PostDetailPage implements OnInit {
     });
     modal.present();
   }
+
+  
 }

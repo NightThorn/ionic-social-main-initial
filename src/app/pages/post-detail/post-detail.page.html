@@ -15,62 +15,15 @@
 <ion-content *ngFor="let item of post" [fullscreen]="true" class="ion-padding-horizontal">
   <ion-grid>
     <ion-row>
-      <ion-col>
-        <ion-card class="ion-no-margin">
-          <ion-card-title>
-            <ion-item lines="none" class="ion-no-padding">
-              <ion-avatar (click)="user(item.user_id)" slot="start">
-                <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}" />
-              </ion-avatar>
-              <ion-label (click)="user(item.user_id)">
-                <h2 class="item-title" style="color: limegreen;">{{ item.user_name }}</h2>
-                <p class="item-subtitle">{{ item.time }}</p>
-              </ion-label>
-
-            </ion-item>
-          </ion-card-title>
-          <ion-card-content>
-            <div style="color: white !important;" [innerHTML]="item.text"></div>
-
-            <ion-item *ngIf="item.post_type == 'video'">
-              <video controls style="width: 100%; height: 400px;">
-                <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.src}}" />
-              </video>
-
-            </ion-item>
-            <ion-item (click)="navigateToModal(item.source)" *ngIf="item.post_type == 'photos'">
-              <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.source}}" />
-
-            </ion-item>
-            <div class="card-footer">
-              <div class="icon-container">
-                <ul>
-                  <li>
-                    <ion-button fill="clear" size="small" shape="round">
-                      <img src="./assets/images/ggsgray.png"
-                        style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
-                      <ion-label>{{ item.reaction_like_count }}</ion-label>
-                    </ion-button>
-                  </li>
-                  <li>
-                    <ion-button fill="clear" size="small" shape="round">
-                      <ion-icon name="chatbubble"></ion-icon>
-                      <ion-label>{{ item.comments }}</ion-label>
-                    </ion-button>
-                  </li>
-
-                </ul>
-              </div>
-              <ion-buttons slot="end">
-
-                <ion-button class="circle-btn" fill="clear" size="small" shape="round">
-                  <ion-icon slot="icon-only" name="arrow-redo"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </div>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
+      <ion-row>
+        <ion-col size-sm="12" size-md="12" size-lg="12" size-lg="12" *ngFor="let item of post">
+          <app-feed-card [avatar]="item.user_picture" [name]="item.user_name" [post_id]="item.post_id" [date]="item.time"
+            [text]="item.text" [origin]="item.origin_id" [user_id]="item.user_id" [picture]="item.picture_source"
+            [videosrc]="item.source" [type]="item.post_type" [likes]="item.reaction_like_count" [comments]="item.comments"
+            [shares]="item.shares" [separator]="true">
+          </app-feed-card>
+        </ion-col>
+      </ion-row>
     </ion-row>
     <ion-row>
       <ion-col>
@@ -83,7 +36,7 @@
 
             <ion-text class="comment"><span (click)="user(cm.user_id)" class="user-comment"
                 style="color: limegreen;">{{cm.user_name}}</span>
-              <span class="item-subtitle">{{ item.time }}</span>
+              <span class="item-subtitle">{{ cm.time }}</span>
 
               <br><br>
               <ion-row>
@@ -93,17 +46,49 @@
                   </span>
                 </ion-col>
                 <ion-col style="text-align: center;" size="3">
-                  <img src="./assets/images/ggsgray.png"
-                    style="height: 14px; border-radius: 0px; margin: 5px;" />
+                  <img src="./assets/images/ggsgray.png" style="height: 14px; border-radius: 0px; margin: 5px;" />
                 </ion-col>
               </ion-row>
               <div class="icon-container">
 
                 <ion-item lines="none">
-                  
-                  <ion-label style="font-size: small; color: gray;" >Reply {{ cm.comments }}</ion-label>
-                </ion-item>
 
+                  <ion-label style="font-size: small; color: gray;">Reply</ion-label>
+                </ion-item>
+                <ion-list>
+                  <ion-item lines="none" *ngFor="let cm of replies">
+                    <ion-avatar (click)="user(cm.user_id)" slot="start" style="margin-left: 5px;"><img
+                        src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{cm.user_picture}}">
+                    </ion-avatar>
+
+                    <ion-text class="comment"><span (click)="user(cm.user_id)" class="user-comment"
+                        style="color: limegreen;">{{cm.user_name}}</span>
+                      <span class="item-subtitle">{{ cm.time }}</span>
+
+                      <br><br>
+                      <ion-row>
+                        <ion-col size="9">
+                          <span class="user-comment-text">
+                            <div [innerHTML]="cm.text"></div>
+                          </span>
+                        </ion-col>
+                        <ion-col style="text-align: center;" size="3">
+                          <img src="./assets/images/ggsgray.png"
+                            style="height: 14px; border-radius: 0px; margin: 5px;" />
+                        </ion-col>
+                      </ion-row>
+                      <div class="icon-container">
+
+                        <ion-item lines="none">
+
+                          <ion-label style="font-size: small; color: gray;">Reply</ion-label>
+                        </ion-item>
+
+                      </div>
+                    </ion-text>
+
+                  </ion-item>
+                </ion-list>
               </div>
             </ion-text>
 
