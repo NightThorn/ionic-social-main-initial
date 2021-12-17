@@ -12,7 +12,7 @@ export class MessageListItemComponent implements OnInit {
   @Input() user: string;
   @Input() message: string;
   @Input() time: string;
-  @Input() messageCount: number;
+  @Input() messageCount: string;
 
   constructor() { }
 
