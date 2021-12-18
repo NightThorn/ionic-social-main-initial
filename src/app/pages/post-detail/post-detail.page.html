@@ -12,15 +12,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content  [fullscreen]="true" class="ion-padding-horizontal">
+<ion-content [fullscreen]="true" class="ion-padding-horizontal">
   <ion-grid>
     <ion-row>
-      <ion-row>
-        <ion-col size-sm="12" size-md="12" size-lg="12" size-lg="12" *ngFor="let item of post">
-          <app-feed-card [avatar]="item.user_picture" [name]="item.user_name" [post_id]="item.post_id" [date]="item.time"
-            [text]="item.text" [origin]="item.origin_id" [user_id]="item.user_id" [picture]="item.picture_source"
-            [videosrc]="item.source" [type]="item.post_type" [likes]="item.reaction_like_count" [comments]="item.comments"
-            [shares]="item.shares" [separator]="true">
+      <ion-row style="width: 100%;">
+        <ion-col *ngFor="let item of post">
+          <app-feed-card [avatar]="item.user_picture" [name]="item.user_name" [post_id]="item.post_id"
+            [date]="item.time" [text]="item.text" [origin]="item.origin_id" [user_id]="item.user_id"
+            [picture]="item.picture_source" [videosrc]="item.source" [type]="item.post_type"
+            [likes]="item.reaction_like_count" [comments]="item.comments" [shares]="item.shares" [separator]="true">
           </app-feed-card>
         </ion-col>
       </ion-row>
@@ -99,9 +99,9 @@
   </ion-grid>
 </ion-content>
 <ion-footer class="ion-no-border">
-  <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+  <form [formGroup]="commentForm" (ngSubmit)="submitComment(data, me, commentForm.value)">
     <ion-item lines="none">
-      <ion-input type="text" placeholder="Write your comment" formControlName="comment"></ion-input>
+      <ion-input type="text" placeholder="Write your comment" formControlName="message"></ion-input>
       <ion-button slot="end" class="circle-btn" fill="clear" size="small" shape="round" color="primary" type="submit">
         <ion-icon slot="icon-only" name="paper-plane"></ion-icon>
       </ion-button>

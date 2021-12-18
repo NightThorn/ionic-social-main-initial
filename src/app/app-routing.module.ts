@@ -100,7 +100,7 @@ const routes: Routes = [
   },
   {
     path: 'video-modal',
-    loadChildren: () => import('./pages/video-modal/video-modal.module').then( m => m.VideoModalPageModule)
+    loadChildren: () => import('./pages/video-modal/video-modal.module').then(m => m.VideoModalPageModule)
   },
   {
     path: 'image-modal',
@@ -108,18 +108,23 @@ const routes: Routes = [
   },
   {
     path: 'groups',
-    loadChildren: () => import('./pages/groups/groups.module').then( m => m.GroupsPageModule)
+    loadChildren: () => import('./pages/groups/groups.module').then(m => m.GroupsPageModule)
   },
   {
     path: 'group',
-    loadChildren: () => import('./pages/group/group.module').then( m => m.GroupPageModule)
-  },  {
+    loadChildren: () => import('./pages/group/group.module').then(m => m.GroupPageModule)
+  },
+  {
     path: 'shop',
-    loadChildren: () => import('./pages/shop/shop.module').then( m => m.ShopPageModule)
+    loadChildren: () => import('./pages/shop/shop.module').then(m => m.ShopPageModule)
   },
   {
     path: 'search',
-    loadChildren: () => import('./pages/search/search.module').then( m => m.SearchPageModule)
+    loadChildren: () => import('./pages/search/search.module').then(m => m.SearchPageModule)
+  },
+  {
+    path: 'members',
+    loadChildren: () => import('./pages/group/members/members.module').then(m => m.MembersPageModule)
   }
 
 

@@ -245,7 +245,45 @@ export class DataService {
       })
     );
   }
-  
+  getGroupMembers(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/groupmembers.php?group=${id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  getGroupMedia(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/groupmedia.php?group=${id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  getGroupFeed(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/groupfeed.php?group=${id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
 
   getUsers() {
     return this.mockData.users;

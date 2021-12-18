@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import moment from 'moment';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
+import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ModalPage } from '../modal/modal.page';
 
 @Component({
@@ -22,8 +24,13 @@ export class GroupPage implements OnInit {
   joined: any;
   joinedGroups: any;
   group_id: any;
+  feed: any;
+  members: any;
+  offset: number;
+  media: any;
 
-  constructor(private activeRoute: ActivatedRoute, private authService: AuthenticationService, private modalController: ModalController,
+  constructor(private activeRoute: ActivatedRoute, private router: Router
+    , private authService: AuthenticationService, private modalController: ModalController,
     private dataService: DataService) { }
 
   ngOnInit() {
@@ -66,10 +73,37 @@ export class GroupPage implements OnInit {
         console.log(this.group_id);
         console.log(this.joined);
       });
+
+      this.dataService.getGroupFeed(this.data).subscribe(res => {
+        this.feed = res.message;
+        console.log(this.feed);
+        for (let i = 0; i < this.feed.length; i++) {
+          this.offset = moment().utcOffset();
+
+          this.feed[i]['time'] = moment.utc(this.feed[i]['time']).fromNow();
+        }
+
+      });
+      
+      this.dataService.getGroupMedia(this.data).subscribe(res => {
+        this.media = res.message;
+
+      });
+
     });
   }
 
+  groupmembers(id) {
 
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(id)
+      }
+    };
+    this.router.navigate(['/members'], navigationExtras).then(() => {
+      window.location.reload();
+    });
+  }
   async openModalPost() {
 
     const modal = await this.modalController.create({
@@ -79,5 +113,15 @@ export class GroupPage implements OnInit {
 
     });
     modal.present();
+  }
+  async openModal(source) {
+    const modal = await this.modalController.create({
+      component: ImageModalPage,
+      cssClass: 'modal-container',
+      componentProps: {
+        'source': source
+      },
+    });
+    return await modal.present();
   }
 }
