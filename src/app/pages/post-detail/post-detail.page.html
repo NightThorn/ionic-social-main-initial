@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngFor="let item of post" [fullscreen]="true" class="ion-padding-horizontal">
+<ion-content  [fullscreen]="true" class="ion-padding-horizontal">
   <ion-grid>
     <ion-row>
       <ion-row>
@@ -56,20 +56,20 @@
                   <ion-label style="font-size: small; color: gray;">Reply</ion-label>
                 </ion-item>
                 <ion-list>
-                  <ion-item lines="none" *ngFor="let cm of replies">
-                    <ion-avatar (click)="user(cm.user_id)" slot="start" style="margin-left: 5px;"><img
-                        src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{cm.user_picture}}">
+                  <ion-item lines="none" *ngFor="let reply of replies">
+                    <ion-avatar (click)="user(reply.user_id)" slot="start" style="margin-left: 5px;"><img
+                        src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{reply.user_picture}}">
                     </ion-avatar>
 
-                    <ion-text class="comment"><span (click)="user(cm.user_id)" class="user-comment"
-                        style="color: limegreen;">{{cm.user_name}}</span>
-                      <span class="item-subtitle">{{ cm.time }}</span>
+                    <ion-text class="comment"><span (click)="user(reply.user_id)" class="user-comment"
+                        style="color: limegreen;">{{reply.user_name}}</span>
+                      <span class="item-subtitle">{{ reply.time }}</span>
 
                       <br><br>
                       <ion-row>
                         <ion-col size="9">
                           <span class="user-comment-text">
-                            <div [innerHTML]="cm.text"></div>
+                            <div [innerHTML]="reply.text"></div>
                           </span>
                         </ion-col>
                         <ion-col style="text-align: center;" size="3">
