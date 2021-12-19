@@ -111,13 +111,14 @@
         </ion-segment>
         <div [ngSwitch]="tabType">
           <ion-row *ngSwitchCase="'posts'" class="ion-no-padding">
-            <ion-col *ngFor="let item of fetchedPosts">
-              <app-feed-card [avatar]="item.user_picture" [name]="item.user_name" [post_id]="item.post_id" [date]="item.time"
-                [text]="item.text" [origin]="item.origin_id" [user_id]="item.user_id" [picture]="item.picture_source"
-                [videosrc]="item.source" [type]="item.post_type" [likes]="item.reaction_like_count" [comments]="item.comments"
+            <ion-row style="width: 100%;" *ngFor="let item of fetchedPosts">
+              <app-feed-card style="width: 100%;" [avatar]="item.user_picture" [name]="item.user_name"
+                [post_id]="item.post_id" [date]="item.time" [text]="item.text" [origin]="item.origin_id"
+                [user_id]="item.user_id" [picture]="item.picture_source" [videosrc]="item.source"
+                [type]="item.post_type" [likes]="item.reaction_like_count" [comments]="item.comments"
                 [shares]="item.shares" [separator]="true">
               </app-feed-card>
-            </ion-col>
+            </ion-row>
           </ion-row>
           <ion-row *ngSwitchCase="'photos'" class="ion-padding-vertical">
 
@@ -130,8 +131,9 @@
           </ion-row>
           <ion-row *ngSwitchCase="'groups'" class="ion-no-padding">
             <ion-col size="12" *ngFor="let item of groups">
-              <app-group-card (click)="goToGroup(item.group_id)" [name]="item.group_title" [verified]="item.group_verified"
-                [description]="item.group_description" [image]="item.group_picture" [members]="item.group_members">
+              <app-group-card (click)="goToGroup(item.group_id)" [name]="item.group_title"
+                [verified]="item.group_verified" [description]="item.group_description" [image]="item.group_picture"
+                [members]="item.group_members">
               </app-group-card>
             </ion-col>
           </ion-row>
