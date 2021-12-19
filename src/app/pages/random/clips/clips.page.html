@@ -11,12 +11,12 @@
   <ion-grid>
     <ion-row justify-content-center align-items-center>
       <ion-card>
-        <ion-item >
+        <ion-item>
           <ion-avatar (click)=user(item.user_id) slot="start">
             <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}" />
           </ion-avatar>
           <ion-label>
-            <h3 (click)=user(item.user_id) >{{item.author}}<span *ngIf="item.user_verified === '1'" style="color: lime;">
+            <h3 (click)=user(item.user_id)>{{item.author}}<span *ngIf="item.user_verified === '1'" style="color: lime;">
                 <ion-icon name="checkmark-circle"></ion-icon>
               </span>
               <span *ngIf="item.user_staff === '1'">
@@ -34,22 +34,51 @@
             </h3>
           </ion-label>
         </ion-item>
-        <ion-item >
-          <video style="height: -webkit-fill-available; width: -webkit-fill-available;" #video autoplay="true" webkit-playsinline preload="auto" loop (click)="videoSet()">
+        <ion-item style="width: 100%;">
+          <video #video autoplay="true"
+            webkit-playsinline preload="auto" loop (click)="videoSet()">
             <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.source }}" />
           </video>
         </ion-item>
-        <ion-footer>
-          <ion-row>
-            <ion-col center text-center>
-              <button>
-                <ion-icon name="eye"></ion-icon>
-                <div>{{item.views}} Views</div>
-              </button>
-            </ion-col>
-
-          </ion-row>
-        </ion-footer>
+        <div class="card-footer">
+          <div style="width: 100%;" class="icon-container">
+        
+            <ul>
+              <ion-grid>
+                <ion-row style="text-align: center;">
+                  <ion-col size="4">
+                    <li>
+                      <ion-button fill="clear" size="small" shape="round">
+                        <img src="./assets/images/ggsgray.png"
+                          style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
+                        <ion-label>{{ item.reaction_like_count }}</ion-label>
+                      </ion-button>
+                    </li>
+                  </ion-col>
+                  <ion-col size="4">
+                    <li>
+                      <ion-button (click)="navigateToDetail(item.post_id)" fill="clear" size="small" shape="round">
+                        <ion-icon name="chatbubble-outline"></ion-icon>
+                        <ion-label>{{ item.comments }}</ion-label>
+                      </ion-button>
+                    </li>
+                  </ion-col>
+                  <ion-col size="4">
+                    <li>
+                      <ion-button slot="end" fill="clear" size="small" shape="round">
+                        <ion-icon slot="icon-only" name="arrow-redo-outline"></ion-icon>
+                        <ion-label>{{ item.shares }}</ion-label>
+        
+                      </ion-button>
+        
+                    </li>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ul>
+          </div>
+        
+        </div>
       </ion-card>
     </ion-row>
   </ion-grid>

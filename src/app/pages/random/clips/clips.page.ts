@@ -25,11 +25,11 @@ export class ClipsPage implements OnInit {
     this.dataService.getRandomClip().subscribe(res => {
       this.clip = res.message;
       this.post_id = res.message['0']['post_id'];
-      
+
       window.onbeforeunload = () => this.ionViewWillLeave();
     })
   }
- 
+
   doRefresh(event) {
     console.log('Begin async operation');
     this.dataService.getRandomClip().subscribe(res => {
@@ -62,7 +62,18 @@ export class ClipsPage implements OnInit {
 
 
   }
+  navigateToDetail(id) {
 
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(id)
+      }
+    };
+    this.myVideo.nativeElement.pause();
+
+    this.router.navigate(['post-detail'], navigationExtras);
+
+  }
   user(id) {
 
     let navigationExtras: NavigationExtras = {
@@ -70,6 +81,8 @@ export class ClipsPage implements OnInit {
         special: JSON.stringify(id)
       }
     };
+    this.myVideo.nativeElement.pause();
+
     this.router.navigate(['/user/'], navigationExtras);
 
   }

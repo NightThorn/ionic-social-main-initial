@@ -99,11 +99,24 @@
         </ion-segment>
         <div [ngSwitch]="tabType">
           <ion-row *ngSwitchCase="'posts'" class="ion-no-padding">
-            <ion-col>
-
-            </ion-col>
+<ion-col>
+  <ion-row style="width: 100%;" *ngFor="let item of feed">
+    <app-feed-card style="width: 100%;" [avatar]="item.user_picture" [name]="item.user_name" [post_id]="item.post_id"
+      [date]="item.time" [text]="item.text" [origin]="item.origin_id" [user_id]="item.user_id"
+      [picture]="item.picture_source" [videosrc]="item.source" [type]="item.post_type"
+      [likes]="item.reaction_like_count" [comments]="item.comments" [shares]="item.shares" [separator]="true">
+    </app-feed-card>
+  </ion-row>
+</ion-col>
           </ion-row>
+<ion-row *ngSwitchCase="'photos'" class="ion-no-padding">
 
+  <ion-col size="6" *ngFor="let pic of media">
+    <img class="image-element" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
+      (click)="openModal(pic.source)" />
+
+  </ion-col>
+</ion-row>
 
           <ion-row *ngSwitchCase="'about'" class="ion-no-padding">
             <ion-col>
