@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
+import moment from 'moment';
 import { now } from 'moment';
 import { interval } from 'rxjs';
 import { StoredUser } from 'src/app/models/stored-user';
@@ -29,6 +30,7 @@ export class ChatPage implements OnInit {
   myMessage: Object;
   latest: any;
   lastMessageID: any;
+  offset: number;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private route: ActivatedRoute, private profileService: ProfileService, private authService: AuthenticationService, private dataService: DataService, private router: Router) {
 
@@ -52,7 +54,11 @@ export class ChatPage implements OnInit {
       this.me = storedUser.UserID;
       this.dataService.getChat(this.id).subscribe(res => {
         this.chat = res.message;
+        for (let i = 0; i < this.chat.length; i++) {
+          this.offset = moment().utcOffset();
 
+          this.chat[i]['time'] = moment.utc(this.chat[i]['time']).fromNow();
+        }
         this.currentUser = storedUser.UserID;
         console.log(this.chat);
         setTimeout(() => {
@@ -72,7 +78,8 @@ export class ChatPage implements OnInit {
   getLastMessage(id) {
     this.dataService.getLatestChat(id).subscribe(res => {
       this.latest = res.message;
-      var last = this.chat.find(message => message.message_id == this.latest[0]['message_id'])
+     
+      var last = this.chat.find(message => message.message_id == this.latest[0]['message_id']);
       console.log("latest id", this.latest[0]['message_id']);
       console.log("last var", last);
       if (last) {
@@ -81,6 +88,11 @@ export class ChatPage implements OnInit {
         
         this.dataService.getChat(this.id).subscribe(res => {
           this.chat = res.message;
+          for (let i = 0; i < this.chat.length; i++) {
+            this.offset = moment().utcOffset();
+
+            this.chat[i]['time'] = moment.utc(this.chat[i]['time']).fromNow();
+          }
           console.log(this.chat);
           setTimeout(() => {
             this.updateScroll();
@@ -104,8 +116,6 @@ export class ChatPage implements OnInit {
     });
 
     this.messageForm.reset();
-
-
 
   }
   ionViewDidLeave() {
