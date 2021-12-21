@@ -85,8 +85,8 @@ showReplies(){
 }
   
   
-    submitComment(id, user, text) {
-      let time = new Date(Date.now())
+ submitComment(id, user, text) {
+   let time = new Date(Date.now());
       let data = {
         "post_id": id,
         "user_id": user,

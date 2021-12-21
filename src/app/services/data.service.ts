@@ -8,6 +8,22 @@ export class DataService {
   mockData = mockDataJson;
 
   constructor(private http: HttpClient) { }
+
+  getSearch(query) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/search.php?query=${query}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
   getTournaments() {
 
 
