@@ -136,7 +136,7 @@ export class FeedCardComponent implements OnInit {
 
   }
   hashtag(text) {
-    var repl = text.replace(/#(\w+)/g, '<a href="/search/#$1">#$1</a>');
+    var repl = text.replace(/#(\w+)/g, '<a href="search/#$1">#$1</a>');
 
     return repl;
   }

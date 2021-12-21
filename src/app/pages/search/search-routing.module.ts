@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SearchPage } from './search.page';
 
 const routes: Routes = [
+  
   {
     path: '',
     component: SearchPage,
@@ -21,11 +22,7 @@ const routes: Routes = [
         path: 'groups',
         loadChildren: () => import('./groups/groups.module').then(m => m.GroupsPageModule)
       },
-      {
-        path: '',
-        redirectTo: 'search/posts',
-        pathMatch: 'full'
-      },]
+      ]
   }];
 
 @NgModule({
