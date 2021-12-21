@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { PostsPageRoutingModule } from './posts-routing.module';
 
 import { PostsPage } from './posts.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    ComponentsModule,
     FormsModule,
     IonicModule,
     PostsPageRoutingModule
   ],
   declarations: [PostsPage]
 })
-export class PostsPageModule {}
+export class PostsPageModule { }

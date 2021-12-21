@@ -1,9 +1,32 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>posts</ion-title>
+    <div>
+<ion-buttons slot="start">
+  <ion-back-button defaultHref="/tabs/explore" text=""></ion-back-button>
+</ion-buttons>      <ion-searchbar [(ngModel)]="searchQuery" (search)="search($event)" class="search" animated value="{{data}}"></ion-searchbar>
+    </div>
+
+   
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [scrollEvents]="true" (ionScroll)="didScroll()" [fullscreen]="true" class="ion-padding-horizontal">
+  <ion-grid>
 
+    
+    
+
+    <ion-row style="width: 100%;" *ngFor="let item of dataList">
+      <app-feed-card style="width: 100%;" [avatar]="item.user_picture" [name]="item.user_name" [post_id]="item.post_id"
+        [date]="item.time" [text]="item.text" [origin]="item.origin_id" [user_id]="item.user_id"
+        [picture]="item.picture_source" [videosrc]="item.source" [type]="item.post_type"
+        [likes]="item.reaction_like_count" [comments]="item.comments" [shares]="item.shares" [separator]="true">
+      </app-feed-card>
+    </ion-row>
+
+  </ion-grid>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
