@@ -19,7 +19,7 @@ import { InViewportMetadata } from 'ng-in-viewport';
 })
 export class ExplorePage implements OnInit {
   @ViewChild('myvideo') myVideo: ElementRef;
-  @ViewChildren('player')videoPlayers: QueryList<any>;
+  @ViewChildren('player') videoPlayers: QueryList<any>;
   currentPlaying = null;
   feeds: any;
   latest: any;
@@ -29,6 +29,7 @@ export class ExplorePage implements OnInit {
     slidesPerView: 2.8,
   };
   public dataL: Array<object> = [];
+  searchQuery: any;
 
   usersConfig = {
     initialSlide: 0,
@@ -73,7 +74,7 @@ export class ExplorePage implements OnInit {
 
       }
     });
-    
+
   }
   loadData(event) {
     setTimeout(() => {
@@ -121,7 +122,7 @@ export class ExplorePage implements OnInit {
   }
 
 
-  
+
   isElementInViewport(element) {
     const rect = element.getBoundingClientRect();
     return (
@@ -133,16 +134,27 @@ export class ExplorePage implements OnInit {
   didScroll() {
     if (this.currentPlaying && this.isElementInViewport(this.currentPlaying)) return;
     else if (this.currentPlaying && !this.isElementInViewport(this.currentPlaying)) {
-      
+
       this.currentPlaying.pause();
       this.currentPlaying = null;
     }
-this.videoPlayers.forEach(player => {
-  console.log('player', player);
-});
+    this.videoPlayers.forEach(player => {
+      console.log('player', player);
+    });
 
 
 
+
+
+  }
+  search(event) {
+    var searchQuery = event.target.value as HTMLInputElement
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(searchQuery)
+      }
+    };
+    this.router.navigate(['search/posts'], navigationExtras)
 
 
   }

@@ -24,6 +24,36 @@ export class DataService {
     );
 
   }
+  getSearchGroups(query) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/search.php?query=${query}&tab=groups`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
+  getSearchPeople(query) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/search.php?query=${query}&tab=people`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
   getTournaments() {
 
 
@@ -383,7 +413,7 @@ export class DataService {
       })
     );
   }
-  
+
   getChat(id) {
 
 

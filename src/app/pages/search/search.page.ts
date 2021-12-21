@@ -26,14 +26,15 @@ export class SearchPage implements OnInit {
   ngOnInit() {
     if (this.data = 'null') {
       this.href = this.router.url;
-      var repl = this.href.replace("/search#", "");
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          special: JSON.stringify(repl)
-        }
-      };
-      this.router.navigate(['/search/posts'], navigationExtras);
+      this.data = this.href.replace("/search#", "");
+      
     }
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(this.data)
+      }
+    };
+    this.router.navigate(['/search/posts'], navigationExtras);
   }
 
 }

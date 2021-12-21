@@ -2,8 +2,7 @@
   <ion-toolbar>
     <div>
       <a href="tabs/explore"><img style="max-width: 40px;" src="assets/images/logo.jpg"></a>
-      <ion-searchbar class="search" animated></ion-searchbar>
-    </div>
+<ion-searchbar [(ngModel)]="searchQuery" (search)="search($event)" class="search" animated></ion-searchbar>    </div>
     <ion-buttons slot="end">
 
       <ion-button (click)="goToSettings()">

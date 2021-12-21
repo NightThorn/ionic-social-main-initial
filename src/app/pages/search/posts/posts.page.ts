@@ -111,9 +111,10 @@ export class PostsPage implements OnInit {
   }
   search(event) {
     var searchQuery = event.target.value as HTMLInputElement
-    this.dataService.getSearch(searchQuery).subscribe(res => {
+    this.data = searchQuery;
+    console.log("i am the data now", this.data)
+    this.dataService.getSearch(this.data).subscribe(res => {
       this.results = res.message;
-      console.log(searchQuery);
       for (let i = 0; i < this.results.length; i++) {
         this.offset = moment().utcOffset();
 
