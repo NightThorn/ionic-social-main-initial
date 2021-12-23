@@ -45,7 +45,7 @@ export class PostDetailPage implements OnInit {
         this.me = storedUser.UserID;
 
       }
-    })
+    });
   
     this.dataService.getPostDetails(this.data).subscribe(res => {
       this.post = res.message;
@@ -94,7 +94,7 @@ showReplies(){
         "time": time
       };
 
-      this.http.post('https://ggs.tv/api/v1/post.php', JSON.stringify(data)).subscribe(res => {
+      this.http.post('https://ggs.tv/api/v1/post.php?action=comment', JSON.stringify(data)).subscribe(res => {
         console.log(res);
       });
 

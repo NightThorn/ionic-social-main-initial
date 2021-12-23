@@ -13,11 +13,12 @@
     <ion-row>
 
       <ion-col size-12>
-
-        <ion-item>
-          <ion-textarea placeholder="What's up?"></ion-textarea>
-        </ion-item>
-
+        <form [formGroup]="postForm" (ngSubmit)="post(me, postForm.value)">
+          <ion-item>
+            <ion-textarea formControlName="message" placeholder="What's up?"></ion-textarea>
+          </ion-item>
+          <ion-button type="submit" ion-button full>Post</ion-button>
+        </form>
       </ion-col>
 
     </ion-row>
@@ -42,6 +43,3 @@
 
   </ion-grid>
 </ion-content>
-<ion-footer>
-  <ion-button ion-button full>Post</ion-button>
-</ion-footer>
