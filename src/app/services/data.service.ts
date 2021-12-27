@@ -347,7 +347,19 @@ export class DataService {
       })
     );
   }
+  getLikes(post_id) {
 
+
+    return this.http.get(`https://ggs.tv/api/v1/getlikes.php?post=${post_id}`).pipe(map((res: any) => {
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   getPostCommentReplies(post_id) {
 
 

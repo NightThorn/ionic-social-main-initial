@@ -7,6 +7,9 @@ import { htmlEncode, htmlDecode } from 'js-htmlencode';
 
 import { DataService } from 'src/app/services/data.service';
 import { HashLocationStrategy } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { StoredUser } from 'src/app/models/stored-user';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-feed-card',
@@ -47,77 +50,106 @@ export class FeedCardComponent implements OnInit {
   external: string;
   decodedtext: any;
   sharedmedia: any;
+  activeStoredUserSubscription$;
+  me: number;
+  reacts: any;
+  liked: any;
+  reacted: any;
 
-  constructor(private router: Router, private sanitizer: DomSanitizer, private dataService: DataService) { }
+  constructor(private router: Router, private sanitizer: DomSanitizer, private authService: AuthenticationService, private http: HttpClient, private dataService: DataService) {
 
-  ngOnInit() {
-    if (this.text.includes('#')) {
-      this.decodedtext = htmlDecode(this.text)
-      this.text = this.hashtag(this.decodedtext);
-
-    }
-    if (this.type === 'shared') {
-
-      this.dataService.getPostDetails(this.origin).subscribe(res => {
-        this.shared = res.message;
-        for (let i = 0; i < this.shared.length; i++) {
-          this.offset = moment().utcOffset();
-
-          this.shared[i]['time'] = moment.utc(this.shared[i]['time']).fromNow();
-        }
-
-      });
-      this.dataService.getMediaPost(this.origin).subscribe(res => {
-        this.sharedmedia = res.message;
-        for (let i = 0; i < this.sharedmedia.length; i++) {
-          this.offset = moment().utcOffset();
-          if (this.sharedmedia[i]['source_url'].includes('tube')) {
-            this.result = this.sharedmedia[i]['source_url'].replace('watch?v=', 'embed/');
-            this.preurl = htmlDecode(this.result).replace('&feature=youtu.be', '');
-
-            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
-            console.log("test?", this.urls);
-            this.external = "youtube";
-          } else if (this.sharedmedia[i]['source_url'].includes('twitch')) {
-            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
-
-            this.sharedmedia[i]['time'] = moment.utc(this.sharedmedia[i]['time']).fromNow();
-            this.external = "twitch";
-
-          }
-        }
-
-      });
-
-    }
-
-    if (this.type === 'media') {
-
-      this.dataService.getMediaPost(this.post_id).subscribe(res => {
-        this.media = res.message;
-        console.log("asdf", this.media);
-        for (let i = 0; i < this.media.length; i++) {
-          this.offset = moment().utcOffset();
-          if (this.media[i]['source_url'].includes('tube')) {
-            this.result = this.media[i]['source_url'].replace('watch?v=', 'embed/');
-            this.preurl = htmlDecode(this.result).replace('&feature=youtu.be', '');
-
-            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
-            console.log("test?", this.urls);
-            this.external = "youtube";
-          } else if (this.media[i]['source_url'].includes('twitch')) {
-            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
-
-            this.media[i]['time'] = moment.utc(this.media[i]['time']).fromNow();
-            this.external = "twitch";
-
-          }
-        }
-
-      });
-    }
 
   }
+
+  ngOnInit() {
+
+    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
+      this.me = storedUser.UserID;
+      console.log(this.me, "meeeeee");
+
+
+
+
+      if (this.text.includes('#')) {
+        this.decodedtext = htmlDecode(this.text)
+        this.text = this.hashtag(this.decodedtext);
+
+      }
+      if (this.type === 'shared') {
+
+        this.dataService.getPostDetails(this.origin).subscribe(res => {
+          this.shared = res.message;
+          for (let i = 0; i < this.shared.length; i++) {
+            this.offset = moment().utcOffset();
+
+            this.shared[i]['time'] = moment.utc(this.shared[i]['time']).fromNow();
+          }
+
+        });
+        this.dataService.getMediaPost(this.origin).subscribe(res => {
+          this.sharedmedia = res.message;
+          for (let i = 0; i < this.sharedmedia.length; i++) {
+            this.offset = moment().utcOffset();
+            if (this.sharedmedia[i]['source_url'].includes('tube')) {
+              this.result = this.sharedmedia[i]['source_url'].replace('watch?v=', 'embed/');
+              this.preurl = htmlDecode(this.result).replace('&feature=youtu.be', '');
+
+              this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
+              this.external = "youtube";
+            } else if (this.sharedmedia[i]['source_url'].includes('twitch')) {
+              this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
+
+              this.sharedmedia[i]['time'] = moment.utc(this.sharedmedia[i]['time']).fromNow();
+              this.external = "twitch";
+
+            }
+          }
+
+        });
+
+      }
+
+      if (this.type === 'media') {
+
+        this.dataService.getMediaPost(this.post_id).subscribe(res => {
+          this.media = res.message;
+          for (let i = 0; i < this.media.length; i++) {
+            this.offset = moment().utcOffset();
+            if (this.media[i]['source_url'].includes('tube')) {
+              this.result = this.media[i]['source_url'].replace('watch?v=', 'embed/');
+              this.preurl = htmlDecode(this.result).replace('&feature=youtu.be', '');
+
+              this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
+              this.external = "youtube";
+            } else if (this.media[i]['source_url'].includes('twitch')) {
+              this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
+
+              this.media[i]['time'] = moment.utc(this.media[i]['time']).fromNow();
+              this.external = "twitch";
+
+            }
+          }
+
+        });
+      }
+      this.dataService.getLikes(this.post_id).subscribe(res => {
+        this.reacted = res.message;
+        var i_like = this.reacted.find(message => message.user_id == this.me)
+        console.log("i like", i_like);
+        if (i_like) {
+          this.liked = "1";
+
+        } else {
+
+          this.liked = "0";
+
+        }
+      });
+    });
+  }
+
+
+
   onIntersection($event) {
     const { [InViewportMetadata]: { entry }, target } = $event;
     const ratio = entry.intersectionRatio;
@@ -150,7 +182,42 @@ export class FeedCardComponent implements OnInit {
 
   }
 
+  react(id) {
+    let data = {
+      "post_id": id,
+      "user_id": this.me,
+    };
+
+
+    this.http.post('https://ggs.tv/api/v1/post.php?action=react', JSON.stringify(data)).subscribe(res => {
+      console.log(res);
+      document.getElementById("react-button").classList.add('hide-button');
+
+      document.getElementById("unreact-button").classList.add('show-button');
+
+    });
 
 
 
+
+  }
+
+  unreact(id) {
+
+    let data = {
+      "post_id": id,
+      "user_id": this.me,
+    };
+    this.http.post('https://ggs.tv/api/v1/post.php?action=unreact', JSON.stringify(data)).subscribe(res => {
+      console.log(res);
+      this.likes = this.likes - 1;
+      document.getElementById('unreact-button').classList.add('hide-button');
+
+      document.getElementById('react-button').classList.add('show-button');
+
+    });
+  }
 }
+
+
+

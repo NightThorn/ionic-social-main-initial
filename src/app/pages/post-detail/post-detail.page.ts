@@ -6,7 +6,7 @@ import moment from 'moment';
 import { DataService } from 'src/app/services/data.service';
 import { ImageModalPage } from '../image-modal/image-modal.page';
 import { VideoModalPage } from '../video-modal/video-modal.page';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -85,7 +85,12 @@ showReplies(){
 }
   
   
- submitComment(id, user, text) {
+  submitComment(id, user, text) {
+    var headers = new HttpHeaders();
+    headers.append("Accept", 'application/json');
+    headers.append('Content-Type', 'application/json');
+    headers.append('Access-Control-Allow-Origin', '*');
+
    let time = new Date(Date.now());
       let data = {
         "post_id": id,
@@ -94,7 +99,7 @@ showReplies(){
         "time": time
       };
 
-      this.http.post('https://ggs.tv/api/v1/post.php?action=comment', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/post.php?action=comment', JSON.stringify(data), { headers: headers }).subscribe(res => {
         console.log(res);
       });
 

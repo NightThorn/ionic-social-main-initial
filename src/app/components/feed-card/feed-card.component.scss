@@ -60,6 +60,13 @@ ion-card-content {
   }
 }
 
+.hide{
+display:none;
+}
+
+.show{
+display:block;
+}
 ion-item {
   --inner-padding-end: 10px;
 }
