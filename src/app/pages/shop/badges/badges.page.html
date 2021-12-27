@@ -11,7 +11,6 @@
   <ion-row class="ion-no-padding">
 
     <ion-col size="6" *ngFor="let item of badges">
-
       <ion-card class="ion-text-center">
         <ion-card-header>
         </ion-card-header>
@@ -23,6 +22,7 @@
             <div [innerHTML]="item.display">
             </div>
           </ion-card-title>
+          <ion-button><img style="width: 25px;" src="assets/images/heads.png" />{{item.price}}</ion-button>
         </ion-card-content>
       </ion-card>
     </ion-col>
