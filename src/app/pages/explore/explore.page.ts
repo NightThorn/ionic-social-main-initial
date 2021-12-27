@@ -11,6 +11,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { VideoModalPage } from '../video-modal/video-modal.page';
 import moment from 'moment';
 import { InViewportMetadata } from 'ng-in-viewport';
+import { XpmodalPage } from '../xpmodal/xpmodal.page';
 
 @Component({
   selector: 'app-explore',
@@ -139,7 +140,19 @@ export class ExplorePage implements OnInit {
     });
     modal.present();
   }
+  async openXPModal(xp) {
 
+    const modal = await this.modalController.create({
+      component: XpmodalPage,
+      cssClass: 'modal',
+      backdropDismiss: false,
+      componentProps: {
+        'xp': xp
+      }
+
+    });
+    modal.present();
+  }
 
  numFormatter(num) {
   if (num > 999 && num < 1000000) {

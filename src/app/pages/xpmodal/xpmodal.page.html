@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <h1 style=" display: flex; align-items:center;">
+      <img style="width: 40px; margin: 10px;" src="assets/images/XP.png">
+      <ion-icon name="arrow-forward-outline"></ion-icon>
+      <img style="width: 40px; margin: 10px;" src="assets/images/heads.png">
+    </h1>
+    <ion-buttons (click)="dismissModal()" slot="end">
+      <ion-icon name="close-outline"></ion-icon>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p>Earn <img style="width: 25px; " src="assets/images/XP.png">
+    by commenting and posting on the app.</p>
+  <p>Convert earned <img style="width: 25px; " src="assets/images/XP.png">
+    into <img style="width: 25px;" src="assets/images/heads.png">
+    </p>
+    <p style="display: flex;"> 1000 <img style="width: 25px; " src="assets/images/XP.png">
+      = 1 <img style="width: 25px;" src="assets/images/heads.png">
+    </p>
+
+  <form [formGroup]="xpForm" (ngSubmit)="convert(gg)">
+    <ion-item>
+      <ion-input style="width: 40px;" formControlName="xp" readonly value="{{xp}}"><img
+          style="width: 40px; margin: 10px;" src="assets/images/XP.png">
+      </ion-input>
+      <ion-icon style="padding-right: 20px;" name="arrow-forward-outline"></ion-icon>
+      <ion-input formControlName="xp" readonly value="{{gg}}"><img style="width: 40px; margin: 10px;"
+          src="assets/images/heads.png">
+      </ion-input>
+    </ion-item>
+    <ion-button type="submit" ion-button full>Convert</ion-button>
+  </form>
+</ion-content>

@@ -125,7 +125,13 @@ const routes: Routes = [
   {
     path: 'members',
     loadChildren: () => import('./pages/group/members/members.module').then(m => m.MembersPageModule)
-  }
+  },
+  {
+    path: 'xpmodal',
+    loadChildren: () => import('./pages/xpmodal/xpmodal.module').then( m => m.XpmodalPageModule)
+  },
+  
+
 
 
 
