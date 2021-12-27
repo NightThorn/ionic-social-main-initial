@@ -10,6 +10,7 @@ import { HashLocationStrategy } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { NgxTweetModule } from "ngx-tweet";
 
 @Component({
   selector: 'app-feed-card',
@@ -55,7 +56,7 @@ export class FeedCardComponent implements OnInit {
   reacts: any;
   liked: any;
   reacted: any;
-
+  image: string = "./assets/images/ggsgray.png";
   constructor(private router: Router, private sanitizer: DomSanitizer, private authService: AuthenticationService, private http: HttpClient, private dataService: DataService) {
 
 
@@ -121,6 +122,13 @@ export class FeedCardComponent implements OnInit {
 
               this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
               this.external = "youtube";
+            }
+            else if (this.media[i]['source_url'].includes('twitter')) {
+              this.result = this.media[i]['source_url'].substring(this.media[i]['source_url'].lastIndexOf('/') + 1);
+              this.result = this.result.replace('?s=20', '');
+
+              console.log("twittaer", this.result);
+              this.external = "twitter";
             } else if (this.media[i]['source_url'].includes('twitch')) {
               this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
 
@@ -138,10 +146,11 @@ export class FeedCardComponent implements OnInit {
         console.log("i like", i_like);
         if (i_like) {
           this.liked = "1";
-
+          this.image = "./assets/images/ggs.png";
         } else {
 
           this.liked = "0";
+          this.image = "./assets/images/ggsgray.png";
 
         }
       });
@@ -191,9 +200,12 @@ export class FeedCardComponent implements OnInit {
 
     this.http.post('https://ggs.tv/api/v1/post.php?action=react', JSON.stringify(data)).subscribe(res => {
       console.log(res);
-      document.getElementById("react-button").classList.add('hide-button');
+      this.likes++;
+      this.liked = "1";
+      this.image = "./assets/images/ggs.png";
 
-      document.getElementById("unreact-button").classList.add('show-button');
+
+
 
     });
 
@@ -210,10 +222,9 @@ export class FeedCardComponent implements OnInit {
     };
     this.http.post('https://ggs.tv/api/v1/post.php?action=unreact', JSON.stringify(data)).subscribe(res => {
       console.log(res);
-      this.likes = this.likes - 1;
-      document.getElementById('unreact-button').classList.add('hide-button');
-
-      document.getElementById('react-button').classList.add('show-button');
+      this.likes--;
+      this.liked = "0";
+      this.image = "./assets/images/ggsgray.png";
 
     });
   }

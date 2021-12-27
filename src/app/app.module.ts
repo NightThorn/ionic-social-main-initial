@@ -12,6 +12,7 @@ import { ProfileService } from './services/profile.service';
 import { PopoverPageModule } from './pages/popover/popover.module';
 import { ModalPageModule } from './pages/modal/modal.module';
 import { InViewportModule } from 'ng-in-viewport';
+import { NgxTweetModule } from "ngx-tweet";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { InViewportModule } from 'ng-in-viewport';
   entryComponents: [],
   imports: [
     BrowserModule,
+    NgxTweetModule,
     FormsModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
