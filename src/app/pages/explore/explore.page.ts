@@ -46,6 +46,9 @@ export class ExplorePage implements OnInit {
   };
   activeStoredUserSubscription$;
   offset: number;
+  xp: any;
+  myXP: any;
+  myWallet: any;
 
 
 
@@ -58,6 +61,7 @@ export class ExplorePage implements OnInit {
       if (storedUser !== null) {
         console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
         console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+       
         this.dataService.getFeed(storedUser.UserID).subscribe(res => {
           this.feeds = res.message;
           for (let i = 0; i < this.feeds.length; i++) {
@@ -71,7 +75,16 @@ export class ExplorePage implements OnInit {
         this.dataService.getLatestVid(storedUser.UserID).subscribe(res => {
           this.latest = res.message;
         });
+        this.dataService.getXP(storedUser.UserID).subscribe(res => {
+          this.xp = res.message;
+          for (let i = 0; i < this.xp.length; i++) {
 
+            this.myXP = this.numFormatter(this.xp[i]['user_points']);
+            this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
+
+            console.log("xp", this.myXP);
+          }
+        });
       }
     });
 
@@ -101,6 +114,12 @@ export class ExplorePage implements OnInit {
   goToSettings() {
     this.router.navigate(['settings']);
   }
+  gotoSearch() {
+    this.router.navigate(['search/posts']);
+  }
+  gotoShop() {
+    this.router.navigate(['shop']);
+  }
   eventDetail(item) {
     let navigationExtras: NavigationExtras = {
       state: {
@@ -122,7 +141,15 @@ export class ExplorePage implements OnInit {
   }
 
 
-
+ numFormatter(num) {
+  if (num > 999 && num < 1000000) {
+    return (num / 1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
+  } else if (num > 1000000) {
+    return (num / 1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
+  } else if (num < 900) {
+    return num; // if value < 1000, nothing to do
+  }
+}
   isElementInViewport(element) {
     const rect = element.getBoundingClientRect();
     return (
@@ -147,17 +174,7 @@ export class ExplorePage implements OnInit {
 
 
   }
-  search(event) {
-    var searchQuery = event.target.value as HTMLInputElement
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(searchQuery)
-      }
-    };
-    this.router.navigate(['search/posts'], navigationExtras)
-
-
-  }
+ 
 
   async openVideoModal(source) {
     const modal = await this.modalController.create({

@@ -1,11 +1,18 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <div>
-      <a href="tabs/explore"><img style="max-width: 40px;" src="assets/images/logo.jpg"></a>
-<ion-searchbar [(ngModel)]="searchQuery" (search)="search($event)" class="search" animated></ion-searchbar>    </div>
-    <ion-buttons slot="end">
+    <div style=" display: flex; align-items:center;" >
+      <img (click)="gotoShop()" style="width: 30px; margin: 10px;" src="assets/images/XP.png">
+      <ion-label (click)="gotoShop()">{{myXP}}</ion-label>
+      <img (click)="gotoShop()" style="width: 30px; margin: 10px;" src="assets/images/heads.png">
+      <ion-label (click)="gotoShop()">{{myWallet}}</ion-label>
 
-      <ion-button (click)="goToSettings()">
+    </div>
+    <ion-buttons slot="end">
+      <ion-button (click)="gotoSearch()">
+
+        <ion-icon name="search-outline"></ion-icon>
+      </ion-button>
+      <ion-button style="margin: 10px;" (click)="goToSettings()">
         <ion-icon class="white-icon" slot="icon-only" name="options"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -36,12 +43,12 @@
       </ion-col>
     </ion-row>
 
-      <ion-row style="width: 100%;" *ngFor="let item of dataList">
-        <app-feed-card style="width: 100%;" [avatar]="item.user_picture" [name]="item.user_name" [post_id]="item.post_id" [date]="item.time"
-          [text]="item.text" [origin]="item.origin_id" [user_id]="item.user_id" [picture]="item.picture_source"
-          [videosrc]="item.source" [type]="item.post_type" [likes]="item.reaction_like_count" [comments]="item.comments"
-          [shares]="item.shares" [separator]="true">
-        </app-feed-card>
+    <ion-row style="width: 100%;" *ngFor="let item of dataList">
+      <app-feed-card style="width: 100%;" [avatar]="item.user_picture" [name]="item.user_name" [post_id]="item.post_id"
+        [date]="item.time" [text]="item.text" [origin]="item.origin_id" [user_id]="item.user_id"
+        [picture]="item.picture_source" [videosrc]="item.source" [type]="item.post_type"
+        [likes]="item.reaction_like_count" [comments]="item.comments" [shares]="item.shares" [separator]="true">
+      </app-feed-card>
     </ion-row>
 
   </ion-grid>
