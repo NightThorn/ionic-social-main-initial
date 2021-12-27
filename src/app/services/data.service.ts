@@ -70,6 +70,19 @@ export class DataService {
 
   }
 
+  getBadgeShop() {
+    return this.http.get(`https://ggs.tv/api/v1/badges.php`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
   getFeed(user) {
     return this.http.get(`https://ggs.tv/api/v1/feed.php?filter=recent&user=${user}`).pipe(map((res: any) => {
 

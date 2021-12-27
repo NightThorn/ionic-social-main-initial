@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-badges',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./badges.page.scss'],
 })
 export class BadgesPage implements OnInit {
+  badges: any;
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
+    this.dataService.getBadgeShop().subscribe(res => {
+      this.badges = res.message;
+    });
   }
-
 }

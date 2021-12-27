@@ -7,11 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { MiscPageRoutingModule } from './misc-routing.module';
 
 import { MiscPage } from './misc.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    ComponentsModule,
     IonicModule,
     MiscPageRoutingModule
   ],

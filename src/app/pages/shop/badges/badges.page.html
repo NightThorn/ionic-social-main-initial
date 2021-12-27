@@ -5,8 +5,26 @@
     </ion-buttons>
     <ion-title>Badges</ion-title>
   </ion-toolbar>
-  </ion-header>
+</ion-header>
 
 <ion-content>
+  <ion-row class="ion-no-padding">
 
+    <ion-col size="6" *ngFor="let item of badges">
+
+      <ion-card class="ion-text-center">
+        <ion-card-header>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-thumbnail>
+            <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.icon}}" />
+          </ion-thumbnail>
+          <ion-card-title style="color: lime;">
+            <div [innerHTML]="item.display">
+            </div>
+          </ion-card-title>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
 </ion-content>
