@@ -51,10 +51,7 @@
           <iframe frameborder="0" playsinline allowfullscreen width="100%" height="315" [src]="urls">
           </iframe>
         </ion-card>
-        <ion-card *ngIf="external === 'twitter'" style="border: 2px solid green; width: 100%;">
-          <ngx-tweet tweetId="{{result}}"></ngx-tweet>
-
-        </ion-card>
+        
         <ion-card *ngIf="external === 'twitch'">
           <a href="{{share.source_url}}"> <img src="./assets/images/twitch.jpg"></a>
         </ion-card>

@@ -123,13 +123,7 @@ export class FeedCardComponent implements OnInit {
               this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
               this.external = "youtube";
             }
-            else if (this.media[i]['source_url'].includes('twitter')) {
-              this.result = this.media[i]['source_url'].substring(this.media[i]['source_url'].lastIndexOf('/') + 1);
-              this.result = this.result.replace('?s=20', '');
-
-              console.log("twittaer", this.result);
-              this.external = "twitter";
-            } else if (this.media[i]['source_url'].includes('twitch')) {
+            else if (this.media[i]['source_url'].includes('twitch')) {
               this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
 
               this.media[i]['time'] = moment.utc(this.media[i]['time']).fromNow();
