@@ -22,7 +22,12 @@
             <div [innerHTML]="item.display">
             </div>
           </ion-card-title>
-          <ion-button><img style="width: 25px;" src="assets/images/heads.png" />{{item.price}}</ion-button>
+          <ion-button *ngIf="pro !== '1' && item.pro_only == 1" (click)="goToPro()"><img style="width: 25px;"
+              src="assets/images/heads.png" />{{item.price}}</ion-button>
+          <ion-button *ngIf="pro == '1' && item.pro_only == 1" (click)="buyBadge(item.id)"><img style="width: 25px;"
+              src="assets/images/heads.png" />{{item.price}}</ion-button>
+          <ion-button *ngIf="item.pro_only == 0" (click)="buyBadge(item.id)"><img style="width: 25px;"
+              src="assets/images/heads.png" />{{item.price}}</ion-button>
         </ion-card-content>
       </ion-card>
     </ion-col>

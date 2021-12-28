@@ -129,7 +129,11 @@ const routes: Routes = [
   {
     path: 'xpmodal',
     loadChildren: () => import('./pages/xpmodal/xpmodal.module').then( m => m.XpmodalPageModule)
+  },  {
+    path: 'buymodal',
+    loadChildren: () => import('./pages/buymodal/buymodal.module').then( m => m.BuymodalPageModule)
   },
+
   
 
 

@@ -83,6 +83,19 @@ export class DataService {
     );
 
   }
+  badgeShopInfo(id) {
+    return this.http.get(`https://ggs.tv/api/v1/badgeshopinfo.php?user=${id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
   getMerch() {
     return this.http.get(`https://ggs.tv/api/v1/merch.php`).pipe(map((res: any) => {
 

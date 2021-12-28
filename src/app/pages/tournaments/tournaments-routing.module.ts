@@ -22,6 +22,10 @@ const routes: Routes = [
         loadChildren: () => import('./create/create.module').then( m => m.CreatePageModule)
       },
       {
+        path: 'giveaways',
+        loadChildren: () => import('./giveaways/giveaways.module').then(m => m.GiveawaysPageModule)
+      },
+      {
         path: 'tournament-details',
         loadChildren: () => import('./tournament-details/tournament-details.module').then( m => m.TournamentDetailsPageModule)
       }
@@ -31,6 +35,7 @@ const routes: Routes = [
     path: 'tournament-details',
     loadChildren: () => import('./tournament-details/tournament-details.module').then( m => m.TournamentDetailsPageModule)
   },
+  
  
 ];
 
