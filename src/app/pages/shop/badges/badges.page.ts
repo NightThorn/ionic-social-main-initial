@@ -14,11 +14,12 @@ import { BuymodalPage } from '../../buymodal/buymodal.page';
   styleUrls: ['./badges.page.scss'],
 })
 export class BadgesPage implements OnInit {
-  badges: any;
+  badges: any = [];
   pro: any;
   me: number;
   activeStoredUserSubscription$;
   info: any;
+  badgesArray: any;
 
   constructor(private dataService: DataService, private router: Router, private authService: AuthenticationService, private modalController: ModalController) { }
 
@@ -43,7 +44,7 @@ export class BadgesPage implements OnInit {
 
             } else if (this.badges[i]['price'] == '0.00' && this.badges[i]['pro_only'] == '1') {
               this.badges[i]['price'] = "Pro Exclusive";
-              
+
             }
           }
         });
@@ -51,22 +52,23 @@ export class BadgesPage implements OnInit {
     });
   }
 
-  async buyBadge(id) {
-   
-      const modal = await this.modalController.create({
-        component: BuymodalPage,
-        backdropDismiss: false,
-        cssClass: 'modal',
+  async buyBadge(id, price) {
 
-        componentProps: {
-          'id': id
-        }
-      });
-      modal.present();
-    }
+    const modal = await this.modalController.create({
+      component: BuymodalPage,
+      backdropDismiss: false,
+      cssClass: 'modal',
+
+      componentProps: {
+        'id': id,
+        'price': price
+      }
+    });
+    modal.present();
+  }
 
   goToPro() {
-    
+
     this.router.navigate(['shop/misc']);
 
   }

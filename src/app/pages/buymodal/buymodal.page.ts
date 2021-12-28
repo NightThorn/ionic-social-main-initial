@@ -12,6 +12,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class BuymodalPage implements OnInit {
   @Input() id: number;
+  @Input() price: number;
 
   activeStoredUserSubscription$;
   me: number;
@@ -25,7 +26,6 @@ export class BuymodalPage implements OnInit {
         console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
         console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
         this.me = storedUser.UserID;
-        //check if user is pro
         
         
       }
