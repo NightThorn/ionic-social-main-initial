@@ -56,6 +56,10 @@
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
 </ion-content>
 <ion-fab vertical="bottom" horizontal="end" slot="fixed">
   <ion-fab-button (click)="openModalPost()">

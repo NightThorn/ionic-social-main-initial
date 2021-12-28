@@ -50,7 +50,7 @@
         <ion-list class="ion-no-padding">
           <ion-list-header>
             <ion-label>Notifications settings</ion-label>
-          </ion-list-header>      
+          </ion-list-header>
           <ion-item lines="none">
             <ion-avatar slot="start" class="icon-bg">
               <ion-icon name="notifications-outline"></ion-icon>
@@ -78,15 +78,43 @@
               <p>All the help you need</p>
             </ion-label>
           </ion-item>
-          <ion-item lines="none">
-            <ion-avatar slot="start" class="icon-bg">
-              <ion-icon name="mail-outline"></ion-icon>
-            </ion-avatar>
-            <ion-label>
-              <h2>Contact us</h2>
-              <p>24/7 support assistance</p>
-            </ion-label>
-          </ion-item>
+          <ion-row>
+            <ion-list class="ion-no-padding">
+              <ion-list-header>
+                <ion-label>Newsfeed</ion-label>
+              </ion-list-header>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-item [ngStyle]="{'border':value === 'all' ? '2px solid green' : 'red' }"
+                      (click)="all()" lines="none">
+                      <ion-avatar slot="start" class="icon-bg">
+
+                        <ion-icon name="earth-outline"></ion-icon>
+                      </ion-avatar>
+                      <ion-label>
+                        <h2>All</h2>
+                        <p>All posts</p>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item [ngStyle]="{'border':value === 'following' ? '2px solid green' : 'red' }"
+                      (click)="following()" lines="none">
+                      <ion-avatar slot="start" class="icon-bg">
+
+                        <ion-icon name="people-outline"></ion-icon>
+                      </ion-avatar>
+                      <ion-label>
+                        <h2>Following</h2>
+                        <p>Following only</p>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-list>
+          </ion-row>
         </ion-list>
       </ion-col>
     </ion-row>

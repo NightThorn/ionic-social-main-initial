@@ -96,6 +96,19 @@ export class DataService {
     );
 
   }
+  getAllPosts(user) {
+    return this.http.get(`https://ggs.tv/api/v1/feed.php?filter=all&user=${user}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
   getXP(user) {
     return this.http.get(`https://ggs.tv/api/v1/xp.php?tab=get&user=${user}`).pipe(map((res: any) => {
 

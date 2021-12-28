@@ -50,7 +50,8 @@ export class ExplorePage implements OnInit {
   xp: any;
   myXP: any;
   myWallet: any;
-
+  filter = "all";
+  me: any;
 
 
   constructor(private router: Router, private authService: AuthenticationService, private modalController: ModalController, private storage: Storage, private dataService: DataService) { }
@@ -62,17 +63,34 @@ export class ExplorePage implements OnInit {
       if (storedUser !== null) {
         console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
         console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
-       
-        this.dataService.getFeed(storedUser.UserID).subscribe(res => {
-          this.feeds = res.message;
-          for (let i = 0; i < this.feeds.length; i++) {
-            this.offset = moment().utcOffset();
+        this.me = storedUser.UserID;
+        this.filter = localStorage.getItem("filter");
 
-            this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
-          }
-          this.dataList = this.feeds.slice(0, this.topLimit);
+        if (this.filter = "all") {
+          this.dataService.getAllPosts(storedUser.UserID).subscribe(res => {
+            this.feeds = res.message;
+            for (let i = 0; i < this.feeds.length; i++) {
+              this.offset = moment().utcOffset();
 
-        });
+              this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
+            }
+            this.dataList = this.feeds.slice(0, this.topLimit);
+
+          });
+        } else {
+
+          this.dataService.getFeed(storedUser.UserID).subscribe(res => {
+            this.feeds = res.message;
+            for (let i = 0; i < this.feeds.length; i++) {
+              this.offset = moment().utcOffset();
+
+              this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
+            }
+            this.dataList = this.feeds.slice(0, this.topLimit);
+
+          });
+
+        }
         this.dataService.getLatestVid(storedUser.UserID).subscribe(res => {
           this.latest = res.message;
         });
@@ -121,6 +139,36 @@ export class ExplorePage implements OnInit {
   gotoShop() {
     this.router.navigate(['shop']);
   }
+  doRefresh(event) {
+    if (this.filter = "all") {
+      this.dataService.getAllPosts(this.me).subscribe(res => {
+        this.feeds = res.message;
+        for (let i = 0; i < this.feeds.length; i++) {
+          this.offset = moment().utcOffset();
+
+          this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
+        }
+        this.dataList = this.feeds.slice(0, this.topLimit);
+
+      });
+    } else {
+
+      this.dataService.getFeed(this.me).subscribe(res => {
+        this.feeds = res.message;
+        for (let i = 0; i < this.feeds.length; i++) {
+          this.offset = moment().utcOffset();
+
+          this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
+        }
+        this.dataList = this.feeds.slice(0, this.topLimit);
+
+      });
+    };
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+  }
+
   eventDetail(item) {
     let navigationExtras: NavigationExtras = {
       state: {
