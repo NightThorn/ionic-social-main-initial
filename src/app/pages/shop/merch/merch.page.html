@@ -8,5 +8,24 @@
 </ion-header>
 
 <ion-content>
+  <ion-row class="ion-no-padding">
 
+    <ion-col size="6" *ngFor="let item of merch">
+      <ion-card style="background-image: url(https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.picture}})"
+        class="ion-text-center">
+        <ion-card-header>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card-subtitle style="color: limegreen;">
+            <div [innerHTML]="item.name"></div>
+          </ion-card-subtitle>
+        </ion-card-content>
+       
+      </ion-card>
+      <div class="card-footer">
+      
+        <ion-button><img style="width: 25px;" src="assets/images/heads.png" />{{item.price}}</ion-button>
+      </div>
+    </ion-col>
+  </ion-row>
 </ion-content>

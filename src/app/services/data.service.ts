@@ -71,7 +71,20 @@ export class DataService {
   }
 
   getBadgeShop() {
-    return this.http.get(`https://ggs.tv/api/v1/badges.php`).pipe(map((res: any) => {
+    return this.http.get(`https://ggs.tv/api/v1/badgeshop.php`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
+  getMerch() {
+    return this.http.get(`https://ggs.tv/api/v1/merch.php`).pipe(map((res: any) => {
 
       console.log(res);
       return res;

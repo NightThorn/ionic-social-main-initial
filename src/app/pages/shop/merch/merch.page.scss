@@ -1,0 +1,16 @@
+ion-card{
+  background-position: center;
+    height: 200px;
+    background-size: cover;
+}
+.card-footer {
+  display: grid;
+  flex-direction: row;
+  align-items: center; }
+
+  ion-card-content{
+
+position: absolute;  
+bottom: 0;
+align-items: center;
+}
