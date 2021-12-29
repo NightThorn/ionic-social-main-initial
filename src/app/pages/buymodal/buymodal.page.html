@@ -12,10 +12,16 @@
 
 <ion-content>
   <p>
-    Confirm purchase? <br>This will remove <img style="width: 30px;" src="assets/images/heads.png" /> {{price}} from your
+    Confirm purchase? <br>This will remove <img style="width: 30px;" src="assets/images/heads.png" /> {{price}} from
+    your
     wallet.
   <p>
+  <form [formGroup]="postForm" (ngSubmit)="buy(me)">
 
-    <ion-button type="submit" ion-button full>Purchase</ion-button>
-
+    <ion-input style="display: none;" formControlName="user" readonly value="{{me}}"></ion-input>
+    <ion-button *ngIf="owned == 1; else mine">You already own this!</ion-button>
+    <ng-template #mine>
+      <ion-button type="submit" class="follow-btn" ion-button full>Buy Badge</ion-button>
+    </ng-template>
+  </form>
 </ion-content>

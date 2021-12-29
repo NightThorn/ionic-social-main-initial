@@ -534,6 +534,21 @@ export class DataService {
     return this.mockData.notifications;
   }
 
+
+  fetchBadges(user_id: number) {
+
+    return this.http.get(`https://ggs.tv/api/v1/badges.php?user=${user_id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+
 }
 
 

@@ -65,7 +65,7 @@ export class BadgesPage implements OnInit {
       }
     });
   }
- 
+
 
   async buyBadge(id, price) {
 
@@ -76,7 +76,8 @@ export class BadgesPage implements OnInit {
 
       componentProps: {
         'id': id,
-        'price': price
+        'price': price,
+        'wallet': this.myWallet,
       }
     });
     modal.present();
