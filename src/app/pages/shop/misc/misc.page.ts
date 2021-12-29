@@ -6,6 +6,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { BuymodalPage } from '../../buymodal/buymodal.page';
 import { MiscmodalPage } from '../../miscmodal/miscmodal.page';
+import { TicketmodalPage } from '../../ticketmodal/ticketmodal.page';
 import { XpmodalPage } from '../../xpmodal/xpmodal.page';
 
 @Component({
@@ -69,7 +70,7 @@ export class MiscPage implements OnInit {
   async buyTicket(id, price) {
 
     const modal = await this.modalController.create({
-      component: MiscmodalPage,
+      component: TicketmodalPage,
       backdropDismiss: false,
       cssClass: 'modal',
 

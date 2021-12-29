@@ -141,6 +141,10 @@ const routes: Routes = [
     path: 'miscmodal',
     loadChildren: () => import('./pages/miscmodal/miscmodal.module').then( m => m.MiscmodalPageModule)
   },
+  {
+    path: 'ticketmodal',
+    loadChildren: () => import('./pages/ticketmodal/ticketmodal.module').then( m => m.TicketmodalPageModule)
+  },
 
   
 

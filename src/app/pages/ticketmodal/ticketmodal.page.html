@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <p style=" display: flex; align-items:center;">
+      Are you sure?
+    </p>
+    <ion-buttons (click)="dismissModal()" slot="end">
+      <ion-icon name="close-outline"></ion-icon>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p>
+    Confirm purchase? <br>This will remove <img style="width: 30px;" src="assets/images/heads.png" /> {{price}} from
+    your
+    wallet.
+  <p>
+  <form [formGroup]="postForm" (ngSubmit)="buy(me)">
+
+    <ion-input style="display: none;" formControlName="user" readonly value="{{me}}"></ion-input>
+    
+      <ion-button type="submit" class="follow-btn" ion-button full>Buy Ticket</ion-button>
+  </form>
+</ion-content>
