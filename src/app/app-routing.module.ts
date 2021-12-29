@@ -137,6 +137,10 @@ const routes: Routes = [
     path: 'buymerchmodal',
     loadChildren: () => import('./pages/buymerchmodal/buymerchmodal.module').then( m => m.BuymerchmodalPageModule)
   },
+  {
+    path: 'miscmodal',
+    loadChildren: () => import('./pages/miscmodal/miscmodal.module').then( m => m.MiscmodalPageModule)
+  },
 
   
 

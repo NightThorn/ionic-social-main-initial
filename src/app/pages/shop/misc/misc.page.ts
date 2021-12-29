@@ -4,6 +4,8 @@ import { ModalController } from '@ionic/angular';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
+import { BuymodalPage } from '../../buymodal/buymodal.page';
+import { MiscmodalPage } from '../../miscmodal/miscmodal.page';
 import { XpmodalPage } from '../../xpmodal/xpmodal.page';
 
 @Component({
@@ -27,44 +29,60 @@ export class MiscPage implements OnInit {
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
         this.me = storedUser.UserID;
-        //check if user pro?
-        this.dataService.badgeShopInfo(this.me).subscribe(res => {
-          this.info = res.message;
-          this.pro = this.info[0]['user_subscribed'];
-          console.log("pro??", this.pro);
-        });
+        console.log(this.me);
+        this.dataService.getXP(storedUser.UserID).subscribe(res => {
+          this.xp = res.message;
+          for (let i = 0; i < this.xp.length; i++) {
 
-        this.dataService.getBadgeShop().subscribe(res => {
-          this.badges = res.message;
-          for (let i = 0; i < this.badges.length; i++) {
-            if (this.badges[i]['price'] == '0.00' && this.badges[i]['pro_only'] == '0') {
-              this.badges[i]['price'] = "Free";
+            this.myXP = this.numFormatter(this.xp[i]['user_points']);
+            this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
 
-            } else if (this.badges[i]['price'] == '0.00' && this.badges[i]['pro_only'] == '1') {
-              this.badges[i]['price'] = "Pro Exclusive";
-
-            }
-           
+            console.log("xp", this.myXP);
           }
         });
 
-          this.dataService.getXP(storedUser.UserID).subscribe(res => {
-            this.xp = res.message;
-            for (let i = 0; i < this.xp.length; i++) {
 
-              this.myXP = this.numFormatter(this.xp[i]['user_points']);
-              this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
 
-              console.log("xp", this.myXP);
-            }
-        });
-      }
+      };
+
     });
   }
+  async buyPro(id, price) {
 
+    const modal = await this.modalController.create({
+      component: MiscmodalPage,
+      backdropDismiss: false,
+      cssClass: 'modal',
+
+      componentProps: {
+        'id': id,
+        'user': this.me,
+        'price': price,
+        'wallet': this.myWallet,
+
+
+      }
+    });
+    modal.present();
+  }
+  async buyTicket(id, price) {
+
+    const modal = await this.modalController.create({
+      component: MiscmodalPage,
+      backdropDismiss: false,
+      cssClass: 'modal',
+
+      componentProps: {
+        'id': id,
+        'user': this.me,
+        'price': price,
+        'wallet': this.myWallet,
+
+      }
+    });
+    modal.present();
+  }
   async openXPModal(xp) {
 
     const modal = await this.modalController.create({

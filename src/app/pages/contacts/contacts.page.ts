@@ -13,7 +13,6 @@ export class ContactPage implements OnInit {
   constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit() {
-    this.users = this.dataService.getUsers();
   }
 
   navigateToChat(item) {

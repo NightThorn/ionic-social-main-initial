@@ -421,9 +421,17 @@ export class DataService {
     );
   }
 
-  getUsers() {
-    return this.mockData.users;
-  }
+  getUser(user_id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/getuser.php?user=${user_id}`).pipe(map((res: any) => {
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );  }
   getPostDetails(post_id) {
 
 

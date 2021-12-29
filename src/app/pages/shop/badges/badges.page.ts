@@ -50,16 +50,16 @@ export class BadgesPage implements OnInit {
               this.badges[i]['price'] = "Pro Exclusive";
 
             }
-            this.dataService.getXP(storedUser.UserID).subscribe(res => {
-              this.xp = res.message;
-              for (let i = 0; i < this.xp.length; i++) {
 
-                this.myXP = this.numFormatter(this.xp[i]['user_points']);
-                this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
+          }
+        });
+        this.dataService.getXP(storedUser.UserID).subscribe(res => {
+          this.xp = res.message;
+          for (let i = 0; i < this.xp.length; i++) {
 
-                console.log("xp", this.myXP);
-              }
-            });
+            this.myXP = this.numFormatter(this.xp[i]['user_points']);
+            this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
+
           }
         });
       }
