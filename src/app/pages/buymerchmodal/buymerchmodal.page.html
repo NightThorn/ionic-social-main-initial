@@ -12,11 +12,22 @@
   <ion-grid>
     <ion-row>
 
-      <ion-col size-12>
+      <ion-col style="background-image: url(https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.picture}})"
+        size-12 *ngFor="let item of merchItem">
+        <ion-card
+          style="background-image: url(https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.picture}})"
+          class="ion-text-center">
+          <ion-card-header>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-card-subtitle style="color: limegreen;">
+            </ion-card-subtitle>
+          </ion-card-content>
+
+        </ion-card>
         <form [formGroup]="postForm" (ngSubmit)="post(me, postForm.value)">
-          <ion-item>
-            <ion-textarea formControlName="item" placeholder="{{merchItem.id}}"></ion-textarea>
-          </ion-item>
+
+          <ion-input style="color: rgb(57, 245, 57);" formControlName="item" readonly placeholder="{{item.name}}"></ion-input>
           <ion-item>
             <ion-textarea formControlName="name" placeholder="Name"></ion-textarea>
           </ion-item>
@@ -32,8 +43,9 @@
           <ion-item>
             <ion-textarea formControlName="zip" placeholder="Zip Code"></ion-textarea>
           </ion-item>
+          
           <ion-item>
-            <ion-textarea formControlName="quantity" placeholder="How Many?"></ion-textarea>
+            <ion-textarea formControlName="size" placeholder="Size(excluding hats): S, M, L, XL"></ion-textarea>
           </ion-item>
           <ion-button type="submit" ion-button full>Order!</ion-button>
         </form>

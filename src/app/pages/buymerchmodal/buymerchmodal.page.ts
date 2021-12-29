@@ -38,7 +38,7 @@ export class BuymerchmodalPage implements OnInit {
       city: [null],
       state: [null],
       zip: [null],
-      quantity: [null],
+      size: [null],
     });
   }
 
@@ -46,17 +46,18 @@ export class BuymerchmodalPage implements OnInit {
     let data = {
       "user_id": me,
       "price": this.merchItem[0]['price'],
-      "item": value.id,
+      "item": this.merchItem[0]['id'],
       "name": value.name,
       "street": value.street,
       "city": value.city,
       "state": value.state,
       "zip": value.zip,
-      "quantity": value.quantity,
+      "size": value.size,
+
     };
     console.log(data);
 
-    this.http.post('https://ggs.tv/api/v1/buymerch.php', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/buymerch.php?action=buy&item=' + data.item, JSON.stringify(data)).subscribe(res => {
       console.log(res);
     });
 

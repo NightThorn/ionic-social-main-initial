@@ -18,6 +18,9 @@ ion-item{
 }
 ion-col{
     text-align: center;
+    background-position: center;
+    background-size: cover;
+
 }
 ion-footer{
     position: fixed;
@@ -36,4 +39,9 @@ ion-row{
 ion-button{
 width: 70%;
     background-color: transparent;
+}
+ion-card{
+  background-position: center;
+    height: 200px;
+    background-size: cover;
 }
