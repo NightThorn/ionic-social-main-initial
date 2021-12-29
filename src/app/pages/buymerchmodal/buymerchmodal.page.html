@@ -4,7 +4,7 @@
       <ion-icon name="close-outline"></ion-icon>
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Make a Post</ion-title>
+    <ion-title>Purchase Item</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -27,7 +27,8 @@
         </ion-card>
         <form [formGroup]="postForm" (ngSubmit)="post(me, postForm.value)">
 
-          <ion-input style="color: rgb(57, 245, 57);" formControlName="item" readonly placeholder="{{item.name}}"></ion-input>
+          <ion-input style="color: rgb(14, 235, 6); background: black; font-size: larger;" formControlName="item"
+            readonly placeholder="{{item.name}}"></ion-input>
           <ion-item>
             <ion-textarea formControlName="name" placeholder="Name"></ion-textarea>
           </ion-item>
@@ -43,7 +44,7 @@
           <ion-item>
             <ion-textarea formControlName="zip" placeholder="Zip Code"></ion-textarea>
           </ion-item>
-          
+
           <ion-item>
             <ion-textarea formControlName="size" placeholder="Size(excluding hats): S, M, L, XL"></ion-textarea>
           </ion-item>
@@ -52,24 +53,7 @@
       </ion-col>
 
     </ion-row>
-    <ion-item-divider style="border-bottom: 1px solid black;">
-    </ion-item-divider>
-    <ion-row style="border-bottom: 1px solid black;">
-      <ion-col size-4>
-
-        <ion-icon name="image-outline"></ion-icon>
-      </ion-col>
-      <ion-col size-4>
-        <ion-icon name="film-outline"></ion-icon>
-      </ion-col>
-      <ion-col size-4>
-        <ion-icon name="camera-outline"></ion-icon>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-
-
-    </ion-row>
+    
 
   </ion-grid>
 </ion-content>

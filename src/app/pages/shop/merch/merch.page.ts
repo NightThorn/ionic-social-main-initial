@@ -15,33 +15,38 @@ import { XpmodalPage } from '../../xpmodal/xpmodal.page';
 export class MerchPage implements OnInit {
   activeStoredUserSubscription$;
   me: number;
-  merch: any;
+  merch: any = [];
   xp: any;
   myXP: any;
-  myWallet: any;
+  myWallet: number;
+  noMoney: any;
 
-  constructor(private authService: AuthenticationService,private modalController: ModalController ,private router: Router, private dataService: DataService) { }
+  constructor(private authService: AuthenticationService, private modalController: ModalController, private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
+
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
         this.me = storedUser.UserID;
         console.log(this.me);
+        this.dataService.getXP(storedUser.UserID).subscribe(res => {
+          this.xp = res.message;
+          for (let i = 0; i < this.xp.length; i++) {
+
+            this.myXP = this.numFormatter(this.xp[i]['user_points']);
+            this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
+
+            console.log("xp", this.myXP);
+          }
+        });
         this.dataService.getMerch().subscribe(res => {
           this.merch = res.message;
 
+
+
         });
       };
-      this.dataService.getXP(storedUser.UserID).subscribe(res => {
-        this.xp = res.message;
-        for (let i = 0; i < this.xp.length; i++) {
 
-          this.myXP = this.numFormatter(this.xp[i]['user_points']);
-          this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
-
-          console.log("xp", this.myXP);
-        }
-      });
     });
 
   }
@@ -58,14 +63,16 @@ export class MerchPage implements OnInit {
     });
     modal.present();
   }
-  async buyMerch(id) {
+  async buyMerch(id, wallet) {
+    console.log("$$", this.myWallet);
 
     const modal = await this.modalController.create({
       component: BuymerchmodalPage,
       cssClass: 'modal',
       backdropDismiss: false,
       componentProps: {
-        'id': id
+        'id': id,
+        'wallet': wallet
       }
 
     });
