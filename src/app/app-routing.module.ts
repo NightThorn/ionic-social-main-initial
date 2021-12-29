@@ -133,6 +133,10 @@ const routes: Routes = [
     path: 'buymodal',
     loadChildren: () => import('./pages/buymodal/buymodal.module').then( m => m.BuymodalPageModule)
   },
+  {
+    path: 'buymerchmodal',
+    loadChildren: () => import('./pages/buymerchmodal/buymerchmodal.module').then( m => m.BuymerchmodalPageModule)
+  },
 
   
 

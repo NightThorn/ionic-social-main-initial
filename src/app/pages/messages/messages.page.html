@@ -7,8 +7,9 @@
 <ion-content [fullscreen]="true" class="ion-padding-horizontal">
   <ion-grid>
     <ion-row>
-      <ion-col class="ion-padding-bottom">
-        <ion-searchbar [(ngModel)]="searchTerm" animated (ionChange)="setFilteredItems()" class="ion-no-padding"></ion-searchbar>
+      <ion-col>
+        <ion-searchbar [(ngModel)]="searchTerm" animated (ionChange)="setFilteredItems()" class="ion-no-padding">
+        </ion-searchbar>
 
       </ion-col>
     </ion-row>
@@ -24,8 +25,8 @@
               </ion-item-option>
             </ion-item-options>
             <app-message-list-item [avatar]="item.user_picture" [user]="item.user_name" [time]="item.time"
-              [message]="item.message" [active]="item.seen" 
-              (click)="navigateToChat(item.conversation_id)"></app-message-list-item>
+              [message]="item.message" [active]="item.seen" (click)="navigateToChat(item.conversation_id)">
+            </app-message-list-item>
             <ion-item-options side="end">
               <ion-item-option>
                 <ion-button class="ion-no-padding" fill="clear" size="small" shape="round" color="danger">

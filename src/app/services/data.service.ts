@@ -96,6 +96,32 @@ export class DataService {
     );
 
   }
+  getMerchItem(id) {
+    return this.http.get(`https://ggs.tv/api/v1/buymerch.php?action=get&item=${id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
+  buyMerch(id) {
+    return this.http.get(`https://ggs.tv/api/v1/buymerch.php?action=buy&item=${id}`).pipe(map((res: any) => {
+
+      console.log(res);
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
   getMerch() {
     return this.http.get(`https://ggs.tv/api/v1/merch.php`).pipe(map((res: any) => {
 

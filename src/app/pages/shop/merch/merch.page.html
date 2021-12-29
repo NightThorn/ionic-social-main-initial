@@ -3,6 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/explore" text=""></ion-back-button>
     </ion-buttons>
+    <div style=" display: flex; align-items:center;" *ngFor="let item of xp">
+      <img (click)="openXPModal(item.user_points)" style="width: 30px; margin: 10px;" src="assets/images/XP.png">
+      <ion-label style="font-size: small;">{{myXP}}</ion-label>
+      <img style="width: 30px; margin: 10px;" src="assets/images/heads.png">
+      <ion-label style="font-size: small;">{{myWallet}}</ion-label>
+    
+    </div>
     <ion-title>Merch</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -24,7 +31,7 @@
       </ion-card>
       <div class="card-footer">
       
-        <ion-button><img style="width: 25px;" src="assets/images/heads.png" />{{item.price}}</ion-button>
+        <ion-button (click)="buyMerch(item.id)"><img style="width: 25px;" src="assets/images/heads.png" />{{item.price}}</ion-button>
       </div>
     </ion-col>
   </ion-row>

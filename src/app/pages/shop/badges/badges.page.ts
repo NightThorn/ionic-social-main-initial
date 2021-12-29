@@ -7,6 +7,7 @@ import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { BuymodalPage } from '../../buymodal/buymodal.page';
+import { XpmodalPage } from '../../xpmodal/xpmodal.page';
 
 @Component({
   selector: 'app-badges',
@@ -20,6 +21,9 @@ export class BadgesPage implements OnInit {
   activeStoredUserSubscription$;
   info: any;
   badgesArray: any;
+  xp: any;
+  myXP: any;
+  myWallet: any;
 
   constructor(private dataService: DataService, private router: Router, private authService: AuthenticationService, private modalController: ModalController) { }
 
@@ -46,11 +50,22 @@ export class BadgesPage implements OnInit {
               this.badges[i]['price'] = "Pro Exclusive";
 
             }
+            this.dataService.getXP(storedUser.UserID).subscribe(res => {
+              this.xp = res.message;
+              for (let i = 0; i < this.xp.length; i++) {
+
+                this.myXP = this.numFormatter(this.xp[i]['user_points']);
+                this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
+
+                console.log("xp", this.myXP);
+              }
+            });
           }
         });
       }
     });
   }
+ 
 
   async buyBadge(id, price) {
 
@@ -67,6 +82,28 @@ export class BadgesPage implements OnInit {
     modal.present();
   }
 
+  async openXPModal(xp) {
+
+    const modal = await this.modalController.create({
+      component: XpmodalPage,
+      cssClass: 'modal',
+      backdropDismiss: false,
+      componentProps: {
+        'xp': xp
+      }
+
+    });
+    modal.present();
+  }
+  numFormatter(num) {
+    if (num > 999 && num < 1000000) {
+      return (num / 1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
+    } else if (num > 1000000) {
+      return (num / 1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
+    } else if (num < 900) {
+      return num; // if value < 1000, nothing to do
+    }
+  }
   goToPro() {
 
     this.router.navigate(['shop/misc']);
