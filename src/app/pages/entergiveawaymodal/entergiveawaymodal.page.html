@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <p style=" display: flex; align-items:center;">
+      Enter Giveaway? </p>
+    <ion-buttons (click)="dismissModal()" slot="end">
+      <ion-icon name="close-outline"></ion-icon>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p>
+    Confirm entry? <br>This will remove 1 from
+    your
+    tickets.
+  <p>
+  <p>You have <span style="color: limegreen;">{{tickets}}</span> tickets left.</p>
+  <form [formGroup]="postForm" (ngSubmit)="enter(user)">
+
+    <ion-input style="display: none;" formControlName="user" readonly value="{{user}}"></ion-input>
+
+    <ion-button type="submit" class="follow-btn" ion-button full>Submit Ticket</ion-button>
+  </form>
+</ion-content>

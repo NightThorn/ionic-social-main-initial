@@ -9,4 +9,34 @@
 
 <ion-content>
 
+  <ion-card *ngFor="let item of giveaways">
+    <ion-slides>
+      <ion-slide>
+        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.picture}}" />
+      </ion-slide>
+    </ion-slides>
+    <ion-card-title>
+      <ion-item>
+        <ion-label>
+          <h2 class="item-title" style="color: lime;">{{ item.title }}</h2>
+          <p class="item-subtitle">{{ item.end | date:'MMMM d, h:mm a' }} EST</p>
+        </ion-label>
+
+      </ion-item>
+    </ion-card-title>
+    <ion-card-content class="ion-no-padding">
+      <ion-item>{{ item.description }}
+      </ion-item>
+    </ion-card-content>
+
+    <div class="card-footer">
+     
+      <ion-button (click)="enter(item.id)" slot="end" fill="clear" size="small" shape="round">
+        Enter Giveaway!
+        <ion-icon slot="icon-only" name="arrow-redo"></ion-icon>
+      </ion-button>
+    </div>
+    <div></div>
+  </ion-card>
+  
 </ion-content>

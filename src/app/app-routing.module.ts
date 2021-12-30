@@ -145,6 +145,10 @@ const routes: Routes = [
     path: 'ticketmodal',
     loadChildren: () => import('./pages/ticketmodal/ticketmodal.module').then( m => m.TicketmodalPageModule)
   },
+  {
+    path: 'entergiveawaymodal',
+    loadChildren: () => import('./pages/entergiveawaymodal/entergiveawaymodal.module').then( m => m.EntergiveawaymodalPageModule)
+  },
 
   
 
