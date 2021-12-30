@@ -33,10 +33,8 @@ export class ProfileService {
     if (token === '' || token === null) {
       return;
     }
-    console.log("PROFILESERVICE:fetchProfile:TOKEN", token);
-    console.log("PROFILESERVICE:fetchProfile:URL", this.URL + user_id);
+   
     this.httpClient.get(this.URL + user_id + "?auth_token=" + token).subscribe(response => {
-      console.log("PROFILESERVICE:fetchProfile:RESPONSE", response);
       if (response['code'] !== 200) {
         // error state
         return;
@@ -56,10 +54,8 @@ export class ProfileService {
     if (token === '' || token === null) {
       return;
     }
-    console.log("PROFILESERVICE:fetchProfile:TOKEN", token);
-    console.log("PROFILESERVICE:fetchProfile:URL", this.URL + user_id);
+    
     this.httpClient.get(this.URL + user_id + "?auth_token=" + token).subscribe(response => {
-      console.log("PROFILESERVICE:fetchProfile:RESPONSE", response);
       if (response['code'] !== 200) {
         // error state
         return;
@@ -72,7 +68,6 @@ export class ProfileService {
 
     return this.httpClient.get(`https://ggs.tv/api/v1/badges.php?user=${user_id}`).pipe(map((res: any) => {
 
-      console.log(res);
       return res;
     }),
       filter((res: any) => {
@@ -86,7 +81,6 @@ export class ProfileService {
 
     return this.httpClient.get(`https://ggs.tv/api/v1/groups.php?user=${user_id}`).pipe(map((res: any) => {
 
-      console.log(res);
       return res;
     }),
       filter((res: any) => {
@@ -101,7 +95,6 @@ export class ProfileService {
 
     return this.httpClient.get(`https://ggs.tv/api/v1/pictures.php?user=${user_id}`).pipe(map((res: any) => {
 
-      console.log(res);
       return res;
     }),
       filter((res: any) => {
@@ -114,7 +107,6 @@ export class ProfileService {
 
     return this.httpClient.get(`https://ggs.tv/api/v1/connection.php?user=${user}`).pipe(map((res: any) => {
 
-      console.log(res);
       return res;
     }),
       filter((res: any) => {
@@ -131,7 +123,6 @@ export class ProfileService {
     };
     return this.httpClient.get(`https://ggs.tv/api/v1/friends.php?user=${user_id}`).pipe(map((res: any) => {
 
-      console.log(res);
       return res;
     }),
       filter((res: any) => {
@@ -146,7 +137,6 @@ export class ProfileService {
 
   public fetchPosts(user_id: number) {
     this.httpClient.get(`https://ggs.tv/api/v1/timeline.php?timeline=profile&user=${user_id}`).subscribe(response => {
-      console.log("sgfsdg",response);
 
       this.fetchedPosts.next(response['message']);
     });

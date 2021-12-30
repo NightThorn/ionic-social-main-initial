@@ -46,9 +46,7 @@ export class LoginPage implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser:StoredUser) => {
-      console.log("LOGIN:PAGE:AUTHSUB:StoredUser", storedUser);
       if(storedUser !== null) {
-        console.log("LOGIN:PAGE:AUTHSUB:TOKEN:ALLGOOD", storedUser, "MOVE TO TABS");
         this.router.navigate(['tabs/explore']);
       }
     });
@@ -70,7 +68,6 @@ export class LoginPage implements OnInit, OnDestroy {
     await loading.present();
 
     this.authService.doLogin(this.email, this.password).subscribe((data:any) => {
-      console.log("LOGINPAGE:DATA:", data);
       if(data['code'] !== 200) {
         // error toast
         let msg = '';

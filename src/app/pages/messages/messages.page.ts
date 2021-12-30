@@ -28,8 +28,7 @@ export class MessagesPage implements OnInit {
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+        
 
         this.dataService.getMessages(storedUser.UserID).subscribe(res => {
 
@@ -40,7 +39,6 @@ export class MessagesPage implements OnInit {
 
             this.dataList[i]['time'] = moment.utc(this.dataList[i]['time']).fromNow();
           }
-          console.log("PROFILEPAGE:messages", this.messages);
 
         });
       }

@@ -37,26 +37,21 @@ export class GroupPage implements OnInit {
     this.activeRoute.queryParams.subscribe(params => {
       if (params && params.special) {
         this.data = JSON.parse(params.special);
-        console.log("uhhhhh huh", this.data);
       }
     });
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+     
       this.me = storedUser.UserID;
-      console.log(this.me);
 
-      console.log(this.joined);
       this.dataService.getGroup(this.data).subscribe(res => {
         this.group = res.message;
         this.group_id = res.message[0]['group_id'];
-        console.log("asd", res.message[0]['group_admin']);
         if (this.me == res.message[0]['group_admin']) {
           this.admin = 1;
         } else {
 
           this.admin = 0;
         }
-        console.log(this.admin);
       });
 
       this.dataService.getJoinedGroups(this.me).subscribe(res => {
@@ -70,13 +65,11 @@ export class GroupPage implements OnInit {
           this.joined = 0;
         }
 
-        console.log(this.group_id);
-        console.log(this.joined);
+       
       });
 
       this.dataService.getGroupFeed(this.data).subscribe(res => {
         this.feed = res.message;
-        console.log(this.feed);
         for (let i = 0; i < this.feed.length; i++) {
           this.offset = moment().utcOffset();
 

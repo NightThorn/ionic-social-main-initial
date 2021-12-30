@@ -30,8 +30,7 @@ export class NotificationPage implements OnInit {
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+        
         this.dataService.getNotis(storedUser.UserID).subscribe(res => {
           this.notifications = res.message;
           for (let i = 0; i < this.notifications.length; i++) {
@@ -39,7 +38,6 @@ export class NotificationPage implements OnInit {
 
             this.notifications[i]['time'] = moment.utc(this.notifications[i]['time']).fromNow();
           }
-          console.log("we see this!....", this.notifications); // <-- what do we see in this
         });
       }
     });

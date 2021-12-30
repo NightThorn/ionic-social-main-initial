@@ -22,8 +22,7 @@ export class ModalPage implements OnInit {
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+       
         this.me = storedUser.UserID;
 
       }
@@ -41,7 +40,6 @@ export class ModalPage implements OnInit {
       "time": time
     };
     this.http.post('https://ggs.tv/api/v1/post.php?action=post', JSON.stringify(data)).subscribe(res => {
-      console.log(res);
     });
 
     this.closeModal();

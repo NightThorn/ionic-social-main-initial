@@ -52,6 +52,7 @@ export class ExplorePage implements OnInit {
   myWallet: any;
   filter = "all";
   me: any;
+  boosted: any;
 
 
   constructor(private router: Router, private authService: AuthenticationService, private modalController: ModalController, private storage: Storage, private dataService: DataService) { }
@@ -61,8 +62,6 @@ export class ExplorePage implements OnInit {
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
         this.me = storedUser.UserID;
         this.filter = localStorage.getItem("filter");
 
@@ -94,6 +93,14 @@ export class ExplorePage implements OnInit {
         this.dataService.getLatestVid(storedUser.UserID).subscribe(res => {
           this.latest = res.message;
         });
+        this.dataService.getBoosted().subscribe(res => {
+          this.boosted = res.message;
+          for (let i = 0; i < this.boosted.length; i++) {
+            this.offset = moment().utcOffset();
+
+            this.boosted[i]['time'] = moment.utc(this.boosted[i]['time']).fromNow();
+          }
+        });
         this.dataService.getXP(storedUser.UserID).subscribe(res => {
           this.xp = res.message;
           for (let i = 0; i < this.xp.length; i++) {
@@ -101,7 +108,6 @@ export class ExplorePage implements OnInit {
             this.myXP = this.numFormatter(this.xp[i]['user_points']);
             this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
 
-            console.log("xp", this.myXP);
           }
         });
       }
@@ -109,6 +115,7 @@ export class ExplorePage implements OnInit {
 
   }
   loadData(event) {
+
     setTimeout(() => {
       this.topLimit += 10;
       this.dataList = this.feeds.slice(0, this.topLimit);
@@ -139,6 +146,7 @@ export class ExplorePage implements OnInit {
   gotoShop() {
     this.router.navigate(['shop']);
   }
+  
   doRefresh(event) {
     if (this.filter = "all") {
       this.dataService.getAllPosts(this.me).subscribe(res => {
@@ -164,6 +172,14 @@ export class ExplorePage implements OnInit {
 
       });
     };
+    this.dataService.getBoosted().subscribe(res => {
+      this.boosted = res.message;
+      for (let i = 0; i < this.feeds.length; i++) {
+        this.offset = moment().utcOffset();
+
+        this.boosted[i]['time'] = moment.utc(this.boosted[i]['time']).fromNow();
+      }
+    });
     setTimeout(() => {
       event.target.complete();
     }, 1000);
@@ -202,15 +218,15 @@ export class ExplorePage implements OnInit {
     modal.present();
   }
 
- numFormatter(num) {
-  if (num > 999 && num < 1000000) {
-    return (num / 1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
-  } else if (num > 1000000) {
-    return (num / 1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
-  } else if (num < 900) {
-    return num; // if value < 1000, nothing to do
+  numFormatter(num) {
+    if (num > 999 && num < 1000000) {
+      return (num / 1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
+    } else if (num > 1000000) {
+      return (num / 1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
+    } else if (num < 900) {
+      return num; // if value < 1000, nothing to do
+    }
   }
-}
   isElementInViewport(element) {
     const rect = element.getBoundingClientRect();
     return (
@@ -227,7 +243,6 @@ export class ExplorePage implements OnInit {
       this.currentPlaying = null;
     }
     this.videoPlayers.forEach(player => {
-      console.log('player', player);
     });
 
 
@@ -235,7 +250,7 @@ export class ExplorePage implements OnInit {
 
 
   }
- 
+
 
   async openVideoModal(source) {
     const modal = await this.modalController.create({

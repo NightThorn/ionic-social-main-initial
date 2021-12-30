@@ -23,7 +23,6 @@ export class BrowsePage implements OnInit {
     this.dataService.getTournaments().subscribe(res => {
       this.tournaments = res.message;
       
-      console.log("PROFILEPAGE:tourneys", this.tournaments);
       this.dataList = this.tournaments.slice(0, this.topLimit);
 
     });

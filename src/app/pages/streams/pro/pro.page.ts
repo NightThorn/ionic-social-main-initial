@@ -19,7 +19,6 @@ export class ProPage implements OnInit {
     this.dataService.getProStreams().subscribe(res => {
       this.streams = res.message;
 
-      console.log("PROFILEPAGE:streams", this.streams);
       this.dataList = this.streams.slice(0, this.topLimit);
 
     });

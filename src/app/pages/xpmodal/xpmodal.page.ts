@@ -22,8 +22,7 @@ export class XpmodalPage implements OnInit {
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+       
         this.me = storedUser.UserID;
         this.xpForm = this.fb.group({
           message: [null]
@@ -40,7 +39,6 @@ export class XpmodalPage implements OnInit {
       "xp": xp,
     };
     this.http.post('https://ggs.tv/api/v1/xp.php?tab=convert&user=' + this.me, JSON.stringify(data)).subscribe(res => {
-      console.log(res);
     });
 
     this.dismissModal();

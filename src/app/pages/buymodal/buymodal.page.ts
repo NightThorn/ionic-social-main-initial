@@ -29,8 +29,7 @@ export class BuymodalPage implements OnInit {
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+       
         this.me = storedUser.UserID;
         this.dataService.fetchBadges(this.me).subscribe(res => {
           this.badges = res.message;
@@ -41,7 +40,6 @@ export class BuymodalPage implements OnInit {
 
             this.owned = "0";
           }
-          console.log(this.owned);
 
         });
       }
@@ -62,9 +60,7 @@ export class BuymodalPage implements OnInit {
     };
     let price = this.price;
     let wallet = this.wallet;
-    console.log(price);
 
-    console.log(wallet);
 
     if (price < wallet) {
       this.http.post('https://ggs.tv/api/v1/buybadge.php?badge=' + this.id, JSON.stringify(data)).subscribe(res => {

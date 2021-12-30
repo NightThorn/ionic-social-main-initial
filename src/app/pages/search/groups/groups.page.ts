@@ -63,7 +63,6 @@ export class GroupsPage implements OnInit {
 
     this.dataService.getSearchGroups(this.data).subscribe(res => {
       this.results = res.message;
-      console.log(this.data);
       for (let i = 0; i < this.results.length; i++) {
         this.offset = moment().utcOffset();
 
@@ -103,7 +102,6 @@ export class GroupsPage implements OnInit {
   search(event) {
     var searchQuery = event.target.value as HTMLInputElement
     this.data = searchQuery;
-    console.log("i am the data now", this.data)
     this.dataService.getSearchGroups(this.data).subscribe(res => {
       this.results = res.message;
       for (let i = 0; i < this.results.length; i++) {

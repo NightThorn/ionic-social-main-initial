@@ -28,12 +28,10 @@ export class EntergiveawaymodalPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.user);
 
     this.dataService.getUser(this.user).subscribe(res => {
       this.userinfo = res.message;
       this.tickets = res.message[0]['tickets'];
-      console.log(this.tickets);
     });
 
 

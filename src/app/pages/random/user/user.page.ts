@@ -64,15 +64,12 @@ export class UserPage implements OnInit {
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+       
 
         this.dataService.getRandomUser(storedUser.UserID).subscribe(res => {
           this.user = res.message;
           this.data = res.message['0']['user_id'];
 
-          console.log("igasdiehjgbakgjags:groups", this.user);
-          console.log("igasdiehjgbakgjags:data", this.data);
 
 
           this.profileService.fetchUser(this.data);
@@ -80,7 +77,6 @@ export class UserPage implements OnInit {
           this.profileService.fetchPosts(this.data);
           this.profileService.fetchGroups(this.data).subscribe(res => {
             this.groups = res.message;
-            console.log("PROFILEPAGE:fetch posts and groups", this.groups);
 
           });
           this.profileService.fetchPictures(this.data).subscribe(res => {
@@ -100,12 +96,10 @@ export class UserPage implements OnInit {
             this.fetchedProfile = profile;
             const newDate = new Date(this.fetchedProfile.user_birthdate);
             this.bday = newDate.toDateString();
-            console.log("PROFILEPAGE:FETCHED_PROFILE_SUB:GOT", this.fetchedProfile);
           });
 
           this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
             this.fetchedPosts = data;
-            console.log("PROFILEPAGE:FETCHED_Posts_SUB:GOT", this.fetchedPosts);
 
           })
           // this.data = this.profileService.fetchProfile(this.x);
@@ -156,15 +150,12 @@ export class UserPage implements OnInit {
   doRefresh(event) {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+       
 
         this.dataService.getRandomUser(storedUser.UserID).subscribe(res => {
           this.user = res.message;
           this.data = res.message['0']['user_id'];
 
-          console.log("igasdiehjgbakgjags:groups", this.user);
-          console.log("igasdiehjgbakgjags:data", this.data);
 
 
           this.profileService.fetchUser(this.data);
@@ -179,7 +170,6 @@ export class UserPage implements OnInit {
           this.profileService.fetchPosts(this.data);
           this.profileService.fetchGroups(this.data).subscribe(res => {
             this.groups = res.message;
-            console.log("PROFILEPAGE:fetch posts and groups", this.groups);
 
           });
           this.profileService.fetchPictures(this.data).subscribe(res => {
@@ -191,12 +181,10 @@ export class UserPage implements OnInit {
             this.fetchedProfile = profile;
             const newDate = new Date(this.fetchedProfile.user_birthdate);
             this.bday = newDate.toDateString();
-            console.log("PROFILEPAGE:FETCHED_PROFILE_SUB:GOT", this.fetchedProfile);
           });
 
           this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
             this.fetchedPosts = data;
-            console.log("PROFILEPAGE:FETCHED_Posts_SUB:GOT", this.fetchedPosts);
 
           })
           // this.data = this.profileService.fetchProfile(this.x);

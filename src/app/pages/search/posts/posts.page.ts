@@ -64,7 +64,6 @@ export class PostsPage implements OnInit {
 
     this.dataService.getSearch(this.data).subscribe(res => {
       this.results = res.message;
-      console.log(this.data);
       for (let i = 0; i < this.results.length; i++) {
         this.offset = moment().utcOffset();
 
@@ -112,7 +111,6 @@ export class PostsPage implements OnInit {
   search(event) {
     var searchQuery = event.target.value as HTMLInputElement
     this.data = searchQuery;
-    console.log("i am the data now", this.data)
     this.dataService.getSearch(this.data).subscribe(res => {
       this.results = res.message;
       for (let i = 0; i < this.results.length; i++) {
@@ -132,7 +130,6 @@ export class PostsPage implements OnInit {
       this.currentPlaying = null;
     }
     this.videoPlayers.forEach(player => {
-      console.log('player', player);
     });
   }
 }

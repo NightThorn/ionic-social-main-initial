@@ -14,7 +14,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/search.php?query=${query}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -29,7 +29,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/search.php?query=${query}&tab=groups`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -44,7 +44,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/search.php?query=${query}&tab=people`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -59,7 +59,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/tournaments.php`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -73,7 +73,7 @@ export class DataService {
   getBadgeShop() {
     return this.http.get(`https://ggs.tv/api/v1/badgeshop.php`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -86,7 +86,7 @@ export class DataService {
   badgeShopInfo(id) {
     return this.http.get(`https://ggs.tv/api/v1/badgeshopinfo.php?user=${id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -99,7 +99,7 @@ export class DataService {
   getMerchItem(id) {
     return this.http.get(`https://ggs.tv/api/v1/buymerch.php?action=get&item=${id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -112,7 +112,7 @@ export class DataService {
   buyMerch(id) {
     return this.http.get(`https://ggs.tv/api/v1/buymerch.php?action=buy&item=${id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -125,7 +125,7 @@ export class DataService {
   getMerch() {
     return this.http.get(`https://ggs.tv/api/v1/merch.php`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -138,7 +138,7 @@ export class DataService {
   getFeed(user) {
     return this.http.get(`https://ggs.tv/api/v1/feed.php?filter=recent&user=${user}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -151,7 +151,7 @@ export class DataService {
   getAllPosts(user) {
     return this.http.get(`https://ggs.tv/api/v1/feed.php?filter=all&user=${user}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -164,7 +164,7 @@ export class DataService {
   getXP(user) {
     return this.http.get(`https://ggs.tv/api/v1/xp.php?tab=get&user=${user}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -179,7 +179,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/streams.php?stream=all`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -194,7 +194,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/streams.php?stream=pro`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -209,7 +209,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/notifications.php?user=${user_id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -224,7 +224,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/random.php?tab=video`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -239,7 +239,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/random.php?tab=user&userid=${user_id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -254,7 +254,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/random.php?tab=group`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -269,7 +269,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/random.php?tab=stream`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -307,7 +307,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/stories.php?user=${id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -320,7 +320,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/followingvids.php?user=${id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -332,7 +332,7 @@ export class DataService {
   getJoinedGroups(user) {
     return this.http.get(`https://ggs.tv/api/v1/getgroups.php?filter=joined&user=${user}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -345,7 +345,7 @@ export class DataService {
   getMyGroups(user) {
     return this.http.get(`https://ggs.tv/api/v1/getgroups.php?filter=me&user=${user}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -358,7 +358,7 @@ export class DataService {
   getDiscoverGroups(user) {
     return this.http.get(`https://ggs.tv/api/v1/getgroups.php?filter=discover&user=${user}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -372,7 +372,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/group.php?group=${id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -385,7 +385,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/groupmembers.php?group=${id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -398,7 +398,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/groupmedia.php?group=${id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -411,7 +411,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/groupfeed.php?group=${id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -420,7 +420,19 @@ export class DataService {
       })
     );
   }
+  getBoosted() {
 
+    return this.http.get(`https://ggs.tv/api/v1/boosted.php`).pipe(map((res: any) => {
+
+      
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   getUser(user_id) {
 
     return this.http.get(`https://ggs.tv/api/v1/getuser.php?user=${user_id}`).pipe(map((res: any) => {
@@ -486,7 +498,6 @@ export class DataService {
   }
   getMediaPost(post_id) {
     return this.http.get(`https://ggs.tv/api/v1/getmediapost.php?post=${post_id}`).pipe(map((res: any) => {
-      console.log("embed?", res);
       return res;
     }),
       filter((res: any) => {
@@ -500,7 +511,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/postcomments.php?post=${post_id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -514,7 +525,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/messages.php?user=${user_id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -527,7 +538,7 @@ export class DataService {
   getLatestChat(id) {
     return this.http.get(`https://ggs.tv/api/v1/latestchat.php?chat=${id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -542,7 +553,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/chat.php?chat=${id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {
@@ -560,7 +571,7 @@ export class DataService {
 
     return this.http.get(`https://ggs.tv/api/v1/badges.php?user=${user_id}`).pipe(map((res: any) => {
 
-      console.log(res);
+      
       return res;
     }),
       filter((res: any) => {

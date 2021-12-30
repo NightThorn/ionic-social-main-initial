@@ -31,11 +31,9 @@ export class ClipsPage implements OnInit {
   }
 
   doRefresh(event) {
-    console.log('Begin async operation');
     this.dataService.getRandomClip().subscribe(res => {
       this.clip = res.message;
 
-      console.log(this.clip);
     });
     setTimeout(() => {
       event.target.complete();

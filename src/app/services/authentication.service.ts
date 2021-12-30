@@ -34,14 +34,11 @@ export class AuthenticationService {
   }
 
   async reload() {
-    console.log("Reload");
 
     let storedUser: StoredUser = await this._storage.get(this.key_stored_user);
 
-    console.log("Reload:StoredUser: ", storedUser);
 
     if ((this.activeStoredUser.getValue() === null) || storedUser.Token !== this.activeStoredUser.getValue().Token) {
-      console.log("Reload:NewStoredUser");
       this.activeStoredUser.next(storedUser);
     }
   }

@@ -20,10 +20,8 @@ export class JoinedPage implements OnInit {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
         this.me = storedUser.UserID;
-        console.log(this.me);
         this.dataService.getJoinedGroups(this.me).subscribe(res => {
           this.groups = res.message;
-          console.log("PROFILEPAGE:groups", this.groups);
 
         }
 

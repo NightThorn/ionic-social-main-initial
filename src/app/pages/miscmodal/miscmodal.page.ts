@@ -32,8 +32,7 @@ export class MiscmodalPage implements OnInit {
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+       
         this.me = storedUser.UserID;
         this.dataService.getUser(this.me).subscribe(res => {
           this.user = res.message;
@@ -44,7 +43,6 @@ export class MiscmodalPage implements OnInit {
 
             this.pro = "0";
           }
-          console.log(this.pro);
 
         });
       }
@@ -65,9 +63,7 @@ export class MiscmodalPage implements OnInit {
     };
     let price = this.price;
     let wallet = this.wallet;
-    console.log(price);
-
-    console.log(wallet);
+  
 
     if (price < wallet) {
       this.http.post('https://ggs.tv/api/v1/miscshop.php?item=' + this.id, JSON.stringify(data)).subscribe(res => {

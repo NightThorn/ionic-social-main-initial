@@ -66,7 +66,6 @@ export class FeedCardComponent implements OnInit {
 
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       this.me = storedUser.UserID;
-      console.log(this.me, "meeeeee");
 
 
 
@@ -137,7 +136,6 @@ export class FeedCardComponent implements OnInit {
       this.dataService.getLikes(this.post_id).subscribe(res => {
         this.reacted = res.message;
         var i_like = this.reacted.find(message => message.user_id == this.me)
-        console.log("i like", i_like);
         if (i_like) {
           this.liked = "1";
           this.image = "./assets/images/ggs.png";
@@ -193,7 +191,6 @@ export class FeedCardComponent implements OnInit {
 
 
     this.http.post('https://ggs.tv/api/v1/post.php?action=react', JSON.stringify(data)).subscribe(res => {
-      console.log(res);
       this.likes++;
       this.liked = "1";
       this.image = "./assets/images/ggs.png";
@@ -215,7 +212,6 @@ export class FeedCardComponent implements OnInit {
       "user_id": this.me,
     };
     this.http.post('https://ggs.tv/api/v1/post.php?action=unreact', JSON.stringify(data)).subscribe(res => {
-      console.log(res);
       this.likes--;
       this.liked = "0";
       this.image = "./assets/images/ggsgray.png";

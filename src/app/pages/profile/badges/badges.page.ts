@@ -27,7 +27,6 @@ export class BadgesPage implements OnInit {
 
     this.profileService.fetchBadges(this.data).subscribe(res => {
       this.badges = res.message;
-      console.log("logggg", this.badges[0]);
     });
   }
 

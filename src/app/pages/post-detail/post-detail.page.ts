@@ -40,8 +40,6 @@ export class PostDetailPage implements OnInit {
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
         this.me = storedUser.UserID;
 
       }
@@ -62,7 +60,6 @@ export class PostDetailPage implements OnInit {
         this.comments[i]['time'] = moment.utc(this.comments[i]['time']).fromNow();
           this.dataService.getPostCommentReplies(this.comments[i]['comment_id']).subscribe(res => {
             this.replies = res.message;
-            console.log("this repleis", this.replies);
 
             for (let i = 0; i < this.replies.length; i++) {
               this.offset = moment().utcOffset();
@@ -100,7 +97,6 @@ showReplies(){
       };
 
     this.http.post('https://ggs.tv/api/v1/post.php?action=comment', JSON.stringify(data), { headers: headers }).subscribe(res => {
-        console.log(res);
       });
     this.dataService.getPostComments(this.data).subscribe(res => {
       this.comments = res.message;
@@ -109,7 +105,6 @@ showReplies(){
         this.comments[i]['time'] = moment.utc(this.comments[i]['time']).fromNow();
         this.dataService.getPostCommentReplies(this.comments[i]['comment_id']).subscribe(res => {
           this.replies = res.message;
-          console.log("this repleis", this.replies);
 
           for (let i = 0; i < this.replies.length; i++) {
             this.offset = moment().utcOffset();

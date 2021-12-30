@@ -26,8 +26,7 @@ export class BuymerchmodalPage implements OnInit {
 
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-      console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
+     
       this.me = storedUser.UserID;
 
 

@@ -47,9 +47,7 @@ export class ChatPage implements OnInit {
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
-
+      
       }
       this.me = storedUser.UserID;
       this.dataService.getChat(this.id).subscribe(res => {
@@ -60,7 +58,6 @@ export class ChatPage implements OnInit {
           this.chat[i]['time'] = moment.utc(this.chat[i]['time']).fromNow();
         }
         this.currentUser = storedUser.UserID;
-        console.log(this.chat);
         setTimeout(() => {
           this.updateScroll();
         }, 500);
@@ -80,10 +77,8 @@ export class ChatPage implements OnInit {
       this.latest = res.message;
      
       var last = this.chat.find(message => message.message_id == this.latest[0]['message_id']);
-      console.log("latest id", this.latest[0]['message_id']);
-      console.log("last var", last);
+     
       if (last) {
-        console.log("yes");
       } else {
         
         this.dataService.getChat(this.id).subscribe(res => {
@@ -93,7 +88,6 @@ export class ChatPage implements OnInit {
 
             this.chat[i]['time'] = moment.utc(this.chat[i]['time']).fromNow();
           }
-          console.log(this.chat);
           setTimeout(() => {
             this.updateScroll();
           }, 500);
@@ -112,7 +106,6 @@ export class ChatPage implements OnInit {
     };
 
     this.http.post('https://ggs.tv/api/v1/sendmessage.php', JSON.stringify(data)).subscribe(res => {
-      console.log(res);
     });
 
     this.messageForm.reset();

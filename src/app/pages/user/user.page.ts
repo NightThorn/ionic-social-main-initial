@@ -75,7 +75,6 @@ export class UserPage implements OnInit {
     this.activeRoute.queryParams.subscribe(params => {
       if (params && params.special) {
         this.data = JSON.parse(params.special);
-        console.log("uhhhhh huh", this.data);
       }
     });
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
@@ -88,14 +87,12 @@ export class UserPage implements OnInit {
           if (follow) {
             this.isFollowing = true;
           }
-          console.log("isfollowing?", this.isFollowing)
-          console.log("ighttt", this.following)
+          
         });
 
 
         this.profileService.fetchFriends(this.data).subscribe(res => {
           this.userFriends = res.message;
-          console.log("friends??", this.userFriends)
 
           this.friendCount = this.userFriends.length;
           var target = this.userFriends.find(message => message.user_id == this.me)
@@ -106,7 +103,6 @@ export class UserPage implements OnInit {
 
             this.isFriends = "0";
           }
-          console.log("friends? orrr", this.isFriends);
         });
 
         this.profileService.fetchUser(this.data);
@@ -118,12 +114,10 @@ export class UserPage implements OnInit {
 
         this.profileService.fetchGroups(this.data).subscribe(res => {
           this.groups = res.message;
-          console.log("PROFILEPAGE:groups", this.groups);
 
         });
         this.profileService.fetchGroups(this.data).subscribe(res => {
           this.groups = res.message;
-          console.log("PROFILEPAGE:groups", this.groups);
 
         });
         this.profileService.fetchPictures(this.data).subscribe(res => {
@@ -135,12 +129,10 @@ export class UserPage implements OnInit {
           this.fetchedProfile = profile;
           const newDate = new Date(this.fetchedProfile.user_birthdate);
           this.bday = newDate.toDateString();
-          console.log("PROFILEPAGE:FETCHED_PROFILE_SUB:GOT", this.fetchedProfile);
         });
 
         this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
           this.fetchedPosts = data;
-          console.log("PROFILEPAGE:FETCHED_Posts_SUB:GOT", this.fetchedPosts);
 
         })
         // this.data = this.profileService.fetchProfile(this.x);

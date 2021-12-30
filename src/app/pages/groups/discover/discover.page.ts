@@ -28,10 +28,8 @@ export class DiscoverPage implements OnInit {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
         this.me = storedUser.UserID;
-        console.log(this.me);
         this.dataService.getDiscoverGroups(this.me).subscribe(res => {
           this.groups = res.message;
-          console.log("PROFILEPAGE:groups", this.groups);
           this.dataList = this.groups.slice(0, this.topLimit);
 
         }

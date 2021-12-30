@@ -28,7 +28,6 @@ export class MerchPage implements OnInit {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
         this.me = storedUser.UserID;
-        console.log(this.me);
         this.dataService.getXP(storedUser.UserID).subscribe(res => {
           this.xp = res.message;
           for (let i = 0; i < this.xp.length; i++) {
@@ -36,7 +35,7 @@ export class MerchPage implements OnInit {
             this.myXP = this.numFormatter(this.xp[i]['user_points']);
             this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
 
-            console.log("xp", this.myXP);
+           
           }
         });
         this.dataService.getMerch().subscribe(res => {
@@ -64,7 +63,6 @@ export class MerchPage implements OnInit {
     modal.present();
   }
   async buyMerch(id, wallet) {
-    console.log("$$", this.myWallet);
 
     const modal = await this.modalController.create({
       component: BuymerchmodalPage,

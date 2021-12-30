@@ -30,14 +30,11 @@ export class BadgesPage implements OnInit {
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:TOKEN", storedUser.Token);
-        console.log("PROFILEPAGE:ACTIVE_USER_SUB:ID", storedUser.UserID);
         this.me = storedUser.UserID;
         //check if user pro?
         this.dataService.badgeShopInfo(this.me).subscribe(res => {
           this.info = res.message;
           this.pro = this.info[0]['user_subscribed'];
-          console.log("pro??", this.pro);
         });
 
         this.dataService.getBadgeShop().subscribe(res => {

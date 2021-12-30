@@ -21,7 +21,6 @@ export class AllPage implements OnInit {
     this.dataService.getAllStreams().subscribe(res => {
       this.streams = res.message;
 
-      console.log("PROFILEPAGE:streams", this.streams);
       this.dataList = this.streams.slice(0, this.topLimit);
 
     });

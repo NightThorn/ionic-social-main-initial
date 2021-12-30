@@ -26,7 +26,6 @@ export class GroupPage implements OnInit {
       this.group = res.message;
       this.dataService.getGroupFeed(this.group[0]['group_id']).subscribe(res => {
         this.feed = res.message;
-        console.log(this.feed);
         for (let i = 0; i < this.feed.length; i++) {
           this.offset = moment().utcOffset();
 
@@ -44,7 +43,6 @@ export class GroupPage implements OnInit {
   }
 
   doRefresh(event) {
-    console.log('Begin async operation');
     this.dataService.getRandomGroup().subscribe(res => {
       this.group = res.message;
 
