@@ -10,6 +10,7 @@ import { StoredUser } from "../../models/stored-user";
 import { ProfileModel } from "../../models/profile-model";
 import { Post } from 'src/app/models/post';
 import { PostsService } from 'src/app/services/posts.service';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-user',
   templateUrl: './user.page.html',
@@ -56,6 +57,11 @@ export class UserPage implements OnInit {
   storedUser: any;
   following: any = [];
   follow: number;
+  reported: string;
+  blocked: string;
+  added: string;
+  public friend = "Friends";
+  public addfriend = "Add Friend";
 
   constructor(
     private dataService: DataService,
@@ -63,6 +69,7 @@ export class UserPage implements OnInit {
     private postsService: PostsService,
     private modalController: ModalController,
     private router: Router,
+    private http: HttpClient,
     public nav: NavController,
     private authService: AuthenticationService,
     private activeRoute: ActivatedRoute
@@ -192,6 +199,58 @@ export class UserPage implements OnInit {
 
     }, 500);
 
+  }
+  add(id) {
+
+    let data = {
+      "user": id,
+      "me": this.me,
+    };
+    this.http.post('https://ggs.tv/api/v1/user.php?action=add', JSON.stringify(data)).subscribe(res => {
+      this.addfriend = "Requested";
+      if (this.addfriend = "Requested") {
+        this.addfriend = "Add Friend";
+
+        this.remove(id);
+      }
+    });
+  }
+
+  remove(id) {
+
+    let data = {
+      "post_id": id,
+      "user_id": this.me,
+    };
+    this.http.post('https://ggs.tv/api/v1/user.php?action=remove', JSON.stringify(data)).subscribe(res => {
+    
+      this.isFriends = "0";
+
+    });
+  }
+  block(id) {
+
+    let data = {
+      "post_id": id,
+      "user_id": this.me,
+    };
+    this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).subscribe(res => {
+      
+      this.blocked = "./assets/images/ggsgray.png";
+
+    });
+  }
+  report(id) {
+
+    let data = {
+      "post_id": id,
+      "user_id": this.me,
+    };
+    this.http.post('https://ggs.tv/api/v1/user.php?action=report', JSON.stringify(data)).subscribe(res => {
+      
+      this.reported = "./assets/images/ggsgray.png";
+
+    });
   }
 }
 

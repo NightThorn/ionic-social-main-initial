@@ -60,9 +60,9 @@
 
         </div>
         <ul>
-          <ion-button *ngIf="isFriends == 1; else addFriend" class="follow-btn">Friends</ion-button>
+          <ion-button *ngIf="isFriends == 1; else addFriend"  class="follow-btn">{{friend}}</ion-button>
           <ng-template #addFriend>
-            <ion-button class="follow-btn">Add Friend</ion-button>
+            <ion-button id="friend-button" (click)="add(fetchedProfile.user_id)" class="follow-btn">{{addfriend}}</ion-button>
           </ng-template>
           <ion-button *ngIf="isFollowing == 1; else follow" class="unfollow-btn">UnFollow
           </ion-button>
