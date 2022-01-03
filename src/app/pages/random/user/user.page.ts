@@ -10,6 +10,7 @@ import { ProfileModel } from "../../../models/profile-model";
 import { Post } from 'src/app/models/post';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { StoredUser } from 'src/app/models/stored-user';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-user',
   templateUrl: './user.page.html',
@@ -49,12 +50,15 @@ export class UserPage implements OnInit {
   friendCount: any;
   data: any;
   user: any;
+  me: number;
+  public addfriend = "Add Friend";
 
   constructor(
     private dataService: DataService,
     private profileService: ProfileService,
     private modalController: ModalController,
     private router: Router,
+    private http: HttpClient,
     private authService: AuthenticationService,
     private activeRoute: ActivatedRoute
   ) {
@@ -65,7 +69,7 @@ export class UserPage implements OnInit {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
        
-
+        this.me = storedUser.UserID;
         this.dataService.getRandomUser(storedUser.UserID).subscribe(res => {
           this.user = res.message;
           this.data = res.message['0']['user_id'];
@@ -108,7 +112,17 @@ export class UserPage implements OnInit {
       }
     });
   }
+  add(id) {
 
+    let data = {
+      "user": id,
+      "me": this.me,
+    };
+    this.http.post('https://ggs.tv/api/v1/user.php?action=add', JSON.stringify(data)).subscribe(res => {
+      this.addfriend = "Requested";
+    
+    });
+  }
   async openModal(source) {
     const modal = await this.modalController.create({
       component: ImageModalPage,
