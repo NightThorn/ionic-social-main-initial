@@ -16,6 +16,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   templateUrl: './feed-card.component.html',
   styleUrls: ['./feed-card.component.scss'],
 })
+  
 export class FeedCardComponent implements OnInit {
   @Input() avatar: string;
   @Input() name: string;

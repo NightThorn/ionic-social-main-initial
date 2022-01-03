@@ -113,7 +113,7 @@ export class UserPage implements OnInit {
     });
   }
   add(id) {
-
+    console.log("testttt");
     let data = {
       "user": id,
       "me": this.me,
@@ -121,6 +121,28 @@ export class UserPage implements OnInit {
     this.http.post('https://ggs.tv/api/v1/user.php?action=add', JSON.stringify(data)).subscribe(res => {
       this.addfriend = "Requested";
     
+    });
+  }
+  report(id) {
+    console.log("testttt");
+    let data = {
+      "user": id,
+      "me": this.me,
+    };
+    this.http.post('https://ggs.tv/api/v1/user.php?action=report', JSON.stringify(data)).subscribe(res => {
+      this.addfriend = "Requested";
+
+    });
+  }
+  block(id) {
+    console.log("testttt");
+    let data = {
+      "user": id,
+      "me": this.me,
+    };
+    this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).subscribe(res => {
+      this.addfriend = "Requested";
+
     });
   }
   async openModal(source) {

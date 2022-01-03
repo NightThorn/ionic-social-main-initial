@@ -68,10 +68,10 @@
             </ion-fab-button>
             <ion-fab-list side="top">
               <ion-fab-button>
-                <ion-icon name="warning">Report</ion-icon>
+                <ion-icon (click)="report(fetchedProfile.user_id)" name="warning">Report</ion-icon>
               </ion-fab-button>
               <ion-fab-button>
-                <ion-icon name="close">Block</ion-icon>
+                <ion-icon (click)="block(fetchedProfile.user_id)" name="close">Block</ion-icon>
               </ion-fab-button>
 
 
