@@ -60,7 +60,7 @@
           </ul>
 
         </div>
-        <ul>
+        <ul *ngIf="fetchedProfile">
           <ion-button class="follow-btn" (click)="add(fetchedProfile.user_id)">Add Friend</ion-button>
           <ion-fab horizontal="end" edge slot="fixed">
             <ion-fab-button>

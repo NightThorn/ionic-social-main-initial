@@ -19,7 +19,7 @@ export class PostDetailPage implements OnInit {
 
   commentForm: FormGroup;
 
-  
+
   data: any;
   post: any;
   comments: any;
@@ -35,7 +35,7 @@ export class PostDetailPage implements OnInit {
         this.data = JSON.parse(params.special);
       }
     });
-}
+  }
 
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
@@ -44,7 +44,7 @@ export class PostDetailPage implements OnInit {
 
       }
     });
-  
+
     this.dataService.getPostDetails(this.data).subscribe(res => {
       this.post = res.message;
       for (let i = 0; i < this.post.length; i++) {
@@ -53,51 +53,6 @@ export class PostDetailPage implements OnInit {
         this.post[i]['time'] = moment.utc(this.post[i]['time']).fromNow();
       }
     });
-    this.dataService.getPostComments(this.data).subscribe(res => {
-      this.comments = res.message;
-      for (let i = 0; i < this.comments.length; i++) {
-        this.offset = moment().utcOffset();
-        this.comments[i]['time'] = moment.utc(this.comments[i]['time']).fromNow();
-          this.dataService.getPostCommentReplies(this.comments[i]['comment_id']).subscribe(res => {
-            this.replies = res.message;
-
-            for (let i = 0; i < this.replies.length; i++) {
-              this.offset = moment().utcOffset();
-
-              this.replies[i]['time'] = moment.utc(this.replies[i]['time']).fromNow();
-            }
-          });
-        
-      }
-    });
-    
-   
-    this.commentForm = this.fb.group({
-      message: [null]
-    });
-  }
-showReplies(){
-  var element = document.getElementById("repliesContainer");
-  element.classList.toggle("replies");
-}
-  
-  
-  submitComment(id, user, text) {
-    var headers = new HttpHeaders();
-    headers.append("Accept", 'application/json');
-    headers.append('Content-Type', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
-
-   let time = new Date(Date.now());
-      let data = {
-        "post_id": id,
-        "user_id": user,
-        "message": text,
-        "time": time
-      };
-
-    this.http.post('https://ggs.tv/api/v1/post.php?action=comment', JSON.stringify(data), { headers: headers }).subscribe(res => {
-      });
     this.dataService.getPostComments(this.data).subscribe(res => {
       this.comments = res.message;
       for (let i = 0; i < this.comments.length; i++) {
@@ -115,7 +70,53 @@ showReplies(){
 
       }
     });
-      this.commentForm.reset();
+
+
+    this.commentForm = this.fb.group({
+      message: [null]
+    });
+  }
+  showReplies() {
+    var element = document.getElementById("repliesContainer");
+    element.classList.toggle("replies");
+  }
+
+
+  submitComment(id, user, text) {
+    var headers = new HttpHeaders();
+    headers.append("Accept", 'application/json');
+    headers.append('Content-Type', 'application/json');
+    headers.append('Access-Control-Allow-Origin', '*');
+
+    let time = new Date(Date.now());
+    let data = {
+      "post_id": id,
+      "user_id": user,
+      "message": text,
+      "time": time
+    };
+
+    this.http.post('https://ggs.tv/api/v1/post.php?action=comment', JSON.stringify(data), { headers: headers }).subscribe(res => {
+    });
+    this.dataService.getPostComments(this.data).subscribe(res => {
+      this.comments = res.message;
+      for (let i = 0; i < this.comments.length; i++) {
+        this.offset = moment().utcOffset();
+        this.comments[i]['time'] = moment.utc(this.comments[i]['time']).fromNow();
+        this.dataService.getPostCommentReplies(this.comments[i]['comment_id']).subscribe(res => {
+          this.replies = res.message;
+
+          for (let i = 0; i < this.replies.length; i++) {
+            this.offset = moment().utcOffset();
+
+            this.replies[i]['time'] = moment.utc(this.replies[i]['time']).fromNow();
+          }
+        });
+
+      }
+    });
+    this.commentForm.reset();
+    window.location.reload();
   }
 
   user(id) {
@@ -127,7 +128,7 @@ showReplies(){
     this.router.navigate(['/user'], navigationExtras);
 
   }
- 
+
 
   async navigateToModal(source) {
     const modal = await this.modalController.create({
@@ -142,5 +143,5 @@ showReplies(){
     modal.present();
   }
 
-  
+
 }

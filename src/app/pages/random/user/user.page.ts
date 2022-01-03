@@ -67,13 +67,17 @@ export class UserPage implements OnInit {
 
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-       
-        this.me = storedUser.UserID;
-        this.dataService.getRandomUser(storedUser.UserID).subscribe(res => {
-          this.user = res.message;
-          this.data = res.message['0']['user_id'];
+      console.log("khdsgfasfasdfsfdasdfkasfd", this.me);
 
+      this.me = storedUser.UserID;
+      console.log("khdsgfasfasdfsfdasdfkasfd", this.me);
+
+        this.dataService.getRandomUser(this.me).subscribe(res => {
+          this.user = res.message;
+          console.log("khdsgfasfasdfsfdasdfkasfd", this.user);
+
+          this.data = this.user['0']['user_id'];
+          console.log("khdsgfkasfd", this.data);
 
 
           this.profileService.fetchUser(this.data);
@@ -109,7 +113,7 @@ export class UserPage implements OnInit {
           // this.data = this.profileService.fetchProfile(this.x);
           this.events = this.dataService.getEvents();
         });
-      }
+      
     });
   }
   add(id) {
@@ -120,7 +124,7 @@ export class UserPage implements OnInit {
     };
     this.http.post('https://ggs.tv/api/v1/user.php?action=add', JSON.stringify(data)).subscribe(res => {
       this.addfriend = "Requested";
-    
+
     });
   }
   report(id) {
@@ -186,7 +190,7 @@ export class UserPage implements OnInit {
   doRefresh(event) {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-       
+
 
         this.dataService.getRandomUser(storedUser.UserID).subscribe(res => {
           this.user = res.message;
@@ -228,7 +232,7 @@ export class UserPage implements OnInit {
         });
       }
     });
-  
+
     setTimeout(() => {
       event.target.complete();
     }, 1000);

@@ -35,6 +35,7 @@ export class ProPage implements OnInit {
 
   }
   stream(twitch) {
-    window.open('twitch://twitch.tv/' + twitch);
+    console.log(twitch);
+    window.open('twitch://stream/' + twitch);
   }
 }

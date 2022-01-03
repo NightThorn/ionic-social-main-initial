@@ -62,6 +62,8 @@ export class UserPage implements OnInit {
   added: string;
   public friend = "Friends";
   public addfriend = "Add Friend";
+  public ifollow = "Follow";
+  public iunfollow = "Unfollow";
 
   constructor(
     private dataService: DataService,
@@ -207,20 +209,17 @@ export class UserPage implements OnInit {
       "me": this.me,
     };
     this.http.post('https://ggs.tv/api/v1/user.php?action=add', JSON.stringify(data)).subscribe(res => {
-      this.addfriend = "Requested";
-      if (this.addfriend = "Requested") {
-        this.addfriend = "Add Friend";
-
-        this.remove(id);
-      }
+      
+        this.addfriend = "Requested";
+      
     });
   }
 
   remove(id) {
 
     let data = {
-      "post_id": id,
-      "user_id": this.me,
+      "user": id,
+      "me": this.me,
     };
     this.http.post('https://ggs.tv/api/v1/user.php?action=remove', JSON.stringify(data)).subscribe(res => {
     
@@ -231,8 +230,8 @@ export class UserPage implements OnInit {
   block(id) {
 
     let data = {
-      "post_id": id,
-      "user_id": this.me,
+      "user": id,
+      "me": this.me,
     };
     this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).subscribe(res => {
       
@@ -243,12 +242,36 @@ export class UserPage implements OnInit {
   report(id) {
 
     let data = {
-      "post_id": id,
-      "user_id": this.me,
+      "user": id,
+      "me": this.me,
     };
     this.http.post('https://ggs.tv/api/v1/user.php?action=report', JSON.stringify(data)).subscribe(res => {
       
       this.reported = "./assets/images/ggsgray.png";
+
+    });
+  }
+  _follow(id) {
+
+    let data = {
+      "user": id,
+      "me": this.me,
+    };
+    this.http.post('https://ggs.tv/api/v1/user.php?action=follow', JSON.stringify(data)).subscribe(res => {
+
+      this.ifollow = "Following";
+
+    });
+  }
+  unfollow(id) {
+
+    let data = {
+      "user": id,
+      "me": this.me,
+    };
+    this.http.post('https://ggs.tv/api/v1/user.php?action=unfollow', JSON.stringify(data)).subscribe(res => {
+
+      this.iunfollow = "Follow";
 
     });
   }

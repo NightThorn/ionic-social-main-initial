@@ -37,7 +37,8 @@ export class AllPage implements OnInit {
 
   }
 
-stream(twitch) {
-    window.open('twitch://twitch.tv/' + twitch);
+  stream(twitch) {
+    console.log(twitch);
+  window.open('twitch://stream/' + twitch);
   }
 }
