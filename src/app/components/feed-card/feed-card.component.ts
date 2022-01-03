@@ -10,7 +10,6 @@ import { HashLocationStrategy } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { NgxTweetModule } from "ngx-tweet";
 
 @Component({
   selector: 'app-feed-card',
