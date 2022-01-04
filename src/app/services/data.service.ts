@@ -207,9 +207,54 @@ export class DataService {
   getNotis(user_id) {
 
 
-    return this.http.get(`https://ggs.tv/api/v1/notifications.php?user=${user_id}`).pipe(map((res: any) => {
+    return this.http.get(`https://ggs.tv/api/v1/notifications.php?user=${user_id}&tab=all`).pipe(map((res: any) => {
 
       
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
+  getLikesNotis(user_id) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/notifications.php?user=${user_id}&tab=likes`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
+  getConnectionsNotis(user_id) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/notifications.php?user=${user_id}&tab=connections`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
+  getCommentsNotis(user_id) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/notifications.php?user=${user_id}&tab=comments`).pipe(map((res: any) => {
+
+
       return res;
     }),
       filter((res: any) => {
