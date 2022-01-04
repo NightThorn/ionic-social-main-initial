@@ -15,7 +15,9 @@ ion-menu-button {
   border-radius: 20px;
   position: relative;
 }
-
+ion-fab-button.md.ion-activatable.ion-focusable.hydrated {
+    --background: transparent;
+}
 ion-header ion-toolbar {
   --background: transparent;
 }

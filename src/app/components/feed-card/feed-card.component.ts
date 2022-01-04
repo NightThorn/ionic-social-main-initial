@@ -33,6 +33,7 @@ export class FeedCardComponent implements OnInit {
   @Input() text: string;
   @Input() comments: number;
   @Input() separator: boolean;
+  @Input() boosted: number;
 
   imgConfig = {
     spaceBetween: 6,
@@ -55,6 +56,12 @@ export class FeedCardComponent implements OnInit {
   me: number;
   reacts: any;
   liked: any;
+  points: number;
+  wallet: number;
+  subscribed: number;
+  mod: number;
+  staff: number;
+  banned: number;
   reacted: any;
   image: string = "./assets/images/ggsgray.png";
   constructor(private router: Router, private sanitizer: DomSanitizer, private authService: AuthenticationService, private http: HttpClient, private dataService: DataService) {
@@ -66,6 +73,12 @@ export class FeedCardComponent implements OnInit {
 
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       this.me = storedUser.UserID;
+      this.points = storedUser.Points;
+      this.wallet = storedUser.Wallet;
+      this.subscribed = storedUser.Subscribed;
+      this.mod = storedUser.Mod;
+      this.staff = storedUser.Staff;
+      this.banned = storedUser.Banned;
 
 
 
@@ -194,17 +207,32 @@ export class FeedCardComponent implements OnInit {
       this.likes++;
       this.liked = "1";
       this.image = "./assets/images/ggs.png";
-
-
-
-
     });
-
-
-
-
   }
-
+  deboost(id) {
+    let data = {
+      "post_id": id,
+      "user_id": this.me,
+    };
+    this.http.post('https://ggs.tv/api/v1/post.php?action=deboost', JSON.stringify(data)).subscribe(res => {
+    });
+  }
+  boost(id) {
+    let data = {
+      "post_id": id,
+      "user_id": this.me,
+    };
+    this.http.post('https://ggs.tv/api/v1/post.php?action=boost', JSON.stringify(data)).subscribe(res => {
+    });
+  }
+  report(id) {
+    let data = {
+      "post_id": id,
+      "user_id": this.me,
+    };
+    this.http.post('https://ggs.tv/api/v1/post.php?action=report', JSON.stringify(data)).subscribe(res => {
+    });
+  }
   unreact(id) {
 
     let data = {

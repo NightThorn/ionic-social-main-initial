@@ -75,14 +75,14 @@
           </ng-template>
           <ion-fab horizontal="end" edge slot="fixed">
             <ion-fab-button>
-              <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+              <ion-icon style="fill: black;" name="ellipsis-vertical-outline"></ion-icon>
             </ion-fab-button>
             <ion-fab-list side="top">
               <ion-fab-button>
-                <ion-icon name="warning" (click)="report(fetchedProfile.user_id)">Report</ion-icon>
+                <ion-icon style="fill: yellow;" name="warning" (click)="report(fetchedProfile.user_id)">Report</ion-icon>
               </ion-fab-button>
               <ion-fab-button>
-                <ion-icon name="close" (click)="block(fetchedProfile.user_id)">Block</ion-icon>
+                <ion-icon style="fill: red;" name="close" (click)="block(fetchedProfile.user_id)">Block</ion-icon>
               </ion-fab-button>
 
 
@@ -126,7 +126,7 @@
                 [post_id]="item.post_id" [date]="item.time" [text]="item.text" [origin]="item.origin_id"
                 [user_id]="item.user_id" [picture]="item.picture_source" [videosrc]="item.source"
                 [type]="item.post_type" [likes]="item.reaction_like_count" [comments]="item.comments"
-                [shares]="item.shares" [separator]="true">
+                [shares]="item.shares" [separator]="true" [boosted]="item.boosted">
               </app-feed-card>
             </ion-row>
           </ion-row>
@@ -135,7 +135,6 @@
             <ion-col size="6" *ngFor="let pic of dataList">
               <img class="image-element" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
                 (click)="openModal(pic.source)" />
-
             </ion-col>
 
           </ion-row>
@@ -269,7 +268,7 @@
   </ion-grid>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
-      <ion-icon name="chatbubbles"></ion-icon>
+      <ion-icon style="fill: lime;" name="chatbubbles"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 

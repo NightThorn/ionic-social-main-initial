@@ -43,10 +43,16 @@ export class AuthenticationService {
     }
   }
 
-  async updateStoredUser(token: string, userId: number) {
+  async updateStoredUser(token: string, userId: number, subscribed: number, mod: number, staff: number, banned: number, points: number, wallet: number,) {
     await this.storage.set(this.key_stored_user, {
       Token: token,
-      UserID: userId
+      UserID: userId,
+      Subscribed: subscribed,
+      Mod: mod,
+      Staff: staff,
+      Banned: banned,
+      Points: points,
+      Wallet: wallet
     });
     this.reload();
   }
@@ -63,5 +69,5 @@ export class AuthenticationService {
     })
   }
 
-  
+
 }

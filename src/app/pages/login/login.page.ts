@@ -88,7 +88,7 @@ export class LoginPage implements OnInit, OnDestroy {
       }
 
       let userData = data['data']['login'];
-      this.authService.updateStoredUser(userData['token'], userData['user_id']);
+      this.authService.updateStoredUser(userData['token'], userData['user_id'], userData['subscribed'], userData['mod'], userData['staff'], userData['banned'], userData['points'], userData['wallet']);
 
       loading.dismiss();
     });

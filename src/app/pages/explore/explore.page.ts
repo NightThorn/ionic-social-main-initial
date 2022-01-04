@@ -53,6 +53,13 @@ export class ExplorePage implements OnInit {
   filter = "all";
   me: any;
   boosted: any;
+  points: number;
+  wallet: number;
+  subscribed: number;
+  mod: number;
+  staff: number;
+  banned: number;
+  boost: any;
 
 
   constructor(private router: Router, private authService: AuthenticationService, private modalController: ModalController, private storage: Storage, private dataService: DataService) { }
@@ -63,11 +70,23 @@ export class ExplorePage implements OnInit {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
         this.me = storedUser.UserID;
+        this.points = storedUser.Points;
+        this.wallet = storedUser.Wallet;
+        this.subscribed = storedUser.Subscribed;
+        this.mod = storedUser.Mod;
+        this.staff = storedUser.Staff;
+        this.banned = storedUser.Banned;
+
+        this.myXP = this.numFormatter(this.points);
+        this.myWallet = this.numFormatter(this.wallet);
+
+        console.log(this.myWallet, this.myXP, this.subscribed);
         this.filter = localStorage.getItem("filter");
 
         if (this.filter = "all") {
           this.dataService.getAllPosts(storedUser.UserID).subscribe(res => {
             this.feeds = res.message;
+
             for (let i = 0; i < this.feeds.length; i++) {
               this.offset = moment().utcOffset();
 
@@ -94,22 +113,14 @@ export class ExplorePage implements OnInit {
           this.latest = res.message;
         });
         this.dataService.getBoosted().subscribe(res => {
-          this.boosted = res.message;
-          for (let i = 0; i < this.boosted.length; i++) {
+          this.boost = res.message;
+          for (let i = 0; i < this.boost.length; i++) {
             this.offset = moment().utcOffset();
 
-            this.boosted[i]['time'] = moment.utc(this.boosted[i]['time']).fromNow();
+            this.boost[i]['time'] = moment.utc(this.boost[i]['time']).fromNow();
           }
         });
-        this.dataService.getXP(storedUser.UserID).subscribe(res => {
-          this.xp = res.message;
-          for (let i = 0; i < this.xp.length; i++) {
-
-            this.myXP = this.numFormatter(this.xp[i]['user_points']);
-            this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
-
-          }
-        });
+        
       }
     });
 

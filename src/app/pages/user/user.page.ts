@@ -228,6 +228,19 @@ export class UserPage implements OnInit {
 
     });
   }
+  boost(id) {
+
+    let data = {
+      "post": id,
+      "me": this.me,
+    };
+    this.blocked = 1;
+
+    this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).subscribe(res => {
+
+
+    });
+  }
   block(id) {
 
     let data = {

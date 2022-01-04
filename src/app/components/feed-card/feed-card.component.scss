@@ -63,7 +63,9 @@ ion-card-content {
 .hide{
 display:none;
 }
-
+ion-fab-button.md.ion-activatable.ion-focusable.hydrated {
+    --background: transparent;
+}
 .show{
 display:block;
 }
