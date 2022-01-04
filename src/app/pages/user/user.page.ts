@@ -30,7 +30,7 @@ export class UserPage implements OnInit {
   groups: any;
 
   public dataL: Array<object> = [];
-
+  public blocked: number = 0;
   public items: any;
   private topLimit: number = 15;
   public dataList: any = [];
@@ -58,7 +58,6 @@ export class UserPage implements OnInit {
   following: any = [];
   follow: number;
   reported: string;
-  blocked: string;
   added: string;
   public friend = "Friends";
   public addfriend = "Add Friend";
@@ -208,9 +207,10 @@ export class UserPage implements OnInit {
       "user": id,
       "me": this.me,
     };
+    this.addfriend = "Requested";
+
     this.http.post('https://ggs.tv/api/v1/user.php?action=add', JSON.stringify(data)).subscribe(res => {
       
-        this.addfriend = "Requested";
       
     });
   }
@@ -221,9 +221,10 @@ export class UserPage implements OnInit {
       "user": id,
       "me": this.me,
     };
+    this.isFriends = "0";
+
     this.http.post('https://ggs.tv/api/v1/user.php?action=remove', JSON.stringify(data)).subscribe(res => {
     
-      this.isFriends = "0";
 
     });
   }
@@ -233,9 +234,10 @@ export class UserPage implements OnInit {
       "user": id,
       "me": this.me,
     };
+    this.blocked = 1;
+
     this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).subscribe(res => {
       
-      this.blocked = "./assets/images/ggsgray.png";
 
     });
   }

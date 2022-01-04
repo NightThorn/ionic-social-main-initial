@@ -52,6 +52,7 @@ export class UserPage implements OnInit {
   user: any;
   me: number;
   public addfriend = "Add Friend";
+  public blocked = 0;
 
   constructor(
     private dataService: DataService,
@@ -122,8 +123,9 @@ export class UserPage implements OnInit {
       "user": id,
       "me": this.me,
     };
+    this.addfriend = "Requested";
+
     this.http.post('https://ggs.tv/api/v1/user.php?action=add', JSON.stringify(data)).subscribe(res => {
-      this.addfriend = "Requested";
 
     });
   }
@@ -134,7 +136,6 @@ export class UserPage implements OnInit {
       "me": this.me,
     };
     this.http.post('https://ggs.tv/api/v1/user.php?action=report', JSON.stringify(data)).subscribe(res => {
-      this.addfriend = "Requested";
 
     });
   }
@@ -144,9 +145,9 @@ export class UserPage implements OnInit {
       "user": id,
       "me": this.me,
     };
-    this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).subscribe(res => {
-      this.addfriend = "Requested";
+    this.blocked = 1;
 
+    this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).subscribe(res => {
     });
   }
   async openModal(source) {
