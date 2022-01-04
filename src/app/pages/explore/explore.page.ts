@@ -77,12 +77,17 @@ export class ExplorePage implements OnInit {
         this.staff = storedUser.Staff;
         this.banned = storedUser.Banned;
 
-        this.myXP = this.numFormatter(this.points);
-        this.myWallet = this.numFormatter(this.wallet);
+       
 
-        console.log(this.myWallet, this.myXP, this.subscribed);
         this.filter = localStorage.getItem("filter");
+        this.dataService.getXP(storedUser.UserID).subscribe(res => {
+          this.xp = res.message;
+          for (let i = 0; i < this.xp.length; i++) {
 
+            this.myXP = this.numFormatter(this.xp[i]['user_points']);
+            this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
+          }
+        });
         if (this.filter = "all") {
           this.dataService.getAllPosts(storedUser.UserID).subscribe(res => {
             this.feeds = res.message;

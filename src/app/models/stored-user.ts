@@ -8,4 +8,6 @@ export interface StoredUser {
   Staff: number;
   Banned: number;
   Wallet: number;
+  User_Package: number;
+  Boosted_Posts: number;
 }

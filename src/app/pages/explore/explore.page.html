@@ -1,8 +1,9 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <div style=" display: flex; align-items:center;">
-      <img (click)="openXPModal(myXP)" style="width: 30px; margin: 10px;" src="assets/images/XP.png">
-      <ion-label style="font-size: small;" (click)="gotoShop()">{{myXP}}</ion-label>
+    <div style=" display: flex; align-items:center;" *ngFor="let item of xp">
+      <img (click)="openXPModal(item.user_points)" style="width: 30px; margin: 10px;" src="assets/images/XP.png">
+        <ion-label style="font-size: small;" (click)="gotoShop()">{{myXP}}</ion-label>
+
       <img (click)="gotoShop()" style="width: 30px; margin: 10px;" src="assets/images/heads.png">
       <ion-label style="font-size: small;" (click)="gotoShop()">{{myWallet}}</ion-label>
 

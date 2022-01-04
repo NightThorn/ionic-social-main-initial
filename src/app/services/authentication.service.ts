@@ -43,7 +43,7 @@ export class AuthenticationService {
     }
   }
 
-  async updateStoredUser(token: string, userId: number, subscribed: number, mod: number, staff: number, banned: number, points: number, wallet: number,) {
+  async updateStoredUser(token: string, userId: number, subscribed: number, mod: number, staff: number, banned: number, points: number, wallet: number, user_package: number, boosted_posts: number) {
     await this.storage.set(this.key_stored_user, {
       Token: token,
       UserID: userId,
@@ -52,7 +52,9 @@ export class AuthenticationService {
       Staff: staff,
       Banned: banned,
       Points: points,
-      Wallet: wallet
+      Wallet: wallet,
+      User_Package: user_package,
+      Boosted_Posts: boosted_posts
     });
     this.reload();
   }
