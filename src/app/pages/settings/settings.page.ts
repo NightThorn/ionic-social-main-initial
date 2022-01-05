@@ -6,6 +6,7 @@ import { async } from 'rxjs';
 import { StoredUser } from 'src/app/models/stored-user';
 import { DataService } from 'src/app/services/data.service';
 import { AuthenticationService } from "../../services/authentication.service";
+import { EditPage } from '../edit/edit.page';
 import { ModalPage } from '../modal/modal.page';
 import { VideoModalPage } from '../video-modal/video-modal.page';
 import { XpmodalPage } from '../xpmodal/xpmodal.page';
@@ -30,6 +31,7 @@ export class SettingsPage implements OnInit {
   user_package: number;
   boosted_posts: number;
   user: any;
+  bio: any;
 
   constructor(
     private router: Router,
@@ -44,10 +46,12 @@ export class SettingsPage implements OnInit {
         this.me = storedUser.UserID;
         this.dataService.getUser(this.me).subscribe(res => {
           this.user = res.message;
+          this.bio = this.user[0]['user_biography'];
         });
         this.value = localStorage.getItem("filter");
       }
     });
+    console.log(this.bio);
   }
   gotoShop() {
     this.router.navigate(['shop']);
@@ -81,13 +85,13 @@ export class SettingsPage implements OnInit {
     modal.present();
   }
   async openXPModal(xp) {
-
     const modal = await this.modalController.create({
       component: XpmodalPage,
       cssClass: 'modal',
       backdropDismiss: false,
       componentProps: {
-        'xp': xp
+        'xp': xp,
+
       }
 
     });
@@ -112,7 +116,20 @@ export class SettingsPage implements OnInit {
   }
 
 
+  async edit(id, bio) {
 
+    const modal = await this.modalController.create({
+      component: EditPage,
+      cssClass: 'modal',
+      backdropDismiss: false,
+      componentProps: {
+        'id': id,
+        'bio': bio
+      }
+
+    });
+    modal.present();
+  }
 
   async openVideoModal(source) {
     const modal = await this.modalController.create({

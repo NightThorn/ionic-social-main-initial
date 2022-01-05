@@ -149,6 +149,10 @@ const routes: Routes = [
     path: 'entergiveawaymodal',
     loadChildren: () => import('./pages/entergiveawaymodal/entergiveawaymodal.module').then( m => m.EntergiveawaymodalPageModule)
   },
+  {
+    path: 'edit',
+    loadChildren: () => import('./pages/edit/edit.module').then( m => m.EditPageModule)
+  },
 
   
 

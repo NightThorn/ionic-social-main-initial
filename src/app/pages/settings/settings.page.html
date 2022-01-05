@@ -30,15 +30,15 @@
 
                 <img (click)="gotoShop()" style="width: 30px; margin: 10px;" src="assets/images/heads.png">
                 <ion-label style="font-size: small;" (click)="gotoShop()">{{item.user_wallet_balance}}</ion-label>
-<ion-item>
-  <div style=" display: flex; align-items:center;">
-    <ion-label style="font-size: small;">All-Time </ion-label>
+                <ion-item>
+                  <div style=" display: flex; align-items:center;">
+                    <ion-label style="font-size: small;">All-Time </ion-label>
 
-    <img style="width: 20px; margin: 5px; " src="assets/images/XP.png">
-    <ion-label style="font-size: small;">: {{item.total_xp}}</ion-label>
-  </div>
+                    <img style="width: 20px; margin: 5px; " src="assets/images/XP.png">
+                    <ion-label style="font-size: small;">: {{item.total_xp}}</ion-label>
+                  </div>
 
-</ion-item>
+                </ion-item>
               </div>
             </ion-label>
           </ion-item>
@@ -52,12 +52,12 @@
           <ion-list-header>
             <ion-label>General Settings</ion-label>
           </ion-list-header>
-          <ion-item lines="none">
+          <ion-item (click)="edit(me, bio)" lines="none">
             <ion-avatar slot="start" class="icon-bg">
               <ion-icon name="person"></ion-icon>
             </ion-avatar>
             <ion-label>
-              <h2>Edit Profile</h2>
+              <h2>Edit Account</h2>
               <p>Edit Profile Information</p>
             </ion-label>
           </ion-item>
@@ -80,11 +80,12 @@
               <p>View/Unblock users</p>
             </ion-label>
           </ion-item>
-          
+
           <ion-list-header>
             <ion-label>Referral</ion-label>
           </ion-list-header>
-          <p style="color: orange; margin: 10px;" *ngIf="item.total_xp<5000">Unlock referral code with 5k all-time xp!</p>
+          <p style="color: orange; margin: 10px;" *ngIf="item.total_xp<5000">Unlock referral code with 5k all-time xp!
+          </p>
 
           <ion-item *ngIf="item.total_xp > 5000" lines="none">
             <ion-label>
