@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵsetCurrentInjector } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
@@ -6,8 +6,10 @@ import { async } from 'rxjs';
 import { StoredUser } from 'src/app/models/stored-user';
 import { DataService } from 'src/app/services/data.service';
 import { AuthenticationService } from "../../services/authentication.service";
+import { BlockedPage } from '../blocked/blocked.page';
 import { EditPage } from '../edit/edit.page';
 import { ModalPage } from '../modal/modal.page';
+import { PasswordPage } from '../password/password.page';
 import { VideoModalPage } from '../video-modal/video-modal.page';
 import { XpmodalPage } from '../xpmodal/xpmodal.page';
 @Component({
@@ -32,6 +34,14 @@ export class SettingsPage implements OnInit {
   boosted_posts: number;
   user: any;
   bio: any;
+  location: any;
+  username: any;
+  email: any;
+  gender: any;
+  relationship: any;
+  birthdate: any;
+  searching: number;
+  current: any;
 
   constructor(
     private router: Router,
@@ -47,6 +57,17 @@ export class SettingsPage implements OnInit {
         this.dataService.getUser(this.me).subscribe(res => {
           this.user = res.message;
           this.bio = this.user[0]['user_biography'];
+          this.location = this.user[0]['user_current_city'];
+          this.gender = this.user[0]['user_gender'];
+          this.current = this.user[0]['user_name'];
+
+          this.username = this.user[0]['user_name'];
+          this.relationship = this.user[0]['user_relationship'];
+          this.birthdate = this.user[0]['user_birthdate'];
+          this.searching = this.user[0]['searching'];
+
+          this.email = this.user[0]['user_email'];
+
         });
         this.value = localStorage.getItem("filter");
       }
@@ -97,7 +118,19 @@ export class SettingsPage implements OnInit {
     });
     modal.present();
   }
+  async blocked(id) {
+    const modal = await this.modalController.create({
+      component: BlockedPage,
+      cssClass: 'modal',
+      backdropDismiss: false,
+      componentProps: {
+        'me': id,
 
+      }
+
+    });
+    modal.present();
+  }
   numFormatter(num) {
     if (num > 999 && num < 1000000) {
       return (num / 1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
@@ -116,7 +149,7 @@ export class SettingsPage implements OnInit {
   }
 
 
-  async edit(id, bio) {
+  async edit(id, current, bio, location, username, email, gender, relationship, birthdate, searching) {
 
     const modal = await this.modalController.create({
       component: EditPage,
@@ -124,13 +157,22 @@ export class SettingsPage implements OnInit {
       backdropDismiss: false,
       componentProps: {
         'id': id,
-        'bio': bio
+        'current': current,
+        'bio': bio,
+        'location': location,
+        'username': username,
+        'email': email,
+        'gender': gender,
+        'relationship': relationship,
+        'birthdate': birthdate,
+        'searching': searching
+
       }
 
     });
     modal.present();
   }
-
+ 
   async openVideoModal(source) {
     const modal = await this.modalController.create({
       component: VideoModalPage,
@@ -139,6 +181,19 @@ export class SettingsPage implements OnInit {
 
       componentProps: {
         'source': source
+      }
+    });
+    modal.present();
+  }
+
+  async password(id) {
+    const modal = await this.modalController.create({
+      component: PasswordPage,
+      backdropDismiss: false,
+      cssClass: 'modal',
+
+      componentProps: {
+        'id': id
       }
     });
     modal.present();

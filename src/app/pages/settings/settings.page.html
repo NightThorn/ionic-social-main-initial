@@ -52,7 +52,9 @@
           <ion-list-header>
             <ion-label>General Settings</ion-label>
           </ion-list-header>
-          <ion-item (click)="edit(me, bio)" lines="none">
+          <ion-item
+            (click)="edit(me, current, bio, location, username, email, gender, relationship, birthdate, searching)"
+            lines="none">
             <ion-avatar slot="start" class="icon-bg">
               <ion-icon name="person"></ion-icon>
             </ion-avatar>
@@ -62,7 +64,7 @@
             </ion-label>
           </ion-item>
 
-          <ion-item lines="none">
+          <ion-item (click)="password(me)" lines="none">
             <ion-avatar slot="start" class="icon-bg">
               <ion-icon name="lock-closed-outline"></ion-icon>
             </ion-avatar>
@@ -71,7 +73,7 @@
               <p>Change your current password</p>
             </ion-label>
           </ion-item>
-          <ion-item lines="none">
+          <ion-item (click)="blocked(me)" lines="none">
             <ion-avatar slot="start" class="icon-bg">
               <ion-icon name="people-outline"></ion-icon>
             </ion-avatar>

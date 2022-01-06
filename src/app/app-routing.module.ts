@@ -153,6 +153,14 @@ const routes: Routes = [
     path: 'edit',
     loadChildren: () => import('./pages/edit/edit.module').then( m => m.EditPageModule)
   },
+  {
+    path: 'blocked',
+    loadChildren: () => import('./pages/blocked/blocked.module').then( m => m.BlockedPageModule)
+  },
+  {
+    path: 'password',
+    loadChildren: () => import('./pages/password/password.module').then( m => m.PasswordPageModule)
+  },
 
   
 

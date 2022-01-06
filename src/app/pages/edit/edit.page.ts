@@ -15,7 +15,18 @@ export class EditPage implements OnInit {
   activeStoredUserSubscription$;
   me: number;
   @Input() id: number;
-  @Input() bio: number;
+  @Input() bio: string;
+  @Input() location: string;
+  @Input() username: string;
+  @Input() email: string;
+  @Input() gender: number;
+  @Input() birthdate: Date;
+  @Input() relationship: number;
+  @Input() searching: number;
+  @Input() current: string;
+
+
+
   constructor(private modalController: ModalController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
 
@@ -26,23 +37,39 @@ export class EditPage implements OnInit {
         this.me = storedUser.UserID;
 
       }
+
     })
     this.postForm = this.fb.group({
-      message: [null]
+      biography: [this.bio],
+      location: [this.location],
+      email: [this.email],
+      gender: [this.gender],
+      relationship: [this.relationship],
+      username: [this.username],
+      searching: [this.searching],
+      birthdate: [this.birthdate],
+      current: [this.current],
+
     });
   }
 
   post(user, message) {
-    let time = new Date(Date.now());
     let data = {
       "user_id": user,
-      "message": message,
-      "time": time
+      "current": message.current,
+      "biography": message.biography,
+      "location": message.location,
+      "email": message.email,
+      "gender": message.gender,
+      "relationship": message.relationship,
+      "username": message.username,
+      "searching": message.searching
     };
-    this.http.post('https://ggs.tv/api/v1/post.php?action=post', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/edituser.php?action=edit', JSON.stringify(data)).subscribe(res => {
     });
 
     this.closeModal();
+    window.location.reload();
   }
   closeModal() {
     this.modalController.dismiss();

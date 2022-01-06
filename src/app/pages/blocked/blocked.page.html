@@ -1,0 +1,40 @@
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons (click)="closeModal()" slot="end">
+        <ion-icon name="close-outline"></ion-icon>
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Blocked Users</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <ion-item  *ngFor="let item of blocked">
+
+      <ion-thumbnail (click)="user(item.user_id)" item-left>
+        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}">
+
+      </ion-thumbnail>
+
+      <ion-label>
+        {{ item.user_name }} <span *ngIf="item.user_verified === '1'" style="color: lime;">
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </span>
+        <span *ngIf="item.user_staff === '1'">
+          <ion-badge color="success">Staff</ion-badge>
+        </span>
+        <span *ngIf="item.user_sponsored === '1'">
+          <ion-badge color="success">Sponsored</ion-badge>
+        </span>
+        <span *ngIf="item.user_mod === '1'">
+          <ion-badge color="danger">Mod</ion-badge>
+        </span>
+      </ion-label>
+<ion-buttons (click)="unblock(item.user_id)" slot="end">
+  <ion-icon name="close-outline"></ion-icon>
+  <ion-back-button></ion-back-button>
+</ion-buttons>
+    </ion-item>
+  </ion-list>
+ 
+</ion-content>

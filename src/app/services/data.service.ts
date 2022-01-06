@@ -489,6 +489,18 @@ export class DataService {
         return true;
       })
     );  }
+  getBlocked(user_id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/getblocked.php?user=${user_id}`).pipe(map((res: any) => {
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
 
   getGiveaways() {
 
