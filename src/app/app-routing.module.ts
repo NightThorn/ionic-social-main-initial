@@ -161,6 +161,10 @@ const routes: Routes = [
     path: 'password',
     loadChildren: () => import('./pages/password/password.module').then( m => m.PasswordPageModule)
   },
+  {
+    path: 'editgroup',
+    loadChildren: () => import('./pages/editgroup/editgroup.module').then( m => m.EditgroupPageModule)
+  },
 
   
 
