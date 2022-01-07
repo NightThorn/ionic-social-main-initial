@@ -47,12 +47,14 @@ export class GroupPage implements OnInit {
         this.data = JSON.parse(params.special);
       }
     });
+
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
 
       this.me = storedUser.UserID;
     });
     this.dataService.getGroup(this.data).subscribe(res => {
       this.group = res.message;
+      console.log(this.group);
       this.group_picture = res.message[0]['group_picture'];
       this.group_cover = res.message[0]['group_cover'];
       this.group_description = res.message[0]['group_description'];
