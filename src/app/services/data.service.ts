@@ -57,7 +57,7 @@ export class DataService {
   getTournaments() {
 
 
-    return this.http.get(`https://ggs.tv/api/v1/tournaments.php`).pipe(map((res: any) => {
+    return this.http.get(`https://ggs.tv/api/v1/tournaments.php?view=browse`).pipe(map((res: any) => {
 
       
       return res;
@@ -583,6 +583,21 @@ export class DataService {
     return this.http.get(`https://ggs.tv/api/v1/messages.php?user=${user_id}`).pipe(map((res: any) => {
 
       
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+
+  getTournamentDetails(id) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/tournaments.php?view=details&id=${id}`).pipe(map((res: any) => {
+
+
       return res;
     }),
       filter((res: any) => {

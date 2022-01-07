@@ -6,7 +6,13 @@ import { TournamentDetailsPage } from './tournament-details.page';
 const routes: Routes = [
   {
     path: '',
-    component: TournamentDetailsPage
+    component: TournamentDetailsPage,
+   children: [
+      {
+        path: ':id',
+        component: TournamentDetailsPage
+      }
+    ]
   }
 ];
 

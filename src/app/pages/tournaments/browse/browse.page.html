@@ -19,14 +19,15 @@
     <ion-card-title>
       <ion-item >
         <ion-label>
-          <h2 class="item-title" style="color: lime;">{{ item.title }}</h2>
-          <p class="item-subtitle">{{ item.start_date | date:'MMMM d, h:mm a' }} EST</p>
+          <h2 class="item-title" (click)="details(item.id)" style="color: lime;">{{ item.title }}</h2>
+          <p class="item-subtitle">{{ item.start_date}} EST</p>
         </ion-label>
 
       </ion-item>
     </ion-card-title>
     <ion-card-content class="ion-no-padding">
-      <ion-item>{{ item.about }}
+      <ion-item><div [innerHTML]="item.about"></div>
+
       </ion-item>
     </ion-card-content>
 
@@ -47,8 +48,8 @@
           </li>
         </ul>
       </div>
-      <ion-button slot="end" fill="clear" size="small" shape="round">
-        Register
+      <ion-button (click)="details(item.id)" slot="end" fill="clear" size="small" shape="round">
+        Details
         <ion-icon slot="icon-only" name="arrow-redo"></ion-icon>
       </ion-button>
     </div>

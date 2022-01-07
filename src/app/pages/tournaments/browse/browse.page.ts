@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class BrowsePage implements OnInit {
   public items: any;
   private topLimit: number = 15;
   public dataList: any = [];
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private router: Router) { }
 
   ngOnInit() {
     this.dataService.getTournaments().subscribe(res => {
@@ -48,5 +49,14 @@ export class BrowsePage implements OnInit {
     return this.tournaments.filter(item => {
       return item.about.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
     });
+  }
+  details(id) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(id)
+      }
+    };
+    this.router.navigate(['tournaments/tournament-details'], navigationExtras)
+
   }
 }
