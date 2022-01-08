@@ -34,6 +34,8 @@ export class FeedCardComponent implements OnInit {
   @Input() comments: number;
   @Input() separator: boolean;
   @Input() boosted: number;
+  @Input() feeling: string;
+  @Input() value: string;
 
   imgConfig = {
     spaceBetween: 6,
