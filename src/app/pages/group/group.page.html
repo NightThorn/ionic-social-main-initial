@@ -39,9 +39,8 @@
   <ion-grid class="ion-padding-horizontal borders">
     <ion-row class="">
       <ion-col>
-
         <ul>
-          <ion-button *ngIf="admin == 1" (click)="editgroup(group_id, group_picture, group_cover, group_title, group_name, group_admin, group_privacy, group_description)" class="follow-btn">Edit Group</ion-button>
+          <ion-button *ngIf="admin == 1" (click)="editgroup(group_id, group_picture, group_cover, group_title, group_name, group_admin, group_privacy, group_description, group_tag)" class="follow-btn">Edit Group</ion-button>
           <ion-button *ngIf="admin == 0 && group.group_category != 19 && joined == 0" class="follow-btn">Join
           </ion-button>
           <ion-button *ngIf="admin == 0 && group.group_category != 19 && joined == 1" class="unfollow-btn">Leave

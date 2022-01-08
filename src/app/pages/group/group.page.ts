@@ -36,10 +36,9 @@ export class GroupPage implements OnInit {
   group_admin: any;
   group_name: any;
   group_privacy: any;
+  group_tag: any;
 
-  constructor(private activeRoute: ActivatedRoute, private router: Router
-    , private authService: AuthenticationService, private modalController: ModalController,
-    private dataService: DataService) { }
+  constructor(private activeRoute: ActivatedRoute, private router: Router, private authService: AuthenticationService, private modalController: ModalController, private dataService: DataService) { }
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe(params => {
@@ -52,6 +51,7 @@ export class GroupPage implements OnInit {
 
       this.me = storedUser.UserID;
     });
+
     this.dataService.getGroup(this.data).subscribe(res => {
       this.group = res.message;
       console.log(this.group);
@@ -63,6 +63,8 @@ export class GroupPage implements OnInit {
       this.group_name = res.message[0]['group_name'];
       this.group_privacy = res.message[0]['group_privacy'];
       this.group_id = res.message[0]['group_id'];
+      this.group_tag = res.message[0]['group_tag'];
+
       if (this.me == res.message[0]['group_admin']) {
         this.admin = 1;
       } else {
@@ -134,7 +136,7 @@ export class GroupPage implements OnInit {
     return await modal.present();
   }
 
-  async editgroup(id, group_picture, group_cover, group_title, group_name, group_admin, group_privacy, group_description) {
+  async editgroup(id, group_picture, group_cover, group_title, group_name, group_admin, group_privacy, group_description, group_tag) {
 
     const modal = await this.modalController.create({
       component: EditgroupPage,
@@ -147,7 +149,9 @@ export class GroupPage implements OnInit {
         'group_name': group_name,
         'group_admin': group_admin,
         'group_privacy': group_privacy,
-        'group_description': group_description
+        'group_description': group_description,
+        'group_tag': group_tag,
+
 
 
 

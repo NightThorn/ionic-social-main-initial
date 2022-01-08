@@ -415,7 +415,7 @@ export class DataService {
   }
   getGroup(id) {
 
-    return this.http.get(`https://ggs.tv/api/v1/group.php?group=${id}`).pipe(map((res: any) => {
+    return this.http.get(`https://ggs.tv/api/v1/group.php?group=${id}&action=get`).pipe(map((res: any) => {
 
       
       return res;
