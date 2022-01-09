@@ -202,6 +202,7 @@ export class FeedCardComponent implements OnInit {
     let data = {
       "post_id": id,
       "user_id": this.me,
+      "node_type": 'post',
     };
 
     this.likes++;
