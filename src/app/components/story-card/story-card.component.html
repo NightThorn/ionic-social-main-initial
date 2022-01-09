@@ -1,9 +1,11 @@
-<ion-card class="ion-no-margin" >
+<ion-card class="ion-no-margin">
   <ion-card-content class="ion-no-padding">
-    <video #myvideo loop  > <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{source}}" /> </video>
+    <video #myvideo loop playsinline>
+      <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{source}}" />
+    </video>
     <div class="data-container">
       <img class="avatar" (click)="user(id)" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{avatar}}" />
- 
+
       <ul>
         <li class="text">{{ name }}</li>
         <li class="caption">{{ date | humanizeDate }}</li>
