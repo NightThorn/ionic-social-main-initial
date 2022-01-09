@@ -198,5 +198,6 @@ export class SettingsPage implements OnInit {
     });
     modal.present();
   }
+  
 }
 

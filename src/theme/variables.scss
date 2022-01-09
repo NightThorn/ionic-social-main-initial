@@ -2,7 +2,9 @@
 // http://ionicframework.com/docs/theming/
 
 /** Ionic CSS Variables **/
-:root {
+@media (prefers-color-scheme: light) {
+  body {
+
   /** primary **/
   --ion-color-primary: #13dd3f;
   --ion-color-primary-rgb: 101, 19, 225;
@@ -80,7 +82,7 @@
   /* font family */
   --ion-font-family: "Poppins", sans-serif;
 }
-
+}
 :focus {
 	outline: none;
 }
@@ -91,8 +93,8 @@
    * Dark Colors
    * -------------------------------------------
    */
+:root {
 
-  body {
     --ion-color-primary: #0af832;
     --ion-color-primary-rgb: 66, 140, 255;
     --ion-color-primary-contrast: #ffffff;
