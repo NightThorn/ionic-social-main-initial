@@ -204,11 +204,11 @@ export class FeedCardComponent implements OnInit {
       "user_id": this.me,
     };
 
-
+    this.likes++;
+    this.liked = "1";
+    this.image = "./assets/images/ggs.png";
     this.http.post('https://ggs.tv/api/v1/post.php?action=react', JSON.stringify(data)).subscribe(res => {
-      this.likes++;
-      this.liked = "1";
-      this.image = "./assets/images/ggs.png";
+    
     });
   }
   deboost(id) {
@@ -241,10 +241,11 @@ export class FeedCardComponent implements OnInit {
       "post_id": id,
       "user_id": this.me,
     };
+    this.likes--;
+    this.liked = "0";
+    this.image = "./assets/images/ggsgray.png";
     this.http.post('https://ggs.tv/api/v1/post.php?action=unreact', JSON.stringify(data)).subscribe(res => {
-      this.likes--;
-      this.liked = "0";
-      this.image = "./assets/images/ggsgray.png";
+  
 
     });
   }

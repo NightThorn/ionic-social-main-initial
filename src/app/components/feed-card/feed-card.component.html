@@ -148,13 +148,16 @@
             <ion-row style="text-align: center;">
               <ion-col size="4">
                 <li>
-                  <ion-button id="react-button" (click)="react(post_id)" fill="clear" size="small" shape="round">
+                  <ion-button id="react-button" *ngIf="liked == 0"  (click)="react(post_id)" fill="clear" size="small" shape="round">
                     <img id="react-button" [src]="image"
                       style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
 
                     <ion-label>{{ likes }}</ion-label>
                   </ion-button>
-
+<ion-button *ngIf="liked == 1" id="unreact-button" (click)="unreact(post_id)" fill="clear" size="small" shape="round">
+  <img src="./assets/images/ggs.png" style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
+<ion-label>{{ likes }}</ion-label>
+</ion-button>
                 </li>
               </ion-col>
               <ion-col size="4">
