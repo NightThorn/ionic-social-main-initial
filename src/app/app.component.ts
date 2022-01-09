@@ -35,7 +35,6 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     // initialize storage right away because why not
     await this.storage.create();
-    this.router.navigate(['login'])
 
   }
 }
