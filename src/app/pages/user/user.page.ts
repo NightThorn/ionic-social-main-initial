@@ -120,10 +120,7 @@ export class UserPage implements OnInit {
           this.badgeCount = this.userBadges.length;
         });
 
-        this.profileService.fetchGroups(this.data).subscribe(res => {
-          this.groups = res.message;
-
-        });
+      
         this.profileService.fetchGroups(this.data).subscribe(res => {
           this.groups = res.message;
 

@@ -11,12 +11,12 @@
   <ion-list>
     <ion-item *ngFor="let item of apps">
 
-      <ion-thumbnail item-left>
+      <ion-thumbnail (click)="applicant(item.user_id, item.group_id)" item-left>
         <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}">
 
       </ion-thumbnail>
 
-      <ion-label>
+      <ion-label (click)="applicant(item.user_id, item.group_id)">
         {{ item.user_name }} <span *ngIf="item.user_verified === '1'" style="color: lime;">
           <ion-icon name="checkmark-circle"></ion-icon>
         </span>
@@ -30,7 +30,14 @@
           <ion-badge color="danger">Mod</ion-badge>
         </span>
       </ion-label>
+<ion-buttons style="height: 40px;" >
 
+  <ion-button
+    (click)="accept(item.user_id)"
+    class="follow-btn">Accept</ion-button>
+  <ion-button (click)="decline(item.user_id)" class="unfollow-btn">Decline</ion-button>
+
+</ion-buttons>
     </ion-item>
   </ion-list>
 </ion-content>

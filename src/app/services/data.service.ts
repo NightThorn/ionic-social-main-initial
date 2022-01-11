@@ -566,6 +566,19 @@ export class DataService {
       })
     );
   }
+  getApplicant(group_id, user) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/grinding.php?action=single&group=` + group_id + `&user=` + user).pipe(map((res: any) => {
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   getCommentReactions(comment_id) {
 
 

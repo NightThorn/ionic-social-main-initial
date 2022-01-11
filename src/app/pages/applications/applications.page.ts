@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -21,7 +22,7 @@ export class ApplicationsPage implements OnInit {
 
 
 
-  constructor(private modalController: ModalController, private dataService: DataService, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
+  constructor(private modalController: ModalController, private router: Router, private dataService: DataService, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -32,11 +33,32 @@ export class ApplicationsPage implements OnInit {
       this.dataService.getApps(this.group_id).subscribe(res => {
 
         this.apps = res.message;
+        console.log(this.apps);
       });
     });
   }
   closeModal() {
     this.modalController.dismiss();
+
+  }
+  accept(user) {
+    
+
+  }
+  decline(user) {
+    
+
+  }
+  applicant(user, group) {
+
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        user: JSON.stringify(user),
+        group: JSON.stringify(group)
+      }
+    };
+    this.router.navigate(['applicant'], navigationExtras);
+    this.closeModal();
 
   }
 
