@@ -71,10 +71,9 @@ export class GrindingPage implements OnInit {
   invite(user) {
     let data = {
       "me": this.me,
-      "userid": user,
-      "group_id": this.group_id,
+      "userid": user
     };
-    this.http.post('https://ggs.tv/api/v1/group.php?action=apply', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/group.php?action=invite&group=' + this.group_id, JSON.stringify(data)).subscribe(res => {
       this.presentAlert();
 
       this.closeModal();
