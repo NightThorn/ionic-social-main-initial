@@ -40,23 +40,25 @@
     <ion-row class="">
       <ion-col>
         <ul>
-          <ion-buttons style="height: 40px;" *ngIf="admin == 1" >
+          <ion-buttons style="height: 40px;" *ngIf="admin == 1">
 
             <ion-button
               (click)="editgroup(group_id, group_picture, group_cover, group_title, group_name, group_admin, group_privacy, group_description, group_tag)"
               class="follow-btn">Edit Group</ion-button>
-            <ion-button
-              (click)="applications(group_id)"
-              class="follow-btn">Applications</ion-button>
+            <ion-button (click)="applications(group_id)" class="follow-btn">Applications</ion-button>
 
           </ion-buttons>
-          <ion-button *ngIf="admin == 0 && group.group_category != 19 && joined == 0" class="follow-btn">Join
+          <ion-button *ngIf="admin == 0 && group.group_category != 19 && joined == 0 && group.group_category != 20"
+            (click)="join(group.group_id)" class="follow-btn">Join
           </ion-button>
-          <ion-button *ngIf="admin == 0 && group.group_category != 19 && joined == 1" class="unfollow-btn">Leave
+          <ion-button *ngIf="admin == 0 && group.group_category != 19 && joined == 1 && group.group_category != 20"
+            (click)="leave(group.group_id)" class="unfollow-btn">Leave
           </ion-button>
-
-          <ion-button *ngIf="admin == 0 && group.group_category == 19" (click)="apply(group.group_id)"
-            class="follow-btn">Apply</ion-button>
+          <ion-button *ngIf="admin == 0 && group.group_category != 19 && joined == 2 && group.group_category != 20"
+            (click)="leave(group.group_id)" class="unfollow-btn">Requested
+          </ion-button>
+          <ion-button *ngIf="admin == 0 && group.group_category == 19 || group.group_category == 20"
+            (click)="apply(group.group_id)" class="follow-btn">Apply</ion-button>
 
           <ion-fab *ngIf="admin == 0" horizontal="end" edge slot="fixed">
             <ion-fab-button>

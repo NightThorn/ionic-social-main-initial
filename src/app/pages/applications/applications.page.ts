@@ -41,13 +41,27 @@ export class ApplicationsPage implements OnInit {
     this.modalController.dismiss();
 
   }
-  accept(user) {
-    
-
+  approve(user) {
+    let data = {
+      "userid": user,
+    };
+    this.http.post('https://ggs.tv/api/v1/group.php?action=decline&group=' + this.group_id, JSON.stringify(data)).subscribe(res => {
+    });
   }
   decline(user) {
-    
-
+    let data = {
+      "userid": user,
+    };
+    window.location.reload();
+    this.http.post('https://ggs.tv/api/v1/group.php?action=decline&group=' + this.group_id, JSON.stringify(data)).subscribe(res => {
+    });
+  }
+  accept(user) {
+    let data = {
+      "userid": user,
+    };
+    this.http.post('https://ggs.tv/api/v1/group.php?action=accept&group=' + this.group_id, JSON.stringify(data)).subscribe(res => {
+    });
   }
   applicant(user, group) {
 

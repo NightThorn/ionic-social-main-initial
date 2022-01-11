@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
@@ -40,7 +41,7 @@ export class GroupPage implements OnInit {
   group_privacy: any;
   group_tag: any;
 
-  constructor(private activeRoute: ActivatedRoute, private router: Router, private authService: AuthenticationService, private modalController: ModalController, private dataService: DataService) { }
+  constructor(private activeRoute: ActivatedRoute, private http: HttpClient, private router: Router, private authService: AuthenticationService, private modalController: ModalController, private dataService: DataService) { }
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe(params => {
@@ -117,6 +118,24 @@ export class GroupPage implements OnInit {
       window.location.reload();
     });
   }
+  join(user) {
+    let data = {
+      "userid": user,
+    };
+    this.joined = 2;
+
+    this.http.post('https://ggs.tv/api/v1/group.php?action=join&group=' + this.group_id, JSON.stringify(data)).subscribe(res => {
+    });
+  }
+  leave(user) {
+    let data = {
+      "userid": user,
+    };
+    this.joined = 0;
+
+    this.http.post('https://ggs.tv/api/v1/group.php?action=leave&group=' + this.group_id, JSON.stringify(data)).subscribe(res => {
+    });
+  }
   async openModalPost() {
 
     const modal = await this.modalController.create({
@@ -174,17 +193,17 @@ export class GroupPage implements OnInit {
   }
   async applications(group_id) {
 
-      const modal = await this.modalController.create({
-        component: ApplicationsPage,
-        componentProps: {
-          'group_id': group_id,
-          'user_id': this.me
+    const modal = await this.modalController.create({
+      component: ApplicationsPage,
+      componentProps: {
+        'group_id': group_id,
+        'user_id': this.me
 
-        },
-      });
-      return await modal.present();
-    }
+      },
+    });
+    return await modal.present();
+  }
 
-  
+
 
 }

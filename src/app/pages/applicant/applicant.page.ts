@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
@@ -19,7 +20,7 @@ export class ApplicantPage implements OnInit {
   groups: any;
   xp: any;
 
-  constructor(private activeRoute: ActivatedRoute, private router: Router, private profileService: ProfileService, private dataService: DataService) { }
+  constructor(private activeRoute: ActivatedRoute, private router: Router, private http: HttpClient, private profileService: ProfileService, private dataService: DataService) { }
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe(params => {
@@ -52,14 +53,29 @@ export class ApplicantPage implements OnInit {
     });
 
   }
-  accept(user) {
-
-
+  approve(user) {
+    let data = {
+      "userid": user,
+    };
+    this.http.post('https://ggs.tv/api/v1/group.php?action=decline&group=' + this.groupid, JSON.stringify(data)).subscribe(res => {
+    });
   }
   decline(user) {
-
-
+    let data = {
+      "userid": user,
+    };
+    this.http.post('https://ggs.tv/api/v1/group.php?action=decline&group=' + this.groupid, JSON.stringify(data)).subscribe(res => {
+    });
   }
+  accept(user) {
+    let data = {
+      "userid": user,
+    };
+    this.http.post('https://ggs.tv/api/v1/group.php?action=accept&group=' + this.groupid, JSON.stringify(data)).subscribe(res => {
+      });
+  }
+
+ 
   badges(id) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
