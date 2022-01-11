@@ -17,6 +17,7 @@ export class ApplicantPage implements OnInit {
   userBadges: any;
   badgeCount: any;
   groups: any;
+  xp: any;
 
   constructor(private activeRoute: ActivatedRoute, private router: Router, private profileService: ProfileService, private dataService: DataService) { }
 
@@ -31,6 +32,7 @@ export class ApplicantPage implements OnInit {
     this.dataService.getApplicant(this.groupid, this.data).subscribe(res => {
 
       this.apps = res.message;
+      this.xp = this.apps[0]['total_xp']
       console.log(this.apps);
     });
     this.profileService.fetchFriends(this.data).subscribe(res => {

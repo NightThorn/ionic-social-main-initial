@@ -1,8 +1,7 @@
-<ion-content [fullscreen]="true" *ngFor="let item of apps">
-  <ion-grid class="ion-no-padding ion-no-margin background-opts"
-    style.background-image="url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_cover }}')">
+<ion-content>
+  <ion-grid style="background-color: grey;" class="ion-no-padding ion-no-margin background-opts">
     <ion-row>
-      <ion-col class="header-container">
+      <ion-col *ngFor="let item of apps" class="header-container">
         <ion-header class="ion-no-border">
           <ion-toolbar>
             <ion-buttons slot="start">
@@ -43,16 +42,16 @@
     <ion-row class="">
       <ion-col>
         <div class="numbers">
-          <ul (click)="friends(item.user_id)">
+          <ul>
             <li>{{friendCount}}</li>
             <li>Friends</li>
           </ul>
-          <ul (click)="badges(item.user_id)">
+          <ul>
             <li>{{badgeCount}}</li>
             <li>Badges</li>
           </ul>
           <ul>
-            <li>{{ item.total_xp }}</li>
+            <li>{{ xp }}</li>
             <li>XP Earned</li>
           </ul>
 
@@ -60,14 +59,49 @@
 
       </ion-col>
     </ion-row>
-    <ion-row>
-
-    </ion-row>
-
-
   </ion-grid>
+  <ion-grid *ngFor="let item of apps">
+    <ion-row>
+      <ion-col>
+        <h1>Name</h1>
+      </ion-col>
+      <ion-col>
+        <p>{{item.fname}} {{item.lname}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h1>Email</h1>
+      </ion-col>
+      <ion-col>
+        <p>{{item.email}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h1>Bio</h1>
+      </ion-col>
+      <ion-col>
+        <p>{{item.bio}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h1>Stats</h1>
+      </ion-col>
+      <ion-col>
+        <p>{{item.stats}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row></ion-row>
+    <ion-row style="align-items: center;">
+      <ion-buttons style="height: 40px;">
 
+        <ion-button (click)="accept(item.user_id)" class="follow-btn">Accept</ion-button>
+        <ion-button (click)="decline(item.user_id)" class="unfollow-btn">Decline</ion-button>
 
-
+      </ion-buttons>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
