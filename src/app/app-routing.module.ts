@@ -178,6 +178,10 @@ const routes: Routes = [
     path: 'applicant',
     loadChildren: () => import('./pages/applicant/applicant.module').then( m => m.ApplicantPageModule)
   },
+  {
+    path: 'grinding',
+    loadChildren: () => import('./pages/grinding/grinding.module').then( m => m.GrindingPageModule)
+  },
 
 
   

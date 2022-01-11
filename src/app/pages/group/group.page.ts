@@ -9,6 +9,7 @@ import { DataService } from 'src/app/services/data.service';
 import { ApplicationsPage } from '../applications/applications.page';
 import { ApplyPage } from '../apply/apply.page';
 import { EditgroupPage } from '../editgroup/editgroup.page';
+import { GrindingPage } from '../grinding/grinding.page';
 import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ModalPage } from '../modal/modal.page';
 
@@ -204,6 +205,17 @@ export class GroupPage implements OnInit {
     return await modal.present();
   }
 
+  async grinding(id) {
 
+    const modal = await this.modalController.create({
+      component: GrindingPage,
+      cssClass: 'modal-container',
+      componentProps: {
+        'group_id': id,
+
+      },
+    });
+    return await modal.present();
+  }
 
 }

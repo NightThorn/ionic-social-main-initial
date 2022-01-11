@@ -48,6 +48,10 @@
             <ion-button style="color: white;" (click)="applications(group_id)" class="follow-btn">Applications
             </ion-button>
 
+            <ion-button style="color: white;" (click)="grinding(group_id)" class="follow-btn">Grinders
+
+            </ion-button>
+
           </ion-buttons>
           <ion-button *ngIf="admin == 0 && group.group_category != 19 && joined == 0 && group.group_category != 20"
             (click)="join(group.group_id)" class="follow-btn">Join
