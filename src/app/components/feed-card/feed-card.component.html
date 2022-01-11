@@ -40,7 +40,7 @@
         [innerHTML]="text"></div>
     </ion-item>
     <ion-item *ngIf="type === 'video'">
-      <video muted inViewport [inViewportOptions]="{ threshold: [0, 0.65], partial: true }"
+      <video [muted]="'muted'" inViewport [inViewportOptions]="{ threshold: [0, 0.65], partial: true }"
         (inViewportAction)="onIntersection($event)" #player playsinline preload="auto" loop controls
         style="width: 100%;">
         <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{videosrc}}" />
@@ -101,7 +101,7 @@
                 [innerHTML]="share.text"></div>
             </ion-item>
             <ion-item *ngIf="share.post_type === 'video'">
-              <video muted #player playsinline preload="auto" loop controls style="width: 100%;">
+              <video [muted]="'muted'" #player playsinline preload="auto" loop controls style="width: 100%;">
                 <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.source}}" />
               </video>
             </ion-item>
