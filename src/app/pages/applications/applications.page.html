@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content>
   <ion-list>
-    <ion-item (click)="user(item.user_id)" *ngFor="let item of apps">
+    <ion-item *ngFor="let item of apps">
 
       <ion-thumbnail item-left>
         <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}">
