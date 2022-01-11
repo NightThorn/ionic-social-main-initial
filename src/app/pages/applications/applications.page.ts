@@ -29,7 +29,7 @@ export class ApplicationsPage implements OnInit {
       if (storedUser !== null) {
         this.me = storedUser.UserID;
       }
-      this.dataService.getApps(storedUser.UserID).subscribe(res => {
+      this.dataService.getApps(this.group_id).subscribe(res => {
 
         this.apps = res.message;
       });
