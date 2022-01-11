@@ -101,7 +101,7 @@
                 [innerHTML]="share.text"></div>
             </ion-item>
             <ion-item *ngIf="share.post_type === 'video'">
-              <video #player playsinline preload="auto" loop controls style="width: 100%;">
+              <video muted #player playsinline preload="auto" loop controls style="width: 100%;">
                 <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.source}}" />
               </video>
             </ion-item>
