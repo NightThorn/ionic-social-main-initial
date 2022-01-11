@@ -166,7 +166,19 @@ const routes: Routes = [
   {
     path: 'editgroup',
     loadChildren: () => import('./pages/editgroup/editgroup.module').then( m => m.EditgroupPageModule)
+  },  {
+    path: 'apply',
+    loadChildren: () => import('./pages/apply/apply.module').then( m => m.ApplyPageModule)
   },
+  {
+    path: 'applications',
+    loadChildren: () => import('./pages/applications/applications.module').then( m => m.ApplicationsPageModule)
+  },
+  {
+    path: 'applicant',
+    loadChildren: () => import('./pages/applicant/applicant.module').then( m => m.ApplicantPageModule)
+  },
+
 
   
 

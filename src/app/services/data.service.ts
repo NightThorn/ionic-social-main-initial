@@ -553,6 +553,32 @@ export class DataService {
       })
     );
   }
+  getApps(group_id) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/grinding.php?action=all&group=` + group_id).pipe(map((res: any) => {
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  getCommentReactions(comment_id) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/getcommentreacts.php?post=${comment_id}`).pipe(map((res: any) => {
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   getMediaPost(post_id) {
     return this.http.get(`https://ggs.tv/api/v1/getmediapost.php?post=${post_id}`).pipe(map((res: any) => {
       return res;

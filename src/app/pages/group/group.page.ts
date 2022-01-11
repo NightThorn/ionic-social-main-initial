@@ -5,6 +5,8 @@ import moment from 'moment';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
+import { ApplicationsPage } from '../applications/applications.page';
+import { ApplyPage } from '../apply/apply.page';
 import { EditgroupPage } from '../editgroup/editgroup.page';
 import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ModalPage } from '../modal/modal.page';
@@ -135,7 +137,18 @@ export class GroupPage implements OnInit {
     });
     return await modal.present();
   }
+  async apply(id) {
 
+    const modal = await this.modalController.create({
+      component: ApplyPage,
+      cssClass: 'modal-container',
+      componentProps: {
+        'group_id': id,
+
+      },
+    });
+    return await modal.present();
+  }
   async editgroup(id, group_picture, group_cover, group_title, group_name, group_admin, group_privacy, group_description, group_tag) {
 
     const modal = await this.modalController.create({
@@ -159,5 +172,19 @@ export class GroupPage implements OnInit {
     });
     return await modal.present();
   }
+  async applications(group_id) {
+
+      const modal = await this.modalController.create({
+        component: ApplicationsPage,
+        componentProps: {
+          'group_id': group_id,
+          'user_id': this.me
+
+        },
+      });
+      return await modal.present();
+    }
+
+  
 
 }

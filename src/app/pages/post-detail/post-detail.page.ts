@@ -60,7 +60,7 @@ export class PostDetailPage implements OnInit {
         this.comments[i]['time'] = moment.utc(this.comments[i]['time']).fromNow();
         this.dataService.getPostCommentReplies(this.comments[i]['comment_id']).subscribe(res => {
           this.replies = res.message;
-
+          console.log();
           for (let i = 0; i < this.replies.length; i++) {
             this.offset = moment().utcOffset();
 
