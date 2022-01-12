@@ -89,23 +89,26 @@
               </ion-list>
             </ion-col>
             <ion-col size="6">
-<input  id="file" type="file" class="form-control" (change)="onFileChange($event)">
-              
+              <ion-label>Group Picture</ion-label>
+              <input id="file" type="file" class="form-control" (change)="onFileChange($event)">
+              <ion-label>Group Cover</ion-label>
+
+              <input id="file" type="file" class="form-control" (change)="onCoverChange($event)">
 
             </ion-col>
           </ion-row>
-<ion-row>
-  <ion-col size="4">
+          <ion-row>
+            <ion-col size="4">
 
-    <ion-label>Org Tag:</ion-label>
-  </ion-col>
-  <ion-col size="8">
+              <ion-label>Org Tag:</ion-label>
+            </ion-col>
+            <ion-col size="8">
 
-    <ion-item>
-      <ion-input formControlName="group_tag" value="{{group_tag}}"></ion-input>
-    </ion-item>
-  </ion-col>
-</ion-row>
+              <ion-item>
+                <ion-input formControlName="group_tag" value="{{group_tag}}"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
           <ion-button type="submit" ion-button full>Save</ion-button>
         </form>
       </ion-col>

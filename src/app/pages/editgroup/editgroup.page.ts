@@ -29,7 +29,7 @@ export class EditgroupPage implements OnInit {
   private file: File;
 
 
-  constructor(private modalController: ModalController,private alertController: AlertController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
+  constructor(private modalController: ModalController, private alertController: AlertController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -112,6 +112,24 @@ export class EditgroupPage implements OnInit {
       };
     }
   }
+  // for video upload  https://www.codegrepper.com/code-examples/html/input+type+file+accept+only+video
 
- 
+  onCoverChange(e) {
+    const reader = new FileReader();
+
+    if (e.target.files && e.target.files.length) {
+      const [file] = e.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.imgFile = reader.result as string;
+        this.postForm.patchValue({
+          group_cover: reader.result
+        });
+
+      };
+    }
+  }
+
+
 }
