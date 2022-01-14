@@ -186,7 +186,11 @@ const routes: Routes = [
   {
     path: 'grinding',
     loadChildren: () => import('./pages/grinding/grinding.module').then(m => m.GrindingPageModule)
+  },  {
+    path: 'creategroup',
+    loadChildren: () => import('./pages/creategroup/creategroup.module').then( m => m.CreategroupPageModule)
   }
+
 ];
 @NgModule({
   imports: [
