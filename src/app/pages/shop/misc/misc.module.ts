@@ -8,6 +8,9 @@ import { MiscPageRoutingModule } from './misc-routing.module';
 
 import { MiscPage } from './misc.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { MiscmodalPageModule } from '../../miscmodal/miscmodal.module';
+import { XpmodalPageModule } from '../../xpmodal/xpmodal.module';
+import { TicketmodalPageModule } from '../../ticketmodal/ticketmodal.module';
 
 @NgModule({
   imports: [
@@ -15,8 +18,11 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     ComponentsModule,
     IonicModule,
-    MiscPageRoutingModule
+    MiscPageRoutingModule,
+    MiscmodalPageModule,
+    XpmodalPageModule,
+    TicketmodalPageModule
   ],
   declarations: [MiscPage]
 })
-export class MiscPageModule {}
+export class MiscPageModule { }

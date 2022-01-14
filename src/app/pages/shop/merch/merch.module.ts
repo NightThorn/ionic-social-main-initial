@@ -8,6 +8,7 @@ import { MerchPageRoutingModule } from './merch-routing.module';
 
 import { MerchPage } from './merch.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { BuymerchmodalPageModule } from '../../buymerchmodal/buymerchmodal.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     ComponentsModule,
     IonicModule,
-    MerchPageRoutingModule
+    MerchPageRoutingModule,
+    BuymerchmodalPageModule
   ],
   declarations: [MerchPage]
 })

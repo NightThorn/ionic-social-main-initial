@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ExplorePageRoutingModule } from './explore-routing.module';
 import { InViewportModule } from 'ng-in-viewport';
-
+import { ModalPageModule } from '../modal/modal.module';
 import { ExplorePage } from './explore.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
@@ -17,7 +17,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     IonicModule,
     InViewportModule,
     ExplorePageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    ModalPageModule,
+
   ],
   declarations: [ExplorePage]
 })

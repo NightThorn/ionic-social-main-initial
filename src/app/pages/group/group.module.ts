@@ -8,6 +8,10 @@ import { GroupPageRoutingModule } from './group-routing.module';
 
 import { GroupPage } from './group.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ApplyPageModule } from '../apply/apply.module';
+import { EditgroupPageModule } from '../editgroup/editgroup.module';
+import { ApplicationsPageModule } from '../applications/applications.module';
+import { GrindingPageModule } from '../grinding/grinding.module';
 
 @NgModule({
   imports: [
@@ -15,7 +19,11 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     IonicModule,
     ComponentsModule,
-    GroupPageRoutingModule
+    GroupPageRoutingModule,
+    ApplyPageModule,
+    EditgroupPageModule,
+    ApplicationsPageModule,
+    GrindingPageModule
   ],
   declarations: [GroupPage]
 })

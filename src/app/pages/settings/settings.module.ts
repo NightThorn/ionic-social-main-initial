@@ -7,13 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { SettingsPageRoutingModule } from './settings-routing.module';
 
 import { SettingsPage } from './settings.page';
+import { EditPageModule } from '../edit/edit.module';
+import { PasswordPageModule } from '../password/password.module';
+import { BlockedPageModule } from '../blocked/blocked.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SettingsPageRoutingModule
+    SettingsPageRoutingModule,
+    EditPageModule,
+    PasswordPageModule,
+    BlockedPageModule
   ],
   declarations: [SettingsPage]
 })

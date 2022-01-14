@@ -9,7 +9,6 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { VideoModalPage } from '../video-modal/video-modal.page';
 import moment from 'moment';
 import { XpmodalPage } from '../xpmodal/xpmodal.page';
-
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.page.html',
@@ -59,7 +58,7 @@ export class ExplorePage implements OnInit {
   boost: any;
 
 
-  constructor(private router: Router, private authService: AuthenticationService, private modalController: ModalController, private storage: Storage, private dataService: DataService) { }
+  constructor(private router: Router, private authService: AuthenticationService, public modalController: ModalController, private storage: Storage, private dataService: DataService) { }
 
 
 

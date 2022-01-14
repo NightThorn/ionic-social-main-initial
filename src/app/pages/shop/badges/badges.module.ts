@@ -8,6 +8,8 @@ import { BadgesPageRoutingModule } from './badges-routing.module';
 
 import { BadgesPage } from './badges.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { BuymodalPageModule } from '../../buymodal/buymodal.module';
+import { XpmodalPageModule } from '../../xpmodal/xpmodal.module';
 
 @NgModule({
   imports: [
@@ -15,7 +17,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     IonicModule,
     ComponentsModule,
-    BadgesPageRoutingModule
+    BadgesPageRoutingModule,
+    BuymodalPageModule,
+    XpmodalPageModule
   ],
   declarations: [BadgesPage]
 })
