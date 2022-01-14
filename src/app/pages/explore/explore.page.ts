@@ -1,16 +1,13 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
-import { HttpClientModule } from '@angular/common/http';
 import { Storage } from '@ionic/storage-angular';
-import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ModalController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { VideoModalPage } from '../video-modal/video-modal.page';
 import moment from 'moment';
-import { InViewportMetadata } from 'ng-in-viewport';
 import { XpmodalPage } from '../xpmodal/xpmodal.page';
 
 @Component({
