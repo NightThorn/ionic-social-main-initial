@@ -3,7 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    
+
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
@@ -129,68 +129,64 @@ const routes: Routes = [
   },
   {
     path: 'xpmodal',
-    loadChildren: () => import('./pages/xpmodal/xpmodal.module').then( m => m.XpmodalPageModule)
+    loadChildren: () => import('./pages/xpmodal/xpmodal.module').then(m => m.XpmodalPageModule)
   },
   {
     path: 'buymodal',
-    loadChildren: () => import('./pages/buymodal/buymodal.module').then( m => m.BuymodalPageModule)
+    loadChildren: () => import('./pages/buymodal/buymodal.module').then(m => m.BuymodalPageModule)
   },
   {
     path: 'buymerchmodal',
-    loadChildren: () => import('./pages/buymerchmodal/buymerchmodal.module').then( m => m.BuymerchmodalPageModule)
+    loadChildren: () => import('./pages/buymerchmodal/buymerchmodal.module').then(m => m.BuymerchmodalPageModule)
   },
   {
     path: 'miscmodal',
-    loadChildren: () => import('./pages/miscmodal/miscmodal.module').then( m => m.MiscmodalPageModule)
+    loadChildren: () => import('./pages/miscmodal/miscmodal.module').then(m => m.MiscmodalPageModule)
   },
   {
     path: 'ticketmodal',
-    loadChildren: () => import('./pages/ticketmodal/ticketmodal.module').then( m => m.TicketmodalPageModule)
+    loadChildren: () => import('./pages/ticketmodal/ticketmodal.module').then(m => m.TicketmodalPageModule)
+  },
+  {
+    path: 'modal',
+    loadChildren: () => import('./pages/modal/modal.module').then(m => m.ModalPageModule)
   },
   {
     path: 'entergiveawaymodal',
-    loadChildren: () => import('./pages/entergiveawaymodal/entergiveawaymodal.module').then( m => m.EntergiveawaymodalPageModule)
+    loadChildren: () => import('./pages/entergiveawaymodal/entergiveawaymodal.module').then(m => m.EntergiveawaymodalPageModule)
   },
   {
     path: 'edit',
-    loadChildren: () => import('./pages/edit/edit.module').then( m => m.EditPageModule)
+    loadChildren: () => import('./pages/edit/edit.module').then(m => m.EditPageModule)
   },
   {
     path: 'blocked',
-    loadChildren: () => import('./pages/blocked/blocked.module').then( m => m.BlockedPageModule)
+    loadChildren: () => import('./pages/blocked/blocked.module').then(m => m.BlockedPageModule)
   },
   {
     path: 'password',
-    loadChildren: () => import('./pages/password/password.module').then( m => m.PasswordPageModule)
+    loadChildren: () => import('./pages/password/password.module').then(m => m.PasswordPageModule)
   },
   {
     path: 'editgroup',
-    loadChildren: () => import('./pages/editgroup/editgroup.module').then( m => m.EditgroupPageModule)
-  },  {
+    loadChildren: () => import('./pages/editgroup/editgroup.module').then(m => m.EditgroupPageModule)
+  },
+  {
     path: 'apply',
-    loadChildren: () => import('./pages/apply/apply.module').then( m => m.ApplyPageModule)
+    loadChildren: () => import('./pages/apply/apply.module').then(m => m.ApplyPageModule)
   },
   {
     path: 'applications',
-    loadChildren: () => import('./pages/applications/applications.module').then( m => m.ApplicationsPageModule)
+    loadChildren: () => import('./pages/applications/applications.module').then(m => m.ApplicationsPageModule)
   },
   {
     path: 'applicant',
-    loadChildren: () => import('./pages/applicant/applicant.module').then( m => m.ApplicantPageModule)
+    loadChildren: () => import('./pages/applicant/applicant.module').then(m => m.ApplicantPageModule)
   },
   {
     path: 'grinding',
-    loadChildren: () => import('./pages/grinding/grinding.module').then( m => m.GrindingPageModule)
-  },
-
-
-  
-
-
-
-
-
-
+    loadChildren: () => import('./pages/grinding/grinding.module').then(m => m.GrindingPageModule)
+  }
 ];
 @NgModule({
   imports: [

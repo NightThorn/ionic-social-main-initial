@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { ProfileService } from './services/profile.service';
-import { PopoverPageModule } from './pages/popover/popover.module';
 import { ModalPageModule } from './pages/modal/modal.module';
 import { InViewportModule } from 'ng-in-viewport';
 import { NgxTweetModule } from "ngx-tweet";
@@ -27,8 +26,6 @@ import { NgxTweetModule } from "ngx-tweet";
     IonicStorageModule.forRoot(),
     HttpClientModule,
     InViewportModule,
-    ModalPageModule,
-    PopoverPageModule,
     AppRoutingModule,
     IonicStorageModule.forRoot(),
   ],
