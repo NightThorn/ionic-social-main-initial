@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Set Grinding For</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
+  <ion-list>
+    <ion-item (click)="select(item.group_id, item.group_tag, item.group_name)" *ngFor="let item of dataList">
+
+      <ion-thumbnail item-left>
+        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.group_picture }}">
+
+      </ion-thumbnail>
+
+      <ion-label>
+        {{ item.group_name }} <span *ngIf="item.group_verified === '1'" style="color: lime;">
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </span>
+       
+      </ion-label>
+
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

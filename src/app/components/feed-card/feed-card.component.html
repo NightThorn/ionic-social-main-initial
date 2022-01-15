@@ -1,40 +1,43 @@
 <ion-card style="width: 100%">
-  
+
   <ion-card-title>
     <ion-item lines="none">
-      
+
       <ion-avatar (click)="user(user_id)" slot="start">
         <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{avatar}}" />
       </ion-avatar>
       <ion-label (click)="user(user_id)">
-        <h2 class="item-title" style="color: lime;">{{ name }}</h2> <h3>{{feeling}} <span style="color: limegreen"> {{value}}</span></h3>
+        <h2 class="item-title" style="color: lime;"><span *ngIf="grinding != 0">#</span><span *ngIf="tag"
+            (click)="getTagGroup(tag)">{{tag}}|</span>{{ name }}</h2>
+        <h3>{{feeling}} <span style="color: limegreen"> {{value}}</span></h3>
         <p class="item-subtitle">{{ date }}</p>
       </ion-label>
-    <ion-fab horizontal="end" edge slot="end">
-      <ion-fab-button style="max-width: 30px; background-color: transparent; max-height: 30px;">
-        <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-list  style="display: flex; align-items: end;" side="start">
-        <ion-fab-button style="max-width: 30px; max-height: 30px;">
-          <ion-icon style="fill: yellow" (click)="report(post_id)" name="warning">Report</ion-icon>
-        </ion-fab-button> 
-        <ion-fab-button *ngIf="subscribed == 1 || mod == 1 || staff == 1" style="max-width: 30px; max-height: 30px;">
-                <ion-icon *ngIf="boosted == 0; else unboost" style="fill: red;" name="battery-charging-outline" (click)="boost(post_id)">Block</ion-icon>
-  <ng-template #unboost>
-                <ion-icon  style="fill: red;" name="battery-dead" (click)="deboost(post_id)"></ion-icon>
+      <ion-fab horizontal="end" edge slot="end">
+        <ion-fab-button style="max-width: 30px; background-color: transparent; max-height: 30px;">
+          <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list style="display: flex; align-items: end;" side="start">
+          <ion-fab-button style="max-width: 30px; max-height: 30px;">
+            <ion-icon style="fill: yellow" (click)="report(post_id)" name="warning">Report</ion-icon>
+          </ion-fab-button>
+          <ion-fab-button *ngIf="subscribed == 1 || mod == 1 || staff == 1" style="max-width: 30px; max-height: 30px;">
+            <ion-icon *ngIf="boosted == 0; else unboost" style="fill: red;" name="battery-charging-outline"
+              (click)="boost(post_id)">Block</ion-icon>
+            <ng-template #unboost>
+              <ion-icon style="fill: red;" name="battery-dead" (click)="deboost(post_id)"></ion-icon>
 
-  </ng-template>
-              </ion-fab-button>
+            </ng-template>
+          </ion-fab-button>
 
-      </ion-fab-list>
-    </ion-fab>
+        </ion-fab-list>
+      </ion-fab>
     </ion-item>
-          
+
   </ion-card-title>
   <ion-card-content class="ion-no-padding">
-    
+
     <ion-item>
-      
+
       <div (click)="navigateToDetail(post_id)"
         style="max-width: 400px; max-height: 250px; font-weight: 400; overflow: scroll; margin-bottom: 10px;"
         [innerHTML]="text"></div>
@@ -148,16 +151,19 @@
             <ion-row style="text-align: center;">
               <ion-col size="4">
                 <li>
-                  <ion-button id="react-button" *ngIf="liked == 0"  (click)="react(post_id)" fill="clear" size="small" shape="round">
+                  <ion-button id="react-button" *ngIf="liked == 0" (click)="react(post_id)" fill="clear" size="small"
+                    shape="round">
                     <img id="react-button" [src]="image"
                       style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
 
                     <ion-label>{{ likes }}</ion-label>
                   </ion-button>
-<ion-button *ngIf="liked == 1" id="unreact-button" (click)="unreact(post_id)" fill="clear" size="small" shape="round">
-  <img src="./assets/images/ggs.png" style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
-<ion-label>{{ likes }}</ion-label>
-</ion-button>
+                  <ion-button *ngIf="liked == 1" id="unreact-button" (click)="unreact(post_id)" fill="clear"
+                    size="small" shape="round">
+                    <img src="./assets/images/ggs.png"
+                      style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
+                    <ion-label>{{ likes }}</ion-label>
+                  </ion-button>
                 </li>
               </ion-col>
               <ion-col size="4">

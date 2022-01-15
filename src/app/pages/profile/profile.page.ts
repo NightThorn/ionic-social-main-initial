@@ -64,7 +64,6 @@ export class ProfilePage implements OnInit, OnDestroy {
   // x = localStorage.getItem("user_id");
 
   ngOnInit() {
-
     this.activeRoute.params.subscribe(params => {
 
       this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
@@ -100,6 +99,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
       this.fetchedProfile = profile;
+      console.log(this.fetchedProfile);
       const newDate = new Date(this.fetchedProfile.user_birthdate);
       this.bday = newDate.toDateString();
     });
@@ -200,6 +200,23 @@ export class ProfilePage implements OnInit, OnDestroy {
     });
     modal.present();
   }
+  group(tag) {
+
+    this.dataService.getGroupFromTag(tag).subscribe(res => {
+      this.groups = res.message;
+      let navigationExtras: NavigationExtras = {
+        queryParams: {
+          special: JSON.stringify(this.groups[0]['group_id'])
+        }
+      };
+      this.router.navigate(['group'], navigationExtras);
+
+    });
+
+  }
+
+
+
 }
 
 

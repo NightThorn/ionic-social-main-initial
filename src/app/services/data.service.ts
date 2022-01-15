@@ -583,7 +583,7 @@ export class DataService {
   grinding(group_id) {
 
 
-    return this.http.get(`https://ggs.tv/api/v1/grinding.php?action=grinding&group=` + group_id).pipe(map((res: any) => {
+    return this.http.get(`https://ggs.tv/api/v1/grinding.php?action=get&group=` + group_id).pipe(map((res: any) => {
 
       return res;
     }),
@@ -593,6 +593,7 @@ export class DataService {
       })
     );
   }
+  
   getCommentReactions(comment_id) {
 
 
@@ -620,6 +621,34 @@ export class DataService {
 
 
     return this.http.get(`https://ggs.tv/api/v1/postcomments.php?post=${post_id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  getAllGroups(user) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/getgroups.php?user=${user}&filter=all`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  getGroupFromTag(tag) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/getGroupTag.php?tag=${tag}`).pipe(map((res: any) => {
 
 
       return res;

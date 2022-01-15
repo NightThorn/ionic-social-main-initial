@@ -189,6 +189,10 @@ const routes: Routes = [
   },  {
     path: 'creategroup',
     loadChildren: () => import('./pages/creategroup/creategroup.module').then( m => m.CreategroupPageModule)
+  },
+  {
+    path: 'grind',
+    loadChildren: () => import('./pages/grind/grind.module').then( m => m.GrindPageModule)
   }
 
 ];

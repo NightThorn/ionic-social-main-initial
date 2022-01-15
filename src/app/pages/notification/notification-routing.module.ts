@@ -8,7 +8,11 @@ const routes: Routes = [
     path: '',
     component: NotificationPage,
     children: [
-     
+      {
+        path: '',
+        redirectTo: '/notifications/all',
+        pathMatch: 'full'
+      },
       {
         path: 'all',
         loadChildren: () => import('./all/all.module').then(m => m.AllPageModule)

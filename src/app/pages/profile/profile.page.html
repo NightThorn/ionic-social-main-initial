@@ -18,8 +18,9 @@
               <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}" />
             </ion-thumbnail>
             <ul class="profile-text ion-padding-horizontal" *ngIf="fetchedProfile">
-              <li>{{ fetchedProfile.user_name }} <span *ngIf="fetchedProfile.user_verified === '1'"
-                  style="color: lime;">
+              <li><span *ngIf="fetchedProfile.grinding != 0">#</span><span
+                  (click)="group(fetchedProfile.tag)">{{fetchedProfile.tag}}|</span>{{ fetchedProfile.user_name }}
+                <span *ngIf="fetchedProfile.user_verified === '1'" style="color: lime;">
                   <ion-icon name="checkmark-circle"></ion-icon>
                 </span>
                 <span *ngIf="fetchedProfile.user_staff === '1'">
@@ -112,10 +113,11 @@
         <div [ngSwitch]="tabType">
           <ion-row *ngSwitchCase="'posts'" class="ion-no-padding">
             <ion-row style="width: 100%;" *ngFor="let item of fetchedPosts">
-              <app-feed-card style="width: 100%;" [avatar]="item.user_picture" [name]="item.user_name" [post_id]="item.post_id"
-                [date]="item.time" [text]="item.text" [origin]="item.origin_id" [user_id]="item.user_id"
-                [picture]="item.picture_source" [videosrc]="item.source" [type]="item.post_type"
-                [likes]="item.reaction_like_count" [comments]="item.comments" [shares]="item.shares" [separator]="true">
+              <app-feed-card style="width: 100%;" [avatar]="item.user_picture" [name]="item.user_name"
+                [post_id]="item.post_id" [date]="item.time" [text]="item.text" [origin]="item.origin_id"
+                [user_id]="item.user_id" [picture]="item.picture_source" [videosrc]="item.source"
+                [type]="item.post_type" [likes]="item.reaction_like_count" [comments]="item.comments"
+                [shares]="item.shares" [tag]="item.tag" [grinding]="item.grinding" [separator]="true">
               </app-feed-card>
             </ion-row>
           </ion-row>

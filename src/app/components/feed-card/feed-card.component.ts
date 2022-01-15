@@ -36,6 +36,9 @@ export class FeedCardComponent implements OnInit {
   @Input() boosted: number;
   @Input() feeling: string;
   @Input() value: string;
+  @Input() tag: string;
+  @Input() grinding: number;
+
 
   imgConfig = {
     spaceBetween: 6,
@@ -66,6 +69,7 @@ export class FeedCardComponent implements OnInit {
   banned: number;
   reacted: any;
   image: string = "./assets/images/ggsgray.png";
+  groups: any;
   constructor(private router: Router, private sanitizer: DomSanitizer, private authService: AuthenticationService, private http: HttpClient, private dataService: DataService) {
 
 
@@ -249,6 +253,21 @@ export class FeedCardComponent implements OnInit {
   
 
     });
+  }
+
+  getTagGroup(tag) {
+
+    this.dataService.getGroupFromTag(tag).subscribe(res => {
+      this.groups = res.message;
+      let navigationExtras: NavigationExtras = {
+        queryParams: {
+          special: JSON.stringify(this.groups[0]['group_id'])
+        }
+      };
+      this.router.navigate(['group'], navigationExtras);
+
+    });
+
   }
 }
 

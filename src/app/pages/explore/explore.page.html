@@ -49,7 +49,7 @@
         [post_id]="item.post_id" [date]="item.time" [text]="item.text" [origin]="item.origin_id"
         [user_id]="item.user_id" [feeling]="item.feeling_action" [value]="item.feeling_value"
         [picture]="item.picture_source" [videosrc]="item.source" [type]="item.post_type"
-        [likes]="item.reaction_like_count" [comments]="item.comments" [shares]="item.shares" [boosted]="item.boosted">
+        [likes]="item.reaction_like_count" [grinding]="item.grinding" [tag]="item.tag" [comments]="item.comments" [shares]="item.shares" [boosted]="item.boosted">
       </app-feed-card>
     </ion-row>
     <ion-row style="width: 100%;" *ngFor="let item of dataList">
@@ -57,7 +57,7 @@
         [date]="item.time" [text]="item.text" [origin]="item.origin_id" [user_id]="item.user_id"
         [picture]="item.picture_source" [feeling]="item.feeling_action" [value]="item.feeling_value"
         [videosrc]="item.source" [type]="item.post_type" [likes]="item.reaction_like_count" [comments]="item.comments"
-        [boosted]="item.boosted" [shares]="item.shares" [separator]="true">
+        [boosted]="item.boosted" [grinding]="item.grinding" [tag]="item.tag" [shares]="item.shares" [separator]="true">
       </app-feed-card>
     </ion-row>
 

@@ -164,4 +164,6 @@ export interface ProfileModel {
   vkontakte_connected: string
   vkontakte_id: string
   zodiac: string
+  tag: string
+  grinding: number
 }

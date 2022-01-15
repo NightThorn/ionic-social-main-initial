@@ -41,6 +41,7 @@ export class GrindingPage implements OnInit {
       }
       this.dataService.grinding(this.group_id).subscribe(res => {
         this.grinders = res.message;
+        console.log(this.grinders);
         this.dataList = this.grinders.slice(0, this.topLimit);
 
       });
@@ -103,6 +104,7 @@ export class GrindingPage implements OnInit {
       }
     };
     this.router.navigate(['user'], navigationExtras)
+    this.closeModal();
 
   }
 }
