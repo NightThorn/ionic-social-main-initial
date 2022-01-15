@@ -193,6 +193,10 @@ const routes: Routes = [
   {
     path: 'grind',
     loadChildren: () => import('./pages/grind/grind.module').then( m => m.GrindPageModule)
+  },
+  {
+    path: 'editprofile',
+    loadChildren: () => import('./pages/editprofile/editprofile.module').then( m => m.EditprofilePageModule)
   }
 
 ];

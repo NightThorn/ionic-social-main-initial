@@ -12,6 +12,7 @@ import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ImageModalPageModule } from '../image-modal/image-modal.module';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { ProfileService } from 'src/app/services/profile.service';
+import { EditprofilePageModule } from '../editprofile/editprofile.module';
 
 @NgModule({
   entryComponents: [ImageModalPage],
@@ -22,7 +23,8 @@ import { ProfileService } from 'src/app/services/profile.service';
     HttpClientModule,
     ProfilePageRoutingModule,
     ImageModalPageModule,
-    ComponentsModule
+    ComponentsModule,
+    EditprofilePageModule
   ],
   declarations: [ProfilePage]
 })

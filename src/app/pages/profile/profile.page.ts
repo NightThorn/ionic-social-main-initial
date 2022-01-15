@@ -11,6 +11,7 @@ import { Post } from 'src/app/models/post';
 import { PostsService } from 'src/app/services/posts.service';
 import { ModalPage } from '../modal/modal.page';
 import moment from 'moment';
+import { EditprofilePage } from '../editprofile/editprofile.page';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -49,6 +50,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   friendCount: any;
   userFriends: any;
   offset: number;
+  me: number;
   constructor(
     private dataService: DataService,
     private profileService: ProfileService,
@@ -68,7 +70,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
       this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
         if (storedUser !== null) {
-
+          this.me = storedUser.UserID;
           this.profileService.fetchProfile(storedUser.UserID);
           this.profileService.fetchPosts(storedUser.UserID);
 
@@ -214,6 +216,18 @@ export class ProfilePage implements OnInit, OnDestroy {
     });
 
   }
+  async editProfile(id) {
+
+      const modal = await this.modalController.create({
+        component: EditprofilePage,
+        componentProps: {
+          'me': id,
+
+        },
+      });
+      return await modal.present();
+    }
+
 
 
 
