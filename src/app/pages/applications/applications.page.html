@@ -32,10 +32,8 @@
       </ion-label>
 <ion-buttons style="height: 40px;" >
 
-  <ion-button
-    (click)="accept(item.user_id)"
-    class="follow-btn">Accept</ion-button>
-  <ion-button (click)="decline(item.user_id)" class="unfollow-btn">Decline</ion-button>
+  <ion-button (click)="accept(item.user_id)" class="follow-btn">{{Accept}}</ion-button>
+  <ion-button (click)="decline(item.user_id)" class="unfollow-btn">{{Decline}}</ion-button>
 
 </ion-buttons>
     </ion-item>

@@ -57,7 +57,7 @@ export class ApplicantPage implements OnInit {
     let data = {
       "userid": user,
     };
-    this.http.post('https://ggs.tv/api/v1/group.php?action=decline&group=' + this.groupid, JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/group.php?action=approve&group=' + this.groupid, JSON.stringify(data)).subscribe(res => {
     });
   }
   decline(user) {
