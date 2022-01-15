@@ -13,14 +13,14 @@
   <ion-list>
     <p>*Only groups with a Tag set will display</p>
 
-    <ion-item (click)="select(item.group_id, item.group_tag, item.group_name)" *ngFor="let item of dataList">
+    <ion-item (click)="select(item.group_id, item.group_tag, item.group_title)" *ngFor="let item of dataList">
       <ion-thumbnail item-left>
         <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.group_picture }}">
 
       </ion-thumbnail>
 
       <ion-label>
-        {{ item.group_name }} <span *ngIf="item.group_verified === '1'" style="color: lime;">
+        {{ item.group_title }} <span *ngIf="item.group_verified === '1'" style="color: lime;">
           <ion-icon name="checkmark-circle"></ion-icon>
         </span>
        
