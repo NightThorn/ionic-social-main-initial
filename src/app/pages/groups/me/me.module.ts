@@ -9,6 +9,7 @@ import { MePageRoutingModule } from './me-routing.module';
 import { MePage } from './me.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { HttpClientModule } from '@angular/common/http';
+import { CreategroupPageModule } from '../../creategroup/creategroup.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
     IonicModule,
     HttpClientModule,
     ComponentsModule,
-    MePageRoutingModule
+    MePageRoutingModule,
+    CreategroupPageModule
   ],
   declarations: [MePage]
 })

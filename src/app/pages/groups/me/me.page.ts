@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
+import { CreategroupPage } from '../../creategroup/creategroup.page';
 
 @Component({
   selector: 'app-me',
@@ -14,7 +16,7 @@ export class MePage implements OnInit {
   me: any;
   groups: any = [];
 
-  constructor(private authService: AuthenticationService, private router: Router, private dataService: DataService) { }
+  constructor(private authService: AuthenticationService, public modalController: ModalController, private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
@@ -42,9 +44,17 @@ export class MePage implements OnInit {
     this.router.navigate(['group'], navigationExtras);
   }
 
-  createGroup() {
+  async createGroup() {
 
-    
+    const modal = await this.modalController.create({
+      component: CreategroupPage,
+      cssClass: 'modal-container',
+      componentProps: {
+        'admin': this.me,
+
+      },
+    });
+    return await modal.present();
   }
 
 }

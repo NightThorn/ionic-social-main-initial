@@ -1,30 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { AlertController, ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
-  selector: 'app-editgroup',
-  templateUrl: './editgroup.page.html',
-  styleUrls: ['./editgroup.page.scss'],
+  selector: 'app-creategroup',
+  templateUrl: './creategroup.page.html',
+  styleUrls: ['./creategroup.page.scss'],
 })
-export class EditgroupPage implements OnInit {
+export class CreategroupPage implements OnInit {
+
   imgFile: string;
 
   postForm: FormGroup;
   activeStoredUserSubscription$;
-  me: number;
-  @Input() group_id: number;
-  @Input() group_name: string;
-  @Input() group_title: string;
-  @Input() group_description: string;
-  @Input() group_cover: string;
-  @Input() group_admin: number;
-  @Input() group_picture: string;
-  @Input() group_privacy: string;
-  @Input() group_tag: string;
+  
+  
+  @Input() admin: number;
 
   private file: File;
 
@@ -33,24 +27,16 @@ export class EditgroupPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-
-        this.me = storedUser.UserID;
-
-      }
-
-    })
+    
     this.postForm = this.fb.group({
-      group_id: [this.group_id],
-      group_cover: [this.group_cover],
-      group_title: [this.group_title],
-      group_description: [this.group_description],
-      group_picture: [this.group_picture],
-      group_admin: [this.group_admin],
-      group_name: [this.group_name],
-      group_privacy: [this.group_privacy],
-      group_tag: [this.group_tag]
+      group_cover: [''],
+      group_title: [''],
+      group_description: [''],
+      group_picture: [''],
+      group_admin: [''],
+      group_name: [''],
+      group_privacy: [''],
+      group_tag: ['']
 
 
     });
@@ -130,6 +116,4 @@ export class EditgroupPage implements OnInit {
       };
     }
   }
-
-
 }

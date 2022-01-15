@@ -11,6 +11,7 @@ import { Post } from 'src/app/models/post';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { StoredUser } from 'src/app/models/stored-user';
 import { HttpClient } from '@angular/common/http';
+import moment from 'moment';
 @Component({
   selector: 'app-user',
   templateUrl: './user.page.html',
@@ -53,6 +54,7 @@ export class UserPage implements OnInit {
   me: number;
   public addfriend = "Add Friend";
   public blocked = 0;
+  offset: number;
 
   constructor(
     private dataService: DataService,
@@ -109,6 +111,11 @@ export class UserPage implements OnInit {
 
           this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
             this.fetchedPosts = data;
+            for (let i = 0; i < this.fetchedPosts.length; i++) {
+              this.offset = moment().utcOffset();
+
+              this.fetchedPosts[i]['time'] = moment.utc(this.fetchedPosts[i]['time']).fromNow();
+            }
 
           })
           // this.data = this.profileService.fetchProfile(this.x);

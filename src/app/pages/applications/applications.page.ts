@@ -76,9 +76,9 @@ export class ApplicationsPage implements OnInit {
         group: JSON.stringify(group)
       }
     };
-    this.closeModal();
 
     this.router.navigate(['applicant'], navigationExtras);
+    this.closeModal();
 
   }
 

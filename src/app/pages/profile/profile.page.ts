@@ -10,6 +10,7 @@ import { ProfileModel } from "../../models/profile-model";
 import { Post } from 'src/app/models/post';
 import { PostsService } from 'src/app/services/posts.service';
 import { ModalPage } from '../modal/modal.page';
+import moment from 'moment';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -47,6 +48,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   badgeCount: any;
   friendCount: any;
   userFriends: any;
+  offset: number;
   constructor(
     private dataService: DataService,
     private profileService: ProfileService,
@@ -104,6 +106,11 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
       this.fetchedPosts = data;
+      for (let i = 0; i < this.fetchedPosts.length; i++) {
+        this.offset = moment().utcOffset();
+
+        this.fetchedPosts[i]['time'] = moment.utc(this.fetchedPosts[i]['time']).fromNow();
+      }
 
     })
     // this.data = this.profileService.fetchProfile(this.x);
