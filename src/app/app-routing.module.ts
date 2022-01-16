@@ -201,6 +201,10 @@ const routes: Routes = [
   {
     path: 'giphy',
     loadChildren: () => import('./pages/giphy/giphy.module').then( m => m.GiphyPageModule)
+  },
+  {
+    path: 'grouppost',
+    loadChildren: () => import('./pages/grouppost/grouppost.module').then( m => m.GrouppostPageModule)
   }
 
 ];

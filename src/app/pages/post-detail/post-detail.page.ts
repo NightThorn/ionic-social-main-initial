@@ -9,6 +9,8 @@ import { VideoModalPage } from '../video-modal/video-modal.page';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { GiphyPage } from '../giphy/giphy.page';
+import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-post-detail',
@@ -19,6 +21,9 @@ export class PostDetailPage implements OnInit {
 
   commentForm: FormGroup;
 
+  liked: any;
+
+  commentimage: string = "./assets/images/ggsgray.png";
 
   data: any;
   post: any;
@@ -28,6 +33,8 @@ export class PostDetailPage implements OnInit {
   reply: any;
   activeStoredUserSubscription$;
   me: number;
+  gif: any;
+  reacted: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private authService: AuthenticationService, private route: ActivatedRoute, private modalController: ModalController, private dataService: DataService, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -55,7 +62,10 @@ export class PostDetailPage implements OnInit {
     });
     this.dataService.getPostComments(this.data).subscribe(res => {
       this.comments = res.message;
+      
+      console.log(this.comments);
       for (let i = 0; i < this.comments.length; i++) {
+       
         this.offset = moment().utcOffset();
         this.comments[i]['time'] = moment.utc(this.comments[i]['time']).fromNow();
         this.dataService.getPostCommentReplies(this.comments[i]['comment_id']).subscribe(res => {
@@ -73,7 +83,9 @@ export class PostDetailPage implements OnInit {
 
 
     this.commentForm = this.fb.group({
-      message: [null]
+      text: [null],
+      gif: [null],
+
     });
   }
   showReplies() {
@@ -92,33 +104,50 @@ export class PostDetailPage implements OnInit {
     let data = {
       "post_id": id,
       "user_id": user,
-      "message": text,
-      "time": time
+      "comment": text,
+      "time": time,
+      "gif": this.gif
+
     };
 
-    this.http.post('https://ggs.tv/api/v1/post.php?action=comment', JSON.stringify(data), { headers: headers }).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/post.php?action=comment', JSON.stringify(data), { headers: headers }).subscribe(
+      () => { // If POST is success
+        window.location.reload();      },
+      (error) => { // If POST is failed
+        "Error occurred";
+      }
+    );
+   
+  }
+  async onGif(e) {
+    const modal = await this.modalController.create({
+      component: GiphyPage,
+      backdropDismiss: false,
+      cssClass: 'modal'
     });
-    this.dataService.getPostComments(this.data).subscribe(res => {
-      this.comments = res.message;
-      for (let i = 0; i < this.comments.length; i++) {
-        this.offset = moment().utcOffset();
-        this.comments[i]['time'] = moment.utc(this.comments[i]['time']).fromNow();
-        this.dataService.getPostCommentReplies(this.comments[i]['comment_id']).subscribe(res => {
-          this.replies = res.message;
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        this.gif = detail.data;
 
-          for (let i = 0; i < this.replies.length; i++) {
-            this.offset = moment().utcOffset();
+        var elem = document.createElement("img");
+        elem.setAttribute("src", this.gif);
+        elem.setAttribute("height", "200");
+        elem.setAttribute("width", "100%");
+        elem.setAttribute("alt", "IMG");
 
-            this.replies[i]['time'] = moment.utc(this.replies[i]['time']).fromNow();
-          }
+        document.getElementById("text").appendChild(elem);
+        document.getElementById("gifid").style.border = "thick solid lime";
+        document.getElementById("imageid").style.border = "none";
+        document.getElementById("videoid").style.border = "none";
+
+        this.commentForm.patchValue({
+          gif: this.gif
         });
-
       }
     });
-    this.commentForm.reset();
-    window.location.reload();
-  }
+    await modal.present();
 
+  };
   user(id) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
@@ -142,6 +171,29 @@ export class PostDetailPage implements OnInit {
     });
     modal.present();
   }
+  commentlike(id) {
+    let data = {
+      "comment_id": id,
+      "user_id": this.me,
+    };
 
+    this.liked = "1";
+    this.commentimage = "./assets/images/ggs.png";
+    this.http.post('https://ggs.tv/api/v1/post.php?action=commentlike', JSON.stringify(data)).subscribe(res => {
+
+    });
+  }
+  commentunlike(id) {
+    let data = {
+      "comment_id": id,
+      "user_id": this.me,
+    };
+
+    this.liked = "0";
+    this.commentimage = "./assets/images/ggsgray.png";
+    this.http.post('https://ggs.tv/api/v1/post.php?action=commentunlike', JSON.stringify(data)).subscribe(res => {
+
+    });
+  }
 
 }

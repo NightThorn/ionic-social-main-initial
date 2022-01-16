@@ -10,6 +10,7 @@ import { ApplicationsPage } from '../applications/applications.page';
 import { ApplyPage } from '../apply/apply.page';
 import { EditgroupPage } from '../editgroup/editgroup.page';
 import { GrindingPage } from '../grinding/grinding.page';
+import { GrouppostPage } from '../grouppost/grouppost.page';
 import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ModalPage } from '../modal/modal.page';
 
@@ -140,9 +141,12 @@ export class GroupPage implements OnInit {
   async openModalPost() {
 
     const modal = await this.modalController.create({
-      component: ModalPage,
+      component: GrouppostPage,
       cssClass: 'modal',
-      backdropDismiss: false
+      backdropDismiss: false,
+      componentProps: {
+        'group': this.data
+      },
 
     });
     modal.present();

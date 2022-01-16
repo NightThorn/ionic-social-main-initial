@@ -9,6 +9,7 @@ import { PostDetailPageRoutingModule } from './post-detail-routing.module';
 import { PostDetailPage } from './post-detail.page';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { GiphyPageModule } from '../giphy/giphy.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     IonicModule,
     ComponentsModule,
     PostDetailPageRoutingModule,
-    UtilsModule
+    UtilsModule,
+    GiphyPageModule
   ],
   declarations: [PostDetailPage]
 })

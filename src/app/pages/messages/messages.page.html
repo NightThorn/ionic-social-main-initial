@@ -25,7 +25,7 @@
               </ion-item-option>
             </ion-item-options>
             <app-message-list-item [avatar]="item.user_picture" [user]="item.user_name" [time]="item.time"
-              [message]="item.message" [active]="item.seen" (click)="navigateToChat(item.conversation_id)">
+              [message]="item.message" (click)="navigateToChat(item.conversation_id)">
             </app-message-list-item>
             <ion-item-options side="end">
               <ion-item-option>
