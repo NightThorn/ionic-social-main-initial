@@ -197,6 +197,10 @@ const routes: Routes = [
   {
     path: 'editprofile',
     loadChildren: () => import('./pages/editprofile/editprofile.module').then( m => m.EditprofilePageModule)
+  },
+  {
+    path: 'giphy',
+    loadChildren: () => import('./pages/giphy/giphy.module').then( m => m.GiphyPageModule)
   }
 
 ];

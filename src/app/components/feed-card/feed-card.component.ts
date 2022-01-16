@@ -24,6 +24,7 @@ export class FeedCardComponent implements OnInit {
   @Input() type: string;
   @Input() videosrc: string;
   @Input() picture: string;
+  @Input() gif: string;
   @Input() link: string;
   @Input() likes: number;
   @Input() shares: number;

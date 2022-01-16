@@ -52,6 +52,9 @@
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'photos'">
       <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
     </ion-item>
+    <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'gif'">
+      <img src="{{picture}}" />
+    </ion-item>
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_picture'">
       <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
     </ion-item>
@@ -118,6 +121,9 @@
             </ion-item>
             <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'profile_picture'">
               <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.picture_source}}" />
+            </ion-item>
+            <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'gif'">
+              <img src="{{share.gif}}" />
             </ion-item>
             <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'cover_picture'">
               <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.cover_picture}}" />

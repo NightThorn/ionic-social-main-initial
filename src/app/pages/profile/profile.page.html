@@ -63,21 +63,7 @@
         </div>
         <ul>
           <ion-button (click)="editProfile(me)" class="follow-btn">Edit Profile</ion-button>
-          <ion-fab horizontal="end" edge slot="fixed">
-            <ion-fab-button>
-              <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-            </ion-fab-button>
-            <ion-fab-list side="top">
-              <ion-fab-button>
-                <ion-icon name="warning">Report</ion-icon>
-              </ion-fab-button>
-              <ion-fab-button>
-                <ion-icon name="close">Block</ion-icon>
-              </ion-fab-button>
-
-
-            </ion-fab-list>
-          </ion-fab>
+         
         </ul>
       </ion-col>
     </ion-row>
@@ -114,7 +100,7 @@
             <ion-row style="width: 100%;" *ngFor="let item of fetchedPosts">
               <app-feed-card style="width: 100%;" [avatar]="item.user_picture" [name]="item.user_name"
                 [post_id]="item.post_id" [date]="item.time" [text]="item.text" [origin]="item.origin_id"
-                [user_id]="item.user_id" [picture]="item.picture_source" [videosrc]="item.source"
+                [user_id]="item.user_id" [gif]="item.gif" [picture]="item.picture_source" [videosrc]="item.source"
                 [type]="item.post_type" [likes]="item.reaction_like_count" [comments]="item.comments"
                 [shares]="item.shares" [tag]="item.tag" [grinding]="item.grinding" [separator]="true">
               </app-feed-card>

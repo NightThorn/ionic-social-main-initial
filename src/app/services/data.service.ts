@@ -593,7 +593,7 @@ export class DataService {
       })
     );
   }
-  
+
   getCommentReactions(comment_id) {
 
 
@@ -635,6 +635,20 @@ export class DataService {
 
 
     return this.http.get(`https://ggs.tv/api/v1/getgroups.php?user=${user}&filter=all`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  giphy(search) {
+
+
+    return this.http.get(`https://api.giphy.com/v1/gifs/search?api_key=bLJIN6O9CxQZC6YPQvFRbjnUKrHK4YnN&q=` + search).pipe(map((res: any) => {
 
 
       return res;
