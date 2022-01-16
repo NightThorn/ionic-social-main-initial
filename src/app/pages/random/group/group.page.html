@@ -96,7 +96,7 @@
   <ion-row style="width: 100%;" *ngFor="let item of feed">
     <app-feed-card style="width: 100%;" [avatar]="item.user_picture" [name]="item.user_name" [post_id]="item.post_id"
       [date]="item.time" [text]="item.text" [origin]="item.origin_id" [user_id]="item.user_id"
-      [picture]="item.picture_source" [videosrc]="item.source" [type]="item.post_type"
+      [picture]="item.picture_source" [gif]="item.gif" [videosrc]="item.source" [type]="item.post_type"
       [likes]="item.reaction_like_count" [comments]="item.comments" [shares]="item.shares" [separator]="true">
     </app-feed-card>
   </ion-row>
