@@ -439,6 +439,32 @@ export class DataService {
       })
     );
   }
+  getGroupAdmins(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/groupadmins.php?action=get&group=${id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  getGroupMembersNotAdmin(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/groupmembersnotadmin.php?group=${id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   getGroupMedia(id) {
 
     return this.http.get(`https://ggs.tv/api/v1/groupmedia.php?group=${id}`).pipe(map((res: any) => {

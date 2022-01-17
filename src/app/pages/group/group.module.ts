@@ -12,6 +12,7 @@ import { ApplyPageModule } from '../apply/apply.module';
 import { EditgroupPageModule } from '../editgroup/editgroup.module';
 import { ApplicationsPageModule } from '../applications/applications.module';
 import { GrindingPageModule } from '../grinding/grinding.module';
+import { GroupadminsPageModule } from '../groupadmins/groupadmins.module';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { GrindingPageModule } from '../grinding/grinding.module';
     ApplyPageModule,
     EditgroupPageModule,
     ApplicationsPageModule,
-    GrindingPageModule
+    GrindingPageModule,
+    GroupadminsPageModule
   ],
   declarations: [GroupPage]
 })

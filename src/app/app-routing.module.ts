@@ -205,6 +205,18 @@ const routes: Routes = [
   {
     path: 'grouppost',
     loadChildren: () => import('./pages/grouppost/grouppost.module').then( m => m.GrouppostPageModule)
+  },
+  {
+    path: 'groupadmins',
+    loadChildren: () => import('./pages/groupadmins/groupadmins.module').then( m => m.GroupadminsPageModule)
+  },
+  {
+    path: 'addadmin',
+    loadChildren: () => import('./pages/addadmin/addadmin.module').then( m => m.AddadminPageModule)
+  },
+  {
+    path: 'sharemodal',
+    loadChildren: () => import('./pages/sharemodal/sharemodal.module').then( m => m.SharemodalPageModule)
   }
 
 ];

@@ -10,6 +10,8 @@ import { HashLocationStrategy } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { SharemodalPage } from 'src/app/pages/sharemodal/sharemodal.page';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-feed-card',
@@ -71,7 +73,7 @@ export class FeedCardComponent implements OnInit {
   reacted: any;
   image: string = "./assets/images/ggsgray.png";
   groups: any;
-  constructor(private router: Router, private sanitizer: DomSanitizer, private authService: AuthenticationService, private http: HttpClient, private dataService: DataService) {
+  constructor(private router: Router, private modalController: ModalController, private sanitizer: DomSanitizer, private authService: AuthenticationService, private http: HttpClient, private dataService: DataService) {
 
 
   }
@@ -216,6 +218,19 @@ export class FeedCardComponent implements OnInit {
     this.http.post('https://ggs.tv/api/v1/post.php?action=react', JSON.stringify(data)).subscribe(res => {
     
     });
+  }
+  async share(id) {
+    const modal = await this.modalController.create({
+      component: SharemodalPage,
+      cssClass: 'modal',
+      backdropDismiss: false,
+      componentProps: {
+        'id': id,
+
+      }
+
+    });
+    modal.present();
   }
   deboost(id) {
     let data = {

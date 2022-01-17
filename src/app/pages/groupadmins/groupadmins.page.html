@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons (click)="add(group_id)" slot="end">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-buttons>
+    <ion-buttons (click)="closeModal()" slot="end">
+      <ion-icon name="close-outline"></ion-icon>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Group Admins</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item  *ngFor="let item of admins">
+
+      <ion-thumbnail item-left>
+        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}">
+
+      </ion-thumbnail>
+
+      <ion-label>
+        {{ item.user_name }} <span *ngIf="item.user_verified === '1'" style="color: lime;">
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </span>
+        <span *ngIf="item.user_staff === '1'">
+          <ion-badge color="success">Staff</ion-badge>
+        </span>
+        <span *ngIf="item.user_sponsored === '1'">
+          <ion-badge color="success">Sponsored</ion-badge>
+        </span>
+        <span *ngIf="item.user_mod === '1'">
+          <ion-badge color="danger">Mod</ion-badge>
+        </span>
+      </ion-label>
+      <ion-button (click)="remove(item.user_id)" class="follow-btn">Remove</ion-button>
+
+    </ion-item>
+  </ion-list>
+
+</ion-content>

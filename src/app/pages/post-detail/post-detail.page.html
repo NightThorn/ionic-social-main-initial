@@ -44,6 +44,7 @@
                 <ion-col size="9">
                   <span class="user-comment-text">
                     <div [innerHTML]="cm.text"></div>
+                    <img *ngIf="cm.image" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{cm.image}}">
                   </span>
             <img *ngIf="cm.gifsrc" src="{{cm.gifsrc}}">
 

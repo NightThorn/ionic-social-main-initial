@@ -47,7 +47,6 @@ export class EditgroupPage implements OnInit {
       group_title: [this.group_title],
       group_description: [this.group_description],
       group_picture: [this.group_picture],
-      group_admin: [this.group_admin],
       group_name: [this.group_name],
       group_privacy: [this.group_privacy],
       group_tag: [this.group_tag]
@@ -65,7 +64,6 @@ export class EditgroupPage implements OnInit {
       "group_picture": message.group_picture,
       "group_privacy": message.group_privacy,
       "group_description": message.group_description,
-      "group_admin": message.group_admin,
       "group_tag": message.group_tag
 
 
