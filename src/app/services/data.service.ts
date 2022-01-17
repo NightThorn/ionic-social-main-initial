@@ -452,6 +452,45 @@ export class DataService {
       })
     );
   }
+  getCounter(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/counter.php?action=get&user=${id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  resetCounter(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/counter.php?action=reset&user=${id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  resetmessages(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/counter.php?action=resetmessages&user=${id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   getGroupMembersNotAdmin(id) {
 
     return this.http.get(`https://ggs.tv/api/v1/groupmembersnotadmin.php?group=${id}`).pipe(map((res: any) => {
