@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    
+    <ion-buttons (click)="closeModal()" slot="end">
+      <ion-icon name="close-outline"></ion-icon>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Group Admin</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item  *ngFor="let item of admins; let i = index">
+
+      <ion-thumbnail item-left>
+        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}">
+
+      </ion-thumbnail>
+
+      <ion-label>
+        {{ item.user_name }} <span *ngIf="item.user_verified === '1'" style="color: lime;">
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </span>
+        <span *ngIf="item.user_staff === '1'">
+          <ion-badge color="success">Staff</ion-badge>
+        </span>
+        <span *ngIf="item.user_sponsored === '1'">
+          <ion-badge color="success">Sponsored</ion-badge>
+        </span>
+        <span *ngIf="item.user_mod === '1'">
+          <ion-badge color="danger">Mod</ion-badge>
+        </span>
+      </ion-label>
+      <ion-button (click)="admin(item.user_id, i)" class="follow-btn">{{joined[i]}}</ion-button>
+
+    </ion-item>
+  </ion-list>
+
+</ion-content>

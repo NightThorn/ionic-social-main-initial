@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons (click)="closeModal()" slot="end">
+      <ion-icon name="close-outline"></ion-icon>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Set Grinding For</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
+  <ion-list>
+    <p>*Only groups with a Tag set will display</p>
+
+    <ion-item (click)="select(item.group_id, item.group_tag, item.group_title)" *ngFor="let item of dataList">
+      <ion-thumbnail item-left>
+        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.group_picture }}">
+
+      </ion-thumbnail>
+
+      <ion-label>
+        {{ item.group_title }} <span *ngIf="item.group_verified === '1'" style="color: lime;">
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </span>
+       
+      </ion-label>
+
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

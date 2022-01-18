@@ -9,6 +9,7 @@ import { FcmService } from 'src/app/services/fcm.service';
 import { AuthenticationService } from "../../services/authentication.service";
 import { BlockedPage } from '../blocked/blocked.page';
 import { EditPage } from '../edit/edit.page';
+import { GrindPage } from '../grind/grind.page';
 import { ModalPage } from '../modal/modal.page';
 import { PasswordPage } from '../password/password.page';
 import { VideoModalPage } from '../video-modal/video-modal.page';
@@ -175,7 +176,7 @@ export class SettingsPage implements OnInit {
     });
     modal.present();
   }
- 
+
   async openVideoModal(source) {
     const modal = await this.modalController.create({
       component: VideoModalPage,
@@ -201,6 +202,17 @@ export class SettingsPage implements OnInit {
     });
     modal.present();
   }
-  
+  async grind(id) {
+    const modal = await this.modalController.create({
+      component: GrindPage,
+      backdropDismiss: false,
+      cssClass: 'modal',
+
+      componentProps: {
+        'id': id
+      }
+    });
+    modal.present();
+  }
 }
 

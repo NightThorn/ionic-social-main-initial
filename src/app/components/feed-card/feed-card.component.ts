@@ -10,6 +10,8 @@ import { HashLocationStrategy } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { SharemodalPage } from 'src/app/pages/sharemodal/sharemodal.page';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-feed-card',
@@ -24,6 +26,7 @@ export class FeedCardComponent implements OnInit {
   @Input() type: string;
   @Input() videosrc: string;
   @Input() picture: string;
+  @Input() gif: string;
   @Input() link: string;
   @Input() likes: number;
   @Input() shares: number;
@@ -36,6 +39,9 @@ export class FeedCardComponent implements OnInit {
   @Input() boosted: number;
   @Input() feeling: string;
   @Input() value: string;
+  @Input() tag: string;
+  @Input() grinding: number;
+
 
   imgConfig = {
     spaceBetween: 6,
@@ -66,7 +72,8 @@ export class FeedCardComponent implements OnInit {
   banned: number;
   reacted: any;
   image: string = "./assets/images/ggsgray.png";
-  constructor(private router: Router, private sanitizer: DomSanitizer, private authService: AuthenticationService, private http: HttpClient, private dataService: DataService) {
+  groups: any;
+  constructor(private router: Router, private modalController: ModalController, private sanitizer: DomSanitizer, private authService: AuthenticationService, private http: HttpClient, private dataService: DataService) {
 
 
   }
@@ -212,6 +219,19 @@ export class FeedCardComponent implements OnInit {
     
     });
   }
+  async share(id) {
+    const modal = await this.modalController.create({
+      component: SharemodalPage,
+      cssClass: 'modal',
+      backdropDismiss: false,
+      componentProps: {
+        'id': id,
+
+      }
+
+    });
+    modal.present();
+  }
   deboost(id) {
     let data = {
       "post_id": id,
@@ -249,6 +269,21 @@ export class FeedCardComponent implements OnInit {
   
 
     });
+  }
+
+  getTagGroup(tag) {
+
+    this.dataService.getGroupFromTag(tag).subscribe(res => {
+      this.groups = res.message;
+      let navigationExtras: NavigationExtras = {
+        queryParams: {
+          special: JSON.stringify(this.groups[0]['group_id'])
+        }
+      };
+      this.router.navigate(['group'], navigationExtras);
+
+    });
+
   }
 }
 

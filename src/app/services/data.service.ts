@@ -439,6 +439,71 @@ export class DataService {
       })
     );
   }
+  getGroupAdmins(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/groupadmins.php?action=get&group=${id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  getCounter(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/counter.php?action=get&user=${id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  resetCounter(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/counter.php?action=reset&user=${id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  resetmessages(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/counter.php?action=resetmessages&user=${id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  getGroupMembersNotAdmin(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/groupmembersnotadmin.php?group=${id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   getGroupMedia(id) {
 
     return this.http.get(`https://ggs.tv/api/v1/groupmedia.php?group=${id}`).pipe(map((res: any) => {
@@ -583,7 +648,7 @@ export class DataService {
   grinding(group_id) {
 
 
-    return this.http.get(`https://ggs.tv/api/v1/grinding.php?action=grinding&group=` + group_id).pipe(map((res: any) => {
+    return this.http.get(`https://ggs.tv/api/v1/grinding.php?action=get&group=` + group_id).pipe(map((res: any) => {
 
       return res;
     }),
@@ -593,6 +658,7 @@ export class DataService {
       })
     );
   }
+
   getCommentReactions(comment_id) {
 
 
@@ -620,6 +686,48 @@ export class DataService {
 
 
     return this.http.get(`https://ggs.tv/api/v1/postcomments.php?post=${post_id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  getAllGroups(user) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/getgroups.php?user=${user}&filter=all`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  giphy(search) {
+
+
+    return this.http.get(`https://api.giphy.com/v1/gifs/search?api_key=bLJIN6O9CxQZC6YPQvFRbjnUKrHK4YnN&q=` + search).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  getGroupFromTag(tag) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/getGroupTag.php?tag=${tag}`).pipe(map((res: any) => {
 
 
       return res;

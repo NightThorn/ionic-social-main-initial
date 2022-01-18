@@ -94,7 +94,6 @@ export class ExplorePage implements OnInit {
               this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
             }
             this.dataList = this.feeds.slice(0, this.topLimit);
-
           });
         } else {
 
@@ -106,7 +105,6 @@ export class ExplorePage implements OnInit {
               this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
             }
             this.dataList = this.feeds.slice(0, this.topLimit);
-
           });
 
         }
@@ -181,7 +179,6 @@ export class ExplorePage implements OnInit {
           this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
         }
         this.dataList = this.feeds.slice(0, this.topLimit);
-
       });
     };
     this.dataService.getBoosted().subscribe(res => {

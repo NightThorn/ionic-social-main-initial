@@ -5,15 +5,20 @@
       <ion-icon name="home"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="messages">
+    <ion-tab-button *ngFor="let item of count" (click)="resetmessages()" tab="messages">
       <ion-icon name="chatbubble-ellipses"></ion-icon>
+            <ion-badge *ngIf="item.user_live_messages_counter != 0" color="danger">{{item.user_live_messages_counter}}
+            </ion-badge>
+
     </ion-tab-button>
 
     <ion-tab-button></ion-tab-button>
 
 
-    <ion-tab-button tab="notification">
+    <ion-tab-button *ngFor="let item of count" (click)="remove()" tab="notification">
       <ion-icon name="notifications"></ion-icon>
+      <ion-badge  *ngIf="item.user_live_notifications_counter != 0" color="danger">{{item.user_live_notifications_counter}}</ion-badge>
+
     </ion-tab-button>
 
     <ion-tab-button tab="profile">

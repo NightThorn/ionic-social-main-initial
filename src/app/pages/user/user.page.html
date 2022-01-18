@@ -16,8 +16,8 @@
               <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}" />
             </ion-thumbnail>
             <ul class="profile-text ion-padding-horizontal" *ngIf="fetchedProfile">
-              <li>{{ fetchedProfile.user_name }} <span *ngIf="fetchedProfile.user_verified === '1'"
-                  style="color: lime;">
+              <li><span (click)="goToGroup(fetchedProfile.grinding)" *ngIf="fetchedProfile.grinding != 0">#</span><span *ngIf="fetchedProfile.tag"
+                (click)="getTagGroup(fetchedProfile.tag)">{{fetchedProfile.tag}}|</span>{{ fetchedProfile.user_name}} <span *ngIf="fetchedProfile.user_verified === '1'" style="color: lime;">
                   <ion-icon name="checkmark-circle"></ion-icon>
                 </span>
                 <span *ngIf="fetchedProfile.user_staff === '1'">
@@ -34,7 +34,6 @@
                 </span>
               </li>
 
-              <li>LFG: {{ fetchedProfile.lfg_text }}</li>
             </ul>
           </div>
         </div>
@@ -79,7 +78,8 @@
             </ion-fab-button>
             <ion-fab-list side="top">
               <ion-fab-button>
-                <ion-icon style="fill: yellow;" name="warning" (click)="report(fetchedProfile.user_id)">Report</ion-icon>
+                <ion-icon style="fill: yellow;" name="warning" (click)="report(fetchedProfile.user_id)">Report
+                </ion-icon>
               </ion-fab-button>
               <ion-fab-button>
                 <ion-icon style="fill: red;" name="close" (click)="block(fetchedProfile.user_id)">Block</ion-icon>
@@ -126,7 +126,7 @@
                 [post_id]="item.post_id" [date]="item.time" [text]="item.text" [origin]="item.origin_id"
                 [user_id]="item.user_id" [picture]="item.picture_source" [videosrc]="item.source"
                 [type]="item.post_type" [likes]="item.reaction_like_count" [comments]="item.comments"
-                [shares]="item.shares" [separator]="true" [boosted]="item.boosted">
+                [shares]="item.shares" [gif]="item.gif" [tag]="item.tag" [grinding]="item.grinding"  [separator]="true" [boosted]="item.boosted">
               </app-feed-card>
             </ion-row>
           </ion-row>

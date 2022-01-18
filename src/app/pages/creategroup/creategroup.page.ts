@@ -27,16 +27,17 @@ export class CreategroupPage implements OnInit {
   }
 
   ngOnInit() {
-    
+    console.log(this.admin);
     this.postForm = this.fb.group({
       group_cover: [''],
       group_title: [''],
       group_description: [''],
       group_picture: [''],
-      group_admin: [''],
       group_name: [''],
       group_privacy: [''],
-      group_tag: ['']
+      group_tag: [''],
+      group_category: ['']
+
 
 
     });
@@ -51,13 +52,15 @@ export class CreategroupPage implements OnInit {
       "group_picture": message.group_picture,
       "group_privacy": message.group_privacy,
       "group_description": message.group_description,
-      "group_admin": message.group_admin,
-      "group_tag": message.group_tag
+      "group_admin": this.admin,
+      "group_tag": message.group_tag,
+      "category": message.group_category
+
 
 
 
     };
-    this.http.post('https://ggs.tv/api/v1/group.php?action=edit', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/group.php?action=create', JSON.stringify(data)).subscribe(res => {
       this.presentAlert();
 
       this.closeModal();
@@ -73,8 +76,8 @@ export class CreategroupPage implements OnInit {
   async presentAlert() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Group Settings Changed',
-      message: 'Settings have been saved!',
+      header: 'Group Created',
+      message: 'Group has been saved!',
       buttons: ['OK']
     });
     await alert.present();

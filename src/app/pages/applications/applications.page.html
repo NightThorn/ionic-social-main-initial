@@ -30,12 +30,11 @@
           <ion-badge color="danger">Mod</ion-badge>
         </span>
       </ion-label>
-<ion-buttons style="height: 40px;" >
+<ion-buttons >
+  <p (click)="applicant(item.user_id, item.group_id)">View</p>
 
-  <ion-button
-    (click)="accept(item.user_id)"
-    class="follow-btn">Accept</ion-button>
-  <ion-button (click)="decline(item.user_id)" class="unfollow-btn">Decline</ion-button>
+  <p (click)="accept(item.user_id)" class="follow-btn">{{Accept}}</p>
+  <p (click)="decline(item.user_id)" class="unfollow-btn">{{Decline}}</p>
 
 </ion-buttons>
     </ion-item>

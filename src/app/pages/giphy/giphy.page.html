@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons (click)="dismissModal()" slot="end">
+      <ion-icon name="close-outline"></ion-icon>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Choose a Gif</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar #searchTerm (search)="searchGif(searchTerm.value)"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let item of giphy">
+
+    <img (click)="choose(item.images.original.url)" src="{{item.images.original.url}}">
+
+
+
+
+    </ion-item>
+  </ion-list>
+
+</ion-content>

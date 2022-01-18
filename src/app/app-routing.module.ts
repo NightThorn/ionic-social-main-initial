@@ -189,6 +189,34 @@ const routes: Routes = [
   },  {
     path: 'creategroup',
     loadChildren: () => import('./pages/creategroup/creategroup.module').then( m => m.CreategroupPageModule)
+  },
+  {
+    path: 'grind',
+    loadChildren: () => import('./pages/grind/grind.module').then( m => m.GrindPageModule)
+  },
+  {
+    path: 'editprofile',
+    loadChildren: () => import('./pages/editprofile/editprofile.module').then( m => m.EditprofilePageModule)
+  },
+  {
+    path: 'giphy',
+    loadChildren: () => import('./pages/giphy/giphy.module').then( m => m.GiphyPageModule)
+  },
+  {
+    path: 'grouppost',
+    loadChildren: () => import('./pages/grouppost/grouppost.module').then( m => m.GrouppostPageModule)
+  },
+  {
+    path: 'groupadmins',
+    loadChildren: () => import('./pages/groupadmins/groupadmins.module').then( m => m.GroupadminsPageModule)
+  },
+  {
+    path: 'addadmin',
+    loadChildren: () => import('./pages/addadmin/addadmin.module').then( m => m.AddadminPageModule)
+  },
+  {
+    path: 'sharemodal',
+    loadChildren: () => import('./pages/sharemodal/sharemodal.module').then( m => m.SharemodalPageModule)
   }
 
 ];

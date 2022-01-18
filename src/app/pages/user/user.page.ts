@@ -205,6 +205,20 @@ export class UserPage implements OnInit {
     }, 500);
 
   }
+  getTagGroup(tag) {
+    
+    this.dataService.getGroupFromTag(tag).subscribe(res => {
+      this.groups = res.message;
+      let navigationExtras: NavigationExtras = {
+        queryParams: {
+          special: JSON.stringify(this.groups[0]['group_id'])
+        }
+      };
+      this.router.navigate(['group'], navigationExtras);
+
+    });
+    
+  }
   add(id) {
 
     let data = {
