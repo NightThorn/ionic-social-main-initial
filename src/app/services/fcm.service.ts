@@ -1,14 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Firebase } from '@ionic-native/firebase/ngx';
 import { Platform } from '@ionic/angular';
 import { AngularFirestore } from 'angularfire2/firestore';
+@Injectable({ providedIn: 'root' })
 
-@Injectable()
 export class FcmService {
 
     constructor(private firebase: Firebase,
         private afs: AngularFirestore,
-        private platform: Platform) { }
+        private platform: Platform, private http: HttpClient) { }
 
     async getToken(user) {
         let token;
@@ -31,19 +32,20 @@ export class FcmService {
 
     async saveToken(token, userid, ostype) {
         if (!token) return;
+        let data = {
+            sessiontype: 'app', token: token, userid: userid, ostype: ostype
+        };
+       
 
+        this.http.post('https://ggs.tv/savetoken.php', JSON.stringify(data)).subscribe(res => {
+            console.log(res);   
+        });
 
-            $.ajax({
-                url: 'https://ggs.tv/savetoken.php',
-                type: 'POST',
-                async: true,
-                data: { sessiontype: 'app', token: token, userid: userid, ostype: ostype },
-                success: function (data) {
-                    console.log(data); // Inspect this in your console
-                }
-            });
-        
-    }
+         
+       
+        }
+    
+
 
    async removeToken(userid) {
         let token;
@@ -55,15 +57,14 @@ export class FcmService {
        if (this.platform.is('android')) {
            ostype = 'android'
        }
-    $.ajax({
-        url: 'savetoken.php',
-        type: 'POST',
-        async: true,
-        data: { sessiontype: 'app', token: token, userid: userid, action: 'delete', ostype: ostype },
-        success: function (data) {
-            console.log(data); // Inspect this in your console
-        }
-    });
+       let data = {
+           sessiontype: 'app', token: token, userid: userid, action: 'delete', ostype: ostype
+       };
+
+
+       this.http.post('https://ggs.tv/savetoken.php', JSON.stringify(data)).subscribe(res => {
+           console.log(res);
+       });
 }
     onNotifications() {
         return this.firebase.onNotificationOpen();

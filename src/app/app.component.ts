@@ -14,8 +14,6 @@ export class AppComponent implements OnInit {
     private storage: Storage, private router: Router
   ) {
     moment.locale('en');
-
-
   }
   goHome() {
     this.router.navigate(['tabs/explore']);
