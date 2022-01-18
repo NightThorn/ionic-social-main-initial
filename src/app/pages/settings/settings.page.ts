@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage-angular';
 import { async } from 'rxjs';
 import { StoredUser } from 'src/app/models/stored-user';
 import { DataService } from 'src/app/services/data.service';
+import { FcmService } from 'src/app/services/fcm.service';
 import { AuthenticationService } from "../../services/authentication.service";
 import { BlockedPage } from '../blocked/blocked.page';
 import { EditPage } from '../edit/edit.page';
@@ -47,7 +48,8 @@ export class SettingsPage implements OnInit {
     private router: Router,
     private authService: AuthenticationService,
     private dataService: DataService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private fcm: FcmService
   ) { }
 
   ngOnInit() {
@@ -91,6 +93,7 @@ export class SettingsPage implements OnInit {
   }
   async logout() {
     await this.authService.destroy();
+    await this.fcm.removeToken(this.me);
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 

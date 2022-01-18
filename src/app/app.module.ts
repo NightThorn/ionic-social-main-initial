@@ -13,6 +13,19 @@ import { ModalPageModule } from './pages/modal/modal.module';
 import { InViewportModule } from 'ng-in-viewport';
 import { NgxTweetModule } from "ngx-tweet";
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { Firebase } from '@ionic-native/firebase/ngx';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCddHyUNEHKoKtqcdlgbhKSQsIjJHtpjIs",
+  authDomain: "greasy-gamer-267521.firebaseapp.com",
+  projectId: "greasy-gamer-267521",
+  storageBucket: "greasy-gamer-267521.appspot.com",
+  messagingSenderId: "996502230755",
+  appId: "1:996502230755:web:9ee5a09cbdcf0a064197d6",
+  measurementId: "G-4YTDY6WE3Z"
+};
 @NgModule({
   declarations: [
     AppComponent
@@ -28,9 +41,11 @@ import { NgxTweetModule } from "ngx-tweet";
     InViewportModule,
     AppRoutingModule,
     IonicStorageModule.forRoot(),
-  ],
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule],
   providers: [
     AccessProviders,
+    Firebase,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     ProfileService
   ],

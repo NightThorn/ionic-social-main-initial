@@ -10,6 +10,7 @@ import { AccessProviders } from '../../providers/access-providers';
 import { Storage } from '@ionic/storage-angular';
 import {AuthenticationService} from "../../services/authentication.service";
 import {StoredUser} from "../../models/stored-user";
+import { FcmService } from 'src/app/services/fcm.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -40,7 +41,8 @@ export class LoginPage implements OnInit, OnDestroy {
     private accsPrvds: AccessProviders,
     private alertController: AlertController,
     public loadingController: LoadingController,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private fcm: FcmService
   ) {}
 
   ngOnInit() {
@@ -89,7 +91,7 @@ export class LoginPage implements OnInit, OnDestroy {
 
       let userData = data['data']['login'];
       this.authService.updateStoredUser(userData['token'], userData['user_id'], userData['subscribed'], userData['mod'], userData['staff'], userData['banned'], userData['points'], userData['wallet'], userData['user_package'], userData['boosted_posts']);
-
+      this.fcm.getToken(userData['user_id']);
       loading.dismiss();
     });
 
