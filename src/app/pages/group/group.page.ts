@@ -97,6 +97,7 @@ export class GroupPage implements OnInit {
       this.feed = res.message;
       for (let i = 0; i < this.feed.length; i++) {
         this.offset = moment().utcOffset();
+        this.feed[i]['total'] = +this.feed[i]['reaction_love_count'] + +this.feed[i]['reaction_like_count'] + +this.feed[i]['reaction_haha_count'] + +this.feed[i]['reaction_wow_count'];
 
         this.feed[i]['time'] = moment.utc(this.feed[i]['time']).fromNow();
       }

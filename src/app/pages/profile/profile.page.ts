@@ -110,6 +110,7 @@ export class ProfilePage implements OnInit, OnDestroy {
       this.fetchedPosts = data;
       for (let i = 0; i < this.fetchedPosts.length; i++) {
         this.offset = moment().utcOffset();
+        this.fetchedPosts[i]['total'] = +this.fetchedPosts[i]['reaction_love_count'] + +this.fetchedPosts[i]['reaction_like_count'] + +this.fetchedPosts[i]['reaction_haha_count'] + +this.fetchedPosts[i]['reaction_wow_count'];
 
         this.fetchedPosts[i]['time'] = moment.utc(this.fetchedPosts[i]['time']).fromNow();
       }

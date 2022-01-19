@@ -56,6 +56,7 @@ export class ExplorePage implements OnInit {
   staff: number;
   banned: number;
   boost: any;
+  total: any;
 
 
   constructor(private router: Router, private authService: AuthenticationService, public modalController: ModalController, private storage: Storage, private dataService: DataService) { }
@@ -73,7 +74,7 @@ export class ExplorePage implements OnInit {
         this.staff = storedUser.Staff;
         this.banned = storedUser.Banned;
 
-       
+
 
         this.filter = localStorage.getItem("filter");
         this.dataService.getXP(storedUser.UserID).subscribe(res => {
@@ -90,7 +91,7 @@ export class ExplorePage implements OnInit {
 
             for (let i = 0; i < this.feeds.length; i++) {
               this.offset = moment().utcOffset();
-
+              this.feeds[i]['total'] = +this.feeds[i]['reaction_love_count'] + +this.feeds[i]['reaction_like_count'] + +this.feeds[i]['reaction_haha_count'] + +this.feeds[i]['reaction_wow_count'];
               this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
             }
             this.dataList = this.feeds.slice(0, this.topLimit);
@@ -101,6 +102,7 @@ export class ExplorePage implements OnInit {
             this.feeds = res.message;
             for (let i = 0; i < this.feeds.length; i++) {
               this.offset = moment().utcOffset();
+              this.feeds[i]['total'] = +this.feeds[i]['reaction_love_count'] + +this.feeds[i]['reaction_like_count'] + +this.feeds[i]['reaction_haha_count'] + +this.feeds[i]['reaction_wow_count'];
 
               this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
             }
@@ -115,11 +117,12 @@ export class ExplorePage implements OnInit {
           this.boost = res.message;
           for (let i = 0; i < this.boost.length; i++) {
             this.offset = moment().utcOffset();
+            this.boost[i]['total'] = +this.boost[i]['reaction_love_count'] + +this.boost[i]['reaction_like_count'] + +this.boost[i]['reaction_haha_count'] + +this.boost[i]['reaction_wow_count'];
 
             this.boost[i]['time'] = moment.utc(this.boost[i]['time']).fromNow();
           }
         });
-        
+
       }
     });
 
@@ -156,7 +159,7 @@ export class ExplorePage implements OnInit {
   gotoShop() {
     this.router.navigate(['shop']);
   }
-  
+
   doRefresh(event) {
     if (this.filter = "all") {
       this.dataService.getAllPosts(this.me).subscribe(res => {
