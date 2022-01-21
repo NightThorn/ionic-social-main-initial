@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
@@ -6,9 +6,15 @@ import { emailValidator } from 'src/app/validators/email.validators';
 import { passwordValidator } from 'src/app/validators/password.validator';
 import { AccessProviders } from '../../providers/access-providers';
 import { Storage } from '@ionic/storage-angular';
-import {AuthenticationService} from "../../services/authentication.service";
-import {StoredUser} from "../../models/stored-user";
+import { AuthenticationService } from "../../services/authentication.service";
+import { StoredUser } from "../../models/stored-user";
 import { FcmService } from 'src/app/services/fcm.service';
+import {
+  ActionPerformed,
+  PushNotificationSchema,
+  PushNotifications,
+  Token,
+} from '@capacitor/push-notifications';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -29,6 +35,7 @@ export class LoginPage implements OnInit, OnDestroy {
   accessProviders: any;
 
   activeStoredUserSubscription$;
+  token: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,12 +48,12 @@ export class LoginPage implements OnInit, OnDestroy {
     public loadingController: LoadingController,
     private authService: AuthenticationService,
     private fcm: FcmService
-  ) {}
+  ) { }
 
   ngOnInit() {
 
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser:StoredUser) => {
-      if(storedUser !== null) {
+    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
+      if (storedUser !== null) {
         this.router.navigate(['tabs/explore']);
       }
     });
@@ -55,6 +62,45 @@ export class LoginPage implements OnInit, OnDestroy {
       email: [null, [Validators.required, emailValidator]],
       password: [null, [Validators.required, passwordValidator]],
     });
+
+    PushNotifications.requestPermissions().then(result => {
+      if (result.receive === 'granted') {
+        // Register with Apple / Google to receive push via APNS/FCM
+        PushNotifications.register();
+      } else {
+        // Show some error
+      }
+    });
+
+    // On success, we should be able to receive notifications
+    PushNotifications.addListener('registration',
+      (token: Token) => {
+        alert('Push registration success, token: ' + token.value);
+        this.token = token.value;
+      }
+    );
+
+    // Some issue with our setup and push will not work
+    PushNotifications.addListener('registrationError',
+      (error: any) => {
+        alert('Error on registration: ' + JSON.stringify(error));
+      }
+    );
+
+    // Show us the notification payload if the app is open on our device
+    PushNotifications.addListener('pushNotificationReceived',
+      (notification: PushNotificationSchema) => {
+        alert('Push received: ' + JSON.stringify(notification));
+      }
+    );
+
+    // Method called when tapping on a notification
+    PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification: ActionPerformed) => {
+        alert('Push action performed: ' + JSON.stringify(notification));
+      }
+    );
+
   }
 
   ngOnDestroy() {
@@ -67,17 +113,17 @@ export class LoginPage implements OnInit, OnDestroy {
     const loading = await this.loadingController.create();
     await loading.present();
 
-    this.authService.doLogin(this.email, this.password).subscribe((data:any) => {
-      if(data['code'] !== 200) {
+    this.authService.doLogin(this.email, this.password).subscribe((data: any) => {
+      if (data['code'] !== 200) {
         // error toast
         let msg = '';
-        if(data['message'] !== '') {
+        if (data['message'] !== '') {
           msg = data['message'];
         } else if (data['errors'].length > 0) {
           msg = data['errors'][0];
         }
 
-        if(msg !== '') {
+        if (msg !== '') {
           msg = 'Could not log in, please try again';
         }
 
@@ -89,7 +135,7 @@ export class LoginPage implements OnInit, OnDestroy {
 
       let userData = data['data']['login'];
       this.authService.updateStoredUser(userData['token'], userData['user_id'], userData['subscribed'], userData['mod'], userData['staff'], userData['banned'], userData['points'], userData['wallet'], userData['user_package'], userData['boosted_posts']);
-      this.fcm.getToken(userData['user_id']);
+      this.fcm.getToken(this.token, userData['user_id']);
       loading.dismiss();
     });
 
@@ -117,10 +163,10 @@ export class LoginPage implements OnInit, OnDestroy {
     //
     //   }
     // });
-  //})
+    //})
   }
 
-  async presentToast(a){
+  async presentToast(a) {
     const toast = await this.toastCtrl.create({
       message: a,
       duration: 1500,

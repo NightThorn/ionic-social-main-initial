@@ -9,20 +9,16 @@ export class FcmService {
     constructor(private firebase: Firebase,
         private platform: Platform, private http: HttpClient) { }
 
-    async getToken(user) {
-        let token;
+    async getToken(token, user) {
         let ostype;
 
         if (this.platform.is('android')) {
             ostype = 'android'
 
-            token = await this.firebase.getToken();
         }
 
         if (this.platform.is('ios')) {
             ostype = 'ios'
-            token = await this.firebase.getToken();
-            await this.firebase.grantPermission();
         }
 
         this.saveToken(token, user, ostype);
