@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { emailValidator } from 'src/app/validators/email.validators';
 import { passwordValidator } from 'src/app/validators/password.validator';
-import { Toast } from '@capacitor/core';
-import { async } from 'rxjs';
 import { AccessProviders } from '../../providers/access-providers';
 import { Storage } from '@ionic/storage-angular';
 import {AuthenticationService} from "../../services/authentication.service";

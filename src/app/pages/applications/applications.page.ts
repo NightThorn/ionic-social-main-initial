@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
-import { AccessibilityPluginWeb } from '@capacitor/core';
 import { ModalController } from '@ionic/angular';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -62,10 +61,10 @@ export class ApplicationsPage implements OnInit {
   accept(user) {
     let data = {
       "userid": user,
-    }; 
+    };
     this.Accept = "Accepted";
     this.http.post('https://ggs.tv/api/v1/group.php?action=accept&group=' + this.group_id, JSON.stringify(data)).subscribe(res => {
-    
+
     });
   }
   applicant(user, group) {
