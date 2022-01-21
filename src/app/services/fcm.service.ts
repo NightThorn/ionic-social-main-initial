@@ -2,13 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Firebase } from '@ionic-native/firebase/ngx';
 import { Platform } from '@ionic/angular';
-import { AngularFirestore } from 'angularfire2/firestore';
 @Injectable({ providedIn: 'root' })
 
 export class FcmService {
 
     constructor(private firebase: Firebase,
-        private afs: AngularFirestore,
         private platform: Platform, private http: HttpClient) { }
 
     async getToken(user) {
