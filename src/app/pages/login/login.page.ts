@@ -68,14 +68,13 @@ export class LoginPage implements OnInit, OnDestroy {
         // Register with Apple / Google to receive push via APNS/FCM
         PushNotifications.register();
       } else {
-        // Show some error
+        console.log("hmmmm");
       }
     });
 
     // On success, we should be able to receive notifications
     PushNotifications.addListener('registration',
       (token: Token) => {
-        alert('Push registration success, token: ' + token.value);
         this.token = token.value;
       }
     );
@@ -83,21 +82,18 @@ export class LoginPage implements OnInit, OnDestroy {
     // Some issue with our setup and push will not work
     PushNotifications.addListener('registrationError',
       (error: any) => {
-        alert('Error on registration: ' + JSON.stringify(error));
       }
     );
 
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotificationSchema) => {
-        alert('Push received: ' + JSON.stringify(notification));
       }
     );
 
     // Method called when tapping on a notification
     PushNotifications.addListener('pushNotificationActionPerformed',
       (notification: ActionPerformed) => {
-        alert('Push action performed: ' + JSON.stringify(notification));
       }
     );
 
@@ -134,8 +130,10 @@ export class LoginPage implements OnInit, OnDestroy {
       }
 
       let userData = data['data']['login'];
-      this.authService.updateStoredUser(userData['token'], userData['user_id'], userData['subscribed'], userData['mod'], userData['staff'], userData['banned'], userData['points'], userData['wallet'], userData['user_package'], userData['boosted_posts']);
       this.fcm.getToken(this.token, userData['user_id']);
+      localStorage.setItem("notiToken", this.token);
+
+      this.authService.updateStoredUser(userData['token'], userData['user_id'], userData['subscribed'], userData['mod'], userData['staff'], userData['banned'], userData['points'], userData['wallet'], userData['user_package'], userData['boosted_posts']);
       loading.dismiss();
     });
 

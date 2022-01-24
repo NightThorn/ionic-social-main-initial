@@ -41,10 +41,8 @@ export class FcmService {
     
 
 
-   async removeToken(userid) {
-        let token;
+   async removeToken(userid, token) {
         let ostype;
-        token = await this.firebase.getToken();
        if (this.platform.is('ios')) {
            ostype = 'ios'
        }

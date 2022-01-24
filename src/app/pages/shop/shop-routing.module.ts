@@ -24,9 +24,14 @@ const routes: Routes = [
       {
         path: 'misc',
         loadChildren: () => import('./misc/misc.module').then(m => m.MiscPageModule)
+      },
+      {
+        path: 'load',
+        loadChildren: () => import('./load/load.module').then(m => m.LoadPageModule)
       }
     ]
-  }];
+  },] 
+;
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

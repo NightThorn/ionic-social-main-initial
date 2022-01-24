@@ -94,7 +94,9 @@ export class SettingsPage implements OnInit {
   }
   async logout() {
     await this.authService.destroy();
-    await this.fcm.removeToken(this.me);
+      const x = localStorage.getItem("notiToken");
+
+    await this.fcm.removeToken(this.me, x);
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 

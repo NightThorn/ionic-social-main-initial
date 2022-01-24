@@ -125,6 +125,7 @@
             <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'gif'">
               <img src="{{share.gif}}" />
             </ion-item>
+            
             <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'cover_picture'">
               <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.cover_picture}}" />
             </ion-item>

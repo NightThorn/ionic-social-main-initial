@@ -41,6 +41,8 @@ export class FeedCardComponent implements OnInit {
   @Input() value: string;
   @Input() tag: string;
   @Input() grinding: number;
+  @Input() colored: number;
+
 
 
   imgConfig = {
@@ -130,7 +132,7 @@ export class FeedCardComponent implements OnInit {
         });
 
       }
-
+     
       if (this.type === 'media') {
 
         this.dataService.getMediaPost(this.post_id).subscribe(res => {
