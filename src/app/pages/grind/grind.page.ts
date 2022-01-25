@@ -59,7 +59,7 @@ export class GrindPage implements OnInit {
       return item.group_name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
     });
   }
-  select(group, tag, group_name) { 
+  select(group, tag, group_name) {
     let data = {
       "me": this.id,
       "group_id": group,
@@ -74,6 +74,10 @@ export class GrindPage implements OnInit {
   }
   closeModal() {
     this.modalController.dismiss();
+
+  }
+  none() {
+    this.closeModal();
 
   }
   async presentAlert(name) {

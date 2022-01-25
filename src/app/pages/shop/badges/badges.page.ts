@@ -44,7 +44,7 @@ export class BadgesPage implements OnInit {
               this.badges[i]['price'] = "Free";
 
             } else if (this.badges[i]['price'] == '0.00' && this.badges[i]['pro_only'] == '1') {
-              this.badges[i]['price'] = "Pro Exclusive";
+              this.badges[i]['price'] = "Pro";
 
             }
 

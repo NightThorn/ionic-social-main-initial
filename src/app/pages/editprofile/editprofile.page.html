@@ -4,7 +4,7 @@
       <ion-icon name="close-outline"></ion-icon>
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Edit Group</ion-title>
+    <ion-title>Edit Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,9 +14,9 @@
 
       <ion-col size-12>
         <form [formGroup]="postForm" (ngSubmit)="post(postForm.value)">
-         
+
           <ion-row>
-            
+
             <ion-col size="6">
               <ion-label>Profile Picture</ion-label>
               <input id="file" type="file" class="form-control" (change)="onFileChange($event)">
@@ -26,7 +26,7 @@
 
             </ion-col>
           </ion-row>
-         
+
           <ion-button type="submit" ion-button full>Save</ion-button>
         </form>
       </ion-col>

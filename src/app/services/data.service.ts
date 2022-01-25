@@ -24,6 +24,21 @@ export class DataService {
     );
 
   }
+  getColored(id) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/coloredpost.php?id=${id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
   getSearchGroups(query) {
 
 
