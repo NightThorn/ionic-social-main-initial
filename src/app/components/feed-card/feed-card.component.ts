@@ -12,13 +12,11 @@ import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { SharemodalPage } from 'src/app/pages/sharemodal/sharemodal.page';
 import { ModalController } from '@ionic/angular';
-
 @Component({
   selector: 'app-feed-card',
   templateUrl: './feed-card.component.html',
   styleUrls: ['./feed-card.component.scss'],
 })
-  
 export class FeedCardComponent implements OnInit {
   @Input() avatar: string;
   @Input() name: string;
@@ -41,7 +39,7 @@ export class FeedCardComponent implements OnInit {
   @Input() value: string;
   @Input() tag: string;
   @Input() grinding: number;
-  @Input() colored: number;
+  @Input() colored: any;
 
 
 
@@ -75,6 +73,9 @@ export class FeedCardComponent implements OnInit {
   reacted: any;
   image: string = "./assets/images/ggsgray.png";
   groups: any;
+  background: any;
+  coloredpost: any;
+  coloredtext: any;
   constructor(private router: Router, private modalController: ModalController, private sanitizer: DomSanitizer, private authService: AuthenticationService, private http: HttpClient, private dataService: DataService) {
 
 
@@ -92,7 +93,14 @@ export class FeedCardComponent implements OnInit {
       this.banned = storedUser.Banned;
 
 
-
+      if (this.colored) {
+        this.dataService.getColored(this.colored).subscribe(res => {
+          this.background = res.message;
+          this.coloredpost = this.background[0]['background_image'];
+          this.coloredtext = this.background[0]['text_color'];
+          console.log(this.coloredtext);
+        });
+      }
 
       if (this.text.includes('#')) {
         this.decodedtext = htmlDecode(this.text)
@@ -132,7 +140,7 @@ export class FeedCardComponent implements OnInit {
         });
 
       }
-     
+
       if (this.type === 'media') {
 
         this.dataService.getMediaPost(this.post_id).subscribe(res => {
@@ -218,7 +226,7 @@ export class FeedCardComponent implements OnInit {
     this.liked = "1";
     this.image = "./assets/images/ggs.png";
     this.http.post('https://ggs.tv/api/v1/post.php?action=react', JSON.stringify(data)).subscribe(res => {
-    
+
     });
   }
   async share(id) {
@@ -268,7 +276,7 @@ export class FeedCardComponent implements OnInit {
     this.liked = "0";
     this.image = "./assets/images/ggsgray.png";
     this.http.post('https://ggs.tv/api/v1/post.php?action=unreact', JSON.stringify(data)).subscribe(res => {
-  
+
 
     });
   }

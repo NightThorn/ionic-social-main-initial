@@ -73,11 +73,8 @@ ion-header ion-toolbar {
 }
 
 .follow-btn {
-  --background: radial-gradient(
-    circle at top left,
-    var(--ion-color-secondary),
-    var(--ion-color-primary)
-  );
+  --background:  var(--ion-color-primary);
+color: whitesmoke;
   --box-shadow: none;
   border-radius: 10px;
   text-transform: capitalize;
