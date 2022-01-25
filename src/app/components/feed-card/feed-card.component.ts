@@ -98,7 +98,7 @@ export class FeedCardComponent implements OnInit {
           this.background = res.message;
           this.coloredpost = this.background[0]['background_image'];
           this.coloredtext = this.background[0]['text_color'];
-          
+          console.log(this.coloredtext);
         });
       }
 
