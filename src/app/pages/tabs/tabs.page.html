@@ -7,8 +7,8 @@
 
     <ion-tab-button *ngFor="let item of count" (click)="resetmessages()" tab="messages">
       <ion-icon name="chatbubble-ellipses"></ion-icon>
-            <ion-badge *ngIf="item.user_live_messages_counter != 0" color="danger">{{item.user_live_messages_counter}}
-            </ion-badge>
+      <ion-badge *ngIf="item.user_live_messages_counter != 0" color="danger">{{item.user_live_messages_counter}}
+      </ion-badge>
 
     </ion-tab-button>
 
@@ -17,7 +17,8 @@
 
     <ion-tab-button *ngFor="let item of count" (click)="remove()" tab="notification">
       <ion-icon name="notifications"></ion-icon>
-      <ion-badge  *ngIf="item.user_live_notifications_counter != 0" color="danger">{{item.user_live_notifications_counter}}</ion-badge>
+      <ion-badge *ngIf="item.user_live_notifications_counter != 0" color="danger">
+        {{item.user_live_notifications_counter}}</ion-badge>
 
     </ion-tab-button>
 
@@ -28,7 +29,7 @@
 
 </ion-tabs>
 
-<ion-fab vertical="bottom" horizontal="center" slot="fixed" edge="false">
+<ion-fab style="padding-bottom: 10px;" vertical="bottom" horizontal="center" slot="fixed">
   <ion-fab-button type="button">
     <img class="custom-icon-image" style="max-width: 90%;" />
   </ion-fab-button>
