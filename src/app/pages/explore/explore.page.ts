@@ -112,6 +112,7 @@ export class ExplorePage implements OnInit {
         }
         this.dataService.getLatestVid(storedUser.UserID).subscribe(res => {
           this.latest = res.message;
+          console.log(this.latest);
         });
         this.dataService.getBoosted().subscribe(res => {
           this.boost = res.message;

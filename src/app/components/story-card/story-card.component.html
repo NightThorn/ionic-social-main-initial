@@ -1,7 +1,7 @@
 <ion-card class="ion-no-margin">
   <ion-card-content class="ion-no-padding">
-    <video #myvideo loop playsinline>
-      <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{source}}" />
+    <video #myvideo preload="metadata" loop playsinline>
+      <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{source}}#t=0.001" />
     </video>
     <div class="data-container">
       <img class="avatar" (click)="user(id)" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{avatar}}" />

@@ -93,12 +93,11 @@ export class FeedCardComponent implements OnInit {
       this.banned = storedUser.Banned;
 
 
-      if (this.colored) {
+      if (this.colored > 0) {
         this.dataService.getColored(this.colored).subscribe(res => {
           this.background = res.message;
           this.coloredpost = this.background[0]['background_image'];
           this.coloredtext = this.background[0]['text_color'];
-          console.log(this.coloredtext);
         });
       }
 
