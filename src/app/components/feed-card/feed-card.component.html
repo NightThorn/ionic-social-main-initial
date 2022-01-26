@@ -172,13 +172,13 @@
                     <img id="react-button" [src]="image"
                       style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
 
-                    <ion-label>{{ likes }}</ion-label>
+                    <ion-label *ngIf="likes > 0">{{ likes }}</ion-label>
                   </ion-button>
                   <ion-button *ngIf="liked == 1" id="unreact-button" (click)="unreact(post_id)" fill="clear"
                     size="small" shape="round">
                     <img src="./assets/images/ggs.png"
                       style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
-                    <ion-label>{{ likes }}</ion-label>
+                    <ion-label *ngIf="likes > 0">{{ likes }}</ion-label>
                   </ion-button>
                 </li>
               </ion-col>
@@ -186,7 +186,7 @@
                 <li>
                   <ion-button (click)="navigateToDetail(post_id)" fill="clear" size="small" shape="round">
                     <ion-icon name="chatbubble-outline"></ion-icon>
-                    <ion-label>{{ comments }}</ion-label>
+                    <ion-label *ngIf="comments > 0">{{ comments }}</ion-label>
                   </ion-button>
                 </li>
               </ion-col>
@@ -194,7 +194,7 @@
                 <li>
                   <ion-button (click)="share(post_id)" slot="end" fill="clear" size="small" shape="round">
                     <ion-icon slot="icon-only" name="arrow-redo-outline"></ion-icon>
-                    <ion-label>{{ shares }}</ion-label>
+                    <ion-label *ngIf="shares > 0">{{ shares }}</ion-label>
 
                   </ion-button>
 
