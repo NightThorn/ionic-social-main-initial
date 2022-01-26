@@ -1,21 +1,16 @@
 <ion-content [fullscreen]="true">
-  <div class="container">
-    <video autoplay playsinline loop>
+  <div>
+    <video style="width: 100%;" autoplay playsinline loop>
       <source src="./assets/intro.mp4" types='video/mp4; codecs="h.264"'>
     </video>
-    <ion-grid
-
-    >
+    <ion-grid>
       <ion-row class="ion-no-padding">
         <ion-col class="ion-no-padding">
           <ion-header class="ion-no-border">
             <ion-toolbar>
               <ion-buttons slot="start">
                 <ion-button (click)="goBack()" class="back-btn">
-                  <ion-icon
-                    slot="icon-only"
-                    name="arrow-back-outline"
-                  ></ion-icon>
+                  <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
                 </ion-button>
               </ion-buttons>
             </ion-toolbar>
@@ -34,59 +29,32 @@
         <ion-col class="login">
           <form [formGroup]="loginForm" (ngSubmit)="signIn()">
             <ion-item lines="none" class="ion-no-padding">
-              <ion-label class="input-label" position="stacked"
-                >Email Address</ion-label
-              >
-              <ion-input
-                type="email"
-                [(ngModel)]="email"
-                formControlName="email"
-                placeholder="Type your email address"
-              ></ion-input>
-              <div
-                class="errors-container"
-                *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)"
-              >
-                <ng-container *ngIf="loginForm.get('email').errors.required"
-                  >Email is required</ng-container
-                >
-                <ng-container *ngIf="loginForm.get('email').errors.invalidEmail"
-                  >Email is invalid</ng-container
-                >
+              <ion-label class="input-label" position="stacked">Email Address</ion-label>
+              <ion-input type="email" [(ngModel)]="email" formControlName="email" placeholder="Type your email address">
+              </ion-input>
+              <div class="errors-container"
+                *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <ng-container *ngIf="loginForm.get('email').errors.required">Email is required</ng-container>
+                <ng-container *ngIf="loginForm.get('email').errors.invalidEmail">Email is invalid</ng-container>
               </div>
             </ion-item>
             <ion-item lines="none" class="ion-no-padding">
-              <ion-label class="input-label" position="stacked"
-                >Password</ion-label
-              >
-              <ion-input
-                type="password"
-                [(ngModel)]="password"
-                formControlName="password"
-                placeholder="Type your password"
-              ></ion-input>
-              <div
-                class="errors-container"
-                *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)"
-              >
+              <ion-label class="input-label" position="stacked">Password</ion-label>
+              <ion-input type="password" [(ngModel)]="password" formControlName="password"
+                placeholder="Type your password"></ion-input>
+              <div class="errors-container"
+                *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)">
                 <ng-container *ngIf="loginForm.get('password').errors.required">
                   Password is required
                 </ng-container>
-                <ng-container
-                  *ngIf="loginForm.get('password').errors.invalidPassword"
-                >
+                <ng-container *ngIf="loginForm.get('password').errors.invalidPassword">
                   {{loginForm.get('password').errors.message}}
                 </ng-container>
               </div>
             </ion-item>
             <div class="ion-padding-vertical">
-              <ion-button
-                [disabled]="loginForm.invalid"
-                class="action-button gradient-button"
-                expand="block"
-                fill="solid"
-                type="submit"
-              >
+              <ion-button [disabled]="loginForm.invalid" class="action-button gradient-button" expand="block"
+                fill="solid" type="submit">
                 <span>Sign In</span>
               </ion-button>
             </div>
