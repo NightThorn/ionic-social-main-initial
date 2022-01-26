@@ -11,19 +11,21 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar
-          animated
-          placeholder="Filter contacts"
-        ></ion-searchbar>
+    <ion-searchbar animated placeholder="Filter contacts"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding-horizontal">
+<ion-content class="ion-padding-horizontal">
   <ion-grid>
     <ion-row>
-      <ion-col size="4" sizeMd="3" sizeLg="2" sizeXl="2" *ngFor="let item of users">
-        <app-contact-card (click)="navigateToChat(item)" [image]="item.avatar" [name]="item.user" [isActive]="item.active"></app-contact-card>
+      <ion-col size="4" sizeMd="3" sizeLg="2" sizeXl="2" *ngFor="let item of dataList">
+        <app-contact-card (click)="chat(item.user_id)" [image]="item.user_picture" [name]="item.user_name">
+        </app-contact-card>
       </ion-col>
     </ion-row>
   </ion-grid>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
