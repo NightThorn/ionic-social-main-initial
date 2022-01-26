@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
@@ -12,12 +12,13 @@ import { Post } from 'src/app/models/post';
 import { PostsService } from 'src/app/services/posts.service';
 import { HttpClient } from '@angular/common/http';
 import moment from 'moment';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-user',
   templateUrl: './user.page.html',
   styleUrls: ['./user.page.scss'],
 })
-export class UserPage implements OnInit {
+export class UserPage implements OnInit, OnDestroy {
 
   cover = {
     backgroundImage:
@@ -38,6 +39,9 @@ export class UserPage implements OnInit {
   pictures: any = [];
   profile: any;
   storage: any;
+  subscription1$: Subscription
+  subscription2$: Subscription
+  subscriptions: Subscription[] = []
   activeStoredUserSubscription$;
   fetchedProfileSubscription$;
   fetchedProfile: ProfileModel;
@@ -65,6 +69,18 @@ export class UserPage implements OnInit {
   public ifollow = "Follow";
   public iunfollow = "Unfollow";
   offset: number;
+  subscription3$: Subscription;
+  subscription7$: Subscription;
+  subscription6$: Subscription;
+  subscription5$: Subscription;
+  subscription4$: Subscription;
+  subscription8$: Subscription;
+  subscription9$: Subscription;
+  subscription10$: Subscription;
+  subscription11$: Subscription;
+  subscription12$: Subscription;
+  subscription13$: Subscription;
+  subscription14$: Subscription;
 
   constructor(
     private dataService: DataService,
@@ -90,7 +106,7 @@ export class UserPage implements OnInit {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
         this.me = storedUser.UserID;
-        this.profileService.checkFollow(this.me).subscribe(res => {
+       this.subscription1$ = this.profileService.checkFollow(this.me).subscribe(res => {
           this.following = res.message;
           var follow = this.following.find(message => message.following_id == this.data)
 
@@ -101,7 +117,7 @@ export class UserPage implements OnInit {
         });
 
 
-        this.profileService.fetchFriends(this.data).subscribe(res => {
+       this.subscription2$ = this.profileService.fetchFriends(this.data).subscribe(res => {
           this.userFriends = res.message;
 
           this.friendCount = this.userFriends.length;
@@ -117,28 +133,28 @@ export class UserPage implements OnInit {
 
         this.profileService.fetchUser(this.data);
         this.profileService.fetchPosts(this.data);
-        this.profileService.fetchBadges(this.data).subscribe(res => {
+        this.subscription3$ = this.profileService.fetchBadges(this.data).subscribe(res => {
           this.userBadges = res.message;
           this.badgeCount = this.userBadges.length;
         });
 
       
-        this.profileService.fetchGroups(this.data).subscribe(res => {
+        this.subscription4$ = this.profileService.fetchGroups(this.data).subscribe(res => {
           this.groups = res.message;
 
         });
-        this.profileService.fetchPictures(this.data).subscribe(res => {
+        this.subscription5$ = this.profileService.fetchPictures(this.data).subscribe(res => {
           this.pictures = res.message;
           this.dataList = this.pictures.slice(0, this.topLimit);
 
         });
-        this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
+        this.subscription6$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
           this.fetchedProfile = profile;
           const newDate = new Date(this.fetchedProfile.user_birthdate);
           this.bday = newDate.toDateString();
         });
 
-        this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
+        this.subscription7$ = this.profileService.fetchedPosts.subscribe((data: Post) => {
           this.fetchedPosts = data;
           for (let i = 0; i < this.fetchedPosts.length; i++) {
             this.offset = moment().utcOffset();
@@ -228,7 +244,7 @@ export class UserPage implements OnInit {
     };
     this.addfriend = "Requested";
 
-    this.http.post('https://ggs.tv/api/v1/user.php?action=add', JSON.stringify(data)).subscribe(res => {
+    this.subscription8$ = this.http.post('https://ggs.tv/api/v1/user.php?action=add', JSON.stringify(data)).subscribe(res => {
       
       
     });
@@ -242,7 +258,7 @@ export class UserPage implements OnInit {
     };
     this.isFriends = "0";
 
-    this.http.post('https://ggs.tv/api/v1/user.php?action=remove', JSON.stringify(data)).subscribe(res => {
+    this.subscription9$ =this.http.post('https://ggs.tv/api/v1/user.php?action=remove', JSON.stringify(data)).subscribe(res => {
     
 
     });
@@ -255,7 +271,7 @@ export class UserPage implements OnInit {
     };
     this.blocked = 1;
 
-    this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).subscribe(res => {
+    this.subscription10$ = this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).subscribe(res => {
 
 
     });
@@ -268,7 +284,7 @@ export class UserPage implements OnInit {
     };
     this.blocked = 1;
 
-    this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).subscribe(res => {
+    this.subscription11$ = this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).subscribe(res => {
       
 
     });
@@ -279,7 +295,7 @@ export class UserPage implements OnInit {
       "user": id,
       "me": this.me,
     };
-    this.http.post('https://ggs.tv/api/v1/user.php?action=report', JSON.stringify(data)).subscribe(res => {
+    this.subscription12$ = this.http.post('https://ggs.tv/api/v1/user.php?action=report', JSON.stringify(data)).subscribe(res => {
       
       this.reported = "./assets/images/ggsgray.png";
 
@@ -291,7 +307,7 @@ export class UserPage implements OnInit {
       "user": id,
       "me": this.me,
     };
-    this.http.post('https://ggs.tv/api/v1/user.php?action=follow', JSON.stringify(data)).subscribe(res => {
+    this.subscription13$ = this.http.post('https://ggs.tv/api/v1/user.php?action=follow', JSON.stringify(data)).subscribe(res => {
 
       this.ifollow = "Following";
 
@@ -303,11 +319,15 @@ export class UserPage implements OnInit {
       "user": id,
       "me": this.me,
     };
-    this.http.post('https://ggs.tv/api/v1/user.php?action=unfollow', JSON.stringify(data)).subscribe(res => {
+    this.subscription14$ = this.http.post('https://ggs.tv/api/v1/user.php?action=unfollow', JSON.stringify(data)).subscribe(res => {
 
       this.iunfollow = "Follow";
 
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 }
 

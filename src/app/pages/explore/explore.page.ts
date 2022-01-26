@@ -22,7 +22,7 @@ export class ExplorePage implements OnInit {
   latest: any;
   storiesConfig = {
     initialSlide: 0,
-    spaceBetween: 10,
+    spaceBetween: 5,
     slidesPerView: 2.8,
   };
   public dataL: Array<object> = [];
