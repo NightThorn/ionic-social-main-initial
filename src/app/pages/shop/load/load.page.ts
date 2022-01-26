@@ -6,7 +6,6 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { BuymodalPage } from '../../buymodal/buymodal.page';
 import { XpmodalPage } from '../../xpmodal/xpmodal.page';
-import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal/ngx';
 @Component({
   selector: 'app-load',
   templateUrl: './load.page.html',
@@ -23,7 +22,7 @@ export class LoadPage implements OnInit {
   myXP: any;
   myWallet: any;
 
-  constructor(private dataService: DataService, private payPal: PayPal, private router: Router, private authService: AuthenticationService, private modalController: ModalController) { }
+  constructor(private dataService: DataService, private router: Router, private authService: AuthenticationService, private modalController: ModalController) { }
 
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
@@ -89,51 +88,7 @@ export class LoadPage implements OnInit {
   currency: string = 'USD';
   currencyIcon: string = '$';
 
-  payWithPaypal(money) {
-    console.log("Pay ????");
-    this.payPal.init({
-      PayPalEnvironmentProduction: 'ARn5gBIbMkIwBqVxz_BhkZmPsGIIPCkH5RViEnu7Xhn_Hkm2CK2w1IfKqV2JksKKpITgJM5WffLsBwWD',
-      PayPalEnvironmentSandbox: 'YOUR_SANDBOX_CLIENT_ID'
-    }).then(() => {
-      // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
-      this.payPal.prepareToRender('PayPalEnvironmentProduction', new PayPalConfiguration({
-        // Only needed if you get an "Internal Service Error" after PayPal login!
-        //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
-      })).then(() => {
-        let payment = new PayPalPayment(money, this.currency, 'Description', 'sale');
-        this.payPal.renderSinglePaymentUI(payment).then((res) => {
-          console.log(res);
-          // Successfully paid
-
-          // Example sandbox response
-          //
-          // {
-          //   "client": {
-          //     "environment": "sandbox",
-          //     "product_name": "PayPal iOS SDK",
-          //     "paypal_sdk_version": "2.16.0",
-          //     "platform": "iOS"
-          //   },
-          //   "response_type": "payment",
-          //   "response": {
-          //     "id": "PAY-1AB23456CD789012EF34GHIJ",
-          //     "state": "approved",
-          //     "create_time": "2016-10-03T13:33:33Z",
-          //     "intent": "sale"
-          //   }
-          // }
-        }, () => {
-          // Error or render dialog closed without being successful
-        });
-      }, () => {
-        // Error in configuration
-      });
-    }, () => {
-      // Error in initialization, maybe PayPal isn't supported or something else
-    });
-  }
-
-
+  payWithPaypal(item){}
 
 
 

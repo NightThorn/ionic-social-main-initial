@@ -12,7 +12,6 @@ import { ProfileService } from './services/profile.service';
 import { ModalPageModule } from './pages/modal/modal.module';
 import { InViewportModule } from 'ng-in-viewport';
 import { NgxTweetModule } from "ngx-tweet";
-import { PayPal } from '@ionic-native/paypal/ngx';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { Firebase } from '@ionic-native/firebase/ngx';
@@ -46,7 +45,6 @@ const firebaseConfig = {
   providers: [
     AccessProviders,
     Firebase,
-    PayPal,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     ProfileService
   ],
