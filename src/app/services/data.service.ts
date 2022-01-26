@@ -495,7 +495,7 @@ export class DataService {
   }
   resetmessages(id) {
 
-    return this.http.get(`https://ggs.tv/api/v1/counter.php?action=resetmessages&user=${id}`).pipe(map((res: any) => {
+    return this.http.get(`https://ggs.tv/api/v1/counter.php?action=resetmessage&user=${id}`).pipe(map((res: any) => {
 
 
       return res;
