@@ -1,10 +1,9 @@
 <div class="container ion-no-margin">
   <div class="img-container" [ngClass]="{ 'border-gradient': live,'active': active }">
-    <img
+     <ion-img
       [ngClass]="{ 'img-border': live}"
       src="{{ avatar }}"
-      onerror="this.src='assets/images/user-avatar.svg'"
-    />
+      onerror="this.src='assets/images/user-avatar.svg'"></ion-img>
     <i></i>
   </div>
   <ion-label color="medium">{{ name }}</ion-label>

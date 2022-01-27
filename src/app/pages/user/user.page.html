@@ -13,7 +13,7 @@
         <div class="profile ion-padding">
           <div class="profile-user">
             <ion-thumbnail>
-              <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}" />
+               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}" ></ion-img>
             </ion-thumbnail>
             <ul class="profile-text ion-padding-horizontal" *ngIf="fetchedProfile">
               <li><span (click)="goToGroup(fetchedProfile.grinding)" *ngIf="fetchedProfile.grinding != 0">#</span><span *ngIf="fetchedProfile.tag"
@@ -133,8 +133,8 @@
           <ion-row *ngSwitchCase="'photos'" class="ion-padding-vertical">
 
             <ion-col size="6" *ngFor="let pic of dataList">
-              <img class="image-element" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
-                (click)="openModal(pic.source)" />
+               <ion-img class="image-element" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
+                (click)="openModal(pic.source)" ></ion-img>
             </ion-col>
 
           </ion-row>

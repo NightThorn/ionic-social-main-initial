@@ -4,10 +4,10 @@
       <ion-back-button defaultHref="/tabs/explore" text=""></ion-back-button>
     </ion-buttons>
     <div style=" display: flex; align-items:center;" *ngFor="let item of xp">
-      
-      <img  style="width: 30px; margin: 10px;" src="assets/images/heads.png">
-      <ion-label style="font-size: small;" >{{myWallet}}</ion-label>
-    
+
+      <ion-img style="width: 30px; margin: 10px;" src="assets/images/heads.png"></ion-img>
+      <ion-label style="font-size: small;">{{myWallet}}</ion-label>
+
     </div>
     <ion-title>Badges</ion-title>
   </ion-toolbar>
@@ -22,18 +22,21 @@
         </ion-card-header>
         <ion-card-content>
           <ion-thumbnail>
-            <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.icon}}" />
+            <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.icon}}"></ion-img>
           </ion-thumbnail>
           <ion-card-title style="color: lime;">
             <div [innerHTML]="item.display">
             </div>
           </ion-card-title>
-          <ion-button *ngIf="pro !== '1' && item.pro_only == 1" (click)="goToPro()"><img style="width: 25px;"
-              src="assets/images/heads.png" />{{item.price}}</ion-button>
-          <ion-button *ngIf="pro == '1' && item.pro_only == 1" (click)="buyBadge(item.id, item.price)"><img style="width: 25px;"
-              src="assets/images/heads.png" />{{item.price}}</ion-button>
-          <ion-button *ngIf="item.pro_only == 0" (click)="buyBadge(item.id, item.price)"><img style="width: 25px;"
-              src="assets/images/heads.png" />{{item.price}}</ion-button>
+          <ion-button *ngIf="pro !== '1' && item.pro_only == 1" (click)="goToPro()">
+            <ion-img style="width: 25px;" src="assets/images/heads.png"></ion-img>{{item.price}}
+          </ion-button>
+          <ion-button *ngIf="pro == '1' && item.pro_only == 1" (click)="buyBadge(item.id, item.price)">
+            <ion-img style="width: 25px;" src="assets/images/heads.png"></ion-img>{{item.price}}
+          </ion-button>
+          <ion-button *ngIf="item.pro_only == 0" (click)="buyBadge(item.id, item.price)">
+            <ion-img style="width: 25px;" src="assets/images/heads.png"></ion-img>{{item.price}}
+          </ion-button>
         </ion-card-content>
       </ion-card>
     </ion-col>

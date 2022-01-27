@@ -19,7 +19,7 @@
     <ion-row *ngFor="let message of chat">
       <ion-col size="9" *ngIf="currentUser != message.user_id" class="message left-bubble">
         <ion-thumbnail>
-          <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{message.user_picture}}" />
+           <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{message.user_picture}}" ></ion-img>
         </ion-thumbnail>
         <ion-label>{{message.user_name}}</ion-label><span *ngIf="message.user_verified === '1'" style="color: lime;">
           <ion-icon name="checkmark-circle"></ion-icon>

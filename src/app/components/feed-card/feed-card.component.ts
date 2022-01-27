@@ -4,26 +4,28 @@ import { NavigationExtras, Router } from '@angular/router';
 import moment from 'moment';
 import { InViewportMetadata } from 'ng-in-viewport';
 import { htmlEncode, htmlDecode } from 'js-htmlencode';
-
 import { DataService } from 'src/app/services/data.service';
-import { HashLocationStrategy } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { SharemodalPage } from 'src/app/pages/sharemodal/sharemodal.page';
 import { ModalController } from '@ionic/angular';
+import { Plugins } from '@capacitor/core';
+
+const CACHE_FOLDER = 'CACHED-IMG';
 @Component({
   selector: 'app-feed-card',
   templateUrl: './feed-card.component.html',
   styleUrls: ['./feed-card.component.scss'],
 })
 export class FeedCardComponent implements OnInit {
+  _src = '';
+  upload = 'https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/';
   @Input() avatar: string;
   @Input() name: string;
   @Input() date: string;
   @Input() type: string;
   @Input() videosrc: string;
-  @Input() picture: string;
   @Input() gif: string;
   @Input() link: string;
   @Input() likes: number;
@@ -40,8 +42,7 @@ export class FeedCardComponent implements OnInit {
   @Input() tag: string;
   @Input() grinding: number;
   @Input() colored: any;
-
-
+  @Input() picture: string;
 
   imgConfig = {
     spaceBetween: 6,
@@ -81,8 +82,9 @@ export class FeedCardComponent implements OnInit {
 
   }
 
+  
   ngOnInit() {
-
+    
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       this.me = storedUser.UserID;
       this.points = storedUser.Points;
@@ -91,7 +93,6 @@ export class FeedCardComponent implements OnInit {
       this.mod = storedUser.Mod;
       this.staff = storedUser.Staff;
       this.banned = storedUser.Banned;
-
 
       if (this.colored > 0) {
         this.dataService.getColored(this.colored).subscribe(res => {

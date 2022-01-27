@@ -12,7 +12,7 @@
     <ion-card>
       <ion-slides>
         <ion-slide>
-          <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{tournamentpic}}" />
+          <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{tournamentpic}}"></ion-img>
         </ion-slide>
       </ion-slides>
       <ion-card-title>
@@ -64,7 +64,7 @@
             <ion-icon slot="icon-only" name="arrow-redo"></ion-icon>
           </ion-button>
         </ng-template>
-        
+
       </div>
       <div></div>
     </ion-card>
@@ -72,7 +72,7 @@
     <ion-item (click)="user(item.user_id)" *ngFor="let item of tournaments">
 
       <ion-thumbnail item-left>
-        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}">
+        <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}"></ion-img>
 
       </ion-thumbnail>
 

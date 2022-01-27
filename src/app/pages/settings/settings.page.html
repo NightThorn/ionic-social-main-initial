@@ -17,18 +17,18 @@
           </ion-list-header>
           <ion-item lines="none" class="ion-no-padding">
             <ion-thumbnail slot="start">
-              <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.user_picture}}" />
+               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.user_picture}}" ></ion-img>
             </ion-thumbnail>
             <ion-label class="ion-no-margin">
               <div class="text-container">
                 <h2 class="item-title">{{ item.user_name }}</h2>
               </div>
               <div style=" display: flex; align-items:center;">
-                <img (click)="openXPModal(item.user_points)" style="width: 30px; margin: 10px;"
-                  src="assets/images/XP.png">
+                 <ion-img (click)="openXPModal(item.user_points)" style="width: 30px; margin: 10px;"
+                  src="assets/images/XP.png"></ion-img>
                 <ion-label style="font-size: small;" (click)="gotoShop()">{{item.user_points}}</ion-label>
 
-                <img (click)="gotoShop()" style="width: 30px; margin: 10px;" src="assets/images/heads.png">
+                 <ion-img (click)="gotoShop()" style="width: 30px; margin: 10px;" src="assets/images/heads.png"></ion-img>
                 <ion-label style="font-size: small;" (click)="gotoShop()">{{item.user_wallet_balance}}</ion-label>
                
               </div>
@@ -102,7 +102,7 @@
   <div style=" display: flex; align-items:center;">
     <ion-label style="font-size: small;">All-Time </ion-label>
 
-    <img style="width: 20px; margin: 5px; " src="assets/images/XP.png">
+     <ion-img style="width: 20px; margin: 5px; " src="assets/images/XP.png"></ion-img>
     <ion-label style="font-size: small;">: {{item.total_xp}}</ion-label>
   </div>
 

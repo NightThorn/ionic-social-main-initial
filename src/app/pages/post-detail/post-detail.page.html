@@ -31,8 +31,8 @@
 
         <ion-list>
           <ion-item lines="none" *ngFor="let cm of comments">
-            <ion-avatar (click)="user(cm.user_id)" slot="start" style="margin-left: 5px;"><img
-                src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{cm.user_picture}}">
+            <ion-avatar (click)="user(cm.user_id)" slot="start" style="margin-left: 5px;">
+              <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{cm.user_picture}}"></ion-img>
             </ion-avatar>
 
             <ion-text class="comment"><span (click)="user(cm.user_id)" class="user-comment"
@@ -44,13 +44,15 @@
                 <ion-col size="9">
                   <span class="user-comment-text">
                     <div [innerHTML]="cm.text"></div>
-                    <img *ngIf="cm.image" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{cm.image}}">
+                    <ion-img *ngIf="cm.image"
+                      src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{cm.image}}"></ion-img>
                   </span>
-            <img *ngIf="cm.gifsrc" src="{{cm.gifsrc}}">
+                  <ion-img *ngIf="cm.gifsrc" src="{{cm.gifsrc}}"></ion-img>
 
                 </ion-col>
                 <ion-col style="text-align: center;" size="3">
-                  <img (click)="commentlike(cm.comment_id)" [src]="commentimage" style="height: 14px; border-radius: 0px; margin: 5px;" />
+                  <ion-img (click)="commentlike(cm.comment_id)" [src]="commentimage"
+                    style="height: 14px; border-radius: 0px; margin: 5px;"></ion-img>
                 </ion-col>
               </ion-row>
               <div class="icon-container">
@@ -61,8 +63,9 @@
                 </ion-item>
                 <ion-list>
                   <ion-item lines="none" *ngFor="let reply of replies">
-                    <ion-avatar (click)="user(reply.user_id)" slot="start" style="margin-left: 5px;"><img
-                        src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{reply.user_picture}}">
+                    <ion-avatar (click)="user(reply.user_id)" slot="start" style="margin-left: 5px;">
+                      <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{reply.user_picture}}">
+                      </ion-img>
                     </ion-avatar>
 
                     <ion-text class="comment"><span (click)="user(reply.user_id)" class="user-comment"
@@ -78,8 +81,8 @@
                           </span>
                         </ion-col>
                         <ion-col style="text-align: center;" size="3">
-                          <img src="./assets/images/ggsgray.png"
-                            style="height: 14px; border-radius: 0px; margin: 5px;" />
+                          <ion-img src="./assets/images/ggsgray.png"
+                            style="height: 14px; border-radius: 0px; margin: 5px;"></ion-img>
                         </ion-col>
                       </ion-row>
                       <div class="icon-container">
@@ -109,7 +112,7 @@
       <ion-input id="text" type="text" placeholder="Write your comment" formControlName="text"></ion-input>
       <div id="gifid" class="image-upload">
         <label (click)="onGif($event)" for="gif-input">
-          <img src="./assets/images/giphy.png">
+          <ion-img src="./assets/images/giphy.png"></ion-img>
         </label>
         <input id="gif-input" class="form-control">
       </div>

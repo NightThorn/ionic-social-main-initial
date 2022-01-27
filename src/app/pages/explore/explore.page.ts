@@ -9,6 +9,9 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { VideoModalPage } from '../video-modal/video-modal.page';
 import moment from 'moment';
 import { XpmodalPage } from '../xpmodal/xpmodal.page';
+import {  Plugins } from '@capacitor/core';
+
+const { Filesystem } = Plugins;
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.page.html',
@@ -18,7 +21,7 @@ export class ExplorePage implements OnInit {
   @ViewChild('myvideo') myVideo: ElementRef;
   @ViewChildren('player') videoPlayers: QueryList<any>;
   currentPlaying = null;
-  feeds: any;
+  feeds = [];
   latest: any;
   storiesConfig = {
     initialSlide: 0,

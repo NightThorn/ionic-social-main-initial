@@ -14,7 +14,7 @@
     </ion-card-header>
     <ion-card-content>
       <ion-thumbnail>
-        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.user_picture}}" />
+        <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.user_picture}}" ></ion-img>
       </ion-thumbnail>
       <ion-card-title style="color: lime;"> {{ item.user_name }} <span *ngIf="item.verified === '1'"
           style="color: lime;">

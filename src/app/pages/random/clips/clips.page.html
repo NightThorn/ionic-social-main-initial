@@ -13,7 +13,7 @@
       <ion-card>
         <ion-item>
           <ion-avatar (click)=user(item.user_id) slot="start">
-            <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}" />
+             <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}" ></ion-img>
           </ion-avatar>
           <ion-label>
             <h3 (click)=user(item.user_id)>{{item.author}}<span *ngIf="item.user_verified === '1'" style="color: lime;">
@@ -49,8 +49,8 @@
                   <ion-col size="4">
                     <li>
                       <ion-button fill="clear" size="small" shape="round">
-                        <img src="./assets/images/ggsgray.png"
-                          style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
+                         <ion-img src="./assets/images/ggsgray.png"
+                          style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" ></ion-img>
                         <ion-label>{{ item.reaction_like_count }}</ion-label>
                       </ion-button>
                     </li>

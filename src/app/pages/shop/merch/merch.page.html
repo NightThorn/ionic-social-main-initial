@@ -5,7 +5,7 @@
     </ion-buttons>
     <div style=" display: flex; align-items:center;" *ngFor="let item of xp">
       
-      <img style="width: 30px; margin: 10px;" src="assets/images/heads.png">
+       <ion-img style="width: 30px; margin: 10px;" src="assets/images/heads.png"></ion-img>
       <ion-label style="font-size: small;">{{myWallet}}</ion-label>
 
     </div>
@@ -31,7 +31,7 @@
       <div class="card-footer">
 
 
-        <ion-button (click)="buyMerch(item.id, myWallet)"><img style="width: 25px;" src="assets/images/heads.png" />{{item.price}}
+        <ion-button (click)="buyMerch(item.id, myWallet)"> <ion-img style="width: 25px;" src="assets/images/heads.png" ></ion-img>{{item.price}}
         </ion-button>
 
       </div>

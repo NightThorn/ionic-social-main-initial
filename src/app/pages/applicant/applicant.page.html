@@ -12,7 +12,7 @@
         <div class="profile ion-padding">
           <div class="profile-user">
             <ion-thumbnail>
-              <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}" />
+               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}" ></ion-img>
             </ion-thumbnail>
             <ul class="profile-text ion-padding-horizontal">
               <li>{{ item.user_name }} <span *ngIf="item.user_verified === '1'" style="color: lime;">

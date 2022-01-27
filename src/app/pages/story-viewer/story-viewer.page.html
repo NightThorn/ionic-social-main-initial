@@ -13,7 +13,7 @@
             ></video>
           </ng-container>
           <ng-template #elseMedia>
-            <img [src]="hist.media" />
+            <ion-img [src]="hist.media" ></ion-img>
           </ng-template>
         </ng-container>
       </div>
@@ -36,7 +36,7 @@
           </ion-item>
           <ion-item lines="none">
             <ion-avatar slot="start">
-              <img [src]="item.userPicture" />
+            <ion-img [src]="item.userPicture" ></ion-img>
             </ion-avatar>
             <ion-label>
               <h2>{{ item.userName }}</h2>

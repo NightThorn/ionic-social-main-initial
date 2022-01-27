@@ -2,7 +2,7 @@
   <ion-card-title>
     <ion-item lines="none">
       <ion-avatar (click)="user(user_id)" slot="start">
-        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{avatar}}" />
+        <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{avatar}}"></ion-img>
       </ion-avatar>
       <ion-label (click)="user(user_id)">
         <h2 class="item-title" style="color: lime;"><span *ngIf="grinding != 0">#</span><span *ngIf="tag"
@@ -59,26 +59,26 @@
       </video>
     </ion-item>
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'photos'">
-      <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
+      <ion-img [src]='upload + picture'></ion-img>
     </ion-item>
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'gif'">
-      <img src="{{gif}}" />
+      <ion-img src="{{gif}}"></ion-img>
     </ion-item>
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_picture'">
-      <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
+      <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"></ion-img>
     </ion-item>
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_cover'">
-      <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
+      <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"> </ion-img>
     </ion-item>
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'cover_picture'">
-      <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
+      <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"></ion-img>
     </ion-item>
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'group_cover'">
-      <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
+      <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"></ion-img>
     </ion-item>
 
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'group_picture'">
-      <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}" />
+      <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"></ion-img>
     </ion-item>
     <div *ngIf="type === 'media'">
       <ion-item *ngFor="let share of media">
@@ -98,7 +98,7 @@
           <ion-card-title>
             <ion-item lines="none">
               <ion-avatar (click)="user(user_id)" slot="start">
-                <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.user_picture}}" />
+                <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.user_picture}}"></ion-img>
               </ion-avatar>
               <ion-label (click)="user(share.user_id)">
                 <h2 class="item-title">{{ share.user_name }}</h2>
@@ -122,25 +122,25 @@
             </ion-item>
 
             <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'photos'">
-              <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.picture_source}}" />
+              <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.picture_source}}"></ion-img>
             </ion-item>
 
             <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'group_cover'">
-              <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.group_cover}}" />
+              <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.group_cover}}"></ion-img>
             </ion-item>
             <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'profile_picture'">
-              <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.picture_source}}" />
+              <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.picture_source}}"></ion-img>
             </ion-item>
             <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'gif'">
-              <img src="{{share.gif}}" />
+              <ion-img src="{{share.gif}}"></ion-img>
             </ion-item>
 
             <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'cover_picture'">
-              <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.cover_picture}}" />
+              <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.cover_picture}}"></ion-img>
             </ion-item>
 
             <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'group_picture'">
-              <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.group_picture}}" />
+              <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.group_picture}}"></ion-img>
             </ion-item>
             <div *ngIf="share.post_type === 'media'">
               <ion-item (click)="navigateToDetail(post_id)" *ngFor="let share of sharedmedia">
@@ -169,15 +169,15 @@
                 <li>
                   <ion-button id="react-button" *ngIf="liked == 0" (click)="react(post_id)" fill="clear" size="small"
                     shape="round">
-                    <img id="react-button" [src]="image"
-                      style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
+                    <ion-img id="react-button" [src]="image"
+                      style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;"></ion-img>
 
                     <ion-label *ngIf="likes > 0">{{ likes }}</ion-label>
                   </ion-button>
                   <ion-button *ngIf="liked == 1" id="unreact-button" (click)="unreact(post_id)" fill="clear"
                     size="small" shape="round">
-                    <img src="./assets/images/ggs.png"
-                      style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" />
+                    <ion-img src="./assets/images/ggs.png"
+                      style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;"></ion-img>
                     <ion-label *ngIf="likes > 0">{{ likes }}</ion-label>
                   </ion-button>
                 </li>

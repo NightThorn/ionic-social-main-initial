@@ -21,7 +21,7 @@
     </ion-item>
     <ion-item (click)="select(item.group_id, item.group_tag, item.group_title)" *ngFor="let item of dataList">
       <ion-thumbnail item-left>
-        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.group_picture }}">
+         <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.group_picture }}"></ion-img>
       </ion-thumbnail>
 
       <ion-label>

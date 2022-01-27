@@ -12,7 +12,7 @@
   <ion-card *ngFor="let item of giveaways">
     <ion-slides>
       <ion-slide>
-        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.picture}}" />
+        <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.picture}}"></ion-img>
       </ion-slide>
     </ion-slides>
     <ion-card-title>
@@ -30,7 +30,7 @@
     </ion-card-content>
 
     <div class="card-footer">
-     
+
       <ion-button (click)="enter(item.id)" slot="end" fill="clear" size="small" shape="round">
         Enter Giveaway!
         <ion-icon slot="icon-only" name="arrow-redo"></ion-icon>
@@ -38,5 +38,5 @@
     </div>
     <div></div>
   </ion-card>
-  
+
 </ion-content>
