@@ -11,6 +11,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { SharemodalPage } from 'src/app/pages/sharemodal/sharemodal.page';
 import { ModalController } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
+
 
 const CACHE_FOLDER = 'CACHED-IMG';
 @Component({
@@ -191,7 +193,9 @@ export class FeedCardComponent implements OnInit {
     ratio >= 0.65 ? vid.play() : vid.pause();
   }
   navigateToDetail(id) {
-
+    const hapticsVibrate = async () => {
+      await Haptics.vibrate();
+    };
     let navigationExtras: NavigationExtras = {
       queryParams: {
         special: JSON.stringify(id)
@@ -221,7 +225,9 @@ export class FeedCardComponent implements OnInit {
       "user_id": this.me,
       "node_type": 'post',
     };
-
+    const hapticsVibrate = async () => {
+      await Haptics.vibrate();
+    };
     this.likes++;
     this.liked = "1";
     this.image = "./assets/images/ggs.png";
