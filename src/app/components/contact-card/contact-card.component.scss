@@ -1,5 +1,4 @@
 ion-card {
-  box-shadow: none !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,12 +9,10 @@ ion-thumbnail {
   --border-radius: 50%;
 }
 
-ion-card-content {
-  padding: 16px 16px 0 16px;
-}
+
 
 ion-card-title {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--ion-color-medium);
   text-align: center;
@@ -44,4 +41,21 @@ ion-card-title {
       font-size: 12px;
     }
   }
+}
+
+
+.follow-btn {
+  --background:  var(--ion-color-primary);
+position: relative;
+transform: translaate(-50%, -50%);
+  --box-shadow: none;
+  border-radius: 10px;
+  text-transform: capitalize;
+  font-weight: 400;
+  top: 50%;
+    left: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 11px;
+  max-height: 28px;
 }
