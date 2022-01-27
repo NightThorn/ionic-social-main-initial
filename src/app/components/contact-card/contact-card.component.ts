@@ -10,7 +10,11 @@ export class ContactCardComponent implements OnInit {
   @Input() image: string;
   @Input() name: string;
   @Input() isActive: boolean;
-  
+  @Input() staff: number;
+  @Input() mod: number;
+  @Input() sponsored: number;
+  @Input() verified: number;
+
   constructor() { }
 
   ngOnInit() {}

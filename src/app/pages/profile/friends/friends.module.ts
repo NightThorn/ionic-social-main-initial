@@ -8,6 +8,7 @@ import { FriendsPageRoutingModule } from './friends-routing.module';
 
 import { FriendsPage } from './friends.page';
 import { HttpClientModule } from '@angular/common/http';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -15,8 +16,9 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule,
     IonicModule,
+    ComponentsModule,
     FriendsPageRoutingModule
   ],
   declarations: [FriendsPage]
 })
-export class FriendsPageModule {}
+export class FriendsPageModule { }

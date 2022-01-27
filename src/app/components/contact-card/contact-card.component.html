@@ -1,10 +1,24 @@
 <ion-card>
   <ion-avatar>
-    <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{image}}" ></ion-img>
+    <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{image}}"></ion-img>
     <i></i>
   </ion-avatar>
 
   <ion-card-content class="ion-no-padding">
-    <ion-card-title>{{ name }}</ion-card-title>
+    <ion-card-title>{{ name }}
+
+      <span *ngIf="verified > 0" style="color: lime;">
+        <ion-icon name="checkmark-circle"></ion-icon>
+      </span>
+      <span *ngIf="staff > 0">
+        <ion-badge color="success">Staff</ion-badge>
+      </span>
+      <span *ngIf="sponsored > 0">
+        <ion-badge color="success">Sponsored</ion-badge>
+      </span>
+      <span *ngIf="mod > 0">
+        <ion-badge color="danger">Mod</ion-badge>
+      </span>
+    </ion-card-title>
   </ion-card-content>
 </ion-card>

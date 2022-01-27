@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { UserfriendsPageRoutingModule } from './userfriends-routing.module';
 
 import { UserfriendsPage } from './userfriends.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentsModule,
     UserfriendsPageRoutingModule
   ],
   declarations: [UserfriendsPage]

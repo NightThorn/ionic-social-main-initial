@@ -8,31 +8,16 @@
 </ion-header>
 <ion-content padding>
   <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
-  <ion-list>
-    <ion-item (click)="user(item.user_id)" *ngFor="let item of dataList">
-
-      <ion-thumbnail item-left>
-         <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}"></ion-img>
-
-      </ion-thumbnail>
-
-      <ion-label>
-        {{ item.user_name }} <span *ngIf="item.user_verified === '1'" style="color: lime;">
-          <ion-icon name="checkmark-circle"></ion-icon>
-        </span>
-        <span *ngIf="item.user_staff === '1'">
-          <ion-badge color="success">Staff</ion-badge>
-        </span>
-        <span *ngIf="item.user_sponsored === '1'">
-          <ion-badge color="success">Sponsored</ion-badge>
-        </span>
-        <span *ngIf="item.user_mod === '1'">
-          <ion-badge color="danger">Mod</ion-badge>
-        </span>
-      </ion-label>
-
-    </ion-item>
-  </ion-list>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4" sizeMd="3" sizeLg="2" sizeXl="2" *ngFor="let item of dataList">
+        <app-contact-card (click)="user(item.user_id)" [image]="item.user_picture" [name]="item.user_name"
+          [sponsored]="item.user_sponsored" [mod]="item.user_mod" [staff]="item.user_staff"
+          [verified]="item.user_verified">
+        </app-contact-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
