@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <h1 style=" display: flex; align-items:center;">
-       <ion-img style="width: 40px; margin: 10px;" src="assets/images/XP.png"></ion-img>
+      <ion-img style="width: 40px; margin: 10px;" src="assets/images/XP.png"></ion-img>
       <ion-icon name="arrow-forward-outline"></ion-icon>
-       <ion-img style="width: 40px; margin: 10px;" src="assets/images/heads.png"></ion-img>
+      <ion-img style="width: 40px; margin: 10px;" src="assets/images/heads.png"></ion-img>
     </h1>
     <ion-buttons (click)="dismissModal()" slot="end">
       <ion-icon name="close-outline"></ion-icon>
@@ -13,23 +13,23 @@
 </ion-header>
 
 <ion-content>
-  <p>Earn  <ion-img style="width: 25px; " src="assets/images/XP.png"></ion-img>
+  <p>Earn <img style="width: 25px; " src="assets/images/XP.png" />
     by commenting and posting on the app.</p>
-  <p>Convert earned  <ion-img style="width: 25px; " src="assets/images/XP.png"></ion-img>
-    into  <ion-img style="width: 25px;" src="assets/images/heads.png"></ion-img>
-    </p>
-    <p style="display: flex;"> 1000  <ion-img style="width: 25px; " src="assets/images/XP.png"></ion-img>
-      = 1  <ion-img style="width: 25px;" src="assets/images/heads.png"></ion-img>
-    </p>
+  <p>Convert earned <img style="width: 25px; " src="assets/images/XP.png" />
+    into <img style="width: 25px;" src="assets/images/heads.png" />
+  </p>
+  <p style="display: flex;"> 1000 <img style="width: 25px; " src="assets/images/XP.png" />
+    = 1 <img style="width: 25px;" src="assets/images/heads.png" />
+  </p>
 
   <form [formGroup]="xpForm" (ngSubmit)="convert(gg)">
     <ion-item>
-      <ion-input style="width: 40px;" formControlName="xp" readonly value="{{xp}}"> <ion-img
-          style="width: 40px; margin: 10px;" src="assets/images/XP.png"></ion-img>
+      <ion-input style="width: 40px;" formControlName="xp" readonly value="{{xp}}">
+        <ion-img style="width: 40px; margin: 10px;" src="assets/images/XP.png"></ion-img>
       </ion-input>
       <ion-icon style="padding-right: 20px;" name="arrow-forward-outline"></ion-icon>
-      <ion-input formControlName="xp" readonly value="{{gg}}"> <ion-img style="width: 40px; margin: 10px;"
-          src="assets/images/heads.png"></ion-img>
+      <ion-input formControlName="xp" readonly value="{{gg}}">
+        <ion-img style="width: 40px; margin: 10px;" src="assets/images/heads.png"></ion-img>
       </ion-input>
     </ion-item>
     <ion-button type="submit" ion-button full>Convert</ion-button>

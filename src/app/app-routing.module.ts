@@ -217,6 +217,10 @@ const routes: Routes = [
   {
     path: 'sharemodal',
     loadChildren: () => import('./pages/sharemodal/sharemodal.module').then( m => m.SharemodalPageModule)
+  },
+  {
+    path: 'newchat',
+    loadChildren: () => import('./pages/newchat/newchat.module').then( m => m.NewchatPageModule)
   }
 
 ];

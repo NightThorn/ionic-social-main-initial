@@ -39,6 +39,21 @@ export class DataService {
     );
 
   }
+  newChat(id, me) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/createchat.php?user=${id}&me=${me}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
   getSearchGroups(query) {
 
 

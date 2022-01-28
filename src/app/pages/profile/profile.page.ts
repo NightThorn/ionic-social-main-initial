@@ -69,31 +69,30 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.activeRoute.params.subscribe(params => {
 
       this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-        if (storedUser !== null) {
-          this.me = storedUser.UserID;
-          this.profileService.fetchProfile(storedUser.UserID);
-          this.profileService.fetchPosts(storedUser.UserID);
+        this.me = storedUser.UserID;
+        this.profileService.fetchProfile(storedUser.UserID);
+        this.profileService.fetchPosts(storedUser.UserID);
 
-          this.profileService.fetchGroups(storedUser.UserID).subscribe(res => {
-            this.groups = res.message;
+        this.profileService.fetchGroups(storedUser.UserID).subscribe(res => {
+          this.groups = res.message;
 
-          });
-          this.profileService.fetchFriends(storedUser.UserID).subscribe(res => {
-            this.userFriends = res.message;
-            this.friendCount = this.userFriends.length;
-          });
-          this.profileService.fetchBadges(storedUser.UserID).subscribe(res => {
-            this.userBadges = res.message;
-            this.badgeCount = this.userBadges.length;
-          });
-          this.profileService.fetchPictures(storedUser.UserID).subscribe(res => {
-            this.pictures = res.message;
-            this.dataList = this.pictures.slice(0, this.topLimit);
+        });
+        this.profileService.fetchFriends(storedUser.UserID).subscribe(res => {
+          this.userFriends = res.message;
+          this.friendCount = this.userFriends.length;
+        });
+        this.profileService.fetchBadges(storedUser.UserID).subscribe(res => {
+          this.userBadges = res.message;
+          this.badgeCount = this.userBadges.length;
+        });
+        this.profileService.fetchPictures(storedUser.UserID).subscribe(res => {
+          this.pictures = res.message;
+          this.dataList = this.pictures.slice(0, this.topLimit);
 
-          });
+        });
 
 
-        };
+
 
 
       })
@@ -219,15 +218,15 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
   async editProfile(id) {
 
-      const modal = await this.modalController.create({
-        component: EditprofilePage,
-        componentProps: {
-          'me': id,
+    const modal = await this.modalController.create({
+      component: EditprofilePage,
+      componentProps: {
+        'me': id,
 
-        },
-      });
-      return await modal.present();
-    }
+      },
+    });
+    return await modal.present();
+  }
 
 
 

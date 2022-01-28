@@ -13,9 +13,9 @@
     <ion-row>
       <ion-col>
         <form [formGroup]="postForm" (ngSubmit)="post(me, postForm.value)">
-            <ion-item>
-              <ion-textarea formControlName="text" placeholder="What's up?"></ion-textarea>
-            </ion-item>
+          <ion-item>
+            <ion-textarea formControlName="text" placeholder="What's up?"></ion-textarea>
+          </ion-item>
 
 
           <ion-row style="border-bottom: 1px solid black;">
@@ -40,9 +40,9 @@
             <ion-col size-4>
               <div id="gifid" class="image-upload">
                 <label (click)="onGif($event)" for="gif-input">
-                   <ion-img src="./assets/images/giphy.png"></ion-img>
+                  <img style="width: 25px; " src="./assets/images/giphy.png" />
                 </label>
-                <input id="gif-input" class="form-control" >
+                <input id="gif-input" class="form-control">
               </div>
             </ion-col>
           </ion-row>

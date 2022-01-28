@@ -32,7 +32,7 @@
 
   <ion-card-content class="ion-no-padding">
 
-    <ion-item *ngIf="text">
+    <ion-item lines="none" *ngIf="text">
       <ion-row>
         <ion-col size="0">
         </ion-col>
@@ -51,49 +51,49 @@
       </ion-row>
 
     </ion-item>
-    <ion-item *ngIf="type === 'video'">
+    <ion-item lines="none" *ngIf="type === 'video'">
       <video [muted]="'muted'" inViewport [inViewportOptions]="{ threshold: [0, 0.65], partial: true }"
         (inViewportAction)="onIntersection($event)" #player playsinline preload="auto" loop controls
         style="width: 100%;">
         <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{videosrc}}" />
       </video>
     </ion-item>
-    <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'photos'">
+    <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'photos'">
       <ion-img [src]='upload + picture'></ion-img>
     </ion-item>
-    <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'gif'">
+    <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'gif'">
       <ion-img src="{{gif}}"></ion-img>
     </ion-item>
-    <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_picture'">
+    <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_picture'">
       <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"></ion-img>
     </ion-item>
-    <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_cover'">
+    <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_cover'">
       <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"> </ion-img>
     </ion-item>
-    <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'cover_picture'">
+    <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'cover_picture'">
       <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"></ion-img>
     </ion-item>
-    <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'group_cover'">
+    <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'group_cover'">
       <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"></ion-img>
     </ion-item>
 
-    <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'group_picture'">
+    <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'group_picture'">
       <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"></ion-img>
     </ion-item>
     <div *ngIf="type === 'media'">
-      <ion-item *ngFor="let share of media">
+      <ion-item lines="none" *ngFor="let share of media">
         <ion-card *ngIf="external === 'youtube'" style="border: 2px solid green; width: 100%;">
           <iframe frameborder="0" playsinline allowfullscreen width="100%" height="315" [src]="urls">
           </iframe>
         </ion-card>
 
-        <ion-card *ngIf="external === 'twitch'">
+        <ion-card lines="none" *ngIf="external === 'twitch'">
           <a href="{{share.source_url}}"> {{share.source_url}}</a>
         </ion-card>
       </ion-item>
     </div>
     <div *ngIf="type === 'shared'">
-      <ion-item *ngFor="let share of shared">
+      <ion-item lines="none" *ngFor="let share of shared">
         <ion-card style="border: 2px solid green;">
           <ion-card-title>
             <ion-item lines="none">
@@ -110,36 +110,36 @@
             </ion-item>
           </ion-card-title>
           <ion-card-content class="ion-no-padding">
-            <ion-item>
+            <ion-item lines="none">
               <div (click)="navigateToDetail(share.post_id)"
                 style="max-width: 400px; max-height: 250px; font-weight: 400; overflow: scroll; margin-bottom: 10px;"
                 [innerHTML]="share.text"></div>
             </ion-item>
-            <ion-item *ngIf="share.post_type === 'video'">
+            <ion-item lines="none" *ngIf="share.post_type === 'video'">
               <video [muted]="'muted'" #player playsinline preload="auto" loop controls style="width: 100%;">
                 <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.source}}" />
               </video>
             </ion-item>
 
-            <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'photos'">
+            <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'photos'">
               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.picture_source}}"></ion-img>
             </ion-item>
 
-            <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'group_cover'">
+            <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'group_cover'">
               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.group_cover}}"></ion-img>
             </ion-item>
-            <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'profile_picture'">
+            <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'profile_picture'">
               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.picture_source}}"></ion-img>
             </ion-item>
-            <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'gif'">
+            <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'gif'">
               <ion-img src="{{share.gif}}"></ion-img>
             </ion-item>
 
-            <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'cover_picture'">
+            <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'cover_picture'">
               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.cover_picture}}"></ion-img>
             </ion-item>
 
-            <ion-item (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'group_picture'">
+            <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="share.post_type === 'group_picture'">
               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{share.group_picture}}"></ion-img>
             </ion-item>
             <div *ngIf="share.post_type === 'media'">
@@ -148,7 +148,7 @@
                   <iframe frameborder="0" playsinline allowfullscreen width="100%" height="315" [src]="urls">
                   </iframe>
                 </ion-card>
-                <ion-card *ngIf="external === 'twitch'">
+                <ion-card lines="none" *ngIf="external === 'twitch'">
                   <iframe frameborder="0" playsinline allowfullscreen width="100%" height="315" [src]="urls">
                   </iframe>
                 </ion-card>
@@ -159,7 +159,7 @@
         </ion-card>
       </ion-item>
     </div>
-    <div class="card-footer">
+    <div lines="none" class="card-footer">
       <div style="width: 100%;" class="icon-container">
 
         <ul>

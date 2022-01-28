@@ -104,7 +104,6 @@ export class UserPage implements OnInit, OnDestroy {
       }
     });
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
         this.me = storedUser.UserID;
        this.subscription1$ = this.profileService.checkFollow(this.me).subscribe(res => {
           this.following = res.message;
@@ -164,9 +163,8 @@ export class UserPage implements OnInit, OnDestroy {
           }
 
         })
-        // this.data = this.profileService.fetchProfile(this.x);
         this.events = this.dataService.getEvents();
-      }
+      
     });
   };
 

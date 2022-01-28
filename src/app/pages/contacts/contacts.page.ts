@@ -73,10 +73,11 @@ export class ContactPage implements OnInit {
 
   chat(item) {
     let navigationExtras: NavigationExtras = {
-      state: {
+      queryParams: {
         user: item,
+        me: this.me
       },
     };
-    this.router.navigate(['chat'], navigationExtras);
+    this.router.navigate(['newchat'], navigationExtras);
   }
 }
