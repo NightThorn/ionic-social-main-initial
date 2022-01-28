@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/notifications/all',
+        redirectTo: 'notification/all',
         pathMatch: 'full'
       },
       {
@@ -29,11 +29,7 @@ const routes: Routes = [
         path: 'connections',
         loadChildren: () => import('./connections/connections.module').then(m => m.ConnectionsPageModule)
       },
-      {
-        path: '',
-        redirectTo: 'tabs/notification/all',
-        pathMatch: 'full'
-      },]
+    ]
   }
 ];
 
@@ -41,4 +37,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class NotificationPageRoutingModule {}
+export class NotificationPageRoutingModule { }
