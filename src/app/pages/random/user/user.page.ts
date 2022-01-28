@@ -75,58 +75,57 @@ export class UserPage implements OnInit {
       this.me = storedUser.UserID;
       console.log("khdsgfasfasdfsfdasdfkasfd", this.me);
 
-        this.dataService.getRandomUser(this.me).subscribe(res => {
-          this.user = res.message;
-          console.log("khdsgfasfasdfsfdasdfkasfd", this.user);
+      this.dataService.getRandomUser(this.me).subscribe(res => {
+        this.user = res.message;
+        console.log("khdsgfasfasdfsfdasdfkasfd", this.user);
 
-          this.data = this.user['0']['user_id'];
-          console.log("khdsgfkasfd", this.data);
+        this.data = this.user['0']['user_id'];
+        console.log("khdsgfkasfd", this.data);
 
 
-          this.profileService.fetchUser(this.data);
+        this.profileService.fetchUser(this.data);
 
-          this.profileService.fetchPosts(this.data);
-          this.profileService.fetchGroups(this.data).subscribe(res => {
-            this.groups = res.message;
+        this.profileService.fetchPosts(this.data);
+        this.profileService.fetchGroups(this.data).subscribe(res => {
+          this.groups = res.message;
 
-          });
-          this.profileService.fetchPictures(this.data).subscribe(res => {
-            this.pictures = res.message;
-            this.dataList = this.pictures.slice(0, this.topLimit);
-
-          });
-          this.profileService.fetchFriends(this.data).subscribe(res => {
-            this.userFriends = res.message;
-            this.friendCount = this.userFriends.length;
-          });
-          this.profileService.fetchBadges(this.data).subscribe(res => {
-            this.userBadges = res.message;
-            this.badgeCount = this.userBadges.length;
-          });
-          this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
-            this.fetchedProfile = profile;
-            const newDate = new Date(this.fetchedProfile.user_birthdate);
-            this.bday = newDate.toDateString();
-          });
-
-          this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
-            this.fetchedPosts = data;
-            for (let i = 0; i < this.fetchedPosts.length; i++) {
-              this.offset = moment().utcOffset();
-              this.fetchedPosts[i]['total'] = +this.fetchedPosts[i]['reaction_love_count'] + +this.fetchedPosts[i]['reaction_like_count'] + +this.fetchedPosts[i]['reaction_haha_count'] + +this.fetchedPosts[i]['reaction_wow_count'];
-
-              this.fetchedPosts[i]['time'] = moment.utc(this.fetchedPosts[i]['time']).fromNow();
-            }
-
-          })
-          // this.data = this.profileService.fetchProfile(this.x);
-          this.events = this.dataService.getEvents();
         });
-      
+        this.profileService.fetchPictures(this.data).subscribe(res => {
+          this.pictures = res.message;
+          this.dataList = this.pictures.slice(0, this.topLimit);
+
+        });
+        this.profileService.fetchFriends(this.data).subscribe(res => {
+          this.userFriends = res.message;
+          this.friendCount = this.userFriends.length;
+        });
+        this.profileService.fetchBadges(this.data).subscribe(res => {
+          this.userBadges = res.message;
+          this.badgeCount = this.userBadges.length;
+        });
+        this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
+          this.fetchedProfile = profile;
+          const newDate = new Date(this.fetchedProfile.user_birthdate);
+          this.bday = newDate.toDateString();
+        });
+
+        this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
+          this.fetchedPosts = data;
+          for (let i = 0; i < this.fetchedPosts.length; i++) {
+            this.offset = moment().utcOffset();
+            this.fetchedPosts[i]['total'] = +this.fetchedPosts[i]['reaction_love_count'] + +this.fetchedPosts[i]['reaction_like_count'] + +this.fetchedPosts[i]['reaction_haha_count'] + +this.fetchedPosts[i]['reaction_wow_count'];
+
+            this.fetchedPosts[i]['time'] = moment.utc(this.fetchedPosts[i]['time']).fromNow();
+          }
+
+        })
+        // this.data = this.profileService.fetchProfile(this.x);
+        this.events = this.dataService.getEvents();
+      });
+
     });
   }
   add(id) {
-    console.log("testttt");
     let data = {
       "user": id,
       "me": this.me,
@@ -195,7 +194,15 @@ export class UserPage implements OnInit {
     };
     this.router.navigate(['friends'], navigationExtras);
   }
-
+  chat(item) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        user: item,
+        me: this.me
+      },
+    };
+    this.router.navigate(['newchat'], navigationExtras);
+  }
   doRefresh(event) {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
@@ -206,6 +213,7 @@ export class UserPage implements OnInit {
           this.data = res.message['0']['user_id'];
 
 
+          this.addfriend = "Add Friend";
 
           this.profileService.fetchUser(this.data);
           this.profileService.fetchFriends(this.data).subscribe(res => {

@@ -14,7 +14,8 @@
         <div class="profile ion-padding">
           <div class="profile-user">
             <ion-thumbnail>
-               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}" ></ion-img>
+              <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}">
+              </ion-img>
             </ion-thumbnail>
             <ul class="profile-text ion-padding-horizontal" *ngIf="fetchedProfile">
               <li>{{ fetchedProfile.user_name }} <span *ngIf="fetchedProfile.user_verified === '1'"
@@ -60,7 +61,7 @@
 
         </div>
         <ul *ngIf="fetchedProfile">
-          <ion-button class="follow-btn" (click)="add(fetchedProfile.user_id)">Add Friend</ion-button>
+          <ion-button class="follow-btn" (click)="add(fetchedProfile.user_id)">{{addfriend}}</ion-button>
           <ion-fab horizontal="end" edge slot="fixed">
             <ion-fab-button>
               <ion-icon name="ellipsis-vertical-outline"></ion-icon>
@@ -121,8 +122,9 @@
           <ion-row *ngSwitchCase="'photos'" class="ion-padding-vertical">
 
             <ion-col size="6" *ngFor="let pic of dataList">
-               <ion-img class="image-element" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
-                (click)="openModal(pic.source)" ></ion-img>
+              <ion-img class="image-element"
+                src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
+                (click)="openModal(pic.source)"></ion-img>
 
             </ion-col>
 
@@ -255,7 +257,7 @@
     </ion-row>
 
   </ion-grid>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab (click)="chat(fetchedProfile.user_id)" vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="chatbubbles"></ion-icon>
     </ion-fab-button>

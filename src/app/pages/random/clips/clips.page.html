@@ -8,80 +8,13 @@
 </ion-header>
 
 <ion-content *ngFor="let item of clip">
-  <ion-grid>
-    <ion-row justify-content-center align-items-center>
-      <ion-card>
-        <ion-item>
-          <ion-avatar (click)=user(item.user_id) slot="start">
-             <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}" ></ion-img>
-          </ion-avatar>
-          <ion-label>
-            <h3 (click)=user(item.user_id)>{{item.author}}<span *ngIf="item.user_verified === '1'" style="color: lime;">
-                <ion-icon name="checkmark-circle"></ion-icon>
-              </span>
-              <span *ngIf="item.user_staff === '1'">
-                <ion-badge color="success">Staff</ion-badge>
-              </span>
-              <span *ngIf="item.user_sponsored === '1'">
-                <ion-badge color="success">Sponsored</ion-badge>
-              </span>
-              <span *ngIf="item.user_mod === '1'">
-                <ion-badge color="danger">Mod</ion-badge>
-              </span>
-              <span *ngIf="item.user_subscribed === '1'">
-                <ion-icon style="color: red;" name="flash"></ion-icon>
-              </span>
-            </h3>
-          </ion-label>
-        </ion-item>
-        <ion-item style="width: 100%;">
-          <video #video playsinline autoplay="true"
-            webkit-playsinline preload="auto" loop (click)="videoSet()">
-            <source src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.source }}" />
-          </video>
-        </ion-item>
-        <div class="card-footer">
-          <div style="width: 100%;" class="icon-container">
-        
-            <ul>
-              <ion-grid>
-                <ion-row style="text-align: center;">
-                  <ion-col size="4">
-                    <li>
-                      <ion-button fill="clear" size="small" shape="round">
-                         <ion-img src="./assets/images/ggsgray.png"
-                          style="height: 20px; border-radius: 0px; width: 50px; margin: 5px;" ></ion-img>
-                        <ion-label>{{ item.reaction_like_count }}</ion-label>
-                      </ion-button>
-                    </li>
-                  </ion-col>
-                  <ion-col size="4">
-                    <li>
-                      <ion-button (click)="navigateToDetail(item.post_id)" fill="clear" size="small" shape="round">
-                        <ion-icon name="chatbubble-outline"></ion-icon>
-                        <ion-label>{{ item.comments }}</ion-label>
-                      </ion-button>
-                    </li>
-                  </ion-col>
-                  <ion-col size="4">
-                    <li>
-                      <ion-button slot="end" fill="clear" size="small" shape="round">
-                        <ion-icon slot="icon-only" name="arrow-redo-outline"></ion-icon>
-                        <ion-label>{{ item.shares }}</ion-label>
-        
-                      </ion-button>
-        
-                    </li>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ul>
-          </div>
-        
-        </div>
-      </ion-card>
-    </ion-row>
-  </ion-grid>
+  <app-feed-card style="max-height: 400px; width: 100%; border: 3px solid gold;" [avatar]="item.user_picture"
+    [name]="item.user_name" [post_id]="item.post_id" [date]="item.time" [text]="item.text" [origin]="item.origin_id"
+    [user_id]="item.user_id" [feeling]="item.feeling_action" [value]="item.feeling_value"
+    [picture]="item.picture_source" [gif]="item.gif" [videosrc]="item.source" [type]="item.post_type"
+    [likes]="item.total" [grinding]="item.grinding" [colored]="item.colored_pattern" [tag]="item.tag"
+    [comments]="item.comments" [shares]="item.shares" [boosted]="item.boosted">
+  </app-feed-card>
 
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content>

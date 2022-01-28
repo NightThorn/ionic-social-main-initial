@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { TimeagoModule } from 'ngx-timeago';
 import moment from 'moment';
+import { interval } from 'rxjs';
 
 
 @Component({
@@ -21,15 +22,22 @@ export class MessagesPage implements OnInit {
   private topLimit: number = 15;
   public dataL: Array<object> = [];
   offset: number;
+  me: number;
+  refresh: any;
 
   constructor(private router: Router, private dataService: DataService, private authService: AuthenticationService,
-    private activeRoute: ActivatedRoute) { }
+    private activeRoute: ActivatedRoute) {
+    this.refresh = interval(7000).subscribe((func => {
+      this.getMessagesRefresh(this.me);
+    }))
+
+  }
 
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-        
 
+        this.me = storedUser.UserID;
         this.dataService.getMessages(storedUser.UserID).subscribe(res => {
 
           this.messages = res.message;
@@ -79,6 +87,19 @@ export class MessagesPage implements OnInit {
     };
     this.router.navigate(['chat'], navigationExtras);
   }
+  getMessagesRefresh(me) {
+    this.dataService.getMessages(me).subscribe(res => {
 
+      this.messages = res.message;
+      this.dataList = this.messages.slice(0, this.topLimit);
+      for (let i = 0; i < this.dataList.length; i++) {
+        this.offset = moment().utcOffset();
+
+        this.dataList[i]['time'] = moment.utc(this.dataList[i]['time']).fromNow();
+      }
+
+    });
+
+  }
 
 }

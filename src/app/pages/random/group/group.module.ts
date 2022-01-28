@@ -8,6 +8,7 @@ import { GroupPageRoutingModule } from './group-routing.module';
 
 import { GroupPage } from './group.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ApplyPageModule } from '../../apply/apply.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     ComponentsModule,
     IonicModule,
-    GroupPageRoutingModule
+    GroupPageRoutingModule,
+    ApplyPageModule
+    
   ],
   declarations: [GroupPage]
 })
