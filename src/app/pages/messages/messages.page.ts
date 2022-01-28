@@ -70,10 +70,11 @@ export class MessagesPage implements OnInit {
     this.router.navigate(['contacts']);
   }
 
-  navigateToChat(id) {
+  navigateToChat(id, username) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
-        chat: JSON.stringify(id)
+        chat: JSON.stringify(id),
+        username: JSON.stringify(username)
       }
     };
     this.router.navigate(['chat'], navigationExtras);

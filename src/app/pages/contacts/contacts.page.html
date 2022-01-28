@@ -11,7 +11,7 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar animated placeholder="Filter contacts"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 

@@ -31,12 +31,14 @@ export class ChatPage implements OnInit {
   latest: any;
   lastMessageID: any;
   offset: number;
+  username: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private route: ActivatedRoute, private profileService: ProfileService, private authService: AuthenticationService, private dataService: DataService, private router: Router) {
 
     this.route.queryParams.subscribe(params => {
       if (params && params.chat) {
         this.id = JSON.parse(params.chat);
+        this.username = JSON.parse(params.username)
       }
     });
     this.lastMessageID = interval(2000).subscribe((func => {

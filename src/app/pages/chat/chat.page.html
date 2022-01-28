@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="/tabs/messages" text=""></ion-back-button>
     </ion-buttons>
     <ion-item lines="none" class="ion-no-padding user-container">
-
+      {{username}}
     </ion-item>
     <ion-buttons slot="end">
       <ion-button>
@@ -19,13 +19,13 @@
     <ion-row *ngFor="let message of chat">
       <ion-col size="9" *ngIf="currentUser != message.user_id" class="message left-bubble">
         <ion-thumbnail>
-           <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{message.user_picture}}" ></ion-img>
+          <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{message.user_picture}}"></ion-img>
         </ion-thumbnail>
         <ion-label>{{message.user_name}}</ion-label><span *ngIf="message.user_verified === '1'" style="color: lime;">
           <ion-icon name="checkmark-circle"></ion-icon>
         </span>
         <div [innerHTML]="message.message"></div>
-        <p class="time">{{ message.time  }}</p>
+        <p class="time">{{ message.time }}</p>
       </ion-col>
       <ion-col size="9" offset="3" *ngIf="currentUser == message.user_id" class="message right-bubble">
         <div [innerHTML]="message.message"></div>
