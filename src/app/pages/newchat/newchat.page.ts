@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import moment from 'moment';
 import { interval } from 'rxjs';
@@ -78,28 +78,45 @@ export class NewchatPage implements OnInit {
     this.content.scrollToBottom();
   }
   getLastMessage(id) {
-    this.dataService.getLatestChat(id).subscribe(res => {
-      this.latest = res.message;
+    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
 
-      var last = this.chat.find(message => message.message_id == this.latest[0]['message_id']);
+      this.dataService.getChat(this.id).subscribe(res => {
+        this.chat = res.message;
+        for (let i = 0; i < this.chat.length; i++) {
+          this.offset = moment().utcOffset();
 
-      if (last) {
-      } else {
+          this.chat[i]['time'] = moment.utc(this.chat[i]['time']).fromNow();
+        }
+        this.currentUser = storedUser.UserID;
 
-        this.dataService.getChat(this.id).subscribe(res => {
-          this.chat = res.message;
-          for (let i = 0; i < this.chat.length; i++) {
-            this.offset = moment().utcOffset();
+        setTimeout(() => {
+          this.updateScroll();
+        }, 500);
+      });
 
-            this.chat[i]['time'] = moment.utc(this.chat[i]['time']).fromNow();
-          }
-          setTimeout(() => {
-            this.updateScroll();
-          }, 500);
-        });
-      }
+      this.dataService.getLatestChat(id).subscribe(res => {
+        this.latest = res.message;
+
+        var last = this.chat.find(message => message.message_id == this.latest[0]['message_id']);
+
+        if (last) {
+        } else {
+
+          this.dataService.getChat(this.id).subscribe(res => {
+            this.chat = res.message;
+            for (let i = 0; i < this.chat.length; i++) {
+              this.offset = moment().utcOffset();
+
+              this.chat[i]['time'] = moment.utc(this.chat[i]['time']).fromNow();
+            }
+            setTimeout(() => {
+              this.updateScroll();
+            }, 500);
+          });
+        }
+      });
+
     });
-
   }
   submitMessage(id, user, text) {
     let time = new Date(Date.now())
@@ -114,9 +131,18 @@ export class NewchatPage implements OnInit {
     });
 
     this.messageForm.reset();
-    this.getLastMessage(this.id);
 
   }
+  ionViewDidLeave() {
+    this.lastMessageID.unsubscribe();
+  }
+  user(id) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(id)
+      }
+    };
+    this.router.navigate(['/user'], navigationExtras);
 
-
+  }
 }

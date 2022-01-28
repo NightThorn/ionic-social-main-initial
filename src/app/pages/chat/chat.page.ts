@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import moment from 'moment';
 import { now } from 'moment';
@@ -48,9 +48,7 @@ export class ChatPage implements OnInit {
 
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
       
-      }
       this.me = storedUser.UserID;
       this.dataService.getChat(this.id).subscribe(res => {
         this.chat = res.message;
@@ -116,5 +114,13 @@ export class ChatPage implements OnInit {
   ionViewDidLeave() {
     this.lastMessageID.unsubscribe();
   }
+  user(id) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(id)
+      }
+    };
+    this.router.navigate(['/user'], navigationExtras);
 
+  }
 }
