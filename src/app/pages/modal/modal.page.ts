@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { FormBuilder } from '@angular/forms';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -20,8 +20,9 @@ export class ModalPage implements OnInit {
   imgFile: string;
   videoFile: string;
   gif: string;
+  respo: { user_id: any; message: any; time: Date; picture: any; video: any; gif: any; };
 
-  constructor(private modalController: ModalController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
+  constructor(private modalController: ModalController, private alertController: AlertController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -53,10 +54,54 @@ export class ModalPage implements OnInit {
 
 
     };
-    this.http.post('https://ggs.tv/api/v1/post.php?action=post', JSON.stringify(data)).subscribe(res => {
+    const httpOptions: Object = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      observe: 'response' as 'response'
+    };
+
+    return this.http.post('https://ggs.tv/api/v1/post.php?action=post', JSON.stringify(data), httpOptions).subscribe(res => {
+      console.log(res);
+      console.log(res['status']);
+
+      if (res['status'] = 200) {
+        this.presentAlert();
+        this.closeModal();
+      } else {
+
+        this.presentError();
+        this.closeModal();
+
+      }
+
+
     });
 
-    this.closeModal();
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Post Successful',
+      message: 'You have successfully posted!',
+      buttons: ['OK']
+    });
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+  }
+  async presentError() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Oof',
+      subHeader: 'Post Unsuccessful',
+      message: 'Something went wrong, please try again!',
+      buttons: ['OK']
+    });
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
   }
   closeModal() {
     this.modalController.dismiss();
@@ -126,6 +171,8 @@ export class ModalPage implements OnInit {
         });
         document.getElementById("preview").appendChild(elem);
         document.getElementById("videoid").style.border = "thick solid lime";
+        document.getElementById("videoid").style.borderRadius = "10px";
+
         document.getElementById("imageid").style.border = "none";
         document.getElementById("gifid").style.border = "none";
 
