@@ -153,16 +153,16 @@ export class UserPage implements OnInit, OnDestroy {
           this.bday = newDate.toDateString();
         });
 
-        this.subscription7$ = this.profileService.fetchedPosts.subscribe((data: Post) => {
-          this.fetchedPosts = data;
-          for (let i = 0; i < this.fetchedPosts.length; i++) {
-            this.offset = moment().utcOffset();
-            this.fetchedPosts[i]['total'] = +this.fetchedPosts[i]['reaction_love_count'] + +this.fetchedPosts[i]['reaction_like_count'] + +this.fetchedPosts[i]['reaction_haha_count'] + +this.fetchedPosts[i]['reaction_wow_count'];
+      this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
+        this.fetchedPosts = data;
+        for (let i = 0; i < this.fetchedPosts.length; i++) {
+          this.offset = moment().utcOffset();
+          this.fetchedPosts[i]['total'] = +this.fetchedPosts[i]['reaction_love_count'] + +this.fetchedPosts[i]['reaction_like_count'] + +this.fetchedPosts[i]['reaction_haha_count'] + +this.fetchedPosts[i]['reaction_wow_count'];
 
-            this.fetchedPosts[i]['time'] = moment.utc(this.fetchedPosts[i]['time']).fromNow();
-          }
+          this.fetchedPosts[i]['time'] = moment.utc(this.fetchedPosts[i]['time']).fromNow();
+        }
 
-        })
+      })
         this.events = this.dataService.getEvents();
       
     });

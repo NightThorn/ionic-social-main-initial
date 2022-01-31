@@ -34,7 +34,6 @@ export class AuthenticationService {
   }
 
   async reload() {
-
     let storedUser: StoredUser = await this._storage.get(this.key_stored_user);
 
 
@@ -59,8 +58,9 @@ export class AuthenticationService {
     this.reload();
   }
 
-  async destroy() {
-    await this.storage.remove(this.key_stored_user);
+  destroy() {
+    this.storage.remove(this.key_stored_user);
+
     this.reload();
   }
 

@@ -27,7 +27,7 @@ export class EditprofilePage implements OnInit {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       
 
-    })
+    });
     this.postForm = this.fb.group({
       cover: [''],
       picture: [''],

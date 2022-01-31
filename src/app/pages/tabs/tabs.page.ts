@@ -16,7 +16,7 @@ export class TabsPage {
   me: number;
   count: any;
   constructor(private router: Router, private authService: AuthenticationService, private dataService: DataService) {
-  
+
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
 
@@ -29,6 +29,9 @@ export class TabsPage {
             this.count = res.message;
           });
         });
+      } else {
+        this.router.navigate(['login']);
+
       }
     });
   }

@@ -9,7 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { VideoModalPage } from '../video-modal/video-modal.page';
 import moment from 'moment';
 import { XpmodalPage } from '../xpmodal/xpmodal.page';
-import {  Plugins } from '@capacitor/core';
+import { Plugins } from '@capacitor/core';
 
 const { Filesystem } = Plugins;
 @Component({
@@ -126,6 +126,9 @@ export class ExplorePage implements OnInit {
             this.boost[i]['time'] = moment.utc(this.boost[i]['time']).fromNow();
           }
         });
+
+      } else {
+        this.router.navigate(['login']);
 
       }
     });
