@@ -60,6 +60,7 @@ export class ExplorePage implements OnInit {
   banned: number;
   boost: any;
   total: any;
+  userXP: any;
 
 
   constructor(private router: Router, private authService: AuthenticationService, public modalController: ModalController, private storage: Storage, private dataService: DataService) { }
@@ -82,11 +83,11 @@ export class ExplorePage implements OnInit {
         this.filter = localStorage.getItem("filter");
         this.dataService.getXP(storedUser.UserID).subscribe(res => {
           this.xp = res.message;
-          for (let i = 0; i < this.xp.length; i++) {
+          console.log(this.xp);
 
-            this.myXP = this.numFormatter(this.xp[i]['user_points']);
-            this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
-          }
+          this.userXP = this.xp[0]['user_points'];
+          this.myWallet = this.numFormatter(this.xp[0]['user_wallet_balance']);
+
         });
         if (this.filter = "all") {
           this.dataService.getAllPosts(storedUser.UserID).subscribe(res => {
