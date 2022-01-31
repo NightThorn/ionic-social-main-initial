@@ -10,6 +10,7 @@ import { PostDetailPage } from './post-detail.page';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { GiphyPageModule } from '../giphy/giphy.module';
+import { MentionModule } from 'angular-mentions';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { GiphyPageModule } from '../giphy/giphy.module';
     ComponentsModule,
     PostDetailPageRoutingModule,
     UtilsModule,
+    MentionModule,
     GiphyPageModule
   ],
   declarations: [PostDetailPage]

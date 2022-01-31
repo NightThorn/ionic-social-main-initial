@@ -30,6 +30,7 @@
     "@ionic/angular": "^5.5.2",
     "@ionic/storage-angular": "^3.0.6",
     "@richthegeek/htmldecode": "^1.0.1",
+    "angular-mentions": "^1.4.0",
     "angularfire2": "^5.4.2",
     "card.io.cordova.mobilesdk": "^2.1.0",
     "cordova-ios": "^4.0.1",

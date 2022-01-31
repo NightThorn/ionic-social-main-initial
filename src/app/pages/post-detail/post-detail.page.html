@@ -105,20 +105,29 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-</ion-content>
-<ion-footer class="ion-no-border">
-  <form [formGroup]="commentForm" (ngSubmit)="submitComment(data, me, commentForm.value)">
-    <ion-item lines="none">
-      <ion-input id="text" type="text" placeholder="Write your comment" formControlName="text"></ion-input>
-      <div id="gifid" class="image-upload">
-        <label (click)="onGif($event)" for="gif-input">
-          <ion-img src="./assets/images/giphy.png"></ion-img>
-        </label>
-        <input id="gif-input" class="form-control">
-      </div>
-      <ion-button slot="end" class="circle-btn" fill="clear" size="small" shape="round" color="primary" type="submit">
-        <ion-icon slot="icon-only" name="paper-plane"></ion-icon>
-      </ion-button>
-    </ion-item>
+  <form style="bottom: 0; display: flex; position: fixed; width: 100%;" [formGroup]="commentForm"
+    (ngSubmit)="submitComment(data, me, commentForm.value)">
+    <ion-row style="width: 100%; align-items: center;">
+      <ion-col size="10">
+        <input style="overflow: visible; width: 100%;" id="text" [mention]="items" contenteditable="true"
+          [mentionConfig]="{triggerChar:'@',maxItems:10, labelKey: 'user_name', dropUp: true}" type="text"
+          placeholder="Write your comment" formControlName="text" />
+      </ion-col>
+      <ion-col style="text-align: center; vertical-align: middle;" size="1">
+
+        <div id="gifid" class="image-upload">
+          <label (click)="onGif($event)" for="gif-input">
+            <ion-img src="./assets/images/giphy.png"></ion-img>
+          </label>
+          <input id="gif-input" class="form-control">
+        </div>
+      </ion-col>
+      <ion-col size="1">
+        <button style="padding-inline-start: 0;" class="circle-btn" fill="clear" size="small" shape="round"
+          color="primary" type="submit">
+          <ion-icon style="font-size: 18px;" slot="icon-only" name="paper-plane"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
   </form>
-</ion-footer>
+</ion-content>

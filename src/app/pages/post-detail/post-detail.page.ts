@@ -11,6 +11,7 @@ import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { GiphyPage } from '../giphy/giphy.page';
 import { OverlayEventDetail } from '@ionic/core';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-post-detail',
@@ -20,6 +21,7 @@ import { OverlayEventDetail } from '@ionic/core';
 export class PostDetailPage implements OnInit {
 
   commentForm: FormGroup;
+  name = 'angular-mentions';
 
   liked: any;
 
@@ -35,8 +37,11 @@ export class PostDetailPage implements OnInit {
   me: number;
   gif: any;
   reacted: any;
+  items: any;
+  myObj: any;
+  names: String[] = [];
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private authService: AuthenticationService, private route: ActivatedRoute, private modalController: ModalController, private dataService: DataService, private router: Router) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private profileService: ProfileService, private authService: AuthenticationService, private route: ActivatedRoute, private modalController: ModalController, private dataService: DataService, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params && params.special) {
         this.data = JSON.parse(params.special);
@@ -46,10 +51,16 @@ export class PostDetailPage implements OnInit {
 
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-        this.me = storedUser.UserID;
+      this.me = storedUser.UserID;
 
-      }
+    });
+
+    this.profileService.fetchFriends(this.me).subscribe(res => {
+
+      this.items = res.message;
+      this.myObj = Object.values(this.items)[0];
+      this.names = [this.myObj["user_name"]];
+      console.log(this.names);
     });
 
     this.dataService.getPostDetails(this.data).subscribe(res => {
@@ -63,10 +74,10 @@ export class PostDetailPage implements OnInit {
     });
     this.dataService.getPostComments(this.data).subscribe(res => {
       this.comments = res.message;
-      
+
       console.log(this.comments);
       for (let i = 0; i < this.comments.length; i++) {
-       
+
         this.offset = moment().utcOffset();
         this.comments[i]['time'] = moment.utc(this.comments[i]['time']).fromNow();
         this.dataService.getPostCommentReplies(this.comments[i]['comment_id']).subscribe(res => {
@@ -113,12 +124,13 @@ export class PostDetailPage implements OnInit {
 
     this.http.post('https://ggs.tv/api/v1/post.php?action=comment', JSON.stringify(data), { headers: headers }).subscribe(
       () => { // If POST is success
-        window.location.reload();      },
+        window.location.reload();
+      },
       (error) => { // If POST is failed
         "Error occurred";
       }
     );
-   
+
   }
   async onGif(e) {
     const modal = await this.modalController.create({
