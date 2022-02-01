@@ -14,7 +14,8 @@
       <ion-col>
         <form [formGroup]="postForm" (ngSubmit)="post(me, postForm.value)">
           <ion-item>
-            <ion-textarea formControlName="text" placeholder="What's up?"></ion-textarea>
+            <textarea [mention]="items" [mentionConfig]="{triggerChar:'@',maxItems:5, labelKey: 'user_name'}"
+              formControlName="text" placeholder="What's up?"></textarea>
           </ion-item>
 
 

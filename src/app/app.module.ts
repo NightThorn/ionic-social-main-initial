@@ -9,13 +9,11 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { ProfileService } from './services/profile.service';
-import { ModalPageModule } from './pages/modal/modal.module';
 import { InViewportModule } from 'ng-in-viewport';
 import { NgxTweetModule } from "ngx-tweet";
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { Firebase } from '@ionic-native/firebase/ngx';
-import { MentionModule } from 'angular-mentions';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCddHyUNEHKoKtqcdlgbhKSQsIjJHtpjIs",
@@ -35,7 +33,6 @@ const firebaseConfig = {
     BrowserModule,
     NgxTweetModule,
     FormsModule,
-    MentionModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     HttpClientModule,

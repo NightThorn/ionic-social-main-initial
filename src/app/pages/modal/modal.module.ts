@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { ModalPageRoutingModule } from './modal-routing.module';
+import { MentionModule } from 'angular-mentions';
 
 import { ModalPage } from './modal.page';
 import { GiphyPageModule } from '../giphy/giphy.module';
@@ -16,7 +17,8 @@ import { GiphyPageModule } from '../giphy/giphy.module';
     ReactiveFormsModule,
     IonicModule,
     ModalPageRoutingModule,
-    GiphyPageModule
+    GiphyPageModule,
+    MentionModule
   ],
   declarations: [ModalPage]
 })

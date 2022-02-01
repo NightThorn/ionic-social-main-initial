@@ -25,4 +25,4 @@ import { MentionModule } from 'angular-mentions';
   ],
   declarations: [PostDetailPage]
 })
-export class PostDetailPageModule {}
+export class PostDetailPageModule { }

@@ -7,6 +7,7 @@ import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { GiphyPage } from '../giphy/giphy.page';
 import { OverlayEventDetail } from '@ionic/core';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-modal',
@@ -19,10 +20,14 @@ export class ModalPage implements OnInit {
   me: number;
   imgFile: string;
   videoFile: string;
+  name = 'angular-mentions';
   gif: string;
+  items: any;
+  myObj: any;
+  names: String[] = [];
   respo: { user_id: any; message: any; time: Date; picture: any; video: any; gif: any; };
 
-  constructor(private modalController: ModalController, private alertController: AlertController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
+  constructor(private modalController: ModalController, private profileService: ProfileService, private alertController: AlertController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -39,6 +44,12 @@ export class ModalPage implements OnInit {
       video: [null],
       gif: [null],
 
+    });
+    this.profileService.fetchFriends(this.me).subscribe(res => {
+
+      this.items = res.message;
+      this.myObj = Object.values(this.items)[0];
+      this.names = [this.myObj["user_name"]];
     });
   }
 

@@ -84,9 +84,9 @@ export class FeedCardComponent implements OnInit {
 
   }
 
-  
+
   ngOnInit() {
-    
+
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       this.me = storedUser.UserID;
       this.points = storedUser.Points;
@@ -107,6 +107,11 @@ export class FeedCardComponent implements OnInit {
       if (this.text.includes('#')) {
         this.decodedtext = htmlDecode(this.text)
         this.text = this.hashtag(this.decodedtext);
+
+      }
+      if (this.text.includes('@')) {
+        this.decodedtext = htmlDecode(this.text)
+        this.text = this.at(this.decodedtext);
 
       }
       if (this.type === 'shared') {
@@ -206,6 +211,11 @@ export class FeedCardComponent implements OnInit {
   }
   hashtag(text) {
     var repl = text.replace(/#(\w+)/g, '<a href="search/#$1">#$1</a>');
+
+    return repl;
+  }
+  at(text) {
+    var repl = text.replace(/@(\w+)/g, '<a href="user/#$1">#$1</a>');
 
     return repl;
   }
