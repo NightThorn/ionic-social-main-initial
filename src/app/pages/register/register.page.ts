@@ -17,6 +17,7 @@ user_name: string = "";
 user_email: string = "";
 user_password: string = "";
 user_password_confirm: string = "";
+code: string = "";
 
 disabledButton;
 
@@ -42,6 +43,8 @@ disabledButton;
       email: [null, [Validators.required, emailValidator]],
       phone: [null, [Validators.required, Validators.pattern('^[0-9]+$')]],
       password: [null, [Validators.required, passwordValidator]],
+      code: null,
+
     });
   }
 
@@ -95,7 +98,9 @@ if(this.user_name==""){
     let body = {
       user_name: this.user_name,
       user_email: this.user_email,
-      user_password: this.user_password
+      user_password: this.user_password,
+      code: this.code
+
     }
 
     this.accsPrvds.postData(body, 'appregister.php').subscribe((res:any)=>{

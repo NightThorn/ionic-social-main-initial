@@ -87,15 +87,15 @@
           <ion-list-header>
             <ion-label>Referral</ion-label>
           </ion-list-header>
-          <p style="color: orange; margin: 10px;" *ngIf="item.total_xp<5000">Unlock referral code with 5k all-time xp!
+          <p style="color: orange; margin: 10px;" *ngIf="item.total_xp<1000">Unlock referral code with 1k all-time xp!
           </p>
 
-          <ion-item *ngIf="item.total_xp > 5000" lines="none">
+          <ion-item *ngIf="item.total_xp > 1000" lines="none">
             <ion-label>
               <h2>Referral Code:</h2>
 
               <h2 style="color: limegreen;">{{item.user_name}}</h2>
-              <p>Each referral code used upon registration awards 500 xp</p>
+              <p>Each referral code used awards 200xp to you, and 100xp to your referral!</p>
             </ion-label>
           </ion-item>
 <ion-item>
