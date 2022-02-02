@@ -62,40 +62,43 @@
                   <ion-label style="font-size: small; color: gray;">Reply</ion-label>
                 </ion-item>
                 <ion-list>
-                  <ion-item lines="none" *ngFor="let reply of comments.replies">
-                    <ion-avatar (click)="user(reply.user_id)" slot="start" style="margin-left: 5px;">
-                      <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{reply.user_picture}}">
-                      </ion-img>
-                    </ion-avatar>
+                    <ng-container *ngFor="let reply of comments.replies" >
+                  <ion-item lines="none" *ngIf="cm.comment_id == reply.node_id">
 
-                    <ion-text class="comment"><span (click)="user(reply.user_id)" class="user-comment"
-                        style="color: limegreen;">{{reply.user_name}}</span>
-                      <span class="item-subtitle">{{ reply.time }}</span>
+                      <ion-avatar (click)="user(reply.user_id)" slot="start" style="margin-left: 5px;">
+                        <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{reply.user_picture}}">
+                        </ion-img>
+                      </ion-avatar>
 
-                      <br><br>
-                      <ion-row>
-                        <ion-col size="9">
+                      <ion-text class="comment"><span (click)="user(reply.user_id)" class="user-comment"
+                          style="color: limegreen;">{{reply.user_name}}</span>
+                        <span class="item-subtitle">{{ reply.time }}</span>
 
-                          <span class="user-comment-text">
-                            <div [innerHTML]="reply.text"></div>
-                          </span>
-                        </ion-col>
-                        <ion-col style="text-align: center;" size="3">
-                          <ion-img src="./assets/images/ggsgray.png"
-                            style="height: 14px; border-radius: 0px; margin: 5px;"></ion-img>
-                        </ion-col>
-                      </ion-row>
-                      <div class="icon-container">
+                        <br><br>
+                        <ion-row>
+                          <ion-col size="9">
 
-                        <ion-item lines="none">
+                            <span class="user-comment-text">
+                              <div [innerHTML]="reply.text"></div>
+                            </span>
+                          </ion-col>
+                          <ion-col style="text-align: center;" size="3">
+                            <ion-img src="./assets/images/ggsgray.png"
+                              style="height: 14px; border-radius: 0px; margin: 5px;"></ion-img>
+                          </ion-col>
+                        </ion-row>
+                        <div class="icon-container">
 
-                          <ion-label style="font-size: small; color: gray;">Reply</ion-label>
-                        </ion-item>
+                          <ion-item lines="none">
 
-                      </div>
-                    </ion-text>
+                            <ion-label style="font-size: small; color: gray;">Reply</ion-label>
+                          </ion-item>
 
-                  </ion-item>
+                        </div>
+                      </ion-text>
+                      </ion-item>
+                    </ng-container>
+                  
                 </ion-list>
               </div>
             </ion-text>
