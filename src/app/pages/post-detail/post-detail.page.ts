@@ -55,13 +55,7 @@ export class PostDetailPage implements OnInit {
 
     });
 
-    this.profileService.fetchFriends(this.me).subscribe(res => {
 
-      this.items = res.message;
-      this.myObj = Object.values(this.items)[0];
-      this.names = [this.myObj["user_name"]];
-      console.log(this.names);
-    });
 
     this.dataService.getPostDetails(this.data).subscribe(res => {
       this.post = res.message;
@@ -83,9 +77,22 @@ export class PostDetailPage implements OnInit {
 
 
       }
+      for (let i = 0; i < this.comments.replies.length; i++) {
+
+        this.offset = moment().utcOffset();
+        this.comments.replies[i]['time'] = moment.utc(this.comments.replies[i]['time']).fromNow();
+
+
+      }
     });
 
+    this.profileService.fetchFriends(this.me).subscribe(res => {
 
+      this.items = res.message;
+      this.myObj = Object.values(this.items)[0];
+      this.names = [this.myObj["user_name"]];
+      console.log(this.names);
+    });
     this.commentForm = this.fb.group({
       text: [null],
       gif: [null],
