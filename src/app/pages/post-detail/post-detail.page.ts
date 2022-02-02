@@ -20,6 +20,8 @@ import { ProfileService } from 'src/app/services/profile.service';
 export class PostDetailPage implements OnInit {
 
   commentForm: FormGroup;
+  replyForm: FormGroup;
+
   name = 'angular-mentions';
 
   liked: any;
@@ -31,7 +33,6 @@ export class PostDetailPage implements OnInit {
   comments: any;
   offset: number;
   replies: any;
-  reply: any;
   activeStoredUserSubscription$;
   me: number;
   gif: any;
@@ -98,12 +99,51 @@ export class PostDetailPage implements OnInit {
       gif: [null],
 
     });
+    this.replyForm = this.fb.group({
+      text: [null],
+      gif: [null],
+
+    });
   }
   showReplies() {
     var element = document.getElementById("repliesContainer");
     element.classList.toggle("replies");
   }
 
+  showReply(toggle) {
+    document.getElementById(toggle).classList.toggle("showReplyForm");
+
+  }
+  showReplyReply(toggle) {
+    document.getElementById(toggle).classList.toggle("showReplyForm");
+
+  }
+  reply(id, text) {
+    var headers = new HttpHeaders();
+    headers.append("Accept", 'application/json');
+    headers.append('Content-Type', 'application/json');
+    headers.append('Access-Control-Allow-Origin', '*');
+
+    let time = new Date(Date.now());
+    let data = {
+      "comment_id": id,
+      "user_id": this.me,
+      "reply": text,
+      "time": time,
+      "gif": this.gif
+
+    };
+
+    this.http.post('https://ggs.tv/api/v1/post.php?action=reply', JSON.stringify(data), { headers: headers }).subscribe(
+      () => { // If POST is success
+        window.location.reload();
+      },
+      (_error) => { // If POST is failed
+        "Error occurred";
+      }
+    );
+
+  }
 
   submitComment(id, user, text) {
     var headers = new HttpHeaders();
@@ -153,6 +193,35 @@ export class PostDetailPage implements OnInit {
         document.getElementById("videoid").style.border = "none";
 
         this.commentForm.patchValue({
+          gif: this.gif
+        });
+      }
+    });
+    await modal.present();
+
+  };
+  async replyGif(e) {
+    const modal = await this.modalController.create({
+      component: GiphyPage,
+      backdropDismiss: false,
+      cssClass: 'modal'
+    });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        this.gif = detail.data;
+
+        var elem = document.createElement("img");
+        elem.setAttribute("src", this.gif);
+        elem.setAttribute("height", "200");
+        elem.setAttribute("width", "100%");
+        elem.setAttribute("alt", "IMG");
+
+        document.getElementById("text").appendChild(elem);
+        document.getElementById("gifid").style.border = "thick solid lime";
+        document.getElementById("imageid").style.border = "none";
+        document.getElementById("videoid").style.border = "none";
+
+        this.replyForm.patchValue({
           gif: this.gif
         });
       }

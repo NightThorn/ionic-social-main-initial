@@ -100,5 +100,13 @@ border-top: 1px solid black;
 ion-list{
 
   padding-top: 0;
-  padding-bottom: 0;
+  padding-bottom: 40px;
+}
+.replyForm{
+
+  display: none;
+}
+.showReplyForm{
+
+  display: flex;
 }

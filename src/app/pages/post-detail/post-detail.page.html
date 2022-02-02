@@ -30,7 +30,7 @@
       <ion-col>
 
         <ion-list>
-          <ion-item lines="none" *ngFor="let cm of comments">
+          <ion-item lines="none" *ngFor="let cm of comments; let i = index">
             <ion-avatar (click)="user(cm.user_id)" slot="start" style="margin-left: 5px;">
               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{cm.user_picture}}"></ion-img>
             </ion-avatar>
@@ -59,10 +59,39 @@
 
                 <ion-item lines="none">
 
-                  <ion-label style="font-size: small; color: gray;">Reply</ion-label>
+                  <ion-label (click)="showReply('toggleId_' + i)" style="font-size: small; color: gray;">
+                    Reply</ion-label>
                 </ion-item>
                 <ion-list>
-                  <ng-container *ngFor="let reply of commentReplies">
+                  <ion-item [id]="'toggleId_' + i" class="replyForm">
+                    <form style="display: flex; width: 100%;" [formGroup]="replyForm"
+                      (ngSubmit)="reply(data, commentForm.value)">
+                      <ion-row style="width: 100%; align-items: center;">
+                        <ion-col size="8">
+                          <input id="text" [mention]="items" contenteditable="true"
+                            [mentionConfig]="{triggerChar:'@',maxItems:10, labelKey: 'user_name', dropUp: true}"
+                            type="text" placeholder="Write your comment" formControlName="text" />
+                          <input id="commentIDhidden" type="hidden" formControlName="commentID" value={{cm.comment_id}}>
+
+                        </ion-col>
+                        <ion-col style="text-align: center; vertical-align: middle;" size="2">
+                          <div id="gifid" class="image-upload">
+                            <label (click)="replyGif($event)" for="gif-input">
+                              <img src="./assets/images/giphy.png" />
+                            </label>
+                            <input id="gif-input" class="form-control">
+                          </div>
+                        </ion-col>
+                        <ion-col size="2">
+                          <button style="padding-inline-start: 0;" class="circle-btn" fill="clear" size="small"
+                            shape="round" color="primary" type="submit">
+                            <ion-icon style="font-size: 18px;" slot="icon-only" name="paper-plane"></ion-icon>
+                          </button>
+                        </ion-col>
+                      </ion-row>
+                    </form>
+                  </ion-item>
+                  <ng-container *ngFor="let reply of commentReplies; let i = index">
                     <ion-item lines="none" *ngIf="cm.comment_id == reply.node_id">
 
                       <ion-avatar (click)="user(reply.user_id)" slot="start" style="margin-left: 5px;">
@@ -91,9 +120,38 @@
 
                           <ion-item lines="none">
 
-                            <ion-label style="font-size: small; color: gray;">Reply</ion-label>
+                            <ion-label (click)="showReplyReply('toggleId' + i)"
+                              style="font-size: small; color: gray;">Reply</ion-label>
                           </ion-item>
+                          <ion-item [id]="'toggleId' + i" class="replyForm">
+                            <form style="display: flex; width: 100%;" [formGroup]="replyForm"
+                              (ngSubmit)="reply(data, commentForm.value)">
+                              <ion-row style="width: 100%; align-items: center;">
+                                <ion-col size="8">
+                                  <input id="text" [mention]="items" contenteditable="true"
+                                    [mentionConfig]="{triggerChar:'@',maxItems:10, labelKey: 'user_name', dropUp: true}"
+                                    type="text" placeholder="Write your comment" formControlName="text" />
+                                  <input id="hidden" type="hidden" formControlName="commentID"
+                                    value="{{reply.comment_id}}">
 
+                                </ion-col>
+                                <ion-col style="text-align: center; vertical-align: middle;" size="2">
+                                  <div id="gifid" class="image-upload">
+                                    <label (click)="replyGif($event)" for="gif-input">
+                                      <img src="./assets/images/giphy.png" />
+                                    </label>
+                                    <input id="gif-input" class="form-control">
+                                  </div>
+                                </ion-col>
+                                <ion-col size="2">
+                                  <button style="padding-inline-start: 0;" class="circle-btn" fill="clear" size="small"
+                                    shape="round" color="primary" type="submit">
+                                    <ion-icon style="font-size: 18px;" slot="icon-only" name="paper-plane"></ion-icon>
+                                  </button>
+                                </ion-col>
+                              </ion-row>
+                            </form>
+                          </ion-item>
                         </div>
                       </ion-text>
                     </ion-item>
