@@ -73,22 +73,14 @@ export class PostDetailPage implements OnInit {
       }
     });
     this.dataService.getPostComments(this.data).subscribe(res => {
-      this.comments = res.message;
+      this.comments = res;
 
       console.log(this.comments);
-      for (let i = 0; i < this.comments.length; i++) {
+      for (let i = 0; i < this.comments.message.length; i++) {
 
         this.offset = moment().utcOffset();
-        this.comments[i]['time'] = moment.utc(this.comments[i]['time']).fromNow();
-        this.dataService.getPostCommentReplies(this.comments[i]['comment_id']).subscribe(res => {
-          this.replies = res.message;
-          console.log();
-          for (let i = 0; i < this.replies.length; i++) {
-            this.offset = moment().utcOffset();
+        this.comments.message[i]['time'] = moment.utc(this.comments.message[i]['time']).fromNow();
 
-            this.replies[i]['time'] = moment.utc(this.replies[i]['time']).fromNow();
-          }
-        });
 
       }
     });
@@ -126,7 +118,7 @@ export class PostDetailPage implements OnInit {
       () => { // If POST is success
         window.location.reload();
       },
-      (error) => { // If POST is failed
+      (_error) => { // If POST is failed
         "Error occurred";
       }
     );
