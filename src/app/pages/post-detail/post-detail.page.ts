@@ -26,7 +26,6 @@ export class PostDetailPage implements OnInit {
 
   liked: any;
 
-  commentimage: string = "./assets/images/ggsgray.png";
 
   data: any;
   post: any;
@@ -118,6 +117,7 @@ export class PostDetailPage implements OnInit {
     document.getElementById(toggle).classList.toggle("showReplyForm");
 
   }
+
   reply(id, text) {
     var headers = new HttpHeaders();
     headers.append("Accept", 'application/json');
@@ -252,27 +252,28 @@ export class PostDetailPage implements OnInit {
     });
     modal.present();
   }
-  commentlike(id) {
+  commentlike(id, toggle) {
     let data = {
       "comment_id": id,
       "user_id": this.me,
     };
+    document.getElementById(toggle).classList.remove("unliked");
+    document.getElementById(toggle).classList.add("liked");
 
     this.liked = "1";
-    this.commentimage = "./assets/images/ggs.png";
     this.http.post('https://ggs.tv/api/v1/post.php?action=commentlike', JSON.stringify(data)).subscribe(res => {
-
     });
   }
-  commentunlike(id) {
+  commentunlike(id, toggle) {
     let data = {
       "comment_id": id,
       "user_id": this.me,
     };
-
+    document.getElementById(toggle).classList.add("unliked");
+    document.getElementById(toggle).classList.remove("liked");
     this.liked = "0";
-    this.commentimage = "./assets/images/ggsgray.png";
     this.http.post('https://ggs.tv/api/v1/post.php?action=commentunlike', JSON.stringify(data)).subscribe(res => {
+      document.getElementById(toggle).classList.toggle("liked");
 
     });
   }

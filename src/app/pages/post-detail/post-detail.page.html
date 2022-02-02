@@ -51,8 +51,9 @@
 
                 </ion-col>
                 <ion-col style="text-align: center;" size="3">
-                  <ion-img (click)="commentlike(cm.comment_id)" [src]="commentimage"
-                    style="height: 14px; border-radius: 0px; margin: 5px;"></ion-img>
+                  <ion-img [id]="'toggleLike_' + i" (click)="commentlike(cm.comment_id, 'toggleLike_' + i)"
+                    class="unliked" src="" style="height: 14px; border-radius: 0px; padding-left: 10px; margin: 5px;">
+                  </ion-img>
                 </ion-col>
               </ion-row>
               <div class="icon-container">
@@ -120,8 +121,8 @@
 
                           <ion-item lines="none">
 
-                            <ion-label (click)="showReplyReply('toggleId' + i)"
-                              style="font-size: small; color: gray;">Reply</ion-label>
+                            <ion-label (click)="showReplyReply('toggleId' + i)" style="font-size: small; color: gray;">
+                              Reply</ion-label>
                           </ion-item>
                           <ion-item [id]="'toggleId' + i" class="replyForm">
                             <form style="display: flex; width: 100%;" [formGroup]="replyForm"

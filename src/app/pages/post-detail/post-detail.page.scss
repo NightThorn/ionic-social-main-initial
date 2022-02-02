@@ -110,3 +110,10 @@ ion-list{
 
   display: flex;
 }
+
+.liked{
+content: url("/assets/images/ggs.png");
+}
+.unliked{
+  content: url("/assets/images/ggsgray.png");
+}
