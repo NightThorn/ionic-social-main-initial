@@ -5,7 +5,6 @@ import { ModalController } from '@ionic/angular';
 import moment from 'moment';
 import { DataService } from 'src/app/services/data.service';
 import { ImageModalPage } from '../image-modal/image-modal.page';
-import { VideoModalPage } from '../video-modal/video-modal.page';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -40,6 +39,7 @@ export class PostDetailPage implements OnInit {
   items: any;
   myObj: any;
   names: String[] = [];
+  commentReplies: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private profileService: ProfileService, private authService: AuthenticationService, private route: ActivatedRoute, private modalController: ModalController, private dataService: DataService, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -67,20 +67,20 @@ export class PostDetailPage implements OnInit {
       }
     });
     this.dataService.getPostComments(this.data).subscribe(res => {
-      this.comments = res;
-
+      this.comments = res.message;
+      this.commentReplies = res.replies;
       console.log(this.comments);
-      for (let i = 0; i < this.comments.message.length; i++) {
+      for (let i = 0; i < this.comments.length; i++) {
 
         this.offset = moment().utcOffset();
-        this.comments.message[i]['time'] = moment.utc(this.comments.message[i]['time']).fromNow();
+        this.comments[i]['time'] = moment.utc(this.comments[i]['time']).fromNow();
 
 
       }
-      for (let i = 0; i < this.comments.replies.length; i++) {
+      for (let i = 0; i < this.commentReplies.length; i++) {
 
         this.offset = moment().utcOffset();
-        this.comments.replies[i]['time'] = moment.utc(this.comments.replies[i]['time']).fromNow();
+        this.commentReplies[i]['time'] = moment.utc(this.commentReplies[i]['time']).fromNow();
 
 
       }

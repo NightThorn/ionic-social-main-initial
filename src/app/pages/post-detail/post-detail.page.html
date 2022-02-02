@@ -30,7 +30,7 @@
       <ion-col>
 
         <ion-list>
-          <ion-item lines="none" *ngFor="let cm of comments.message">
+          <ion-item lines="none" *ngFor="let cm of comments">
             <ion-avatar (click)="user(cm.user_id)" slot="start" style="margin-left: 5px;">
               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{cm.user_picture}}"></ion-img>
             </ion-avatar>
@@ -62,8 +62,8 @@
                   <ion-label style="font-size: small; color: gray;">Reply</ion-label>
                 </ion-item>
                 <ion-list>
-                    <ng-container *ngFor="let reply of comments.replies" >
-                  <ion-item lines="none" *ngIf="cm.comment_id == reply.node_id">
+                  <ng-container *ngFor="let reply of commentReplies">
+                    <ion-item lines="none" *ngIf="cm.comment_id == reply.node_id">
 
                       <ion-avatar (click)="user(reply.user_id)" slot="start" style="margin-left: 5px;">
                         <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{reply.user_picture}}">
@@ -96,9 +96,9 @@
 
                         </div>
                       </ion-text>
-                      </ion-item>
-                    </ng-container>
-                  
+                    </ion-item>
+                  </ng-container>
+
                 </ion-list>
               </div>
             </ion-text>
