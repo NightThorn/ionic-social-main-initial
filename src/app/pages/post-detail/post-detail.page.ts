@@ -21,7 +21,7 @@ export class PostDetailPage implements OnInit {
 
   commentForm: FormGroup;
   replyForm: FormGroup;
-  replyReplyForm: FormGroup;
+  replyreplyForm: FormGroup;
   name = 'angular-mentions';
 
   liked: any;
@@ -98,10 +98,9 @@ export class PostDetailPage implements OnInit {
       gif: [null],
 
     });
-    this.replyReplyForm = this.fb.group({
+    this.replyreplyForm = this.fb.group({
       text: [null],
       commentID: [null],
-
       gif: [null],
 
     });
@@ -112,19 +111,18 @@ export class PostDetailPage implements OnInit {
 
     });
   }
-  showReplies() {
-    var element = document.getElementById("repliesContainer");
-    element.classList.toggle("replies");
-  }
+
 
   showReply(toggle, id) {
     document.getElementById(toggle).classList.toggle("showReplyForm");
     this.replyForm.get('commentID').setValue(id);
 
   }
-  showReplyReply(toggle) {
-    document.getElementById(toggle).classList.toggle("showReplyForm");
+  showReplyReply(toggler, id) {
+    document.getElementById(toggler).classList.toggle("showReplyForm");
+    this.replyreplyForm.get('commentID').setValue(id);
 
+    console.log(id);
   }
 
   reply(me, text) {
@@ -136,6 +134,28 @@ export class PostDetailPage implements OnInit {
     let data = {
       "post_id": text.commentID,
       "user_id": me,
+      "comment": text,
+      "time": time,
+      "gif": this.gif
+    };
+    this.http.post('https://ggs.tv/api/v1/post.php?action=reply', JSON.stringify(data), { headers: headers }).subscribe(
+      () => { // If POST is success
+        window.location.reload();
+      },
+      (_error) => { // If POST is failed
+        "Error occurred";
+      }
+    );
+  }
+  replyreply(me, text) {
+    var headers = new HttpHeaders();
+    headers.append("Accept", 'application/json');
+    headers.append('Content-Type', 'application/json');
+    headers.append('Access-Control-Allow-Origin', '*');
+    let time = new Date(Date.now());
+    let data = {
+      "post_id": text.commentID,
+      "user_id": 294,
       "comment": text,
       "time": time,
       "gif": this.gif
@@ -226,6 +246,35 @@ export class PostDetailPage implements OnInit {
         document.getElementById("videoid").style.border = "none";
 
         this.replyForm.patchValue({
+          gif: this.gif
+        });
+      }
+    });
+    await modal.present();
+
+  };
+  async replyreplyGif(e) {
+    const modal = await this.modalController.create({
+      component: GiphyPage,
+      backdropDismiss: false,
+      cssClass: 'modal'
+    });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        this.gif = detail.data;
+
+        var elem = document.createElement("img");
+        elem.setAttribute("src", this.gif);
+        elem.setAttribute("height", "200");
+        elem.setAttribute("width", "100%");
+        elem.setAttribute("alt", "IMG");
+
+        document.getElementById("text").appendChild(elem);
+        document.getElementById("gifid").style.border = "thick solid lime";
+        document.getElementById("imageid").style.border = "none";
+        document.getElementById("videoid").style.border = "none";
+
+        this.replyreplyForm.patchValue({
           gif: this.gif
         });
       }
