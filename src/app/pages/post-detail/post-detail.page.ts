@@ -21,7 +21,7 @@ export class PostDetailPage implements OnInit {
 
   commentForm: FormGroup;
   replyForm: FormGroup;
-
+  replyReplyForm: FormGroup;
   name = 'angular-mentions';
 
   liked: any;
@@ -98,6 +98,13 @@ export class PostDetailPage implements OnInit {
       gif: [null],
 
     });
+    this.replyReplyForm = this.fb.group({
+      text: [null],
+      commentID: [null],
+
+      gif: [null],
+
+    });
     this.replyForm = this.fb.group({
       text: [null],
       commentID: [null],
@@ -110,8 +117,9 @@ export class PostDetailPage implements OnInit {
     element.classList.toggle("replies");
   }
 
-  showReply(toggle) {
+  showReply(toggle, id) {
     document.getElementById(toggle).classList.toggle("showReplyForm");
+    this.replyForm.get('commentID').setValue(id);
 
   }
   showReplyReply(toggle) {
@@ -119,7 +127,7 @@ export class PostDetailPage implements OnInit {
 
   }
 
-  reply(value) {
+  reply(text) {
     var headers = new HttpHeaders();
     headers.append("Accept", 'application/json');
     headers.append('Content-Type', 'application/json');
@@ -127,9 +135,9 @@ export class PostDetailPage implements OnInit {
 
     let time = new Date(Date.now());
     let data = {
-      "comment_id": value.commentID,
+      "comment_id": text.commentID,
       "user_id": this.me,
-      "reply": value.text,
+      "comment": text,
       "time": time,
       "gif": this.gif
 
