@@ -100,6 +100,7 @@ export class PostDetailPage implements OnInit {
     });
     this.replyForm = this.fb.group({
       text: [null],
+      commentID: [null],
       gif: [null],
 
     });
@@ -118,7 +119,7 @@ export class PostDetailPage implements OnInit {
 
   }
 
-  reply(id, text) {
+  reply(value) {
     var headers = new HttpHeaders();
     headers.append("Accept", 'application/json');
     headers.append('Content-Type', 'application/json');
@@ -126,14 +127,13 @@ export class PostDetailPage implements OnInit {
 
     let time = new Date(Date.now());
     let data = {
-      "comment_id": id,
+      "comment_id": value.commentID,
       "user_id": this.me,
-      "reply": text,
+      "reply": value.text,
       "time": time,
       "gif": this.gif
 
     };
-
     this.http.post('https://ggs.tv/api/v1/post.php?action=reply', JSON.stringify(data), { headers: headers }).subscribe(
       () => { // If POST is success
         window.location.reload();

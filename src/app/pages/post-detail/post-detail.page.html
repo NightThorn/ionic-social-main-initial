@@ -66,13 +66,14 @@
                 <ion-list>
                   <ion-item [id]="'toggleId_' + i" class="replyForm">
                     <form style="display: flex; width: 100%;" [formGroup]="replyForm"
-                      (ngSubmit)="reply(data, commentForm.value)">
+                      (ngSubmit)="reply(replyForm.value)">
                       <ion-row style="width: 100%; align-items: center;">
                         <ion-col size="8">
                           <input id="text" [mention]="items" contenteditable="true"
                             [mentionConfig]="{triggerChar:'@',maxItems:10, labelKey: 'user_name', dropUp: true}"
                             type="text" placeholder="Write your comment" formControlName="text" />
-                          <input id="commentIDhidden" type="hidden" formControlName="commentID" value={{cm.comment_id}}>
+                          <input id="commentIDhidden" type="hidden" formControlName="commentID"
+                            value={{cm.comment_id}}>
 
                         </ion-col>
                         <ion-col style="text-align: center; vertical-align: middle;" size="2">
@@ -125,8 +126,9 @@
                               Reply</ion-label>
                           </ion-item>
                           <ion-item [id]="'toggleId' + i" class="replyForm">
+
                             <form style="display: flex; width: 100%;" [formGroup]="replyForm"
-                              (ngSubmit)="reply(data, commentForm.value)">
+                              (ngSubmit)="reply(replyForm.value)">
                               <ion-row style="width: 100%; align-items: center;">
                                 <ion-col size="8">
                                   <input id="text" [mention]="items" contenteditable="true"
