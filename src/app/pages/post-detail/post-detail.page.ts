@@ -127,20 +127,18 @@ export class PostDetailPage implements OnInit {
 
   }
 
-  reply(text) {
+  reply(me, text) {
     var headers = new HttpHeaders();
     headers.append("Accept", 'application/json');
     headers.append('Content-Type', 'application/json');
     headers.append('Access-Control-Allow-Origin', '*');
-
     let time = new Date(Date.now());
     let data = {
-      "comment_id": text.commentID,
-      "user_id": this.me,
+      "post_id": text.commentID,
+      "user_id": me,
       "comment": text,
       "time": time,
       "gif": this.gif
-
     };
     this.http.post('https://ggs.tv/api/v1/post.php?action=reply', JSON.stringify(data), { headers: headers }).subscribe(
       () => { // If POST is success
@@ -150,9 +148,7 @@ export class PostDetailPage implements OnInit {
         "Error occurred";
       }
     );
-
   }
-
   submitComment(id, user, text) {
     var headers = new HttpHeaders();
     headers.append("Accept", 'application/json');

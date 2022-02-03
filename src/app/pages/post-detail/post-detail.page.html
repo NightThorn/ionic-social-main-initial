@@ -66,7 +66,7 @@
                 <ion-list>
                   <ion-item [id]="'toggleId_' + i" class="replyForm">
                     <form style="display: flex; width: 100%;" [formGroup]="replyForm"
-                      (ngSubmit)="reply(replyForm.value)">
+                      (ngSubmit)="reply(me, replyForm.value)">
                       <ion-row style="width: 100%; align-items: center;">
                         <ion-col size="8">
                           <input id="text" [mention]="items" contenteditable="true"
@@ -127,7 +127,7 @@
                           <ion-item [id]="'toggleId' + i" class="replyForm">
 
                             <form style="display: flex; width: 100%;" [formGroup]="replyReplyForm"
-                              (ngSubmit)="reply(replyReplyForm.value)">
+                              (ngSubmit)="reply(me, replyReplyForm.value)">
                               <ion-row style="width: 100%; align-items: center;">
                                 <ion-col size="8">
                                   <input id="text" [mention]="items" contenteditable="true"
