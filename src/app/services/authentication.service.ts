@@ -43,6 +43,9 @@ export class AuthenticationService {
   }
 
   async updateStoredUser(token: string, userId: number, subscribed: number, mod: number, staff: number, banned: number, points: number, wallet: number, user_package: number, boosted_posts: number) {
+    localStorage.setItem("Token", token);
+    localStorage.setItem('me', userId.toString());
+
     await this.storage.set(this.key_stored_user, {
       Token: token,
       UserID: userId,
@@ -60,7 +63,7 @@ export class AuthenticationService {
 
   destroy() {
     this.storage.remove(this.key_stored_user);
-
+    localStorage.removeItem("Token")
     this.reload();
   }
 

@@ -29,11 +29,10 @@ export class ProfileService {
   }
 
   public fetchProfile(user_id: number) {
-    const token = this.authService.activeStoredUser.getValue().Token;
-    if (token === '' || token === null) {
-      return;
-    }
-   
+    const token = localStorage.getItem('Token');
+
+
+
     this.httpClient.get(this.URL + user_id + "?auth_token=" + token).subscribe(response => {
       if (response['code'] !== 200) {
         // error state
@@ -50,11 +49,9 @@ export class ProfileService {
         special: JSON.stringify(user_id)
       }
     };
-    const token = this.authService.activeStoredUser.getValue().Token;
-    if (token === '' || token === null) {
-      return;
-    }
-    
+    const token = localStorage.getItem('Token');
+
+
     this.httpClient.get(this.URL + user_id + "?auth_token=" + token).subscribe(response => {
       if (response['code'] !== 200) {
         // error state

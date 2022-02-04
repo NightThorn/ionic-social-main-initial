@@ -560,6 +560,7 @@ export class DataService {
       })
     );
   }
+
   getBoosted() {
 
     return this.http.get(`https://ggs.tv/api/v1/boosted.php`).pipe(map((res: any) => {
@@ -576,6 +577,18 @@ export class DataService {
   getUser(user_id) {
 
     return this.http.get(`https://ggs.tv/api/v1/getuser.php?user=${user_id}`).pipe(map((res: any) => {
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  getUserID(user_name) {
+
+    return this.http.get(`https://ggs.tv/api/v1/getuserid.php?user_name=${user_name}`).pipe(map((res: any) => {
 
       return res;
     }),

@@ -221,6 +221,10 @@ const routes: Routes = [
   {
     path: 'newchat',
     loadChildren: () => import('./pages/newchat/newchat.module').then( m => m.NewchatPageModule)
+  },
+  {
+    path: 'mentionuser',
+    loadChildren: () => import('./pages/mentionuser/mentionuser.module').then( m => m.MentionuserPageModule)
   }
 
 ];
