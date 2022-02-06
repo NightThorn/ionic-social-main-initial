@@ -33,6 +33,7 @@ export class XpmodalPage implements OnInit {
   }
   async dismissModal() {
     await this.modalController.dismiss(close);
+    window.location.reload();
 
   }
   convert(xp) {
@@ -43,6 +44,5 @@ export class XpmodalPage implements OnInit {
     });
 
     this.dismissModal();
-    window.location.reload();
   }
 }
