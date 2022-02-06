@@ -22,7 +22,7 @@ export class XpmodalPage implements OnInit {
   ngOnInit() {
     this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       if (storedUser !== null) {
-       
+
         this.me = storedUser.UserID;
         this.xpForm = this.fb.group({
           message: [null]
@@ -33,6 +33,7 @@ export class XpmodalPage implements OnInit {
   }
   async dismissModal() {
     await this.modalController.dismiss(close);
+
   }
   convert(xp) {
     let data = {
@@ -42,5 +43,6 @@ export class XpmodalPage implements OnInit {
     });
 
     this.dismissModal();
+    window.location.reload();
   }
 }
