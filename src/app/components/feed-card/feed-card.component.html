@@ -59,7 +59,7 @@
       </video>
     </ion-item>
     <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'photos'">
-      <ion-img [src]='upload + _picture' *ngIf="_picture != ''; else loading"></ion-img>
+      <ion-img [src]='_picture' *ngIf="_picture != ''; else loading"></ion-img>
       <ng-template #loading>
         <ion-skeleton-text animated>
 
