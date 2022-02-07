@@ -269,7 +269,7 @@ export class FeedCardComponent implements OnInit {
     return repl;
   }
   at(text) {
-    var repl = text.replace(/@(\w+)/g, '<a href="user/#$1">#$1</a>');
+    var repl = text.replace(/@(\w+)/g, '<a href="mentionuser?username=$1">$1</a>');
 
     return repl;
   }

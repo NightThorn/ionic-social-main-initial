@@ -59,6 +59,7 @@ export class PostDetailPage implements OnInit {
 
     this.dataService.getPostDetails(this.data).subscribe(res => {
       this.post = res.message;
+
       console.log(this.post);
       for (let i = 0; i < this.post.length; i++) {
         this.offset = moment().utcOffset();
