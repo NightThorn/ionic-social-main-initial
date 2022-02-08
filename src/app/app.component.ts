@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
     private storage: Storage, private router: Router
   ) {
     moment.locale('en');
+    this.createCacheFolder();
   }
   async createCacheFolder() {
 
