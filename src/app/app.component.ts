@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Plugins } from '@capacitor/core';
+import { Directory } from '@capacitor/filesystem';
 import { Storage } from "@ionic/storage-angular";
 import moment from 'moment';
+const { Filesystem } = Plugins;
 
 
 @Component({
@@ -15,6 +18,15 @@ export class AppComponent implements OnInit {
   ) {
     moment.locale('en');
   }
+  async createCacheFolder() {
+
+    await Filesystem.mkdir({
+
+      directory: Directory.Cache,
+      path: `CACHED-IMG`
+    });
+  }
+
   goHome() {
     this.router.navigate(['tabs/explore']);
   }

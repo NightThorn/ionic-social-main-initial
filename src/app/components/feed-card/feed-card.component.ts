@@ -10,8 +10,10 @@ import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { SharemodalPage } from 'src/app/pages/sharemodal/sharemodal.page';
 import { ModalController } from '@ionic/angular';
-import { Plugins } from '@capacitor/core';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Plugins } from '@capacitor/core';
+const { Filesystem } = Plugins;
+import { Directory, Encoding } from '@capacitor/filesystem';
 
 
 const CACHE_FOLDER = 'CACHED-IMG';
@@ -21,7 +23,7 @@ const CACHE_FOLDER = 'CACHED-IMG';
   styleUrls: ['./feed-card.component.scss'],
 })
 export class FeedCardComponent implements OnInit {
-  _src = '';
+  _picture = '';
   upload = 'https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/';
   @Input() avatar: string;
   @Input() name: string;
@@ -44,7 +46,59 @@ export class FeedCardComponent implements OnInit {
   @Input() tag: string;
   @Input() grinding: number;
   @Input() colored: any;
-  @Input() picture: string;
+  @Input()
+  set picture(pic) {
+    console.log(pic);
+    const imageName = pic.split('/').pop();
+    const fileType = imageName.split('.').pop();
+
+    Filesystem.readFile({
+
+      directory: Directory.Cache,
+      path: `${CACHE_FOLDER}/${imageName}`
+    }).then(readFile => {
+      console.log('LOCAL FILE', readFile);
+      this._picture = `data:image/${fileType};base64,${readFile.data}`;
+    }).catch(async e => {
+      await this.storeImage(pic, imageName);
+      Filesystem.readFile({
+        directory: Directory.Cache,
+        path: `${CACHE_FOLDER}/${imageName}`
+      }).then(readFile => {
+
+        this._picture = `data:image/${fileType};base64,${readFile.data}`;
+
+      })
+    });
+
+  };
+  async storeImage(url, path) {
+    const response = await fetch(`https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/${url}`);
+    // convert to a Blob
+    const blob = await response.blob();
+    // convert to base64 data, which the Filesystem plugin requires
+    const base64Data = await this.convertBlobToBase64(blob) as string;
+
+    const savedFile = await Filesystem.writeFile({
+      path: `${CACHE_FOLDER}/${path}`,
+      data: base64Data,
+      directory: Directory.Cache
+    });
+    return savedFile;
+  }
+  // helper function
+  convertBlobToBase64(blob: Blob) {
+    return new Promise((resolve, reject) => {
+
+      const reader = new FileReader;
+      reader.onload = () => {
+
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(blob);
+    });
+  }
+
 
   imgConfig = {
     spaceBetween: 6,

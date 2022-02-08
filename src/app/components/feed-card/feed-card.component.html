@@ -59,26 +59,56 @@
       </video>
     </ion-item>
     <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'photos'">
-      <ion-img [src]='upload + picture'></ion-img>
+      <ion-img [src]='_picture' *ngIf="_picture != ''; else loading"></ion-img>
+      <ng-template #loading>
+        <ion-skeleton-text animated>
+
+        </ion-skeleton-text>
+      </ng-template>
     </ion-item>
     <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'gif'">
       <ion-img src="{{gif}}"></ion-img>
     </ion-item>
     <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_picture'">
-      <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"></ion-img>
+      <ion-img [src]='_picture' *ngIf="_picture != ''; else loading"></ion-img>
+      <ng-template #loading>
+        <ion-skeleton-text animated>
+
+        </ion-skeleton-text>
+      </ng-template>
     </ion-item>
     <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_cover'">
-      <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"> </ion-img>
+      <ion-img [src]='_picture' *ngIf="_picture != ''; else loading"></ion-img>
+      <ng-template #loading>
+        <ion-skeleton-text animated>
+
+        </ion-skeleton-text>
+      </ng-template>
     </ion-item>
     <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'cover_picture'">
-      <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"></ion-img>
+      <ion-img [src]='_picture' *ngIf="_picture != ''; else loading"></ion-img>
+      <ng-template #loading>
+        <ion-skeleton-text animated>
+
+        </ion-skeleton-text>
+      </ng-template>
     </ion-item>
     <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'group_cover'">
-      <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"></ion-img>
+      <ion-img [src]='_picture' *ngIf="_picture != ''; else loading"></ion-img>
+      <ng-template #loading>
+        <ion-skeleton-text animated>
+
+        </ion-skeleton-text>
+      </ng-template>
     </ion-item>
 
     <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'group_picture'">
-      <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{picture}}"></ion-img>
+      <ion-img [src]='_picture' *ngIf="_picture != ''; else loading"></ion-img>
+      <ng-template #loading>
+        <ion-skeleton-text animated>
+
+        </ion-skeleton-text>
+      </ng-template>
     </ion-item>
     <div *ngIf="type === 'media'">
       <ion-item lines="none" *ngFor="let share of media">
