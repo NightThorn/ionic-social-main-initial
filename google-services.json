@@ -112,6 +112,42 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996502230755:android:809104213bfa85d14197d6",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "996502230755-gm9fnlpcmuvsdmps7u283grj92rrkr5h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBqD1jRLGHUb-vDk17ElGqm5eeClCOxOA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "996502230755-gm9fnlpcmuvsdmps7u283grj92rrkr5h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "996502230755-13me474n36su363r56useuoeh8defkel.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.gamerapp"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
