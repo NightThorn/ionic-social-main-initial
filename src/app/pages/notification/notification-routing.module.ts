@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'notification/all',
+        redirectTo: 'all',
         pathMatch: 'full'
       },
       {
