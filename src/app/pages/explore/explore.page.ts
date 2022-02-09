@@ -169,6 +169,14 @@ export class ExplorePage implements OnInit {
   }
 
   doRefresh(event) {
+    this.dataService.getXP(this.me).subscribe(res => {
+      this.xp = res.message;
+      console.log(this.xp);
+
+      this.userXP = this.xp[0]['user_points'];
+      this.myWallet = this.numFormatter(this.xp[0]['user_wallet_balance']);
+
+    });
     if (this.filter = "all") {
       this.dataService.getAllPosts(this.me).subscribe(res => {
         this.feeds = res.message;
@@ -235,7 +243,14 @@ export class ExplorePage implements OnInit {
       }
 
     });
-    modal.present();
+    modal.onDidDismiss().then((data) => {
+      if (data !== null) {
+        this.userXP = 0;
+        //alert('Modal Sent Data :'+ dataReturned);
+      }
+    });
+
+    return await modal.present();
   }
 
   numFormatter(num) {
