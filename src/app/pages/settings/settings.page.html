@@ -17,20 +17,21 @@
           </ion-list-header>
           <ion-item lines="none" class="ion-no-padding">
             <ion-thumbnail slot="start">
-               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.user_picture}}" ></ion-img>
+              <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.user_picture}}"></ion-img>
             </ion-thumbnail>
             <ion-label class="ion-no-margin">
               <div class="text-container">
                 <h2 class="item-title">{{ item.user_name }}</h2>
               </div>
               <div style=" display: flex; align-items:center;">
-                 <ion-img (click)="openXPModal(item.user_points)" style="width: 30px; margin: 10px;"
+                <ion-img (click)="openXPModal(item.user_points)" style="width: 30px; margin: 10px;"
                   src="assets/images/XP.png"></ion-img>
                 <ion-label style="font-size: small;" (click)="gotoShop()">{{item.user_points}}</ion-label>
 
-                 <ion-img (click)="gotoShop()" style="width: 30px; margin: 10px;" src="assets/images/heads.png"></ion-img>
+                <ion-img (click)="gotoShop()" style="width: 30px; margin: 10px;" src="assets/images/heads.png">
+                </ion-img>
                 <ion-label style="font-size: small;" (click)="gotoShop()">{{item.user_wallet_balance}}</ion-label>
-               
+
               </div>
             </ion-label>
           </ion-item>
@@ -74,15 +75,15 @@
               <p>View/Unblock users</p>
             </ion-label>
           </ion-item>
-<ion-item (click)="grind(me)" lines="none">
-  <ion-avatar slot="start" class="icon-bg">
-<ion-icon name="barbell-outline"></ion-icon>
-  </ion-avatar>
-  <ion-label>
-    <h2>Set your Grinding Hashtag</h2>
-    <p>Show your support for an Org</p>
-  </ion-label>
-</ion-item>
+          <ion-item (click)="grind(me)" lines="none">
+            <ion-avatar slot="start" class="icon-bg">
+              <ion-icon name="barbell-outline"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2>Set your Grinding Hashtag</h2>
+              <p>Show your support for an Org</p>
+            </ion-label>
+          </ion-item>
 
           <ion-list-header>
             <ion-label>Referral</ion-label>
@@ -98,15 +99,15 @@
               <p>Each referral code used awards 200xp to you, and 100xp to your referral!</p>
             </ion-label>
           </ion-item>
-<ion-item>
-  <div style=" display: flex; align-items:center;">
-    <ion-label style="font-size: small;">All-Time </ion-label>
+          <ion-item>
+            <div style=" display: flex; align-items:center;">
+              <ion-label style="font-size: small;">All-Time </ion-label>
 
-     <ion-img style="width: 20px; margin: 5px; " src="assets/images/XP.png"></ion-img>
-    <ion-label style="font-size: small;">: {{item.total_xp}}</ion-label>
-  </div>
+              <ion-img style="width: 20px; margin: 5px; " src="assets/images/XP.png"></ion-img>
+              <ion-label style="font-size: small;">: {{item.total_xp}}</ion-label>
+            </div>
 
-</ion-item>
+          </ion-item>
           <ion-row>
             <ion-list class="ion-no-padding">
               <ion-list-header>
@@ -149,8 +150,8 @@
     </ion-row>
   </ion-grid>
 
-  <ion-item lines="none" (click)="logout()">
-    <ion-label>
+  <ion-item style="width: 90%;" lines="none" (click)="logout()">
+    <ion-label style="text-align: center;">
       <h2 style="color: red;">Log out</h2>
     </ion-label>
   </ion-item>

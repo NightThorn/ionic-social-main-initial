@@ -92,11 +92,11 @@ export class SettingsPage implements OnInit {
 
 
   }
-   logout() {
+  logout() {
     this.authService.destroy();
-      const x = localStorage.getItem("notiToken");
+    const x = localStorage.getItem("notiToken");
 
-   this.fcm.removeToken(this.me, x);
+    this.fcm.removeToken(this.me, x);
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 
@@ -159,7 +159,6 @@ export class SettingsPage implements OnInit {
 
     const modal = await this.modalController.create({
       component: EditPage,
-      cssClass: 'modal',
       backdropDismiss: false,
       componentProps: {
         'id': id,
