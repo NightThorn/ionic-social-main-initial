@@ -14,8 +14,9 @@ import { EntergiveawaymodalPageModule } from '../../entergiveawaymodal/entergive
     CommonModule,
     FormsModule,
     IonicModule,
+    GiveawaysPageRoutingModule,
     EntergiveawaymodalPageModule,
-    GiveawaysPageRoutingModule
+
   ],
   declarations: [GiveawaysPage]
 })
