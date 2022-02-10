@@ -14,7 +14,8 @@
         <div class="profile ion-padding">
           <div class="profile-user">
             <ion-thumbnail>
-               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ group.group_picture }}" ></ion-img>
+              <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ group.group_picture }}">
+              </ion-img>
             </ion-thumbnail>
             <ul class="profile-text ion-padding-horizontal" *ngIf="group">
               <li>
@@ -51,9 +52,9 @@
             <ion-button style="color: white;" (click)="grinding(group_id)" class="follow-btn">Grinders
 
             </ion-button>
-<ion-button style="color: white;" (click)="admins(group_id)" class="follow-btn">Group Admins
+            <ion-button style="color: white;" (click)="admins(group_id)" class="follow-btn">Group Admins
 
-</ion-button>
+            </ion-button>
           </ion-buttons>
           <ion-button *ngIf="admin == 0 && group.group_category != 19 && joined == 0 && group.group_category != 20"
             (click)="join(group.group_id)" class="follow-btn">Join
@@ -114,9 +115,10 @@
               <ion-row style="width: 100%;" *ngFor="let item of feed">
                 <app-feed-card style="width: 100%;" [avatar]="item.user_picture" [name]="item.user_name"
                   [post_id]="item.post_id" [date]="item.time" [text]="item.text" [origin]="item.origin_id"
-                  [user_id]="item.user_id" [gif]="item.gif" [picture]="item.picture_source" [videosrc]="item.source"
-                  [type]="item.post_type" [colored]="item.colored_pattern" [likes]="item.total" [comments]="item.comments"
-                  [shares]="item.shares" [separator]="true">
+                  [user_id]="item.user_id" [picture]="item.picture_source" [videosrc]="item.source"
+                  [type]="item.post_type" [likes]="item.total" [comments]="item.comments" [shares]="item.shares"
+                  [colored]="item.colored_pattern" [gif]="item.gif" [tag]="item.tag" [grinding]="item.grinding"
+                  [separator]="true" [boosted]="item.boosted">
                 </app-feed-card>
               </ion-row>
             </ion-col>
@@ -124,8 +126,9 @@
           <ion-row *ngSwitchCase="'photos'" class="ion-no-padding">
 
             <ion-col size="6" *ngFor="let pic of media">
-               <ion-img class="image-element" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
-                (click)="openModal(pic.source)" ></ion-img>
+              <ion-img class="image-element"
+                src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
+                (click)="openModal(pic.source)"></ion-img>
 
             </ion-col>
           </ion-row>

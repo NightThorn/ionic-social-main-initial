@@ -205,7 +205,6 @@ export class UserPage implements OnInit, OnDestroy {
       }
     };
     this.router.navigate(['/userfriends'], navigationExtras).then(() => {
-      window.location.reload();
     });
   }
 

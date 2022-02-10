@@ -223,7 +223,7 @@ export class ExplorePage implements OnInit {
     this.content.scrollToTop(2000);
 
   }
-  
+
   eventDetail(item) {
     let navigationExtras: NavigationExtras = {
       state: {
@@ -252,15 +252,14 @@ export class ExplorePage implements OnInit {
       componentProps: {
         'xp': xp
       }
-
     });
     modal.onDidDismiss().then((data) => {
-      if (data !== null) {
+      console.log(data);
+      const dataXP = data['data'];
+      if (dataXP === "good") {
         this.userXP = 0;
-        //alert('Modal Sent Data :'+ dataReturned);
       }
     });
-
     return await modal.present();
   }
 

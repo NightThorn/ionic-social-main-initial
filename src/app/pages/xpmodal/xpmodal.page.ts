@@ -16,6 +16,7 @@ export class XpmodalPage implements OnInit {
   gg: number;
   activeStoredUserSubscription$;
   me: number;
+  result: Object;
 
   constructor(private modalController: ModalController, private http: HttpClient, private authService: AuthenticationService, private fb: FormBuilder) { }
 
@@ -31,8 +32,11 @@ export class XpmodalPage implements OnInit {
       }
     });
   }
-  async dismissModal() {
-    await this.modalController.dismiss(close);
+  async dismiss() {
+    await this.modalController.dismiss();
+  }
+  async dismissModal(result) {
+    await this.modalController.dismiss(result);
 
   }
   convert(xp) {
@@ -41,7 +45,8 @@ export class XpmodalPage implements OnInit {
     };
     this.http.post('https://ggs.tv/api/v1/xp.php?tab=convert&user=' + this.me, JSON.stringify(data)).subscribe(res => {
     });
+    this.result = "good";
 
-    this.dismissModal();
+    this.dismissModal(this.result);
   }
 }
