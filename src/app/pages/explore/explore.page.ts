@@ -10,6 +10,7 @@ import { VideoModalPage } from '../video-modal/video-modal.page';
 import moment from 'moment';
 import { XpmodalPage } from '../xpmodal/xpmodal.page';
 import { Plugins } from '@capacitor/core';
+import { IonContent } from '@ionic/angular';
 
 const { Filesystem } = Plugins;
 @Component({
@@ -20,6 +21,8 @@ const { Filesystem } = Plugins;
 export class ExplorePage implements OnInit {
   @ViewChild('myvideo') myVideo: ElementRef;
   @ViewChildren('player') videoPlayers: QueryList<any>;
+  @ViewChild(IonContent) content: IonContent;
+
   currentPlaying = null;
   feeds = [];
   latest: any;
@@ -61,6 +64,7 @@ export class ExplorePage implements OnInit {
   boost: any;
   total: any;
   userXP: any;
+  isShown: boolean;
 
 
   constructor(private router: Router, private authService: AuthenticationService, public modalController: ModalController, private storage: Storage, private dataService: DataService) { }
@@ -167,7 +171,12 @@ export class ExplorePage implements OnInit {
   gotoShop() {
     this.router.navigate(['shop']);
   }
-
+  scrollStart(event) {
+    this.isShown = false;
+  }
+  scrollStop(event) {
+    this.isShown = true;
+  }
   doRefresh(event) {
     this.dataService.getXP(this.me).subscribe(res => {
       this.xp = res.message;
@@ -211,8 +220,10 @@ export class ExplorePage implements OnInit {
     setTimeout(() => {
       event.target.complete();
     }, 1000);
-  }
+    this.content.scrollToTop(2000);
 
+  }
+  
   eventDetail(item) {
     let navigationExtras: NavigationExtras = {
       state: {

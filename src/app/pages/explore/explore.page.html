@@ -20,7 +20,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [scrollEvents]="true" (ionScroll)="didScroll()" [fullscreen]="true" class="ion-padding-horizontal">
+<ion-content [scrollEvents]="true" (ionScroll)="didScroll()" (ionScrollStart)="scrollStart($event)"
+  (ionScrollEnd)="scrollStop($event)" [fullscreen]="true" class="ion-padding-horizontal">
   <ion-grid>
 
     <ion-row>
@@ -77,5 +78,10 @@
 <ion-fab vertical="bottom" horizontal="end" slot="fixed">
   <ion-fab-button (click)="openModalPost()">
     <ion-icon style="color: black;" name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+<ion-fab *ngIf="isShown" vertical="bottom" horizontal="start" slot="fixed">
+  <ion-fab-button (click)="doRefresh($event)">
+    <ion-icon  name="chevron-up-outline"></ion-icon>
   </ion-fab-button>
 </ion-fab>
