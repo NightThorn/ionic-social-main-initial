@@ -9,6 +9,7 @@ import { Haptics } from '@capacitor/haptics';
 import { StoredUser } from 'src/app/models/stored-user';
 import { SharemodalPage } from '../../sharemodal/sharemodal.page';
 import { HttpClient } from '@angular/common/http';
+import moment from 'moment';
 
 @Component({
   selector: 'app-clips',
@@ -26,6 +27,7 @@ export class ClipsPage implements OnInit {
   shares: number;
   comments: number;
   image: string = "./assets/images/ggsgray.png";
+  offset: number;
 
   constructor(private dataService: DataService, private http: HttpClient, private modalController: ModalController, private authService: AuthenticationService, private router: Router, public loadingController: LoadingController, private auth: AuthenticationService, private gestureCtrl: GestureController) { }
 
@@ -38,6 +40,10 @@ export class ClipsPage implements OnInit {
       this.dataService.getRandomClip().subscribe(res => {
         this.clip = res.message;
         this.post_id = res.message['0']['post_id'];
+        this.offset = moment().utcOffset();
+
+        this.clip[0]['time'] = moment.utc(this.clip[0]['time']).fromNow();
+
 
         window.onbeforeunload = () => this.ionViewWillLeave();
       })
@@ -47,6 +53,10 @@ export class ClipsPage implements OnInit {
   doRefresh(event) {
     this.dataService.getRandomClip().subscribe(res => {
       this.clip = res.message;
+      this.post_id = res.message['0']['post_id'];
+      this.offset = moment().utcOffset();
+
+      this.clip[0]['time'] = moment.utc(this.clip[0]['time']).fromNow();
 
     });
     setTimeout(() => {
