@@ -32,7 +32,7 @@
         </ion-item>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row style="padding-bottom: 10px;">
       <ion-col class="ion-no-padding">
         <ion-slides [options]="storiesConfig">
           <ion-slide style="background-color: #010f04; border-radius: 10px;" (click)="openVideoModal(item.source)"
@@ -44,7 +44,7 @@
         </ion-slides>
       </ion-col>
     </ion-row>
-    <ion-row style="width: 100%;" *ngFor="let item of boost">
+    <ion-row style="width: 100%; padding-bottom: 10px;" *ngFor="let item of boost">
       <p style="font-size: xx-small; color: gold; margin: 0;">Boosted</p>
       <app-feed-card style="width: 100%; border: 3px solid gold;" [avatar]="item.user_picture" [name]="item.user_name"
         [post_id]="item.post_id" [date]="item.time" [text]="item.text" [origin]="item.origin_id"

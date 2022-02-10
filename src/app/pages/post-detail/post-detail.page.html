@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding-horizontal">
-  <ion-grid>
+  <ion-grid style="padding-bottom: 60px;">
     <ion-row>
       <ion-row style="width: 100%;">
         <ion-col *ngFor="let item of post">
@@ -169,11 +169,11 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <form style="bottom: 0; display: flex; position: fixed; width: 100%;" [formGroup]="commentForm"
+  <form style="bottom: 0;  display: flex; position: fixed; width: 100%;" [formGroup]="commentForm"
     (ngSubmit)="submitComment(data, me, commentForm.value)">
     <ion-row style="width: 100%; align-items: center;">
       <ion-col size="8">
-        <input id="text" [mention]="items" contenteditable="true"
+        <input style="border: 2px solid #1a3001;" id="text" [mention]="items" contenteditable="true"
           [mentionConfig]="{triggerChar:'@',maxItems:10, labelKey: 'user_name', dropUp: true}" type="text"
           placeholder="Write your comment" formControlName="text" />
       </ion-col>
