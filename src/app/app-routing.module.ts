@@ -19,10 +19,7 @@ const routes: Routes = [
     path: 'introduction',
     loadChildren: () => import('./pages/introduction/introduction.module').then(m => m.IntroductionPageModule)
   },
-  {
-    path: 'register',
-    loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule)
-  },
+
   {
     path: 'tabs',
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule), canActivate: [IntroGuard, AuthGuard]
@@ -43,6 +40,10 @@ const routes: Routes = [
   {
     path: 'post-detail',
     loadChildren: () => import('./pages/post-detail/post-detail.module').then(m => m.PostDetailPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule)
   },
   {
     path: 'welcome',

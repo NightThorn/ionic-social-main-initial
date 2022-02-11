@@ -14,7 +14,7 @@ import { ToastController } from '@ionic/angular';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(
     private storage: Storage, private router: Router, private swUpdate: SwUpdate, private toastController: ToastController,
 

@@ -52,11 +52,7 @@ export class LoginPage implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-        this.router.navigate(['tabs/explore']);
-      }
-    });
+  
 
     this.loginForm = this.formBuilder.group({
       email: [null, [Validators.required, emailValidator]],
