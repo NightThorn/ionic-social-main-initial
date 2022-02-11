@@ -16,7 +16,6 @@ import { Firebase } from '@ionic-native/firebase/ngx';
 import { environment } from './../environments/environment';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { JwtInterceptor } from '@auth0/angular-jwt';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCddHyUNEHKoKtqcdlgbhKSQsIjJHtpjIs",
@@ -50,7 +49,6 @@ const firebaseConfig = {
     AccessProviders,
     Firebase,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     ProfileService
   ],
   bootstrap: [

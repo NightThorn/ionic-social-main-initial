@@ -6,7 +6,6 @@ import { emailValidator } from 'src/app/validators/email.validators';
 import { passwordValidator } from 'src/app/validators/password.validator';
 import { AccessProviders } from '../../providers/access-providers';
 import { Storage } from '@ionic/storage-angular';
-import { AuthenticationService } from "../../services/authentication.service";
 import { StoredUser } from "../../models/stored-user";
 import { FcmService } from 'src/app/services/fcm.service';
 import {
@@ -15,6 +14,7 @@ import {
   PushNotifications,
   Token,
 } from '@capacitor/push-notifications';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -52,7 +52,7 @@ export class LoginPage implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-  
+
 
     this.loginForm = this.formBuilder.group({
       email: [null, [Validators.required, emailValidator]],
@@ -105,7 +105,7 @@ export class LoginPage implements OnInit, OnDestroy {
     const loading = await this.loadingController.create();
     await loading.present();
 
-    this.authService.doLogin(this.loginForm.value).subscribe((data: any) => {
+    this.authService.signIn(this.loginForm.value).subscribe((data: any) => {
       if (data['code'] !== 200) {
         // error toast
         let msg = '';
@@ -129,7 +129,6 @@ export class LoginPage implements OnInit, OnDestroy {
       this.fcm.getToken(this.token, userData['user_id']);
       localStorage.setItem("notiToken", this.token);
 
-      this.authService.updateStoredUser(userData['token'], userData['user_id'], userData['subscribed'], userData['mod'], userData['staff'], userData['banned'], userData['points'], userData['wallet'], userData['user_package'], userData['boosted_posts']);
       loading.dismiss();
     });
 
