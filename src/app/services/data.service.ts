@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import mockDataJson from 'src/app/data/data.json';
 import { HttpClient } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
-  mockData = mockDataJson;
 
   constructor(private http: HttpClient) { }
 
@@ -354,27 +352,8 @@ export class DataService {
     );
 
   }
-  getHistories() {
-    return this.mockData.histories;
-  }
 
-  getSeenFirtsHistories() {
-    return this.mockData.histories.sort((story1: any, story2: any) =>
-      story1.seen > story2.seen ? 1 : story1.seen == story2.seen ? 0 : -1
-    );
-  }
 
-  getArticles() {
-    return this.mockData.articles;
-  }
-
-  getEvents() {
-    return this.mockData.events;
-  }
-
-  getFollow() {
-    return this.mockData.follow;
-  }
 
 
 
@@ -838,9 +817,7 @@ export class DataService {
       })
     );
   }
-  getNotifications() {
-    return this.mockData.notifications;
-  }
+
 
 
   fetchBadges(user_id: number) {

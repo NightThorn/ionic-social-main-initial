@@ -1,0 +1,18 @@
+ion-content {
+    --background: #0081ca;
+}
+
+ion-slides {
+    height: 100%;
+    --bullet-background-active: #fff;
+    --bullet-background: #000;
+}
+
+ion-slide {
+    display: flex;
+    flex-direction: column;
+}
+
+.intro-text {
+    width: 70%;
+}

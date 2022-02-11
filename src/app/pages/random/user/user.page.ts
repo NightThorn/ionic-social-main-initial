@@ -120,7 +120,6 @@ export class UserPage implements OnInit {
 
         })
         // this.data = this.profileService.fetchProfile(this.x);
-        this.events = this.dataService.getEvents();
       });
 
     });
@@ -245,7 +244,6 @@ export class UserPage implements OnInit {
 
           })
           // this.data = this.profileService.fetchProfile(this.x);
-          this.events = this.dataService.getEvents();
         });
       }
     });

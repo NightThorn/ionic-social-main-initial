@@ -1,33 +1,46 @@
 import { Injectable } from '@angular/core';
 import 'rxjs-compat/add/operator/timeout';
 import 'rxjs-compat/add/operator/map';
-import { BehaviorSubject } from "rxjs";
-import { Storage } from "@ionic/storage-angular";
+import { BehaviorSubject, from, Observable } from "rxjs";
 import { StoredUser } from "../models/stored-user";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { Storage } from '@capacitor/storage';
+
+const TOKEN_KEY = 'my-token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
+  isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  token = '';
   key_token = 'auth_token';
   key_user_id = 'auth_user_id';
   key_stored_user = 'auth_stored_user';
-
   private _storage: Storage;
 
   activeStoredUser: BehaviorSubject<StoredUser> = new BehaviorSubject<StoredUser>(null);
 
-  server: string = 'https://ggs.tv/api/v1/';
+  url: string = 'https://ggs.tv/api/v1/';
 
   constructor(
     public http: HttpClient,
     public storage: Storage
   ) {
     this.init();
-  }
+    this.loadToken();
 
+  }
+  private async loadToken() {
+    const token = await Storage.get({ key: TOKEN_KEY });
+    if (token && token.value) {
+      this.token = token.value;
+      this.isAuthenticated.next(true);
+    } else {
+      this.isAuthenticated.next(false);
+    }
+  }
   async init() {
     this._storage = await this.storage.create();
     this.reload();
@@ -67,12 +80,35 @@ export class AuthenticationService {
     this.reload();
   }
 
-  doLogin(email, password) {
-    return this.http.post(this.server + "/auth/login", {
-      user_email: email,
-      user_password: password
-    })
+
+  doLogin(credentials: { email, password }): Observable<any> {
+    return this.http.post(`${this.url}/auth/login`, credentials).pipe(
+      map((data: any) => data.token),
+      switchMap(token => {
+        return from(Storage.set({ key: TOKEN_KEY, value: token }));
+      }),
+      tap(_ => {
+        this.isAuthenticated.next(true);
+      })
+    )
   }
 
+
+  signUp(credentials) {
+    return this.http.post(`https://ggs.tv/appregister.php`, credentials).pipe(
+      map((data: any) => data.token),
+      switchMap(token => {
+        return from(Storage.set({ key: TOKEN_KEY, value: token }));
+      }),
+      tap(_ => {
+        this.isAuthenticated.next(true);
+      })
+    )
+  }
+  
+  sendPasswordReset(email) {
+    // Implement if it exists on your API!
+    return this.http.post(`${this.url}/pw-reset.php`, { email });
+  }
 
 }

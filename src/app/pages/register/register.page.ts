@@ -18,6 +18,7 @@ user_email: string = "";
 user_password: string = "";
 user_password_confirm: string = "";
 code: string = "";
+groupcode: string = "";
 
 disabledButton;
 
@@ -44,7 +45,7 @@ disabledButton;
       phone: [null, [Validators.required, Validators.pattern('^[0-9]+$')]],
       password: [null, [Validators.required, passwordValidator]],
       code: null,
-
+      groupcode: null
     });
   }
 
@@ -99,7 +100,8 @@ if(this.user_name==""){
       user_name: this.user_name,
       user_email: this.user_email,
       user_password: this.user_password,
-      code: this.code
+      code: this.code,
+      groupcode: this.groupcode
 
     }
 

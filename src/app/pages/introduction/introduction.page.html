@@ -1,0 +1,34 @@
+<ion-content>
+  <ion-slides pager="true">
+
+    <!-- Slide 1 -->
+    <ion-slide>
+      <ion-text color="light" class="intro-text ion-margin-bottom">
+        <h1>Welcome to our App!</h1>
+        <p>Ready to get stuff done?</p>
+      </ion-text>
+      <ion-button color="secondary" class="ion-margin-top" (click)="next()">Next</ion-button>
+    </ion-slide>
+
+    <!-- Slide 2 -->
+    <ion-slide>
+      <ion-text color="light" class="intro-text ion-margin-bottom">
+        <!-- Perhaps add an image? -->
+        <!-- <img src="assets/imgs/intro.png"> -->
+        <h1>Feature 1</h1>
+        <p>Description of my the app feature.</p>
+      </ion-text>
+      <ion-button color="secondary" class="ion-margin-top" (click)="next()">Next</ion-button>
+    </ion-slide>
+
+    <!-- Slide 3 -->
+    <ion-slide>
+      <ion-text color="light" class="intro-text ion-margin-bottom">
+        <h1>Feature 2</h1>
+        <p>Description of my the app feature.</p>
+      </ion-text>
+      <ion-button color="secondary" class="ion-margin-top" (click)="finish()">Enjoy the App</ion-button>
+    </ion-slide>
+
+  </ion-slides>
+</ion-content>

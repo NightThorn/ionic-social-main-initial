@@ -109,7 +109,7 @@ export class LoginPage implements OnInit, OnDestroy {
     const loading = await this.loadingController.create();
     await loading.present();
 
-    this.authService.doLogin(this.email, this.password).subscribe((data: any) => {
+    this.authService.doLogin(this.loginForm.value).subscribe((data: any) => {
       if (data['code'] !== 200) {
         // error toast
         let msg = '';
@@ -177,7 +177,11 @@ export class LoginPage implements OnInit, OnDestroy {
   goBack() {
     this.router.navigate(['/welcome']);
   }
+  goToRegister() {
 
+    this.router.navigate(['/register']);
+
+  }
   async presentLoading() {
     this.loading = await this.loadingController.create({
       cssClass: 'loader-container',
@@ -188,6 +192,42 @@ export class LoginPage implements OnInit, OnDestroy {
     });
     await this.loading.present();
   }
+
+
+
+  async sendPasswordReset() {
+    const alert = await this.alertCtrl.create({
+      header: 'Reset Password',
+      message: 'Please enter your email to reset your password',
+      inputs: [
+        {
+          name: 'email',
+          type: 'text'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Reset',
+          handler: (data) => {
+            this.authService.sendPasswordReset(data.email).subscribe(async () => {
+              let alert = await this.alertCtrl.create({
+                header: 'Success',
+                message: 'Check your emails to complete your password reset!',
+                buttons: ['OK']
+              });
+              alert.present();
+            });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
 }
 
 

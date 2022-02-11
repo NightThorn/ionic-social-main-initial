@@ -15,7 +15,6 @@ export class EventsPage implements OnInit {
   constructor(private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
-    this.events = this.dataService.getEvents();
   }
 
 

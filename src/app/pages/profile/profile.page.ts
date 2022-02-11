@@ -116,7 +116,6 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     })
     // this.data = this.profileService.fetchProfile(this.x);
-    this.events = this.dataService.getEvents();
 
   };
 

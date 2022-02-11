@@ -5,6 +5,8 @@ import { Directory } from '@capacitor/filesystem';
 import { Storage } from "@ionic/storage-angular";
 import moment from 'moment';
 const { Filesystem } = Plugins;
+import { SwUpdate } from '@angular/service-worker';
+import { ToastController } from '@ionic/angular';
 
 
 @Component({
@@ -12,13 +14,18 @@ const { Filesystem } = Plugins;
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   constructor(
-    private storage: Storage, private router: Router
+    private storage: Storage, private router: Router, private swUpdate: SwUpdate, private toastController: ToastController,
+
+
   ) {
     moment.locale('en');
+    this.initializeApp();
+
     this.createCacheFolder();
   }
+
   async createCacheFolder() {
 
     await Filesystem.mkdir({
@@ -27,7 +34,29 @@ export class AppComponent implements OnInit {
       path: `CACHED-IMG`
     });
   }
-
+  initializeApp() {
+    this.checkSwUpdate();
+  }
+  async checkSwUpdate() {
+    this.swUpdate.available.subscribe(async evt => {
+      const toast = await this.toastController.create({
+        header: 'New Version available',
+        message: 'Click to update',
+        position: 'bottom',
+        buttons: [
+          {
+            side: 'end',
+            icon: 'star',
+            text: 'Update',
+            handler: () => {
+              window.location.reload();
+            },
+          },
+        ],
+      });
+      toast.present();
+    });
+  }
   goHome() {
     this.router.navigate(['tabs/explore']);
   }

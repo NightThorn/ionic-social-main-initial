@@ -163,7 +163,6 @@ export class UserPage implements OnInit, OnDestroy {
         }
 
       })
-        this.events = this.dataService.getEvents();
       
     });
   };

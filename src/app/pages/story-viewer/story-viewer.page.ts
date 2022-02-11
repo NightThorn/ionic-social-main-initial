@@ -43,7 +43,6 @@ export class StoryViewerPage implements OnInit, OnDestroy {
       initialSlide: position,
       allowTouchMove: false,
     };
-    this.stories = this.dataService.getHistories();
 
     this.commentForm = this.fb.group({
       comment: [null],
@@ -179,7 +178,6 @@ export class StoryViewerPage implements OnInit, OnDestroy {
   }
   
   close() {
-    this.dataService.getSeenFirtsHistories();
     this.router.navigate(['/tabs/explore']);
   }
 

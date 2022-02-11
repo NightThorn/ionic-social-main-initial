@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
 import { AccessProviders } from './providers/access-providers';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +13,10 @@ import { NgxTweetModule } from "ngx-tweet";
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { Firebase } from '@ionic-native/firebase/ngx';
+import { environment } from './../environments/environment';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { JwtInterceptor } from '@auth0/angular-jwt';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCddHyUNEHKoKtqcdlgbhKSQsIjJHtpjIs",
@@ -40,11 +43,14 @@ const firebaseConfig = {
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule],
+    AngularFirestoreModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),],
+
   providers: [
     AccessProviders,
     Firebase,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     ProfileService
   ],
   bootstrap: [

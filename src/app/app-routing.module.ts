@@ -1,33 +1,37 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
+import { IntroGuard } from './guards/intro.guard';
 
 const routes: Routes = [
   {
 
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'tabs',
     pathMatch: 'full'
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule), canActivate: [IntroGuard]
   },
+
   {
-    path: 'tabs',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
-  },
-  {
-    path: 'onboarding',
-    loadChildren: () => import('./pages/onboarding/onboarding.module').then(m => m.OnboardingPageModule)
-  },
-  {
-    path: 'welcome',
-    loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule)
+    path: 'introduction',
+    loadChildren: () => import('./pages/introduction/introduction.module').then(m => m.IntroductionPageModule)
   },
   {
     path: 'register',
     loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule)
   },
+  {
+    path: 'tabs',
+    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule), canActivate: [IntroGuard, AuthGuard]
+  },
+  {
+    path: 'onboarding',
+    loadChildren: () => import('./pages/onboarding/onboarding.module').then(m => m.OnboardingPageModule)
+  },
+
   {
     path: 'chat',
     loadChildren: () => import('./pages/chat/chat.module').then(m => m.ChatPageModule)
@@ -39,6 +43,10 @@ const routes: Routes = [
   {
     path: 'post-detail',
     loadChildren: () => import('./pages/post-detail/post-detail.module').then(m => m.PostDetailPageModule)
+  },
+  {
+    path: 'welcome',
+    loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule)
   },
   {
     path: 'contacts',
@@ -80,7 +88,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'user',
+    path: 'user/:id',
     loadChildren: () => import('./pages/user/user.module').then(m => m.UserPageModule)
   },
   {
@@ -186,46 +194,52 @@ const routes: Routes = [
   {
     path: 'grinding',
     loadChildren: () => import('./pages/grinding/grinding.module').then(m => m.GrindingPageModule)
-  },  {
+  },
+  {
     path: 'creategroup',
-    loadChildren: () => import('./pages/creategroup/creategroup.module').then( m => m.CreategroupPageModule)
+    loadChildren: () => import('./pages/creategroup/creategroup.module').then(m => m.CreategroupPageModule)
   },
   {
     path: 'grind',
-    loadChildren: () => import('./pages/grind/grind.module').then( m => m.GrindPageModule)
+    loadChildren: () => import('./pages/grind/grind.module').then(m => m.GrindPageModule)
   },
   {
     path: 'editprofile',
-    loadChildren: () => import('./pages/editprofile/editprofile.module').then( m => m.EditprofilePageModule)
+    loadChildren: () => import('./pages/editprofile/editprofile.module').then(m => m.EditprofilePageModule)
   },
   {
     path: 'giphy',
-    loadChildren: () => import('./pages/giphy/giphy.module').then( m => m.GiphyPageModule)
+    loadChildren: () => import('./pages/giphy/giphy.module').then(m => m.GiphyPageModule)
   },
   {
     path: 'grouppost',
-    loadChildren: () => import('./pages/grouppost/grouppost.module').then( m => m.GrouppostPageModule)
+    loadChildren: () => import('./pages/grouppost/grouppost.module').then(m => m.GrouppostPageModule)
   },
   {
     path: 'groupadmins',
-    loadChildren: () => import('./pages/groupadmins/groupadmins.module').then( m => m.GroupadminsPageModule)
+    loadChildren: () => import('./pages/groupadmins/groupadmins.module').then(m => m.GroupadminsPageModule)
   },
   {
     path: 'addadmin',
-    loadChildren: () => import('./pages/addadmin/addadmin.module').then( m => m.AddadminPageModule)
+    loadChildren: () => import('./pages/addadmin/addadmin.module').then(m => m.AddadminPageModule)
   },
   {
     path: 'sharemodal',
-    loadChildren: () => import('./pages/sharemodal/sharemodal.module').then( m => m.SharemodalPageModule)
+    loadChildren: () => import('./pages/sharemodal/sharemodal.module').then(m => m.SharemodalPageModule)
   },
   {
     path: 'newchat',
-    loadChildren: () => import('./pages/newchat/newchat.module').then( m => m.NewchatPageModule)
+    loadChildren: () => import('./pages/newchat/newchat.module').then(m => m.NewchatPageModule)
   },
   {
     path: 'mentionuser',
-    loadChildren: () => import('./pages/mentionuser/mentionuser.module').then( m => m.MentionuserPageModule)
+    loadChildren: () => import('./pages/mentionuser/mentionuser.module').then(m => m.MentionuserPageModule)
+  },
+  {
+    path: 'introduction',
+    loadChildren: () => import('./pages/introduction/introduction.module').then(m => m.IntroductionPageModule)
   }
+
 
 ];
 @NgModule({

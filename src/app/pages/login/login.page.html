@@ -58,6 +58,19 @@
                 <span>Sign In</span>
               </ion-button>
             </div>
+              <ion-row class="ion-padding-horizontal">
+                <ion-col class="ion-padding-bottom">
+                  <ion-button class="action-button ion-margin-top" expand="block" fill="outline" color="medium"
+                    (click)="goToRegister()">
+                    <ion-icon name="person-add" class="ion-padding-end"></ion-icon>
+                    <span>Create an account</span>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+              <ion-button expand="block" type="button" color="danger" fill="clear"
+                class="ion-padding-horizontal ion-margin-vertical" (click)="sendPasswordReset()">
+                Forgot Password?
+              </ion-button>
           </form>
         </ion-col>
       </ion-row>
