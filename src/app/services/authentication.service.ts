@@ -9,6 +9,7 @@ import { StoredUser } from '../models/stored-user';
 
 
 const TOKEN_KEY = 'my-token';
+const ID_KEY = 'my-id';
 
 @Injectable({
   providedIn: 'root'
@@ -36,13 +37,14 @@ export class AuthenticationService {
   }
 
   signIn(credentials: { user_email, user_password }): Observable<any> {
-    return this.http.post(`${this.url}/auth/login`, credentials).pipe(
-      map((data: any) => data.token),
+    return this.http.post(`https://ggs.tv/applogin.php`, credentials).pipe(
+      map((data: any) => data.message.token),
       switchMap(token => {
         return from(Storage.set({ key: TOKEN_KEY, value: token }));
       }),
       tap(_ => {
         this.isAuthenticated.next(true);
+
       })
     )
   }
