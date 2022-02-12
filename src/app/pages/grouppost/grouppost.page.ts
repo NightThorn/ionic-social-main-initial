@@ -14,8 +14,7 @@ import { OverlayEventDetail } from '@ionic/core';
 })
 export class GrouppostPage implements OnInit {
   postForm: FormGroup;
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   imgFile: string;
   videoFile: string;
   gif: string;
@@ -25,13 +24,8 @@ export class GrouppostPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
+    this.me = localStorage.getItem("myID");
 
-        this.me = storedUser.UserID;
-
-      }
-    })
     this.postForm = this.fb.group({
       text: [null],
       picture: [null],

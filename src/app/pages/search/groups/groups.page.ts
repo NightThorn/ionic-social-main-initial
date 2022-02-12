@@ -40,7 +40,7 @@ export class GroupsPage implements OnInit {
     spaceBetween: 10,
     slidesPerView: 2.6,
   };
-  activeStoredUserSubscription$;
+  
   searchQuery: any;
 
 

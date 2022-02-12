@@ -25,7 +25,6 @@ export class GroupPage implements OnInit {
   tabType = 'posts';
 
   group: any;
-  activeStoredUserSubscription$;
   me: any;
   admin: any;
   joined: any;
@@ -53,10 +52,8 @@ export class GroupPage implements OnInit {
       }
     });
 
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
+    this.me = localStorage.getItem("myID");
 
-      this.me = storedUser.UserID;
-    });
 
     this.dataService.getGroup(this.data).subscribe(res => {
       this.group = res.message;

@@ -15,8 +15,7 @@ export class SharemodalPage implements OnInit {
   @Input() id: number;
 
   postForm: FormGroup;
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   imgFile: string;
   videoFile: string;
   gif: string;
@@ -27,12 +26,8 @@ export class SharemodalPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
+    this.me = localStorage.getItem("myID");
 
-        this.me = storedUser.UserID;
-
-      }
       this.dataService.getPostDetails(this.id).subscribe(res => {
         this.share = res.message;
       });
@@ -40,7 +35,6 @@ export class SharemodalPage implements OnInit {
         text: [null],
 
       });
-    });
   }
 
   post(user, text) {

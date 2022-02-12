@@ -15,7 +15,6 @@ export class CreategroupPage implements OnInit {
   imgFile: string;
 
   postForm: FormGroup;
-  activeStoredUserSubscription$;
   
   
   @Input() admin: number;

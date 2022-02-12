@@ -14,23 +14,19 @@ export class XpmodalPage implements OnInit {
   @Input() xp: number;
   xpForm: FormGroup;
   gg: number;
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   result: Object;
 
   constructor(private modalController: ModalController, private http: HttpClient, private authService: AuthenticationService, private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
+    this.me = localStorage.getItem("myID");
 
-        this.me = storedUser.UserID;
-        this.xpForm = this.fb.group({
-          message: [null]
-        });
-        this.gg = this.xp * .001;
-      }
+    this.xpForm = this.fb.group({
+      message: [null]
     });
+    this.gg = this.xp * .001;
+
   }
   async dismiss() {
     await this.modalController.dismiss();

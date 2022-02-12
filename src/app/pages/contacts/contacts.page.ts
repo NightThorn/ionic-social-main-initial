@@ -23,8 +23,7 @@ export class ContactPage implements OnInit {
   public dataList: any = [];
   navCtrl: any;
   id;
-  me: number;
-  activeStoredUserSubscription$: any;
+  me: any;
   constructor(private route: ActivatedRoute, private authService: AuthenticationService, private profileService: ProfileService, private router: Router) {
 
     this.route.queryParams.subscribe(params => {
@@ -35,15 +34,13 @@ export class ContactPage implements OnInit {
 
   }
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      this.me = storedUser.UserID;
+    this.me = localStorage.getItem("myID");
 
       this.profileService.fetchFriends(this.me).subscribe(res => {
         this.friends = res.message;
         this.dataList = this.friends.slice(0, this.topLimit);
 
       });
-    });
     this.setFilteredItems();
 
   }

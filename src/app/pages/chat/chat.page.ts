@@ -23,10 +23,9 @@ export class ChatPage implements OnInit {
   chat = [];
   messages: any;
   data: any;
-  activeStoredUserSubscription$;
   currentUser: number;
   id: any;
-  me: number;
+  me: any;
   myMessage: Object;
   latest: any;
   lastMessageID: any;
@@ -47,9 +46,8 @@ export class ChatPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
       
-      this.me = storedUser.UserID;
+    this.me = localStorage.getItem("myID");
       this.dataService.getChat(this.id).subscribe(res => {
         this.chat = res.message;
         for (let i = 0; i < this.chat.length; i++) {
@@ -57,7 +55,7 @@ export class ChatPage implements OnInit {
 
           this.chat[i]['time'] = moment.utc(this.chat[i]['time']).fromNow();
         }
-        this.currentUser = storedUser.UserID;
+        this.currentUser = this.me;
         setTimeout(() => {
           this.updateScroll();
         }, 500);
@@ -66,7 +64,6 @@ export class ChatPage implements OnInit {
       this.messageForm = this.fb.group({
         message: [null],
       });
-    });
 
   }
   updateScroll() {

@@ -14,22 +14,19 @@ import { MiscmodalPage } from '../../miscmodal/miscmodal.page';
 })
 export class GiveawaysPage implements OnInit {
   giveaways: any;
-  activeStoredUserSubscription$;
   me: any;
 
   constructor(private dataService: DataService, private router: Router, private authService: AuthenticationService, private modalController: ModalController) { }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-        this.me = storedUser.UserID;
+    this.me = localStorage.getItem("myID");
+
         this.dataService.getGiveaways().subscribe(res => {
           this.giveaways = res.message;
 
 
         });
-      }
-      });
+     
   }
   async enter(id) {
 

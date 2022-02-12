@@ -37,7 +37,6 @@ export class ProfilePage implements OnInit, OnDestroy {
   pictures: any = [];
   profile: any;
   storage: any;
-  activeStoredUserSubscription$;
   fetchedProfileSubscription$;
   fetchedProfile: ProfileModel;
   fetchedPosts: any = [];
@@ -50,7 +49,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   friendCount: any;
   userFriends: any;
   offset: number;
-  me: number;
+  me: any;
   constructor(
     private dataService: DataService,
     private profileService: ProfileService,
@@ -68,24 +67,24 @@ export class ProfilePage implements OnInit, OnDestroy {
   ngOnInit() {
     this.activeRoute.params.subscribe(params => {
 
-      this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-        this.me = storedUser.UserID;
-        this.profileService.fetchProfile(storedUser.UserID);
-        this.profileService.fetchPosts(storedUser.UserID);
+      this.me = localStorage.getItem("myID");
 
-        this.profileService.fetchGroups(storedUser.UserID).subscribe(res => {
+        this.profileService.fetchProfile(this.me);
+        this.profileService.fetchPosts(this.me);
+
+        this.profileService.fetchGroups(this.me).subscribe(res => {
           this.groups = res.message;
 
         });
-        this.profileService.fetchFriends(storedUser.UserID).subscribe(res => {
+        this.profileService.fetchFriends(this.me).subscribe(res => {
           this.userFriends = res.message;
           this.friendCount = this.userFriends.length;
         });
-        this.profileService.fetchBadges(storedUser.UserID).subscribe(res => {
+        this.profileService.fetchBadges(this.me).subscribe(res => {
           this.userBadges = res.message;
           this.badgeCount = this.userBadges.length;
         });
-        this.profileService.fetchPictures(storedUser.UserID).subscribe(res => {
+        this.profileService.fetchPictures(this.me).subscribe(res => {
           this.pictures = res.message;
           this.dataList = this.pictures.slice(0, this.topLimit);
 
@@ -95,7 +94,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
 
 
-      })
+      
     });
 
     this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
@@ -120,7 +119,6 @@ export class ProfilePage implements OnInit, OnDestroy {
   };
 
   ngOnDestroy() {
-    this.activeStoredUserSubscription$.unsubscribe();
   }
 
   async openModal(source) {

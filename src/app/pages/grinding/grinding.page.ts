@@ -13,8 +13,7 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./grinding.page.scss'],
 })
 export class GrindingPage implements OnInit {
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   @Input() group_id: number;
 
   res: any = [];
@@ -33,12 +32,8 @@ export class GrindingPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
+    this.me = localStorage.getItem("myID");
 
-        this.me = storedUser.UserID;
-
-      }
       this.dataService.grinding(this.group_id).subscribe(res => {
         this.grinders = res.message;
         console.log(this.grinders);
@@ -46,7 +41,6 @@ export class GrindingPage implements OnInit {
 
       });
 
-    });
 
   }
   loadData(event) {

@@ -117,8 +117,7 @@ export class FeedCardComponent implements OnInit {
   external: string;
   decodedtext: any;
   sharedmedia: any;
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   reacts: any;
   liked: any;
   points: number;
@@ -141,14 +140,8 @@ export class FeedCardComponent implements OnInit {
 
   ngOnInit() {
 
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      this.me = storedUser.UserID;
-      this.points = storedUser.Points;
-      this.wallet = storedUser.Wallet;
-      this.subscribed = storedUser.Subscribed;
-      this.mod = storedUser.Mod;
-      this.staff = storedUser.Staff;
-      this.banned = storedUser.Banned;
+    this.me = localStorage.getItem("myID");
+
 
       if (this.colored > 0) {
         this.dataService.getColored(this.colored).subscribe(res => {
@@ -239,7 +232,6 @@ export class FeedCardComponent implements OnInit {
 
         }
       });
-    });
   }
 
 

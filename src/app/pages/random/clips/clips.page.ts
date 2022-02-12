@@ -20,7 +20,6 @@ export class ClipsPage implements OnInit {
   clip: any;
   @ViewChild('video') myVideo: ElementRef;
   post_id: any;
-  activeStoredUserSubscription$: any;
   me: any;
   likes: number;
   liked: any;
@@ -32,10 +31,7 @@ export class ClipsPage implements OnInit {
   constructor(private dataService: DataService, private http: HttpClient, private modalController: ModalController, private authService: AuthenticationService, private router: Router, public loadingController: LoadingController, private auth: AuthenticationService, private gestureCtrl: GestureController) { }
 
   async ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-
-      this.me = storedUser.UserID;
-
+    this.me = localStorage.getItem("myID");
 
       this.dataService.getRandomClip().subscribe(res => {
         this.clip = res.message;
@@ -47,7 +43,6 @@ export class ClipsPage implements OnInit {
 
         window.onbeforeunload = () => this.ionViewWillLeave();
       })
-    });
   }
 
   doRefresh(event) {

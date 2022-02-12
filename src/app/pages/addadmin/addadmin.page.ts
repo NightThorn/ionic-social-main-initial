@@ -13,7 +13,6 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class AddadminPage implements OnInit {
 
-  activeStoredUserSubscription$;
   me: number;
   @Input() group_id: number;
   joined: any;

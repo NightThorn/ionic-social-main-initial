@@ -16,22 +16,21 @@ import moment from 'moment';
 export class NotificationPage implements OnInit {
 
   notifications: any = [];
-  activeStoredUserSubscription$;
   date: string;
   time: any = [];
   myTime: Date;
   myDate: any;
   offset: number;
+  me: string;
 
   constructor(private dataService: DataService, private router: Router,
     private authService: AuthenticationService,
     private activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-        
-        this.dataService.getNotis(storedUser.UserID).subscribe(res => {
+    this.me = localStorage.getItem("myID");
+
+        this.dataService.getNotis(this.me).subscribe(res => {
           this.notifications = res.message;
           for (let i = 0; i < this.notifications.length; i++) {
             this.offset = moment().utcOffset();
@@ -39,8 +38,7 @@ export class NotificationPage implements OnInit {
             this.notifications[i]['time'] = moment.utc(this.notifications[i]['time']).fromNow();
           }
         });
-      }
-    });
+      
   }
 
 

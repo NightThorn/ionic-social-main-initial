@@ -17,7 +17,6 @@ export class EntergiveawaymodalPage implements OnInit {
   @Input() user: number;
 
   postForm: FormGroup;
-  activeStoredUserSubscription$;
   owned: any;
   badges: any = [];
   pro: any;

@@ -14,8 +14,7 @@ export class EditgroupPage implements OnInit {
   imgFile: string;
 
   postForm: FormGroup;
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   @Input() group_id: number;
   @Input() group_name: string;
   @Input() group_title: string;
@@ -33,14 +32,8 @@ export class EditgroupPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
+    this.me = localStorage.getItem("myID");
 
-        this.me = storedUser.UserID;
-
-      }
-
-    })
     this.postForm = this.fb.group({
       group_id: [this.group_id],
       group_cover: [this.group_cover],

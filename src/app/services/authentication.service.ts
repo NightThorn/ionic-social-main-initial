@@ -18,7 +18,6 @@ export class AuthenticationService {
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   token = '';
   id = '';
-  activeStoredUser: BehaviorSubject<StoredUser> = new BehaviorSubject<StoredUser>(null);
 
   url: string = 'https://ggs.tv/api/v1/';
 

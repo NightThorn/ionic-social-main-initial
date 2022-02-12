@@ -19,8 +19,7 @@ export class TicketmodalPage implements OnInit {
   @Input() wallet: number;
 
   postForm: FormGroup;
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   owned: any;
   badges: any = [];
   user: any;
@@ -30,13 +29,8 @@ export class TicketmodalPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-       
-        this.me = storedUser.UserID;
-       
-      }
-    });
+    this.me = localStorage.getItem("myID");
+
 
 
     this.postForm = this.fb.group({

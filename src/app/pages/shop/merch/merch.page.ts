@@ -13,8 +13,7 @@ import { XpmodalPage } from '../../xpmodal/xpmodal.page';
   styleUrls: ['./merch.page.scss'],
 })
 export class MerchPage implements OnInit {
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   merch: any = [];
   xp: any;
   myXP: any;
@@ -25,10 +24,9 @@ export class MerchPage implements OnInit {
 
   ngOnInit() {
 
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-        this.me = storedUser.UserID;
-        this.dataService.getXP(storedUser.UserID).subscribe(res => {
+    this.me = localStorage.getItem("myID");
+
+        this.dataService.getXP(this.me).subscribe(res => {
           this.xp = res.message;
           for (let i = 0; i < this.xp.length; i++) {
 
@@ -44,9 +42,9 @@ export class MerchPage implements OnInit {
 
 
         });
-      };
+      
 
-    });
+  
 
   }
   async openXPModal(xp) {

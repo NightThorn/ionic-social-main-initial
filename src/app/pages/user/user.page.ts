@@ -42,7 +42,6 @@ export class UserPage implements OnInit, OnDestroy {
   subscription1$: Subscription
   subscription2$: Subscription
   subscriptions: Subscription[] = []
-  activeStoredUserSubscription$;
   fetchedProfileSubscription$;
   fetchedProfile: ProfileModel;
   fetchedPosts: any = [];
@@ -103,8 +102,8 @@ export class UserPage implements OnInit, OnDestroy {
         this.data = JSON.parse(params.special);
       }
     });
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-        this.me = storedUser.UserID;
+    this.me = localStorage.getItem("myID");
+
        this.subscription1$ = this.profileService.checkFollow(this.me).subscribe(res => {
           this.following = res.message;
           var follow = this.following.find(message => message.following_id == this.data)
@@ -164,7 +163,6 @@ export class UserPage implements OnInit, OnDestroy {
 
       })
       
-    });
   };
 
   async openModal(source) {

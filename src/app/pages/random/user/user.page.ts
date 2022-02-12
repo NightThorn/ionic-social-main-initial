@@ -36,7 +36,6 @@ export class UserPage implements OnInit {
   pictures: any = [];
   profile: any;
   storage: any;
-  activeStoredUserSubscription$;
   fetchedProfileSubscription$;
   fetchedProfile: ProfileModel;
   fetchedPosts: any = [];
@@ -51,7 +50,7 @@ export class UserPage implements OnInit {
   friendCount: any;
   data: any;
   user: any;
-  me: number;
+  me: any;
   public addfriend = "Add Friend";
   public blocked = 0;
   offset: number;
@@ -69,10 +68,8 @@ export class UserPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      console.log("khdsgfasfasdfsfdasdfkasfd", this.me);
+    this.me = localStorage.getItem("myID");
 
-      this.me = storedUser.UserID;
       console.log("khdsgfasfasdfsfdasdfkasfd", this.me);
 
       this.dataService.getRandomUser(this.me).subscribe(res => {
@@ -122,7 +119,7 @@ export class UserPage implements OnInit {
         // this.data = this.profileService.fetchProfile(this.x);
       });
 
-    });
+   
   }
   add(id) {
     let data = {
@@ -203,11 +200,10 @@ export class UserPage implements OnInit {
     this.router.navigate(['newchat'], navigationExtras);
   }
   doRefresh(event) {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
+    
+    this.me = localStorage.getItem("myID");
 
-
-        this.dataService.getRandomUser(storedUser.UserID).subscribe(res => {
+        this.dataService.getRandomUser(this.me).subscribe(res => {
           this.user = res.message;
           this.data = res.message['0']['user_id'];
 
@@ -245,8 +241,7 @@ export class UserPage implements OnInit {
           })
           // this.data = this.profileService.fetchProfile(this.x);
         });
-      }
-    });
+      
 
     setTimeout(() => {
       event.target.complete();

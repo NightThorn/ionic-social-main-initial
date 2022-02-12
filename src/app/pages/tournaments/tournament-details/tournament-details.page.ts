@@ -17,7 +17,6 @@ export class TournamentDetailsPage implements OnInit {
   events: any;
   tournaments: any;
   me: any;
-  activeStoredUserSubscription$: any;
   tournamentpic: any;
   tournamentinfo: any;
   tournamentrules: any;
@@ -38,11 +37,8 @@ export class TournamentDetailsPage implements OnInit {
         this.data = JSON.parse(params.special);
       }
     });
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-        this.me = storedUser.UserID;
-      
-    
+    this.me = localStorage.getItem("myID");
+
         this.dataService.getTournamentDetails(this.data).subscribe(res => {
           this.tournaments = res.message;
           this.tournamentpic = this.tournaments[0]['thumbnail'];
@@ -61,8 +57,7 @@ export class TournamentDetailsPage implements OnInit {
           }
 
         });
-      }
-    });
+    
 
   }
   user(id) {

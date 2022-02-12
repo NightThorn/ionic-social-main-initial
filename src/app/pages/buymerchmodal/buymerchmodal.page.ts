@@ -17,23 +17,20 @@ export class BuymerchmodalPage implements OnInit {
   @Input() wallet: number;
 
   postForm: FormGroup;
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   merchItem: any;
   noMoney: any;
   constructor(private modalController: ModalController, private router: Router, public alertController: AlertController, private dataService: DataService, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
      
-      this.me = storedUser.UserID;
+    this.me = localStorage.getItem("myID");
 
 
       this.dataService.getMerchItem(this.id).subscribe(res => {
         this.merchItem = res.message;
       });
-    });
     this.postForm = this.fb.group({
       name: [null],
       street: [null],

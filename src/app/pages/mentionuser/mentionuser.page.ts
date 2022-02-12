@@ -43,7 +43,6 @@ export class MentionuserPage implements OnInit {
   subscription1$: Subscription
   subscription2$: Subscription
   subscriptions: Subscription[] = []
-  activeStoredUserSubscription$;
   fetchedProfileSubscription$;
   fetchedProfile: ProfileModel;
   fetchedPosts: any = [];
@@ -112,8 +111,7 @@ export class MentionuserPage implements OnInit {
       console.log(this.data);
 
     });
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      this.me = Number(localStorage.getItem('me'));
+    this.me = localStorage.getItem("myID");
       console.log(this.me);
       this.subscription1$ = this.profileService.checkFollow(this.me).subscribe(res => {
         this.following = res.message;
@@ -174,7 +172,6 @@ export class MentionuserPage implements OnInit {
 
       });
 
-    });
 
   }
 

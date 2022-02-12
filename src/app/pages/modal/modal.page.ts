@@ -16,8 +16,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 })
 export class ModalPage implements OnInit {
   postForm: FormGroup;
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   imgFile: string;
   videoFile: string;
   name = 'angular-mentions';
@@ -31,13 +30,8 @@ export class ModalPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
+    this.me = localStorage.getItem("myID");
 
-        this.me = storedUser.UserID;
-
-      }
-    })
     this.postForm = this.fb.group({
       text: [null],
       picture: [null],

@@ -11,7 +11,6 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./discover.page.scss'],
 })
 export class DiscoverPage implements OnInit {
-  activeStoredUserSubscription$;
   me: any;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
@@ -25,19 +24,17 @@ export class DiscoverPage implements OnInit {
   constructor(private authService: AuthenticationService, private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-        this.me = storedUser.UserID;
-        this.dataService.getDiscoverGroups(this.me).subscribe(res => {
-          this.groups = res.message;
-          this.dataList = this.groups.slice(0, this.topLimit);
+    this.me = localStorage.getItem("myID");
 
-        }
-
-        )};
-      this.setFilteredItems();
+    this.dataService.getDiscoverGroups(this.me).subscribe(res => {
+      this.groups = res.message;
+      this.dataList = this.groups.slice(0, this.topLimit);
 
     });
+
+      this.setFilteredItems();
+
+   
   }
   loadData(event) {
     if (this.searchTerm == "") {

@@ -34,7 +34,6 @@ export class LoginPage implements OnInit {
   password: any;
   accessProviders: any;
 
-  activeStoredUserSubscription$;
   token: string;
 
   constructor(

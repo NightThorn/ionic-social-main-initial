@@ -17,8 +17,8 @@ import { XpmodalPage } from '../../xpmodal/xpmodal.page';
 export class BadgesPage implements OnInit {
   badges: any = [];
   pro: any;
-  me: number;
-  activeStoredUserSubscription$;
+  me: any;
+  
   info: any;
   badgesArray: any;
   xp: any;
@@ -28,9 +28,8 @@ export class BadgesPage implements OnInit {
   constructor(private dataService: DataService, private router: Router, private authService: AuthenticationService, private modalController: ModalController) { }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-        this.me = storedUser.UserID;
+    this.me = localStorage.getItem("myID");
+
         //check if user pro?
         this.dataService.badgeShopInfo(this.me).subscribe(res => {
           this.info = res.message;
@@ -50,7 +49,7 @@ export class BadgesPage implements OnInit {
 
           }
         });
-        this.dataService.getXP(storedUser.UserID).subscribe(res => {
+        this.dataService.getXP(this.me).subscribe(res => {
           this.xp = res.message;
           for (let i = 0; i < this.xp.length; i++) {
 
@@ -59,8 +58,7 @@ export class BadgesPage implements OnInit {
 
           }
         });
-      }
-    });
+      
   }
 
 

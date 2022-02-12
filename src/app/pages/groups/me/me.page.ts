@@ -12,25 +12,19 @@ import { CreategroupPage } from '../../creategroup/creategroup.page';
   styleUrls: ['./me.page.scss'],
 })
 export class MePage implements OnInit {
-  activeStoredUserSubscription$;
   me: any;
   groups: any = [];
 
   constructor(private authService: AuthenticationService, public modalController: ModalController, private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-        this.me = storedUser.UserID;
-        this.dataService.getMyGroups(this.me).subscribe(res => {
-          this.groups = res.message;
+    this.me = localStorage.getItem("myID");
 
-        }
-
-        )
-      };
+    this.dataService.getMyGroups(this.me).subscribe(res => {
+      this.groups = res.message;
 
     });
+
   }
 
   goToGroup(id) {

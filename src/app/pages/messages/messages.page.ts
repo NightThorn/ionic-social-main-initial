@@ -18,11 +18,10 @@ export class MessagesPage implements OnInit {
   public items: any;
   public dataList: any = [];
   messages: any = [];
-  activeStoredUserSubscription$;
   private topLimit: number = 15;
   public dataL: Array<object> = [];
   offset: number;
-  me: number;
+  me: any;
   refresh: any;
 
   constructor(private router: Router, private dataService: DataService, private authService: AuthenticationService,
@@ -34,11 +33,9 @@ export class MessagesPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
+    this.me = localStorage.getItem("myID");
 
-        this.me = storedUser.UserID;
-        this.dataService.getMessages(storedUser.UserID).subscribe(res => {
+        this.dataService.getMessages(this.me).subscribe(res => {
 
           this.messages = res.message;
           this.dataList = this.messages.slice(0, this.topLimit);
@@ -49,8 +46,8 @@ export class MessagesPage implements OnInit {
           }
 
         });
-      }
-    })
+      
+    
     this.setFilteredItems();
 
   }

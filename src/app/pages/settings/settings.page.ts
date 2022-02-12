@@ -22,7 +22,6 @@ import { XpmodalPage } from '../xpmodal/xpmodal.page';
 export class SettingsPage implements OnInit {
   storage: any;
   value: string;
-  activeStoredUserSubscription$: any;
   me: any;
   points: any;
   wallet: any;
@@ -54,9 +53,8 @@ export class SettingsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-        this.me = storedUser.UserID;
+    this.me = localStorage.getItem("myID");
+
         this.dataService.getUser(this.me).subscribe(res => {
           this.user = res.message;
           this.bio = this.user[0]['user_biography'];
@@ -73,9 +71,8 @@ export class SettingsPage implements OnInit {
 
         });
         this.value = localStorage.getItem("filter");
-      }
-    });
-    console.log(this.bio);
+      
+  
   }
   gotoShop() {
     this.router.navigate(['shop']);

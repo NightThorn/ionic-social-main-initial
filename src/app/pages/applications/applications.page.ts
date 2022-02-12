@@ -13,8 +13,7 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./applications.page.scss'],
 })
 export class ApplicationsPage implements OnInit {
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   @Input() group_id: number;
   @Input() user_id: number;
   apps: any;
@@ -27,16 +26,13 @@ export class ApplicationsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-        this.me = storedUser.UserID;
-      }
+    this.me = localStorage.getItem("myID");
+      
       this.dataService.getApps(this.group_id).subscribe(res => {
 
         this.apps = res.message;
         console.log(this.apps);
       });
-    });
   }
   closeModal() {
     this.modalController.dismiss();

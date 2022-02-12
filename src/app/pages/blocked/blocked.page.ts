@@ -13,8 +13,7 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./blocked.page.scss'],
 })
 export class BlockedPage implements OnInit {
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   @Input() id: number;
   blocked: any;
  
@@ -22,16 +21,13 @@ export class BlockedPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-
-        this.me = storedUser.UserID;
-        this.dataService.getBlocked(storedUser.UserID).subscribe(res => {
+  
+    this.me = localStorage.getItem("myID");
+        this.dataService.getBlocked(this.me).subscribe(res => {
 
           this.blocked = res.message;
         });
-      }
-      });
+      
    
   }
   user(id) {

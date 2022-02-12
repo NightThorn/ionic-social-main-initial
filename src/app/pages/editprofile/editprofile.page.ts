@@ -15,8 +15,7 @@ export class EditprofilePage implements OnInit {
   imgFile: string;
 
   postForm: FormGroup;
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   private file: File;
 
 
@@ -24,10 +23,8 @@ export class EditprofilePage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      
+    this.me = localStorage.getItem("myID");
 
-    });
     this.postForm = this.fb.group({
       cover: [''],
       picture: [''],

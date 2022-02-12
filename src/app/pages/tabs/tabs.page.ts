@@ -13,7 +13,6 @@ const { Storage } = Plugins;
 })
 export class TabsPage {
   isClicked = false;
-  activeStoredUserSubscription$;
   count: any;
   me = localStorage.getItem("myID");
 

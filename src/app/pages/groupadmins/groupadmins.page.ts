@@ -15,7 +15,6 @@ import { OverlayEventDetail } from '@ionic/core';
   styleUrls: ['./groupadmins.page.scss'],
 })
 export class GroupadminsPage implements OnInit {
-  activeStoredUserSubscription$;
   me: number;
   @Input() group_id: number;
 

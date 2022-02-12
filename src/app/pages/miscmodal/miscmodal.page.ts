@@ -19,8 +19,7 @@ export class MiscmodalPage implements OnInit {
   @Input() wallet: number;
 
   postForm: FormGroup;
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   owned: any;
   badges: any = [];
   user: any;
@@ -30,10 +29,8 @@ export class MiscmodalPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-       
-        this.me = storedUser.UserID;
+    this.me = localStorage.getItem("myID");
+
         this.dataService.getUser(this.me).subscribe(res => {
           this.user = res.message;
           var target = this.user.find(message => message.user_subscribed == 1)
@@ -45,8 +42,7 @@ export class MiscmodalPage implements OnInit {
           }
 
         });
-      }
-    });
+      
 
 
     this.postForm = this.fb.group({

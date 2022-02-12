@@ -12,10 +12,9 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class ApplyPage implements OnInit {
   postForm: FormGroup;
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   @Input() group_id: number;
- 
+
 
 
 
@@ -23,14 +22,12 @@ export class ApplyPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
 
-        this.me = storedUser.UserID;
+    this.me = localStorage.getItem("myID");
 
-      }
 
-    })
+
+
     this.postForm = this.fb.group({
       fname: '',
       lname: '',

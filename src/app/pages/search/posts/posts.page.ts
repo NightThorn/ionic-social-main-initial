@@ -41,7 +41,6 @@ export class PostsPage implements OnInit {
     spaceBetween: 10,
     slidesPerView: 2.6,
   };
-  activeStoredUserSubscription$;
   searchQuery: any;
 
 

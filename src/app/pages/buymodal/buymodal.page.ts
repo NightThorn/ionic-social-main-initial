@@ -18,8 +18,7 @@ export class BuymodalPage implements OnInit {
   @Input() wallet: number;
 
   postForm: FormGroup;
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   owned: any;
   badges: any = [];
 
@@ -27,10 +26,8 @@ export class BuymodalPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
        
-        this.me = storedUser.UserID;
+    this.me = localStorage.getItem("myID");
         this.dataService.fetchBadges(this.me).subscribe(res => {
           this.badges = res.message;
           var target = this.badges.find(message => message.badge === this.id)
@@ -42,9 +39,7 @@ export class BuymodalPage implements OnInit {
           }
 
         });
-      }
-    });
-
+    
 
     this.postForm = this.fb.group({
       user: this.me,

@@ -32,8 +32,7 @@ export class PostDetailPage implements OnInit {
   comments: any;
   offset: number;
   replies: any;
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   gif: any;
   reacted: any;
   items: any;
@@ -50,10 +49,8 @@ export class PostDetailPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      this.me = storedUser.UserID;
+    this.me = localStorage.getItem("myID");
 
-    });
 
 
 

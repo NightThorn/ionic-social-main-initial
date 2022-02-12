@@ -20,8 +20,7 @@ export class PasswordPage implements OnInit {
   new_password: string = "";
   new_password_confirm: string = "";
 
-  activeStoredUserSubscription$;
-  me: number;
+  me: any;
   @Input() id: number;
   blocked: any;
   postForm: FormGroup;
@@ -32,12 +31,8 @@ export class PasswordPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
+    this.me = localStorage.getItem("myID");
 
-        this.me = storedUser.UserID;
-
-      }
 
       this.postForm = this.fb.group({
         old: [null],
@@ -49,7 +44,6 @@ export class PasswordPage implements OnInit {
 
 
       });
-    });
 
   }
   togglePassword(): void {
