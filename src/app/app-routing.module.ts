@@ -90,7 +90,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'user/:id',
+    path: 'user',
     loadChildren: () => import('./pages/user/user.module').then(m => m.UserPageModule)
   },
   {
@@ -236,6 +236,14 @@ const routes: Routes = [
   {
     path: 'mentionuser',
     loadChildren: () => import('./pages/mentionuser/mentionuser.module').then(m => m.MentionuserPageModule)
+  },
+  {
+    path: 'mentionuserbadges',
+    loadChildren: () => import('./pages/mentionuser/mentionuserbadges/mentionuserbadges.module').then(m => m.MentionuserbadgesPageModule)
+  },
+  {
+    path: 'mentionuserfriends',
+    loadChildren: () => import('./pages/mentionuser/mentionuserfriends/mentionuserfriends.module').then(m => m.MentionuserfriendsPageModule)
   },
   {
     path: 'introduction',

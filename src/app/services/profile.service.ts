@@ -29,11 +29,10 @@ export class ProfileService {
   }
 
   public fetchProfile(user_id: number) {
-    const token = localStorage.getItem('Token');
 
 
 
-    this.httpClient.get(this.URL + user_id + "?auth_token=" + token).subscribe(response => {
+    this.httpClient.get(this.URL + user_id).subscribe(response => {
       if (response['code'] !== 200) {
         // error state
         return;

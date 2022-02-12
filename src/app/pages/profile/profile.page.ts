@@ -62,42 +62,32 @@ export class ProfilePage implements OnInit, OnDestroy {
   ) {
 
   }
-  // x = localStorage.getItem("user_id");
 
   ngOnInit() {
-    this.activeRoute.params.subscribe(params => {
 
-      this.me = localStorage.getItem("myID");
+    this.me = localStorage.getItem("myID");
+    console.log("this me on profile", this.me);
+    this.profileService.fetchProfile(this.me);
+    this.profileService.fetchPosts(this.me);
 
-        this.profileService.fetchProfile(this.me);
-        this.profileService.fetchPosts(this.me);
+    this.profileService.fetchGroups(this.me).subscribe(res => {
+      this.groups = res.message;
 
-        this.profileService.fetchGroups(this.me).subscribe(res => {
-          this.groups = res.message;
-
-        });
-        this.profileService.fetchFriends(this.me).subscribe(res => {
-          this.userFriends = res.message;
-          this.friendCount = this.userFriends.length;
-        });
-        this.profileService.fetchBadges(this.me).subscribe(res => {
-          this.userBadges = res.message;
-          this.badgeCount = this.userBadges.length;
-        });
-        this.profileService.fetchPictures(this.me).subscribe(res => {
-          this.pictures = res.message;
-          this.dataList = this.pictures.slice(0, this.topLimit);
-
-        });
-
-
-
-
-
-      
     });
+    this.profileService.fetchFriends(this.me).subscribe(res => {
+      this.userFriends = res.message;
+      this.friendCount = this.userFriends.length;
+    });
+    this.profileService.fetchBadges(this.me).subscribe(res => {
+      this.userBadges = res.message;
+      this.badgeCount = this.userBadges.length;
+    });
+    this.profileService.fetchPictures(this.me).subscribe(res => {
+      this.pictures = res.message;
+      this.dataList = this.pictures.slice(0, this.topLimit);
 
-    this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
+    });
+   this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
       this.fetchedProfile = profile;
       console.log(this.fetchedProfile);
       const newDate = new Date(this.fetchedProfile.user_birthdate);

@@ -1,9 +1,27 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>mentionuserbadges</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Badges</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+  <ion-card *ngIf="data">
+    <ion-card-header>
+      <ion-card-title>
 
+      </ion-card-title>
+
+    </ion-card-header>
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let i of badges">
+          <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ i.icon }}" height="50px"
+            width="50px"></ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
 </ion-content>

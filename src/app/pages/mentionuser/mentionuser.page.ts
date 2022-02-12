@@ -99,20 +99,16 @@ export class MentionuserPage implements OnInit {
 
   ngOnInit() {
 
-    this.activeRoute.queryParams
-      .subscribe(params => {
-        this.username = params.username;
-      }
-      );
+    this.activeRoute.queryParams.subscribe(params => {
+      this.username = params.username;
+    });
 
-    console.log(this.username);
     this.dataService.getUserID(this.username).subscribe(res => {
       this.data = res.message[0]['user_id'];
       console.log(this.data);
 
-    });
-    this.me = localStorage.getItem("myID");
-      console.log(this.me);
+      this.me = localStorage.getItem("myID");
+
       this.subscription1$ = this.profileService.checkFollow(this.me).subscribe(res => {
         this.following = res.message;
         var follow = this.following.find(message => message.following_id == this.data)
@@ -171,6 +167,7 @@ export class MentionuserPage implements OnInit {
         }
 
       });
+    });
 
 
   }
@@ -192,7 +189,7 @@ export class MentionuserPage implements OnInit {
         special: JSON.stringify(id)
       }
     };
-    this.router.navigate(['/userbadges'], navigationExtras);
+    this.router.navigate(['/mentionuserbadges'], navigationExtras);
   }
   goToGroup(id) {
 
@@ -211,7 +208,7 @@ export class MentionuserPage implements OnInit {
         special: JSON.stringify(id)
       }
     };
-    this.router.navigate(['/userfriends'], navigationExtras).then(() => {
+    this.router.navigate(['/mentionuserfriends'], navigationExtras).then(() => {
       window.location.reload();
     });
   }
