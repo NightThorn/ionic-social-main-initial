@@ -4,12 +4,11 @@ import { Observable, from, BehaviorSubject } from 'rxjs';
 import { map, tap, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from './../../environments/environment';
-import { Storage } from '@capacitor/storage';
 import { StoredUser } from '../models/stored-user';
-
+import { Storage } from '@capacitor/storage';
 
 const TOKEN_KEY = 'my-token';
-const ID_KEY = 'my-id';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +17,14 @@ export class AuthenticationService {
   // Init with null to filter out the first value in a guard!
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   token = '';
+  id = '';
   activeStoredUser: BehaviorSubject<StoredUser> = new BehaviorSubject<StoredUser>(null);
 
   url: string = 'https://ggs.tv/api/v1/';
 
   constructor(private http: HttpClient, private router: Router) {
     this.loadToken();
+
   }
 
   private async loadToken() {
@@ -36,12 +37,15 @@ export class AuthenticationService {
     }
   }
 
-  signIn(credentials: { user_email, user_password }): Observable<any> {
+
+  signIn(credentials: { email, password }): Observable<any> {
     return this.http.post(`https://ggs.tv/applogin.php`, credentials).pipe(
-      map((data: any) => data.message.token),
+      map((data: any) => data.message),
       switchMap(token => {
-        return from(Storage.set({ key: TOKEN_KEY, value: token }));
+        localStorage.setItem("myID", token.id);
+        return from(Storage.set({ key: TOKEN_KEY, value: token.token }));
       }),
+
       tap(_ => {
         this.isAuthenticated.next(true);
 

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { INTRO_KEY } from '../pages/introduction/introduction.page';
 import { Storage } from '@capacitor/storage';
- 
+import { INTRO_KEY } from '../pages/introduction/introduction.page';
+
 @Injectable({
   providedIn: 'root'
 })
-export class IntroGuard implements CanActivate  {
-  
+export class IntroGuard implements CanActivate {
+
   constructor(private router: Router) { }
 
   async canActivate(): Promise<boolean> {

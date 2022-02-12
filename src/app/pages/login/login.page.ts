@@ -20,7 +20,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit, OnDestroy {
+export class LoginPage implements OnInit {
   loginForm: FormGroup;
   loading: any;
 
@@ -95,68 +95,28 @@ export class LoginPage implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy() {
-    this.activeStoredUserSubscription$.unsubscribe();
-  }
+  
 
   async signIn() {
-    await this.storage.create();
-
-    const loading = await this.loadingController.create();
+    let loading = await this.loadingController.create({
+      message: 'Loading...'
+    });
     await loading.present();
 
-    this.authService.signIn(this.loginForm.value).subscribe((data: any) => {
-      if (data['code'] !== 200) {
-        // error toast
-        let msg = '';
-        if (data['message'] !== '') {
-          msg = data['message'];
-        } else if (data['errors'].length > 0) {
-          msg = data['errors'][0];
-        }
-
-        if (msg !== '') {
-          msg = 'Could not log in, please try again';
-        }
-
-        this.presentToast(msg);
+    this.authService.signIn(this.loginForm.value).subscribe(user => {
+      loading.dismiss();
+      this.router.navigateByUrl('/tabs', { replaceUrl: true });
+    },
+      async err => {
         loading.dismiss();
 
-        return;
-      }
-
-      let userData = data['data']['login'];
-      this.fcm.getToken(this.token, userData['user_id']);
-      localStorage.setItem("notiToken", this.token);
-
-      loading.dismiss();
-    });
-
-    // return new Promise(resolve=>{
-    //
-    //   let body = {
-    //         user_email: this.email,
-    //         user_password: this.password
-    //
-    //   }
-    //   console.log(body);
-    // this.accsPrvds.postData(body, 'applogin.php').subscribe( async (res:any)=>{
-    //   if(res['success'] === true) {
-    //     loading.dismiss();
-    //     localStorage.setItem('token', res['message']['token']);
-    //     localStorage.setItem('user_id', res['message']['id']);
-    //
-    //     console.log(res);
-    //     this.router.navigateByUrl('/tabs/explore', { replaceUrl: true });
-    //   }
-    //   else{
-    //     loading.dismiss();
-    //     this.presentToast(res.message);
-    //
-    //
-    //   }
-    // });
-    //})
+        let alert = await this.alertCtrl.create({
+          header: 'Error',
+          message: err.message,
+          buttons: ['OK']
+        });
+        alert.present();
+      })
   }
 
   async presentToast(a) {

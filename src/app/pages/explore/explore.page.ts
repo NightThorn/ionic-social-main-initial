@@ -1,16 +1,15 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
-import { Storage } from '@ionic/storage-angular';
 import { ModalController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
-import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { VideoModalPage } from '../video-modal/video-modal.page';
 import moment from 'moment';
 import { XpmodalPage } from '../xpmodal/xpmodal.page';
 import { Plugins } from '@capacitor/core';
 import { IonContent } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 const { Filesystem } = Plugins;
 @Component({
@@ -47,13 +46,12 @@ export class ExplorePage implements OnInit {
     spaceBetween: 10,
     slidesPerView: 2.6,
   };
-  activeStoredUserSubscription$;
   offset: number;
   xp: any;
   myXP: any;
   myWallet: any;
-  filter = "all";
   me: any;
+  filter = "all";
   boosted: any;
   points: number;
   wallet: number;
@@ -72,71 +70,58 @@ export class ExplorePage implements OnInit {
 
 
   ngOnInit() {
-    this.activeStoredUserSubscription$ = this.authService.activeStoredUser.subscribe((storedUser: StoredUser) => {
-      if (storedUser !== null) {
-        this.me = storedUser.UserID;
-        this.points = storedUser.Points;
-        this.wallet = storedUser.Wallet;
-        this.subscribed = storedUser.Subscribed;
-        this.mod = storedUser.Mod;
-        this.staff = storedUser.Staff;
-        this.banned = storedUser.Banned;
+    this.me = localStorage.getItem("myID");
 
+    console.log("idk ey", this.me);
+    this.filter = localStorage.getItem("filter");
+    this.dataService.getXP(this.me).subscribe(res => {
+      this.xp = res.message;
+      console.log(this.xp);
 
+      this.userXP = this.xp[0]['user_points'];
+      this.myWallet = this.numFormatter(this.xp[0]['user_wallet_balance']);
 
-        this.filter = localStorage.getItem("filter");
-        this.dataService.getXP(storedUser.UserID).subscribe(res => {
-          this.xp = res.message;
-          console.log(this.xp);
+    });
+    if (this.filter = "all") {
+      this.dataService.getAllPosts(this.me).subscribe(res => {
+        this.feeds = res.message;
 
-          this.userXP = this.xp[0]['user_points'];
-          this.myWallet = this.numFormatter(this.xp[0]['user_wallet_balance']);
-
-        });
-        if (this.filter = "all") {
-          this.dataService.getAllPosts(storedUser.UserID).subscribe(res => {
-            this.feeds = res.message;
-
-            for (let i = 0; i < this.feeds.length; i++) {
-              this.offset = moment().utcOffset();
-              this.feeds[i]['total'] = +this.feeds[i]['reaction_love_count'] + +this.feeds[i]['reaction_like_count'] + +this.feeds[i]['reaction_haha_count'] + +this.feeds[i]['reaction_wow_count'];
-              this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
-            }
-            this.dataList = this.feeds.slice(0, this.topLimit);
-          });
-        } else {
-
-          this.dataService.getFeed(storedUser.UserID).subscribe(res => {
-            this.feeds = res.message;
-            for (let i = 0; i < this.feeds.length; i++) {
-              this.offset = moment().utcOffset();
-              this.feeds[i]['total'] = +this.feeds[i]['reaction_love_count'] + +this.feeds[i]['reaction_like_count'] + +this.feeds[i]['reaction_haha_count'] + +this.feeds[i]['reaction_wow_count'];
-
-              this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
-            }
-            this.dataList = this.feeds.slice(0, this.topLimit);
-          });
-
+        for (let i = 0; i < this.feeds.length; i++) {
+          this.offset = moment().utcOffset();
+          this.feeds[i]['total'] = +this.feeds[i]['reaction_love_count'] + +this.feeds[i]['reaction_like_count'] + +this.feeds[i]['reaction_haha_count'] + +this.feeds[i]['reaction_wow_count'];
+          this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
         }
-        this.dataService.getLatestVid(storedUser.UserID).subscribe(res => {
-          this.latest = res.message;
-          console.log(this.latest);
-        });
-        this.dataService.getBoosted().subscribe(res => {
-          this.boost = res.message;
-          for (let i = 0; i < this.boost.length; i++) {
-            this.offset = moment().utcOffset();
-            this.boost[i]['total'] = +this.boost[i]['reaction_love_count'] + +this.boost[i]['reaction_like_count'] + +this.boost[i]['reaction_haha_count'] + +this.boost[i]['reaction_wow_count'];
+        this.dataList = this.feeds.slice(0, this.topLimit);
+      });
+    } else {
 
-            this.boost[i]['time'] = moment.utc(this.boost[i]['time']).fromNow();
-          }
-        });
+      this.dataService.getFeed(this.me).subscribe(res => {
+        this.feeds = res.message;
+        for (let i = 0; i < this.feeds.length; i++) {
+          this.offset = moment().utcOffset();
+          this.feeds[i]['total'] = +this.feeds[i]['reaction_love_count'] + +this.feeds[i]['reaction_like_count'] + +this.feeds[i]['reaction_haha_count'] + +this.feeds[i]['reaction_wow_count'];
 
-      } else {
-        this.router.navigate(['login']);
+          this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
+        }
+        this.dataList = this.feeds.slice(0, this.topLimit);
+      });
 
+    }
+    this.dataService.getLatestVid(this.me).subscribe(res => {
+      this.latest = res.message;
+      console.log(this.latest);
+    });
+    this.dataService.getBoosted().subscribe(res => {
+      this.boost = res.message;
+      for (let i = 0; i < this.boost.length; i++) {
+        this.offset = moment().utcOffset();
+        this.boost[i]['total'] = +this.boost[i]['reaction_love_count'] + +this.boost[i]['reaction_like_count'] + +this.boost[i]['reaction_haha_count'] + +this.boost[i]['reaction_wow_count'];
+
+        this.boost[i]['time'] = moment.utc(this.boost[i]['time']).fromNow();
       }
     });
+
+
 
   }
   loadData(event) {
