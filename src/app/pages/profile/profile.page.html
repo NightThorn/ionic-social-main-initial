@@ -15,7 +15,8 @@
         <div class="profile ion-padding">
           <div class="profile-user">
             <ion-thumbnail>
-               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}" ></ion-img>
+              <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}">
+              </ion-img>
             </ion-thumbnail>
             <ul class="profile-text ion-padding-horizontal" *ngIf="fetchedProfile">
               <li><span *ngIf="fetchedProfile.grinding != 0">#</span><span
@@ -49,22 +50,30 @@
         <div class="numbers">
           <ul (click)="friends(fetchedProfile.user_id)">
             <li>{{friendCount}}</li>
-            <li>Friends</li>
+            <li>
+              <ion-icon style="vertical-align: middle; color: green;" name="people"></ion-icon>
+              Friends
+            </li>
           </ul>
           <ul (click)="badges(fetchedProfile.user_id)">
             <li>{{badgeCount}}</li>
-            <li>Badges</li>
+            <li>
+              <ion-icon style="vertical-align: middle; color: green;" name="ribbon-outline"></ion-icon>
+              Badges
+            </li>
           </ul>
           <ul>
             <li>{{ fetchedProfile.total_xp }}</li>
-            <li>XP Earned</li>
+            <li>
+              <img style="width: 20px; vertical-align: middle;" src="assets/images/XP.png" />
+              <ion-label style="vertical-align: middle;" text-center text-wrap>
+                Earned</ion-label>
+            </li>
           </ul>
 
         </div>
-        <ul>
-          <ion-button (click)="editProfile(me)" class="follow-btn">Edit Profile</ion-button>
-         
-        </ul>
+        <ion-button expand="block" (click)="editProfile(me)">Edit Profile</ion-button>
+
       </ion-col>
     </ion-row>
     <ion-row>
@@ -101,16 +110,17 @@
               <app-feed-card style="width: 100%;" [avatar]="item.user_picture" [name]="item.user_name"
                 [post_id]="item.post_id" [date]="item.time" [text]="item.text" [origin]="item.origin_id"
                 [user_id]="item.user_id" [gif]="item.gif" [picture]="item.picture_source" [videosrc]="item.source"
-                [type]="item.post_type" [likes]="item.total" [comments]="item.comments"
-                [shares]="item.shares" [colored]="item.colored_pattern" [tag]="item.tag" [grinding]="item.grinding" [separator]="true">
+                [type]="item.post_type" [likes]="item.total" [comments]="item.comments" [shares]="item.shares"
+                [colored]="item.colored_pattern" [tag]="item.tag" [grinding]="item.grinding" [separator]="true">
               </app-feed-card>
             </ion-row>
           </ion-row>
           <ion-row *ngSwitchCase="'photos'" class="ion-padding-vertical">
 
             <ion-col size="6" *ngFor="let pic of dataList">
-               <ion-img class="image-element" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
-                (click)="openModal(pic.source)" ></ion-img>
+              <ion-img class="image-element"
+                src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
+                (click)="openModal(pic.source)"></ion-img>
 
             </ion-col>
 

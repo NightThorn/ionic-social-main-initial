@@ -72,6 +72,6 @@ export class AuthenticationService {
 
   sendPasswordReset(email) {
     // Implement if it exists on your API!
-    return this.http.post(`${this.url}/users/pw-reset`, { email });
+    return this.http.post(`${this.url}password-reset.php`, { email });
   }
 }

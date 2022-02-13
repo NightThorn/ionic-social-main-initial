@@ -79,7 +79,7 @@
    */
 
   .ios body {
-    --ion-background-color: #020c00;
+    --ion-background-color: #242423;
     --ion-background-color-rgb: 0, 0, 0;
 
     --ion-text-color: #ffffff;
@@ -113,7 +113,13 @@
 
     --ion-card-background: #021806;
   }
+.ios ion-fab-button{
+      --background:  #4b4b4a;
+}
+.ios ion-icon{
 
+  font-size: initial;
+}
   .ios ion-modal {
   
     --ion-item-background: #021806;

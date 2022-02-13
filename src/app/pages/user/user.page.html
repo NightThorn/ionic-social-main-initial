@@ -46,17 +46,27 @@
         <div class="numbers">
           <ul (click)="friends(fetchedProfile.user_id)">
             <li>{{friendCount}}</li>
-            <li>Friends</li>
+            <li>
+              <ion-icon style="vertical-align: middle; color: green;" name="people"></ion-icon>
+              Friends
+            </li>
           </ul>
           <ul (click)="badges(fetchedProfile.user_id)">
             <li>{{badgeCount}}</li>
-            <li>Badges</li>
+            <li>
+              <ion-icon style="vertical-align: middle; color: green;" name="ribbon-outline"></ion-icon>
+              Badges
+            </li>
           </ul>
           <ul>
             <li>{{ fetchedProfile.total_xp }}</li>
-            <li>XP Earned</li>
+            <li>
+              <img style="width: 20px; vertical-align: middle;" src="assets/images/XP.png" />
+              <ion-label style="vertical-align: middle;" text-center text-wrap>
+                Earned</ion-label>
+            </li>
           </ul>
-
+        
         </div>
         <ul *ngIf="blocked != 1">
 

@@ -2,6 +2,10 @@
   padding-top: calc(constant(safe-area-inset-top) + 4px);
   padding-top: calc(env(safe-area-inset-top) + 4px);
 }
+.ios ion-fab-button.md.ion-activatable.ion-focusable.hydrated{
+      --background:  rgb(184, 184, 184);
+
+}
 ion-fab .fab-list-active .fab-backdrop {
   position: fixed;
   top: 0;
