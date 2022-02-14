@@ -131,6 +131,7 @@ export class PostDetailPage implements OnInit {
     let time = new Date(Date.now());
     let data = {
       "post_id": text.commentID,
+      "node_url": this.data,
       "user_id": me,
       "comment": text,
       "time": time,
@@ -153,7 +154,8 @@ export class PostDetailPage implements OnInit {
     let time = new Date(Date.now());
     let data = {
       "post_id": text.commentID,
-      "user_id": 294,
+      "node_url":this.data,
+      "user_id": me,
       "comment": text,
       "time": time,
       "gif": this.gif

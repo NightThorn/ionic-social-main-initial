@@ -70,8 +70,15 @@ export class AuthenticationService {
     )
   }
 
+ 
   sendPasswordReset(email) {
-    // Implement if it exists on your API!
-    return this.http.post(`${this.url}password-reset.php`, { email });
-  }
+    
+      let data = {
+        "email": email,
+        
+      };
+    return this.http.post('https://ggs.tv/api/v1/password.php?action=change', JSON.stringify(data));
+        
+
+    }
 }
