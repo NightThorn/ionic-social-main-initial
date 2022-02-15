@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { IonInfiniteScroll, IonVirtualScroll } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -10,18 +11,20 @@ import { ProfileService } from 'src/app/services/profile.service';
   styleUrls: ['./friends.page.scss'],
 })
 export class FriendsPage implements OnInit {
-  res: any = [];
+  data: any;
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
+
   private onDestroy$: Subject<void> = new Subject<void>();
+  res: any = [];
   public dataL: Array<object> = [];
   public friends: any = [];
   activatedroute: any;
-  data: any;
   public searchTerm: string = "";
   public items: any;
   private topLimit: number = 15;
   public dataList: any = [];
   navCtrl: any;
-  id;
   constructor(private route: ActivatedRoute, private profileService: ProfileService, private router: Router) {
 
     this.route.queryParams.pipe(takeUntil(this.onDestroy$)).subscribe(params => {
@@ -29,15 +32,13 @@ export class FriendsPage implements OnInit {
         this.data = JSON.parse(params.special);
       }
     });
-
   }
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id');
 
     this.profileService.fetchFriends(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.friends = res.message;
       this.dataList = this.friends.slice(0, this.topLimit);
-
+      console.log(this.dataList);
     });
     this.setFilteredItems();
 
@@ -63,16 +64,13 @@ export class FriendsPage implements OnInit {
     });
   }
   user(id) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-    this.router.navigate(['/user'], navigationExtras);
+
+    this.router.navigate(['/user/' + id]);
 
   }
 
   public ngOnDestroy(): void {
     this.onDestroy$.next();
   }
+
 }

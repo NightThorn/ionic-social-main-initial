@@ -146,95 +146,95 @@ export class FeedCardComponent implements OnInit {
     this.me = localStorage.getItem("myID");
 
 
-      if (this.colored > 0) {
-        this.dataService.getColored(this.colored).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-          this.background = res.message;
-          this.coloredpost = this.background[0]['background_image'];
-          this.coloredtext = this.background[0]['text_color'];
-        });
-      }
-
-      if (this.text.includes('#')) {
-        this.decodedtext = htmlDecode(this.text)
-        this.text = this.hashtag(this.decodedtext);
-
-      }
-      if (this.text.includes('@')) {
-        this.decodedtext = htmlDecode(this.text)
-        this.text = this.at(this.decodedtext);
-
-      }
-      if (this.type === 'shared') {
-
-        this.dataService.getPostDetails(this.origin).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-          this.shared = res.message;
-          for (let i = 0; i < this.shared.length; i++) {
-            this.offset = moment().utcOffset();
-
-            this.shared[i]['time'] = moment.utc(this.shared[i]['time']).fromNow();
-          }
-
-        });
-        this.dataService.getMediaPost(this.origin).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-          this.sharedmedia = res.message;
-          for (let i = 0; i < this.sharedmedia.length; i++) {
-            this.offset = moment().utcOffset();
-            if (this.sharedmedia[i]['source_url'].includes('tube')) {
-              this.result = this.sharedmedia[i]['source_url'].replace('watch?v=', 'embed/');
-              this.preurl = htmlDecode(this.result).replace('&feature=youtu.be', '');
-
-              this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
-              this.external = "youtube";
-            } else if (this.sharedmedia[i]['source_url'].includes('twitch')) {
-              this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
-
-              this.sharedmedia[i]['time'] = moment.utc(this.sharedmedia[i]['time']).fromNow();
-              this.external = "twitch";
-
-            }
-          }
-
-        });
-
-      }
-
-      if (this.type === 'media') {
-
-        this.dataService.getMediaPost(this.post_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-          this.media = res.message;
-          for (let i = 0; i < this.media.length; i++) {
-            this.offset = moment().utcOffset();
-            if (this.media[i]['source_url'].includes('tube')) {
-              this.result = this.media[i]['source_url'].replace('watch?v=', 'embed/');
-              this.preurl = htmlDecode(this.result).replace('&feature=youtu.be', '');
-
-              this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
-              this.external = "youtube";
-            }
-            else if (this.media[i]['source_url'].includes('twitch')) {
-              this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
-
-              this.media[i]['time'] = moment.utc(this.media[i]['time']).fromNow();
-              this.external = "twitch";
-
-            }
-          }
-
-        });
-      }
-    this.dataService.getLikes(this.post_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-        this.reacted = res.message;
-        var i_like = this.reacted.find(message => message.user_id == this.me)
-        if (i_like) {
-          this.liked = "1";
-          this.image = "./assets/images/ggs.png";
-        } else {
-
-          this.liked = "0";
-          this.image = "./assets/images/ggsgray.png";
-
-        }
+    if (this.colored > 0) {
+      this.dataService.getColored(this.colored).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.background = res.message;
+        this.coloredpost = this.background[0]['background_image'];
+        this.coloredtext = this.background[0]['text_color'];
       });
+    }
+
+    if (this.text.includes('#')) {
+      this.decodedtext = htmlDecode(this.text)
+      this.text = this.hashtag(this.decodedtext);
+
+    }
+    if (this.text.includes('@')) {
+      this.decodedtext = htmlDecode(this.text)
+      this.text = this.at(this.decodedtext);
+
+    }
+    if (this.type === 'shared') {
+
+      this.dataService.getPostDetails(this.origin).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.shared = res.message;
+        for (let i = 0; i < this.shared.length; i++) {
+          this.offset = moment().utcOffset();
+
+          this.shared[i]['time'] = moment.utc(this.shared[i]['time']).fromNow();
+        }
+
+      });
+      this.dataService.getMediaPost(this.origin).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.sharedmedia = res.message;
+        for (let i = 0; i < this.sharedmedia.length; i++) {
+          this.offset = moment().utcOffset();
+          if (this.sharedmedia[i]['source_url'].includes('tube')) {
+            this.result = this.sharedmedia[i]['source_url'].replace('watch?v=', 'embed/');
+            this.preurl = htmlDecode(this.result).replace('&feature=youtu.be', '');
+
+            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
+            this.external = "youtube";
+          } else if (this.sharedmedia[i]['source_url'].includes('twitch')) {
+            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
+
+            this.sharedmedia[i]['time'] = moment.utc(this.sharedmedia[i]['time']).fromNow();
+            this.external = "twitch";
+
+          }
+        }
+
+      });
+
+    }
+
+    if (this.type === 'media') {
+
+      this.dataService.getMediaPost(this.post_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.media = res.message;
+        for (let i = 0; i < this.media.length; i++) {
+          this.offset = moment().utcOffset();
+          if (this.media[i]['source_url'].includes('tube')) {
+            this.result = this.media[i]['source_url'].replace('watch?v=', 'embed/');
+            this.preurl = htmlDecode(this.result).replace('&feature=youtu.be', '');
+
+            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
+            this.external = "youtube";
+          }
+          else if (this.media[i]['source_url'].includes('twitch')) {
+            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
+
+            this.media[i]['time'] = moment.utc(this.media[i]['time']).fromNow();
+            this.external = "twitch";
+
+          }
+        }
+
+      });
+    }
+    this.dataService.getLikes(this.post_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.reacted = res.message;
+      var i_like = this.reacted.find(message => message.user_id == this.me)
+      if (i_like) {
+        this.liked = "1";
+        this.image = "./assets/images/ggs.png";
+      } else {
+
+        this.liked = "0";
+        this.image = "./assets/images/ggsgray.png";
+
+      }
+    });
   }
 
 
@@ -269,15 +269,9 @@ export class FeedCardComponent implements OnInit {
     return repl;
   }
   user(id) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-    this.router.navigate(['/user'], navigationExtras);
 
+    this.router.navigate(['/user/' + id]);
   }
-
   react(id) {
     let data = {
       "post_id": id,

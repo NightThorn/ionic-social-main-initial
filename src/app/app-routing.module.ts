@@ -90,7 +90,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'user',
+    path: 'user/:id',
     loadChildren: () => import('./pages/user/user.module').then(m => m.UserPageModule)
   },
   {
@@ -98,11 +98,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/profile/badges/badges.module').then(m => m.BadgesPageModule)
   },
   {
-    path: 'userbadges',
+    path: 'userbadges/:id',
     loadChildren: () => import('./pages/user/userbadges/userbadges.module').then(m => m.UserbadgesPageModule)
   },
   {
-    path: 'userfriends',
+    path: 'userfriends/:id',
     loadChildren: () => import('./pages/user/userfriends/userfriends.module').then(m => m.UserfriendsPageModule)
   },
   {

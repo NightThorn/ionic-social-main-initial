@@ -14,26 +14,23 @@ export class UserbadgesPage implements OnInit {
 
 
   res: any = [];
-  public badges: any = [];
   activatedroute: any;
   fetchedBadges: any;
   data: any;
   id: any;
   private onDestroy$: Subject<void> = new Subject<void>();
+  badges: any;
 
   constructor(private route: ActivatedRoute, private profileService: ProfileService, private router: Router) {
-    this.route.queryParams.pipe(takeUntil(this.onDestroy$)).subscribe(params => {
-      if (params && params.special) {
-        this.data = JSON.parse(params.special);
-      }
-    });
+
 
   }
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id');
-
-    this.profileService.fetchBadges(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+    const id = this.route.snapshot.paramMap.get('id');
+    console.log(id);
+    this.profileService.fetchBadges(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.badges = res.message;
+      console.log(this.badges);
     });
   }
   public ngOnDestroy(): void {

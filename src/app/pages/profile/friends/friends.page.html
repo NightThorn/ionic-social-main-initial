@@ -1,24 +1,36 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/tabs/explore"></ion-back-button>
     </ion-buttons>
     <ion-title>Friends</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
   <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
-  <ion-grid>
-    <ion-row>
-      <ion-col size="4" sizeMd="3" sizeLg="2" sizeXl="2" *ngFor="let item of dataList">
-        <app-contact-card (click)="user(item.user_id)" [image]="item.user_picture" [name]="item.user_name"
-          [sponsored]="item.user_sponsored" [mod]="item.user_mod" [staff]="item.user_staff"
-          [verified]="item.user_verified">
-        </app-contact-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-list>
+    <ion-virtual-scroll [items]="dataList">
 
+      <ion-item *virtualItem="let i">
+        <ion-avatar slot="start">
+          <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ i.user_picture}}" />
+        </ion-avatar>
+        <ion-label> {{ i.user_name }} <span *ngIf="i.user_verified > 0" style="color: lime;">
+            <ion-icon name="checkmark-circle"></ion-icon>
+          </span>
+          <span *ngIf="i.user_staff > 0">
+            <ion-badge color="success">Staff</ion-badge>
+          </span>
+          <span *ngIf="i.user_sponsored > 0">
+            <ion-badge color="success">Sponsored</ion-badge>
+          </span>
+          <span *ngIf="i.user_mod > 0">
+            <ion-badge color="danger">Mod</ion-badge>
+          </span>
+        </ion-label>
+      </ion-item>
+    </ion-virtual-scroll>
+  </ion-list>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>

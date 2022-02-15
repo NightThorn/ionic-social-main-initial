@@ -28,7 +28,7 @@ export class ProfileService {
     }
   }
 
-  public fetchProfile(user_id: number) {
+  public fetchProfile(user_id: any) {
 
 
 
@@ -42,7 +42,7 @@ export class ProfileService {
   }
 
 
-  public fetchUser(user_id: number) {
+  public fetchUser(user_id: any) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
         special: JSON.stringify(user_id)
@@ -60,7 +60,7 @@ export class ProfileService {
     });
   }
 
-  fetchBadges(user_id: number) {
+  fetchBadges(user_id: any) {
 
     return this.httpClient.get(`https://ggs.tv/api/v1/badges.php?user=${user_id}`).pipe(map((res: any) => {
 
@@ -73,7 +73,7 @@ export class ProfileService {
     );
   }
 
-  fetchGroups(user_id: number) {
+  fetchGroups(user_id: any) {
 
     return this.httpClient.get(`https://ggs.tv/api/v1/groups.php?user=${user_id}`).pipe(map((res: any) => {
 
@@ -90,7 +90,7 @@ export class ProfileService {
     this.onDestroy$.next();
   }
 
-  fetchPictures(user_id: number) {
+  fetchPictures(user_id: any) {
 
     return this.httpClient.get(`https://ggs.tv/api/v1/pictures.php?user=${user_id}`).pipe(map((res: any) => {
 
@@ -102,7 +102,7 @@ export class ProfileService {
       })
     );
   }
-  checkFollow(user: number) {
+  checkFollow(user: any) {
 
     return this.httpClient.get(`https://ggs.tv/api/v1/connection.php?user=${user}`).pipe(map((res: any) => {
 
@@ -114,7 +114,7 @@ export class ProfileService {
       })
     );
   }
-  fetchFriends(user_id: number) {
+  fetchFriends(user_id: any) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
         special: JSON.stringify(user_id)
@@ -134,7 +134,7 @@ export class ProfileService {
   }
 
 
-  public fetchPosts(user_id: number) {
+  public fetchPosts(user_id: any) {
     this.httpClient.get(`https://ggs.tv/api/v1/timeline.php?timeline=profile&user=${user_id}`).subscribe(response => {
 
       this.fetchedPosts.next(response['message']);

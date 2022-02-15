@@ -98,16 +98,13 @@ export class UserPage implements OnInit, OnDestroy {
   // x = localStorage.getItem("user_id");
 
   ngOnInit() {
-    this.activeRoute.queryParams.pipe(takeUntil(this.onDestroy$)).subscribe(params => {
-      if (params && params.special) {
-        this.data = JSON.parse(params.special);
-      }
-    });
+    const id = this.activeRoute.snapshot.paramMap.get('id');
+
     this.me = localStorage.getItem("myID");
 
     this.subscription1$ = this.profileService.checkFollow(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.following = res.message;
-      var follow = this.following.find(message => message.following_id == this.data)
+      var follow = this.following.find(message => message.following_id == id)
 
       if (follow) {
         this.isFollowing = true;
@@ -116,7 +113,7 @@ export class UserPage implements OnInit, OnDestroy {
     });
 
 
-    this.subscription2$ = this.profileService.fetchFriends(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+    this.subscription2$ = this.profileService.fetchFriends(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.userFriends = res.message;
 
       this.friendCount = this.userFriends.length;
@@ -130,19 +127,19 @@ export class UserPage implements OnInit, OnDestroy {
       }
     });
 
-    this.profileService.fetchUser(this.data);
-    this.profileService.fetchPosts(this.data);
-    this.subscription3$ = this.profileService.fetchBadges(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+    this.profileService.fetchUser(id);
+    this.profileService.fetchPosts(id);
+    this.subscription3$ = this.profileService.fetchBadges(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.userBadges = res.message;
       this.badgeCount = this.userBadges.length;
     });
 
 
-    this.subscription4$ = this.profileService.fetchGroups(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+    this.subscription4$ = this.profileService.fetchGroups(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.groups = res.message;
 
     });
-    this.subscription5$ = this.profileService.fetchPictures(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+    this.subscription5$ = this.profileService.fetchPictures(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.pictures = res.message;
       this.dataList = this.pictures.slice(0, this.topLimit);
 
@@ -181,12 +178,8 @@ export class UserPage implements OnInit, OnDestroy {
     this.onDestroy$.next();
   }
   badges(id) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-    this.router.navigate(['/userbadges'], navigationExtras);
+   
+    this.router.navigate(['/userbadges/' + id]);
   }
   goToGroup(id) {
 
@@ -200,13 +193,8 @@ export class UserPage implements OnInit, OnDestroy {
   }
   friends(id) {
 
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-    this.router.navigate(['/userfriends'], navigationExtras).then(() => {
-    });
+
+    this.router.navigate(['/userfriends/' + id]);
   }
 
   loadData(event) {
