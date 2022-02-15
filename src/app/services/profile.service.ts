@@ -5,7 +5,7 @@ import { Subject } from "rxjs";
 import { ProfileModel } from "../models/profile-model";
 import { environment } from "../../environments/environment";
 import { Post } from "../models/post";
-import { filter, map } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { NavigationExtras } from '@angular/router';
 
 
@@ -18,7 +18,7 @@ export class ProfileService {
   fetchedPosts: Subject<Post> = new Subject<Post>();
   fetchedBadges: any;
   response: any;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(
     private httpClient: HttpClient,
     private authService: AuthenticationService
@@ -32,7 +32,7 @@ export class ProfileService {
 
 
 
-    this.httpClient.get(this.URL + user_id).subscribe(response => {
+    this.httpClient.get(this.URL + user_id).pipe(takeUntil(this.onDestroy$)).subscribe(response => {
       if (response['code'] !== 200) {
         // error state
         return;
@@ -51,7 +51,7 @@ export class ProfileService {
     const token = localStorage.getItem('Token');
 
 
-    this.httpClient.get(this.URL + user_id + "?auth_token=" + token).subscribe(response => {
+    this.httpClient.get(this.URL + user_id + "?auth_token=" + token).pipe(takeUntil(this.onDestroy$)).subscribe(response => {
       if (response['code'] !== 200) {
         // error state
         return;
@@ -86,6 +86,9 @@ export class ProfileService {
     );
   }
 
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
 
   fetchPictures(user_id: number) {
 
