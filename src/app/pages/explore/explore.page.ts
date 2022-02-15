@@ -25,7 +25,6 @@ export class ExplorePage implements OnInit {
 
   @ViewChildren('player') videoPlayers: QueryList<any>;
   @ViewChild(IonContent) content: IonContent;
-  private onDestroy$: Subject<void> = new Subject<void>();
 
   currentPlaying = null;
   feeds = [];
@@ -69,6 +68,7 @@ export class ExplorePage implements OnInit {
   userXP: any;
   isShown: boolean;
 
+  onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(private router: Router, private authService: AuthenticationService, public modalController: ModalController, private storage: Storage, private dataService: DataService) { }
 
@@ -77,11 +77,9 @@ export class ExplorePage implements OnInit {
   ngOnInit() {
     this.me = localStorage.getItem("myID");
 
-    console.log("idk ey", this.me);
     this.filter = localStorage.getItem("filter");
     this.dataService.getXP(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.xp = res.message;
-      console.log(this.xp);
 
       this.userXP = this.xp[0]['user_points'];
       this.myWallet = this.numFormatter(this.xp[0]['user_wallet_balance']);
@@ -114,7 +112,6 @@ export class ExplorePage implements OnInit {
     }
     this.dataService.getLatestVid(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.latest = res.message;
-      console.log(this.latest);
     });
     this.dataService.getBoosted().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.boost = res.message;
@@ -126,7 +123,6 @@ export class ExplorePage implements OnInit {
       }
     });
 
-    window.onbeforeunload = () => this.ionViewWillLeave();
 
 
   }
@@ -171,7 +167,6 @@ export class ExplorePage implements OnInit {
   doRefresh(event) {
     this.dataService.getXP(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.xp = res.message;
-      console.log(this.xp);
 
       this.userXP = this.xp[0]['user_points'];
       this.myWallet = this.numFormatter(this.xp[0]['user_wallet_balance']);
@@ -245,7 +240,6 @@ export class ExplorePage implements OnInit {
       }
     });
     modal.onDidDismiss().then((data) => {
-      console.log(data);
       const dataXP = data['data'];
       if (dataXP === "good") {
         this.userXP = 0;
@@ -283,12 +277,7 @@ export class ExplorePage implements OnInit {
     }
   }
 
-  ionViewWillLeave() {
-    const iframe = (document.getElementById('youtube') as HTMLIFrameElement);
 
-    iframe.contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
-
-  }
   async openVideoModal(source) {
     const modal = await this.modalController.create({
       component: VideoModalPage,

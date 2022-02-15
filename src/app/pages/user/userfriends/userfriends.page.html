@@ -11,7 +11,7 @@
   <ion-list>
     <ion-virtual-scroll [items]="dataList">
 
-      <ion-item *virtualItem="let i">
+      <ion-item (click)="user(i.user_id)" *virtualItem="let i">
         <ion-avatar slot="start">
           <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ i.user_picture}}" />
         </ion-avatar>

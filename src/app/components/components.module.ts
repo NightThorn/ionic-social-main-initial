@@ -14,7 +14,7 @@ import { EventCardComponent } from './event-card/event-card.component';
 import { FollowCardComponent } from './follow-card/follow-card.component';
 import { InViewportModule } from 'ng-in-viewport';
 import { NgxTweetModule } from "ngx-tweet";
-
+import { SwiperModule } from 'swiper/angular';
 @NgModule({
   declarations: [
     FeedCardComponent,
@@ -28,7 +28,7 @@ import { NgxTweetModule } from "ngx-tweet";
     EventCardComponent,
     FollowCardComponent
   ],
-  imports: [CommonModule, IonicModule.forRoot(), NgxTweetModule, InViewportModule, UtilsModule],
+  imports: [CommonModule, IonicModule.forRoot(), SwiperModule, NgxTweetModule, InViewportModule, UtilsModule],
   exports: [
     FeedCardComponent,
     StoryAvatarComponent,

@@ -50,7 +50,6 @@ export class FeedCardComponent implements OnInit {
   @Input() colored: any;
   @Input()
   set picture(pic) {
-    console.log(pic);
     const imageName = pic.split('/').pop();
     const fileType = imageName.split('.').pop();
 
@@ -59,7 +58,6 @@ export class FeedCardComponent implements OnInit {
       directory: Directory.Cache,
       path: `${CACHE_FOLDER}/${imageName}`
     }).then(readFile => {
-      console.log('LOCAL FILE', readFile);
       this._picture = `data:image/${fileType};base64,${readFile.data}`;
     }).catch(async e => {
       await this.storeImage(pic, imageName);
