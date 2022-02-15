@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -16,14 +18,16 @@ export class BlockedPage implements OnInit {
   me: any;
   @Input() id: number;
   blocked: any;
- 
+  private onDestroy$: Subject<void> = new Subject<void>();
+
+
   constructor(private router: Router, private modalController: ModalController, private authService: AuthenticationService, private http: HttpClient, private dataService: DataService, private fb: FormBuilder) {
   }
 
   ngOnInit() {
   
     this.me = localStorage.getItem("myID");
-        this.dataService.getBlocked(this.me).subscribe(res => {
+    this.dataService.getBlocked(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
           this.blocked = res.message;
         });
@@ -55,4 +59,8 @@ export class BlockedPage implements OnInit {
 
   }
 
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
 }

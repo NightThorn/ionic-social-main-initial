@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { ModalController, AlertController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -26,7 +28,7 @@ export class GrindingPage implements OnInit {
   private topLimit: number = 15;
   public dataList: any = [];
 
-
+  private onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(private modalController: ModalController, private router: Router, private dataService: DataService, private alertController: AlertController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
@@ -34,12 +36,12 @@ export class GrindingPage implements OnInit {
   ngOnInit() {
     this.me = localStorage.getItem("myID");
 
-      this.dataService.grinding(this.group_id).subscribe(res => {
-        this.grinders = res.message;
-        console.log(this.grinders);
-        this.dataList = this.grinders.slice(0, this.topLimit);
+    this.dataService.grinding(this.group_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.grinders = res.message;
+      console.log(this.grinders);
+      this.dataList = this.grinders.slice(0, this.topLimit);
 
-      });
+    });
 
 
   }
@@ -68,13 +70,16 @@ export class GrindingPage implements OnInit {
       "me": this.me,
       "userid": user
     };
-    this.http.post('https://ggs.tv/api/v1/group.php?action=invite&group=' + this.group_id, JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/group.php?action=invite&group=' + this.group_id, JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.presentAlert();
 
       this.closeModal();
       window.location.reload();
     });
 
+  }
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
   closeModal() {
     this.modalController.dismiss();

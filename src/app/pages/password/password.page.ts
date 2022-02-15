@@ -3,6 +3,8 @@ import { Component, ContentChild, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, NavigationExtras } from '@angular/router';
 import { AlertController, IonInput, LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -19,7 +21,7 @@ export class PasswordPage implements OnInit {
   toastctrl: any;
   new_password: string = "";
   new_password_confirm: string = "";
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   me: any;
   @Input() id: number;
   blocked: any;
@@ -34,16 +36,16 @@ export class PasswordPage implements OnInit {
     this.me = localStorage.getItem("myID");
 
 
-      this.postForm = this.fb.group({
-        old: [null],
+    this.postForm = this.fb.group({
+      old: [null],
 
-        new: [null, [Validators.required, passwordValidator]],
+      new: [null, [Validators.required, passwordValidator]],
 
-        repeat: [null, [Validators.required, passwordValidator]],
+      repeat: [null, [Validators.required, passwordValidator]],
 
 
 
-      });
+    });
 
   }
   togglePassword(): void {
@@ -68,7 +70,7 @@ export class PasswordPage implements OnInit {
         "new": blocked.new,
         "repeat": blocked.repeat
       };
-      this.http.post('https://ggs.tv/api/v1/password.php?action=change', JSON.stringify(data)).subscribe(res => {
+      this.http.post('https://ggs.tv/api/v1/password.php?action=change', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         // error toast
         if (res['msg'] == "Old password incorrect") {
           this.presentToast("Old Password Incorrect");
@@ -85,6 +87,10 @@ export class PasswordPage implements OnInit {
   closeModal() {
     this.modalController.dismiss();
 
+  }
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
   async logout() {
     await this.authService.destroy();

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -14,13 +16,13 @@ import { CreategroupPage } from '../../creategroup/creategroup.page';
 export class MePage implements OnInit {
   me: any;
   groups: any = [];
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(private authService: AuthenticationService, public modalController: ModalController, private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
     this.me = localStorage.getItem("myID");
 
-    this.dataService.getMyGroups(this.me).subscribe(res => {
+    this.dataService.getMyGroups(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.groups = res.message;
 
     });
@@ -37,7 +39,9 @@ export class MePage implements OnInit {
 
     this.router.navigate(['group'], navigationExtras);
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   async createGroup() {
 
     const modal = await this.modalController.create({

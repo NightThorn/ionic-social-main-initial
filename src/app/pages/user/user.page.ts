@@ -12,7 +12,8 @@ import { Post } from 'src/app/models/post';
 import { PostsService } from 'src/app/services/posts.service';
 import { HttpClient } from '@angular/common/http';
 import moment from 'moment';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-user',
   templateUrl: './user.page.html',
@@ -80,7 +81,7 @@ export class UserPage implements OnInit, OnDestroy {
   subscription12$: Subscription;
   subscription13$: Subscription;
   subscription14$: Subscription;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(
     private dataService: DataService,
     private profileService: ProfileService,
@@ -97,72 +98,72 @@ export class UserPage implements OnInit, OnDestroy {
   // x = localStorage.getItem("user_id");
 
   ngOnInit() {
-    this.activeRoute.queryParams.subscribe(params => {
+    this.activeRoute.queryParams.pipe(takeUntil(this.onDestroy$)).subscribe(params => {
       if (params && params.special) {
         this.data = JSON.parse(params.special);
       }
     });
     this.me = localStorage.getItem("myID");
 
-       this.subscription1$ = this.profileService.checkFollow(this.me).subscribe(res => {
-          this.following = res.message;
-          var follow = this.following.find(message => message.following_id == this.data)
+    this.subscription1$ = this.profileService.checkFollow(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.following = res.message;
+      var follow = this.following.find(message => message.following_id == this.data)
 
-          if (follow) {
-            this.isFollowing = true;
-          }
-          
-        });
+      if (follow) {
+        this.isFollowing = true;
+      }
+
+    });
 
 
-       this.subscription2$ = this.profileService.fetchFriends(this.data).subscribe(res => {
-          this.userFriends = res.message;
+    this.subscription2$ = this.profileService.fetchFriends(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.userFriends = res.message;
 
-          this.friendCount = this.userFriends.length;
-          var target = this.userFriends.find(message => message.user_id == this.me)
+      this.friendCount = this.userFriends.length;
+      var target = this.userFriends.find(message => message.user_id == this.me)
 
-          if (target) {
-            this.isFriends = "1";
-          } else {
+      if (target) {
+        this.isFriends = "1";
+      } else {
 
-            this.isFriends = "0";
-          }
-        });
+        this.isFriends = "0";
+      }
+    });
 
-        this.profileService.fetchUser(this.data);
-        this.profileService.fetchPosts(this.data);
-        this.subscription3$ = this.profileService.fetchBadges(this.data).subscribe(res => {
-          this.userBadges = res.message;
-          this.badgeCount = this.userBadges.length;
-        });
+    this.profileService.fetchUser(this.data);
+    this.profileService.fetchPosts(this.data);
+    this.subscription3$ = this.profileService.fetchBadges(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.userBadges = res.message;
+      this.badgeCount = this.userBadges.length;
+    });
 
-      
-        this.subscription4$ = this.profileService.fetchGroups(this.data).subscribe(res => {
-          this.groups = res.message;
 
-        });
-        this.subscription5$ = this.profileService.fetchPictures(this.data).subscribe(res => {
-          this.pictures = res.message;
-          this.dataList = this.pictures.slice(0, this.topLimit);
+    this.subscription4$ = this.profileService.fetchGroups(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.groups = res.message;
 
-        });
-        this.subscription6$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
-          this.fetchedProfile = profile;
-          const newDate = new Date(this.fetchedProfile.user_birthdate);
-          this.bday = newDate.toDateString();
-        });
+    });
+    this.subscription5$ = this.profileService.fetchPictures(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.pictures = res.message;
+      this.dataList = this.pictures.slice(0, this.topLimit);
 
-      this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
-        this.fetchedPosts = data;
-        for (let i = 0; i < this.fetchedPosts.length; i++) {
-          this.offset = moment().utcOffset();
-          this.fetchedPosts[i]['total'] = +this.fetchedPosts[i]['reaction_love_count'] + +this.fetchedPosts[i]['reaction_like_count'] + +this.fetchedPosts[i]['reaction_haha_count'] + +this.fetchedPosts[i]['reaction_wow_count'];
+    });
+    this.subscription6$ = this.profileService.fetchedProfile.pipe(takeUntil(this.onDestroy$)).subscribe((profile: ProfileModel) => {
+      this.fetchedProfile = profile;
+      const newDate = new Date(this.fetchedProfile.user_birthdate);
+      this.bday = newDate.toDateString();
+    });
 
-          this.fetchedPosts[i]['time'] = moment.utc(this.fetchedPosts[i]['time']).fromNow();
-        }
+    this.fetchedPostsSub = this.profileService.fetchedPosts.pipe(takeUntil(this.onDestroy$)).subscribe((data: Post) => {
+      this.fetchedPosts = data;
+      for (let i = 0; i < this.fetchedPosts.length; i++) {
+        this.offset = moment().utcOffset();
+        this.fetchedPosts[i]['total'] = +this.fetchedPosts[i]['reaction_love_count'] + +this.fetchedPosts[i]['reaction_like_count'] + +this.fetchedPosts[i]['reaction_haha_count'] + +this.fetchedPosts[i]['reaction_wow_count'];
 
-      })
-      
+        this.fetchedPosts[i]['time'] = moment.utc(this.fetchedPosts[i]['time']).fromNow();
+      }
+
+    })
+
   };
 
   async openModal(source) {
@@ -176,6 +177,9 @@ export class UserPage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   badges(id) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
@@ -217,8 +221,8 @@ export class UserPage implements OnInit, OnDestroy {
 
   }
   getTagGroup(tag) {
-    
-    this.dataService.getGroupFromTag(tag).subscribe(res => {
+
+    this.dataService.getGroupFromTag(tag).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.groups = res.message;
       let navigationExtras: NavigationExtras = {
         queryParams: {
@@ -228,7 +232,7 @@ export class UserPage implements OnInit, OnDestroy {
       this.router.navigate(['group'], navigationExtras);
 
     });
-    
+
   }
   add(id) {
 
@@ -238,9 +242,9 @@ export class UserPage implements OnInit, OnDestroy {
     };
     this.addfriend = "Requested";
 
-    this.subscription8$ = this.http.post('https://ggs.tv/api/v1/user.php?action=add', JSON.stringify(data)).subscribe(res => {
-      
-      
+    this.subscription8$ = this.http.post('https://ggs.tv/api/v1/user.php?action=add', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+
+
     });
   }
 
@@ -252,8 +256,8 @@ export class UserPage implements OnInit, OnDestroy {
     };
     this.isFriends = "0";
 
-    this.subscription9$ =this.http.post('https://ggs.tv/api/v1/user.php?action=remove', JSON.stringify(data)).subscribe(res => {
-    
+    this.subscription9$ = this.http.post('https://ggs.tv/api/v1/user.php?action=remove', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+
 
     });
   }
@@ -265,7 +269,7 @@ export class UserPage implements OnInit, OnDestroy {
     };
     this.blocked = 1;
 
-    this.subscription10$ = this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).subscribe(res => {
+    this.subscription10$ = this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
 
     });
@@ -278,8 +282,8 @@ export class UserPage implements OnInit, OnDestroy {
     };
     this.blocked = 1;
 
-    this.subscription11$ = this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).subscribe(res => {
-      
+    this.subscription11$ = this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+
 
     });
   }
@@ -289,8 +293,8 @@ export class UserPage implements OnInit, OnDestroy {
       "user": id,
       "me": this.me,
     };
-    this.subscription12$ = this.http.post('https://ggs.tv/api/v1/user.php?action=report', JSON.stringify(data)).subscribe(res => {
-      
+    this.subscription12$ = this.http.post('https://ggs.tv/api/v1/user.php?action=report', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+
       this.reported = "./assets/images/ggsgray.png";
 
     });
@@ -301,7 +305,7 @@ export class UserPage implements OnInit, OnDestroy {
       "user": id,
       "me": this.me,
     };
-    this.subscription13$ = this.http.post('https://ggs.tv/api/v1/user.php?action=follow', JSON.stringify(data)).subscribe(res => {
+    this.subscription13$ = this.http.post('https://ggs.tv/api/v1/user.php?action=follow', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
       this.ifollow = "Following";
 
@@ -313,16 +317,14 @@ export class UserPage implements OnInit, OnDestroy {
       "user": id,
       "me": this.me,
     };
-    this.subscription14$ = this.http.post('https://ggs.tv/api/v1/user.php?action=unfollow', JSON.stringify(data)).subscribe(res => {
+    this.subscription14$ = this.http.post('https://ggs.tv/api/v1/user.php?action=unfollow', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
       this.iunfollow = "Follow";
 
     });
   }
 
-  ngOnDestroy() {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
-  }
+
 }
 
 

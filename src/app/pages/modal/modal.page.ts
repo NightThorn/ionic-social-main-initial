@@ -8,6 +8,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { GiphyPage } from '../giphy/giphy.page';
 import { OverlayEventDetail } from '@ionic/core';
 import { ProfileService } from 'src/app/services/profile.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-modal',
@@ -25,7 +27,7 @@ export class ModalPage implements OnInit {
   myObj: any;
   names: String[] = [];
   respo: { user_id: any; message: any; time: Date; picture: any; video: any; gif: any; };
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(private modalController: ModalController, private profileService: ProfileService, private alertController: AlertController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
 
@@ -39,7 +41,7 @@ export class ModalPage implements OnInit {
       gif: [null],
 
     });
-    this.profileService.fetchFriends(this.me).subscribe(res => {
+    this.profileService.fetchFriends(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
       this.items = res.message;
       this.myObj = Object.values(this.items)[0];
@@ -66,7 +68,7 @@ export class ModalPage implements OnInit {
       observe: 'response' as 'response'
     };
 
-    return this.http.post('https://ggs.tv/api/v1/post.php?action=post', JSON.stringify(data), httpOptions).subscribe(res => {
+    return this.http.post('https://ggs.tv/api/v1/post.php?action=post', JSON.stringify(data), httpOptions).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       console.log(res);
       console.log(res['status']);
 
@@ -111,6 +113,11 @@ export class ModalPage implements OnInit {
   closeModal() {
     this.modalController.dismiss();
 
+  }
+
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
   async giphy(id) {
     const modal = await this.modalController.create({

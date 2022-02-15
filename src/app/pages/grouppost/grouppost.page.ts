@@ -6,6 +6,8 @@ import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { GiphyPage } from '../giphy/giphy.page';
 import { OverlayEventDetail } from '@ionic/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-grouppost',
@@ -19,7 +21,7 @@ export class GrouppostPage implements OnInit {
   videoFile: string;
   gif: string;
   group: number;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(private modalController: ModalController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
 
@@ -49,7 +51,7 @@ export class GrouppostPage implements OnInit {
 
 
     };
-    this.http.post('https://ggs.tv/api/v1/post.php?action=group', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/post.php?action=group', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
     });
 
     this.closeModal();
@@ -69,6 +71,10 @@ export class GrouppostPage implements OnInit {
       }
     });
     modal.present();
+  }
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
   onFileChange(e) {
     const reader = new FileReader();

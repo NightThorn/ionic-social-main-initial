@@ -12,6 +12,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { StoredUser } from 'src/app/models/stored-user';
 import { HttpClient } from '@angular/common/http';
 import moment from 'moment';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-user',
   templateUrl: './user.page.html',
@@ -23,7 +25,7 @@ export class UserPage implements OnInit {
     backgroundImage:
       'url(https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/photos/2021/08/gg_baec4903318d885d14ce76fdda9bfecb_cropped.png)',
   };
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   tabType = 'posts';
   Users: any = [];
   feeds: any;
@@ -70,56 +72,56 @@ export class UserPage implements OnInit {
   ngOnInit() {
     this.me = localStorage.getItem("myID");
 
-      console.log("khdsgfasfasdfsfdasdfkasfd", this.me);
+    console.log("khdsgfasfasdfsfdasdfkasfd", this.me);
 
-      this.dataService.getRandomUser(this.me).subscribe(res => {
-        this.user = res.message;
-        console.log("khdsgfasfasdfsfdasdfkasfd", this.user);
+    this.dataService.getRandomUser(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.user = res.message;
+      console.log("khdsgfasfasdfsfdasdfkasfd", this.user);
 
-        this.data = this.user['0']['user_id'];
-        console.log("khdsgfkasfd", this.data);
+      this.data = this.user['0']['user_id'];
+      console.log("khdsgfkasfd", this.data);
 
 
-        this.profileService.fetchUser(this.data);
+      this.profileService.fetchUser(this.data);
 
-        this.profileService.fetchPosts(this.data);
-        this.profileService.fetchGroups(this.data).subscribe(res => {
-          this.groups = res.message;
+      this.profileService.fetchPosts(this.data);
+      this.profileService.fetchGroups(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.groups = res.message;
 
-        });
-        this.profileService.fetchPictures(this.data).subscribe(res => {
-          this.pictures = res.message;
-          this.dataList = this.pictures.slice(0, this.topLimit);
+      });
+      this.profileService.fetchPictures(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.pictures = res.message;
+        this.dataList = this.pictures.slice(0, this.topLimit);
 
-        });
-        this.profileService.fetchFriends(this.data).subscribe(res => {
-          this.userFriends = res.message;
-          this.friendCount = this.userFriends.length;
-        });
-        this.profileService.fetchBadges(this.data).subscribe(res => {
-          this.userBadges = res.message;
-          this.badgeCount = this.userBadges.length;
-        });
-        this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
-          this.fetchedProfile = profile;
-          const newDate = new Date(this.fetchedProfile.user_birthdate);
-          this.bday = newDate.toDateString();
-        });
-
-        this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
-          this.fetchedPosts = data;
-          for (let i = 0; i < this.fetchedPosts.length; i++) {
-            this.offset = moment().utcOffset();
-            this.fetchedPosts[i]['total'] = +this.fetchedPosts[i]['reaction_love_count'] + +this.fetchedPosts[i]['reaction_like_count'] + +this.fetchedPosts[i]['reaction_haha_count'] + +this.fetchedPosts[i]['reaction_wow_count'];
-
-            this.fetchedPosts[i]['time'] = moment.utc(this.fetchedPosts[i]['time']).fromNow();
-          }
-
-        })
-        // this.data = this.profileService.fetchProfile(this.x);
+      });
+      this.profileService.fetchFriends(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.userFriends = res.message;
+        this.friendCount = this.userFriends.length;
+      });
+      this.profileService.fetchBadges(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.userBadges = res.message;
+        this.badgeCount = this.userBadges.length;
+      });
+      this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.pipe(takeUntil(this.onDestroy$)).subscribe((profile: ProfileModel) => {
+        this.fetchedProfile = profile;
+        const newDate = new Date(this.fetchedProfile.user_birthdate);
+        this.bday = newDate.toDateString();
       });
 
-   
+      this.fetchedPostsSub = this.profileService.fetchedPosts.pipe(takeUntil(this.onDestroy$)).subscribe((data: Post) => {
+        this.fetchedPosts = data;
+        for (let i = 0; i < this.fetchedPosts.length; i++) {
+          this.offset = moment().utcOffset();
+          this.fetchedPosts[i]['total'] = +this.fetchedPosts[i]['reaction_love_count'] + +this.fetchedPosts[i]['reaction_like_count'] + +this.fetchedPosts[i]['reaction_haha_count'] + +this.fetchedPosts[i]['reaction_wow_count'];
+
+          this.fetchedPosts[i]['time'] = moment.utc(this.fetchedPosts[i]['time']).fromNow();
+        }
+
+      })
+      // this.data = this.profileService.fetchProfile(this.x);
+    });
+
+
   }
   add(id) {
     let data = {
@@ -128,7 +130,7 @@ export class UserPage implements OnInit {
     };
     this.addfriend = "Requested";
 
-    this.http.post('https://ggs.tv/api/v1/user.php?action=add', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/user.php?action=add', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
     });
   }
@@ -138,7 +140,7 @@ export class UserPage implements OnInit {
       "user": id,
       "me": this.me,
     };
-    this.http.post('https://ggs.tv/api/v1/user.php?action=report', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/user.php?action=report', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
     });
   }
@@ -150,7 +152,7 @@ export class UserPage implements OnInit {
     };
     this.blocked = 1;
 
-    this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/user.php?action=block', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
     });
   }
   async openModal(source) {
@@ -171,6 +173,10 @@ export class UserPage implements OnInit {
       }
     };
     this.router.navigate(['badges'], navigationExtras);
+  }
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
   goToGroup(id) {
 
@@ -200,48 +206,48 @@ export class UserPage implements OnInit {
     this.router.navigate(['newchat'], navigationExtras);
   }
   doRefresh(event) {
-    
+
     this.me = localStorage.getItem("myID");
 
-        this.dataService.getRandomUser(this.me).subscribe(res => {
-          this.user = res.message;
-          this.data = res.message['0']['user_id'];
+    this.dataService.getRandomUser(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.user = res.message;
+      this.data = res.message['0']['user_id'];
 
 
-          this.addfriend = "Add Friend";
+      this.addfriend = "Add Friend";
 
-          this.profileService.fetchUser(this.data);
-          this.profileService.fetchFriends(this.data).subscribe(res => {
-            this.userFriends = res.message;
-            this.friendCount = this.userFriends.length;
-          });
-          this.profileService.fetchBadges(this.data).subscribe(res => {
-            this.userBadges = res.message;
-            this.badgeCount = this.userBadges.length;
-          });
-          this.profileService.fetchPosts(this.data);
-          this.profileService.fetchGroups(this.data).subscribe(res => {
-            this.groups = res.message;
+      this.profileService.fetchUser(this.data);
+      this.profileService.fetchFriends(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.userFriends = res.message;
+        this.friendCount = this.userFriends.length;
+      });
+      this.profileService.fetchBadges(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.userBadges = res.message;
+        this.badgeCount = this.userBadges.length;
+      });
+      this.profileService.fetchPosts(this.data);
+      this.profileService.fetchGroups(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.groups = res.message;
 
-          });
-          this.profileService.fetchPictures(this.data).subscribe(res => {
-            this.pictures = res.message;
-            this.dataList = this.pictures.slice(0, this.topLimit);
+      });
+      this.profileService.fetchPictures(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.pictures = res.message;
+        this.dataList = this.pictures.slice(0, this.topLimit);
 
-          });
-          this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
-            this.fetchedProfile = profile;
-            const newDate = new Date(this.fetchedProfile.user_birthdate);
-            this.bday = newDate.toDateString();
-          });
+      });
+      this.fetchedProfileSubscription$ = this.profileService.fetchedProfile.pipe(takeUntil(this.onDestroy$)).subscribe((profile: ProfileModel) => {
+        this.fetchedProfile = profile;
+        const newDate = new Date(this.fetchedProfile.user_birthdate);
+        this.bday = newDate.toDateString();
+      });
 
-          this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
-            this.fetchedPosts = data;
+      this.fetchedPostsSub = this.profileService.fetchedPosts.pipe(takeUntil(this.onDestroy$)).subscribe((data: Post) => {
+        this.fetchedPosts = data;
 
-          })
-          // this.data = this.profileService.fetchProfile(this.x);
-        });
-      
+      })
+      // this.data = this.profileService.fetchProfile(this.x);
+    });
+
 
     setTimeout(() => {
       event.target.complete();

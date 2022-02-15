@@ -12,12 +12,14 @@ import { PostsService } from 'src/app/services/posts.service';
 import { ModalPage } from '../modal/modal.page';
 import moment from 'moment';
 import { EditprofilePage } from '../editprofile/editprofile.page';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit, OnDestroy {
+export class ProfilePage implements OnInit {
   cover = {
     backgroundImage:
       'url(https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/photos/2021/08/gg_baec4903318d885d14ce76fdda9bfecb_cropped.png)',
@@ -32,7 +34,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   public items: any;
   private topLimit: number = 15;
   public dataList: any = [];
-
+  private onDestroy$: Subject<void> = new Subject<void>();
 
   pictures: any = [];
   profile: any;
@@ -70,31 +72,31 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.profileService.fetchProfile(this.me);
     this.profileService.fetchPosts(this.me);
 
-    this.profileService.fetchGroups(this.me).subscribe(res => {
+    this.profileService.fetchGroups(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.groups = res.message;
 
     });
-    this.profileService.fetchFriends(this.me).subscribe(res => {
+    this.profileService.fetchFriends(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.userFriends = res.message;
       this.friendCount = this.userFriends.length;
     });
-    this.profileService.fetchBadges(this.me).subscribe(res => {
+    this.profileService.fetchBadges(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.userBadges = res.message;
       this.badgeCount = this.userBadges.length;
     });
-    this.profileService.fetchPictures(this.me).subscribe(res => {
+    this.profileService.fetchPictures(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.pictures = res.message;
       this.dataList = this.pictures.slice(0, this.topLimit);
 
     });
-   this.profileService.fetchedProfile.subscribe((profile: ProfileModel) => {
+    this.profileService.fetchedProfile.pipe(takeUntil(this.onDestroy$)).subscribe((profile: ProfileModel) => {
       this.fetchedProfile = profile;
       console.log(this.fetchedProfile);
       const newDate = new Date(this.fetchedProfile.user_birthdate);
       this.bday = newDate.toDateString();
     });
 
-    this.fetchedPostsSub = this.profileService.fetchedPosts.subscribe((data: Post) => {
+    this.fetchedPostsSub = this.profileService.fetchedPosts.pipe(takeUntil(this.onDestroy$)).subscribe((data: Post) => {
       this.fetchedPosts = data;
       for (let i = 0; i < this.fetchedPosts.length; i++) {
         this.offset = moment().utcOffset();
@@ -108,8 +110,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   };
 
-  ngOnDestroy() {
-  }
+
 
   async openModal(source) {
     const modal = await this.modalController.create({
@@ -133,7 +134,9 @@ export class ProfilePage implements OnInit, OnDestroy {
     });
     modal.present();
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   goToSettings() {
     this.router.navigate(['settings']);
   }
@@ -191,7 +194,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
   group(tag) {
 
-    this.dataService.getGroupFromTag(tag).subscribe(res => {
+    this.dataService.getGroupFromTag(tag).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.groups = res.message;
       let navigationExtras: NavigationExtras = {
         queryParams: {

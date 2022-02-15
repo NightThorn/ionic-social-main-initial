@@ -11,6 +11,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { GiphyPage } from '../giphy/giphy.page';
 import { OverlayEventDetail } from '@ionic/core';
 import { ProfileService } from 'src/app/services/profile.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-post-detail',
@@ -39,9 +41,9 @@ export class PostDetailPage implements OnInit {
   myObj: any;
   names: String[] = [];
   commentReplies: any;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(private fb: FormBuilder, private http: HttpClient, private profileService: ProfileService, private authService: AuthenticationService, private route: ActivatedRoute, private modalController: ModalController, private dataService: DataService, private router: Router) {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.pipe(takeUntil(this.onDestroy$)).subscribe(params => {
       if (params && params.special) {
         this.data = JSON.parse(params.special);
       }
@@ -54,7 +56,7 @@ export class PostDetailPage implements OnInit {
 
 
 
-    this.dataService.getPostDetails(this.data).subscribe(res => {
+    this.dataService.getPostDetails(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.post = res.message;
 
       console.log(this.post);
@@ -64,7 +66,7 @@ export class PostDetailPage implements OnInit {
         this.post[i]['time'] = moment.utc(this.post[i]['time']).fromNow();
       }
     });
-    this.dataService.getPostComments(this.data).subscribe(res => {
+    this.dataService.getPostComments(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.comments = res.message;
       this.commentReplies = res.replies;
       console.log(this.comments);
@@ -84,7 +86,7 @@ export class PostDetailPage implements OnInit {
       }
     });
 
-    this.profileService.fetchFriends(this.me).subscribe(res => {
+    this.profileService.fetchFriends(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
       this.items = res.message;
       this.myObj = Object.values(this.items)[0];
@@ -123,6 +125,9 @@ export class PostDetailPage implements OnInit {
     console.log(id);
   }
 
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   reply(me, text) {
     var headers = new HttpHeaders();
     headers.append("Accept", 'application/json');
@@ -137,7 +142,7 @@ export class PostDetailPage implements OnInit {
       "time": time,
       "gif": this.gif
     };
-    this.http.post('https://ggs.tv/api/v1/post.php?action=reply', JSON.stringify(data), { headers: headers }).subscribe(
+    this.http.post('https://ggs.tv/api/v1/post.php?action=reply', JSON.stringify(data), { headers: headers }).pipe(takeUntil(this.onDestroy$)).subscribe(
       () => { // If POST is success
         window.location.reload();
       },
@@ -154,13 +159,13 @@ export class PostDetailPage implements OnInit {
     let time = new Date(Date.now());
     let data = {
       "post_id": text.commentID,
-      "node_url":this.data,
+      "node_url": this.data,
       "user_id": me,
       "comment": text,
       "time": time,
       "gif": this.gif
     };
-    this.http.post('https://ggs.tv/api/v1/post.php?action=reply', JSON.stringify(data), { headers: headers }).subscribe(
+    this.http.post('https://ggs.tv/api/v1/post.php?action=reply', JSON.stringify(data), { headers: headers }).pipe(takeUntil(this.onDestroy$)).subscribe(
       () => { // If POST is success
         window.location.reload();
       },
@@ -185,7 +190,7 @@ export class PostDetailPage implements OnInit {
 
     };
 
-    this.http.post('https://ggs.tv/api/v1/post.php?action=comment', JSON.stringify(data), { headers: headers }).subscribe(
+    this.http.post('https://ggs.tv/api/v1/post.php?action=comment', JSON.stringify(data), { headers: headers }).pipe(takeUntil(this.onDestroy$)).subscribe(
       () => { // If POST is success
         window.location.reload();
       },
@@ -314,7 +319,7 @@ export class PostDetailPage implements OnInit {
     document.getElementById(toggle).classList.add("liked");
 
     this.liked = "1";
-    this.http.post('https://ggs.tv/api/v1/post.php?action=commentlike', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/post.php?action=commentlike', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
     });
   }
   commentunlike(id, toggle) {
@@ -325,7 +330,7 @@ export class PostDetailPage implements OnInit {
     document.getElementById(toggle).classList.add("unliked");
     document.getElementById(toggle).classList.remove("liked");
     this.liked = "0";
-    this.http.post('https://ggs.tv/api/v1/post.php?action=commentunlike', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/post.php?action=commentunlike', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       document.getElementById(toggle).classList.toggle("liked");
 
     });

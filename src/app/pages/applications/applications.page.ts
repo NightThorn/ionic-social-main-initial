@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -17,7 +19,7 @@ export class ApplicationsPage implements OnInit {
   @Input() group_id: number;
   @Input() user_id: number;
   apps: any;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   Accept = "Accept";
   Decline = "Decline";
 
@@ -28,7 +30,7 @@ export class ApplicationsPage implements OnInit {
   ngOnInit() {
     this.me = localStorage.getItem("myID");
       
-      this.dataService.getApps(this.group_id).subscribe(res => {
+    this.dataService.getApps(this.group_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
         this.apps = res.message;
         console.log(this.apps);
@@ -76,5 +78,7 @@ export class ApplicationsPage implements OnInit {
     this.router.navigate(['applicant'], navigationExtras);
 
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
 }

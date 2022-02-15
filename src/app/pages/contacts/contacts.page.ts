@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -23,6 +25,7 @@ export class ContactPage implements OnInit {
   public dataList: any = [];
   navCtrl: any;
   id;
+  private onDestroy$: Subject<void> = new Subject<void>();
   me: any;
   constructor(private route: ActivatedRoute, private authService: AuthenticationService, private profileService: ProfileService, private router: Router) {
 
@@ -36,11 +39,11 @@ export class ContactPage implements OnInit {
   ngOnInit() {
     this.me = localStorage.getItem("myID");
 
-      this.profileService.fetchFriends(this.me).subscribe(res => {
-        this.friends = res.message;
-        this.dataList = this.friends.slice(0, this.topLimit);
+    this.profileService.fetchFriends(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.friends = res.message;
+      this.dataList = this.friends.slice(0, this.topLimit);
 
-      });
+    });
     this.setFilteredItems();
 
   }
@@ -67,6 +70,9 @@ export class ContactPage implements OnInit {
 
 
 
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
 
   chat(item) {
     let navigationExtras: NavigationExtras = {

@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -21,25 +23,25 @@ export class BuymodalPage implements OnInit {
   me: any;
   owned: any;
   badges: any = [];
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(private modalController: ModalController, private dataService: DataService, private router: Router, public alertController: AlertController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
 
   ngOnInit() {
-       
+
     this.me = localStorage.getItem("myID");
-        this.dataService.fetchBadges(this.me).subscribe(res => {
-          this.badges = res.message;
-          var target = this.badges.find(message => message.badge === this.id)
-          if (target) {
-            this.owned = "1";
-          } else {
+    this.dataService.fetchBadges(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.badges = res.message;
+      var target = this.badges.find(message => message.badge === this.id)
+      if (target) {
+        this.owned = "1";
+      } else {
 
-            this.owned = "0";
-          }
+        this.owned = "0";
+      }
 
-        });
-    
+    });
+
 
     this.postForm = this.fb.group({
       user: this.me,
@@ -99,5 +101,10 @@ export class BuymodalPage implements OnInit {
     await success.present();
     const { role } = await success.onDidDismiss();
 
+  }
+
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
 }

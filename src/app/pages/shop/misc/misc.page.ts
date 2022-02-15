@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -15,7 +17,7 @@ import { XpmodalPage } from '../../xpmodal/xpmodal.page';
   styleUrls: ['./misc.page.scss'],
 })
 export class MiscPage implements OnInit {
-  
+
   me: any;
   info: any;
   pro: any;
@@ -23,26 +25,29 @@ export class MiscPage implements OnInit {
   xp: any;
   myXP: any;
   myWallet: any;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(private dataService: DataService, private router: Router, private authService: AuthenticationService, private modalController: ModalController) { }
 
   ngOnInit() {
     this.me = localStorage.getItem("myID");
 
-        this.dataService.getXP(this.me).subscribe(res => {
-          this.xp = res.message;
-          for (let i = 0; i < this.xp.length; i++) {
+    this.dataService.getXP(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.xp = res.message;
+      for (let i = 0; i < this.xp.length; i++) {
 
-            this.myXP = this.numFormatter(this.xp[i]['user_points']);
-            this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
+        this.myXP = this.numFormatter(this.xp[i]['user_points']);
+        this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
 
-          }
-        });
+      }
+    });
 
 
 
-      
+
+  }
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
   async buyPro(id, price) {
 

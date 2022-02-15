@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { DataService } from 'src/app/services/data.service';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -19,7 +21,7 @@ export class ApplicantPage implements OnInit {
   badgeCount: any;
   groups: any;
   xp: any;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(private activeRoute: ActivatedRoute, private router: Router, private http: HttpClient, private profileService: ProfileService, private dataService: DataService) { }
 
   ngOnInit() {
@@ -30,24 +32,24 @@ export class ApplicantPage implements OnInit {
 
       }
     });
-    this.dataService.getApplicant(this.groupid, this.data).subscribe(res => {
+    this.dataService.getApplicant(this.groupid, this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
       this.apps = res.message;
       this.xp = this.apps[0]['total_xp']
       console.log(this.apps);
     });
-    this.profileService.fetchFriends(this.data).subscribe(res => {
+    this.profileService.fetchFriends(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.userFriends = res.message;
       this.friendCount = this.userFriends.length;
 
     });
     this.profileService.fetchUser(this.data);
     this.profileService.fetchPosts(this.data);
-    this.profileService.fetchBadges(this.data).subscribe(res => {
+    this.profileService.fetchBadges(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.userBadges = res.message;
       this.badgeCount = this.userBadges.length;
     });
-    this.profileService.fetchGroups(this.data).subscribe(res => {
+    this.profileService.fetchGroups(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.groups = res.message;
 
     });
@@ -74,7 +76,9 @@ export class ApplicantPage implements OnInit {
     this.http.post('https://ggs.tv/api/v1/group.php?action=accept&group=' + this.groupid, JSON.stringify(data)).subscribe(res => {
       });
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
  
   badges(id) {
     let navigationExtras: NavigationExtras = {

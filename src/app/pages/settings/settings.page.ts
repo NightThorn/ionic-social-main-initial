@@ -2,7 +2,8 @@ import { Component, OnInit, ɵsetCurrentInjector } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
-import { async } from 'rxjs';
+import { async, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { DataService } from 'src/app/services/data.service';
 import { FcmService } from 'src/app/services/fcm.service';
@@ -43,7 +44,7 @@ export class SettingsPage implements OnInit {
   birthdate: any;
   searching: number;
   current: any;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(
     private router: Router,
     private authService: AuthenticationService,
@@ -55,24 +56,24 @@ export class SettingsPage implements OnInit {
   ngOnInit() {
     this.me = localStorage.getItem("myID");
 
-        this.dataService.getUser(this.me).subscribe(res => {
-          this.user = res.message;
-          this.bio = this.user[0]['user_biography'];
-          this.location = this.user[0]['user_current_city'];
-          this.gender = this.user[0]['user_gender'];
-          this.current = this.user[0]['user_name'];
+    this.dataService.getUser(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.user = res.message;
+      this.bio = this.user[0]['user_biography'];
+      this.location = this.user[0]['user_current_city'];
+      this.gender = this.user[0]['user_gender'];
+      this.current = this.user[0]['user_name'];
 
-          this.username = this.user[0]['user_name'];
-          this.relationship = this.user[0]['user_relationship'];
-          this.birthdate = this.user[0]['user_birthdate'];
-          this.searching = this.user[0]['searching'];
+      this.username = this.user[0]['user_name'];
+      this.relationship = this.user[0]['user_relationship'];
+      this.birthdate = this.user[0]['user_birthdate'];
+      this.searching = this.user[0]['searching'];
 
-          this.email = this.user[0]['user_email'];
+      this.email = this.user[0]['user_email'];
 
-        });
-        this.value = localStorage.getItem("filter");
-      
-  
+    });
+    this.value = localStorage.getItem("filter");
+
+
   }
   gotoShop() {
     this.router.navigate(['shop']);
@@ -120,6 +121,9 @@ export class SettingsPage implements OnInit {
 
     });
     modal.present();
+  }
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
   async blocked(id) {
     const modal = await this.modalController.create({

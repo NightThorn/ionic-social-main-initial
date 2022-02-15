@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalController, AlertController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -31,18 +33,18 @@ export class MiscmodalPage implements OnInit {
   ngOnInit() {
     this.me = localStorage.getItem("myID");
 
-        this.dataService.getUser(this.me).subscribe(res => {
-          this.user = res.message;
-          var target = this.user.find(message => message.user_subscribed == 1)
-          if (target) {
-            this.pro = "1";
-          } else {
+    this.dataService.getUser(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.user = res.message;
+      var target = this.user.find(message => message.user_subscribed == 1)
+      if (target) {
+        this.pro = "1";
+      } else {
 
-            this.pro = "0";
-          }
+        this.pro = "0";
+      }
 
-        });
-      
+    });
+
 
 
     this.postForm = this.fb.group({
@@ -51,7 +53,9 @@ export class MiscmodalPage implements OnInit {
     });
 
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   buy(user) {
     let data = {
       "user_id": user,
@@ -59,10 +63,10 @@ export class MiscmodalPage implements OnInit {
     };
     let price = this.price;
     let wallet = this.wallet;
-  
+
 
     if (price < wallet) {
-      this.http.post('https://ggs.tv/api/v1/miscshop.php?item=' + this.id, JSON.stringify(data)).subscribe(res => {
+      this.http.post('https://ggs.tv/api/v1/miscshop.php?item=' + this.id, JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       });
 
       this.ordered();
@@ -104,4 +108,5 @@ export class MiscmodalPage implements OnInit {
     const { role } = await success.onDidDismiss();
 
   }
+  private onDestroy$: Subject<void> = new Subject<void>();
 }

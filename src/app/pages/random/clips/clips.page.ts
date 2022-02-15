@@ -10,6 +10,8 @@ import { StoredUser } from 'src/app/models/stored-user';
 import { SharemodalPage } from '../../sharemodal/sharemodal.page';
 import { HttpClient } from '@angular/common/http';
 import moment from 'moment';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-clips',
@@ -18,6 +20,7 @@ import moment from 'moment';
 })
 export class ClipsPage implements OnInit {
   clip: any;
+  private onDestroy$: Subject<void> = new Subject<void>();
   @ViewChild('video') myVideo: ElementRef;
   post_id: any;
   me: any;
@@ -33,20 +36,20 @@ export class ClipsPage implements OnInit {
   async ngOnInit() {
     this.me = localStorage.getItem("myID");
 
-      this.dataService.getRandomClip().subscribe(res => {
-        this.clip = res.message;
-        this.post_id = res.message['0']['post_id'];
-        this.offset = moment().utcOffset();
+    this.dataService.getRandomClip().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.clip = res.message;
+      this.post_id = res.message['0']['post_id'];
+      this.offset = moment().utcOffset();
 
-        this.clip[0]['time'] = moment.utc(this.clip[0]['time']).fromNow();
+      this.clip[0]['time'] = moment.utc(this.clip[0]['time']).fromNow();
 
 
-        window.onbeforeunload = () => this.ionViewWillLeave();
-      })
+      window.onbeforeunload = () => this.ionViewWillLeave();
+    })
   }
 
   doRefresh(event) {
-    this.dataService.getRandomClip().subscribe(res => {
+    this.dataService.getRandomClip().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.clip = res.message;
       this.post_id = res.message['0']['post_id'];
       this.offset = moment().utcOffset();
@@ -117,7 +120,7 @@ export class ClipsPage implements OnInit {
     this.likes++;
     this.liked = "1";
     this.image = "./assets/images/ggs.png";
-    this.http.post('https://ggs.tv/api/v1/post.php?action=react', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/post.php?action=react', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
     });
   }
@@ -139,7 +142,7 @@ export class ClipsPage implements OnInit {
       "post_id": id,
       "user_id": this.me,
     };
-    this.http.post('https://ggs.tv/api/v1/post.php?action=deboost', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/post.php?action=deboost', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
     });
   }
   boost(id) {
@@ -147,7 +150,7 @@ export class ClipsPage implements OnInit {
       "post_id": id,
       "user_id": this.me,
     };
-    this.http.post('https://ggs.tv/api/v1/post.php?action=boost', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/post.php?action=boost', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
     });
   }
   report(id) {
@@ -155,8 +158,12 @@ export class ClipsPage implements OnInit {
       "post_id": id,
       "user_id": this.me,
     };
-    this.http.post('https://ggs.tv/api/v1/post.php?action=report', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/post.php?action=report', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
     });
+  }
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
   unreact(id) {
 
@@ -167,7 +174,7 @@ export class ClipsPage implements OnInit {
     this.likes--;
     this.liked = "0";
     this.image = "./assets/images/ggsgray.png";
-    this.http.post('https://ggs.tv/api/v1/post.php?action=unreact', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/post.php?action=unreact', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
 
     });

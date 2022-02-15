@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalController, AlertController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 
@@ -16,6 +18,7 @@ export class GiphyPage implements OnInit {
   public friends: any = [];
   activatedroute: any;
   data: any;
+  private onDestroy$: Subject<void> = new Subject<void>();
   public searchTerm: string = "";
   public items: any;
   private topLimit: number = 15;
@@ -29,7 +32,7 @@ export class GiphyPage implements OnInit {
   }
   searchGif(query) {
 
-    this.dataService.giphy(query).subscribe(res => {
+    this.dataService.giphy(query).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.giphy = res.data;
       console.log(this.giphy);
     });
@@ -43,6 +46,8 @@ export class GiphyPage implements OnInit {
     this.modalController.dismiss();
 
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
 
 }

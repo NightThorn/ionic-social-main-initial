@@ -5,7 +5,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { TimeagoModule } from 'ngx-timeago';
 import moment from 'moment';
-import { interval } from 'rxjs';
+import { interval, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class MessagesPage implements OnInit {
   offset: number;
   me: any;
   refresh: any;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(private router: Router, private dataService: DataService, private authService: AuthenticationService,
     private activeRoute: ActivatedRoute) {
     this.refresh = interval(7000).subscribe((func => {
@@ -35,19 +36,19 @@ export class MessagesPage implements OnInit {
   ngOnInit() {
     this.me = localStorage.getItem("myID");
 
-        this.dataService.getMessages(this.me).subscribe(res => {
+    this.dataService.getMessages(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
-          this.messages = res.message;
-          this.dataList = this.messages.slice(0, this.topLimit);
-          for (let i = 0; i < this.dataList.length; i++) {
-            this.offset = moment().utcOffset();
+      this.messages = res.message;
+      this.dataList = this.messages.slice(0, this.topLimit);
+      for (let i = 0; i < this.dataList.length; i++) {
+        this.offset = moment().utcOffset();
 
-            this.dataList[i]['time'] = moment.utc(this.dataList[i]['time']).fromNow();
-          }
+        this.dataList[i]['time'] = moment.utc(this.dataList[i]['time']).fromNow();
+      }
 
-        });
-      
-    
+    });
+
+
     this.setFilteredItems();
 
   }
@@ -85,7 +86,7 @@ export class MessagesPage implements OnInit {
     this.router.navigate(['chat'], navigationExtras);
   }
   getMessagesRefresh(me) {
-    this.dataService.getMessages(me).subscribe(res => {
+    this.dataService.getMessages(me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
       this.messages = res.message;
       this.dataList = this.messages.slice(0, this.topLimit);
@@ -98,5 +99,7 @@ export class MessagesPage implements OnInit {
     });
 
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
 }

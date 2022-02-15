@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ProfileService } from 'src/app/services/profile.service';
 @Component({
   selector: 'app-userfriends',
@@ -8,7 +10,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 })
 export class UserfriendsPage implements OnInit {
 
- 
+  private onDestroy$: Subject<void> = new Subject<void>();
   res: any = [];
   public dataL: Array<object> = [];
   public friends: any = [];
@@ -22,7 +24,7 @@ export class UserfriendsPage implements OnInit {
   id;
   constructor(private route: ActivatedRoute, private profileService: ProfileService, private router: Router) {
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.pipe(takeUntil(this.onDestroy$)).subscribe(params => {
       if (params && params.special) {
         this.data = JSON.parse(params.special);
       }
@@ -32,7 +34,7 @@ export class UserfriendsPage implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
 
-    this.profileService.fetchFriends(this.data).subscribe(res => {
+    this.profileService.fetchFriends(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.friends = res.message;
       this.dataList = this.friends.slice(0, this.topLimit);
 
@@ -70,5 +72,8 @@ export class UserfriendsPage implements OnInit {
 
   }
 
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
 
 }

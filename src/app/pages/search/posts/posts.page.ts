@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } fro
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import moment from 'moment';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { ModalPage } from '../../modal/modal.page';
@@ -14,6 +16,7 @@ import { ModalPage } from '../../modal/modal.page';
 export class PostsPage implements OnInit {
   data: any;
   href: string;
+  private onDestroy$: Subject<void> = new Subject<void>();
   results: any;
   offset: number;
   @ViewChild('myvideo') myVideo: ElementRef;
@@ -61,7 +64,7 @@ export class PostsPage implements OnInit {
 
   ngOnInit() {
 
-    this.dataService.getSearch(this.data).subscribe(res => {
+    this.dataService.getSearch(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.results = res.message;
       for (let i = 0; i < this.results.length; i++) {
         this.offset = moment().utcOffset();
@@ -98,7 +101,9 @@ export class PostsPage implements OnInit {
     modal.present();
   }
 
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
 
   isElementInViewport(element) {
     const rect = element.getBoundingClientRect();
@@ -110,7 +115,7 @@ export class PostsPage implements OnInit {
   search(event) {
     var searchQuery = event.target.value as HTMLInputElement
     this.data = searchQuery;
-    this.dataService.getSearch(this.data).subscribe(res => {
+    this.dataService.getSearch(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.results = res.message;
       for (let i = 0; i < this.results.length; i++) {
         this.offset = moment().utcOffset();

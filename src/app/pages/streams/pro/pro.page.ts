@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -9,6 +11,7 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class ProPage implements OnInit {
   streams: any = [];
+  private onDestroy$: Subject<void> = new Subject<void>();
   private topLimit: number = 15;
   public dataList: any = [];
   public dataL: Array<object> = [];
@@ -16,12 +19,16 @@ export class ProPage implements OnInit {
 
 
   ngOnInit() {
-    this.dataService.getProStreams().subscribe(res => {
+    this.dataService.getProStreams().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.streams = res.message;
 
       this.dataList = this.streams.slice(0, this.topLimit);
 
     });
+  }
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
   loadData(event) {
     setTimeout(() => {

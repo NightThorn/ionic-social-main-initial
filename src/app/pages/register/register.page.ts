@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { emailValidator } from 'src/app/validators/email.validators';
 import { passwordValidator } from 'src/app/validators/password.validator';
@@ -20,7 +22,7 @@ export class RegisterPage implements OnInit {
   user_password_confirm: string = "";
   code: string = "";
   groupcode: string = "";
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   disabledButton;
 
   background = {
@@ -51,13 +53,16 @@ export class RegisterPage implements OnInit {
     });
   }
 
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   async signUp() {
     let loading = await this.loadingController.create({
       message: 'Loading...'
     });
     await loading.present();
 
-    this.auth.signUp(this.registerForm.value).subscribe(async res => {
+    this.auth.signUp(this.registerForm.value).pipe(takeUntil(this.onDestroy$)).subscribe(async res => {
       await loading.dismiss();
 
       let toast = await this.toastCtrl.create({
@@ -116,7 +121,7 @@ export class RegisterPage implements OnInit {
 
         }
 
-        this.accsPrvds.postData(body, 'appregister.php').subscribe((res: any) => {
+        this.accsPrvds.postData(body, 'appregister.php').pipe(takeUntil(this.onDestroy$)).subscribe((res: any) => {
           if (res.success == true) {
             loader.dismiss();
             this.disabledButton = false;

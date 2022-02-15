@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -20,6 +22,9 @@ export class BuymerchmodalPage implements OnInit {
   me: any;
   merchItem: any;
   noMoney: any;
+  private onDestroy$: Subject<void> = new Subject<void>();
+
+
   constructor(private modalController: ModalController, private router: Router, public alertController: AlertController, private dataService: DataService, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
 
@@ -28,7 +33,7 @@ export class BuymerchmodalPage implements OnInit {
     this.me = localStorage.getItem("myID");
 
 
-      this.dataService.getMerchItem(this.id).subscribe(res => {
+    this.dataService.getMerchItem(this.id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.merchItem = res.message;
       });
     this.postForm = this.fb.group({
@@ -100,5 +105,10 @@ export class BuymerchmodalPage implements OnInit {
     await success.present();
     const { role } = await success.onDidDismiss();
 
+  }
+
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
 }

@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalController, AlertController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -15,7 +17,7 @@ import { DataService } from 'src/app/services/data.service';
 export class EntergiveawaymodalPage implements OnInit {
   @Input() id: number;
   @Input() user: number;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   postForm: FormGroup;
   owned: any;
   badges: any = [];
@@ -28,7 +30,7 @@ export class EntergiveawaymodalPage implements OnInit {
 
   ngOnInit() {
 
-    this.dataService.getUser(this.user).subscribe(res => {
+    this.dataService.getUser(this.user).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.userinfo = res.message;
       this.tickets = res.message[0]['tickets'];
     });
@@ -48,7 +50,7 @@ export class EntergiveawaymodalPage implements OnInit {
 
 
     if (this.tickets >= 1) {
-      this.http.post('https://ggs.tv/api/v1/giveaways.php?action=enter&id=' + this.id, JSON.stringify(data)).subscribe(res => {
+      this.http.post('https://ggs.tv/api/v1/giveaways.php?action=enter&id=' + this.id, JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       });
 
       this.ordered();
@@ -89,5 +91,8 @@ export class EntergiveawaymodalPage implements OnInit {
     await success.present();
     const { role } = await success.onDidDismiss();
 
+  }
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
 }

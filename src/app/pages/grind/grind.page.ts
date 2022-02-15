@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalController, AlertController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 
@@ -23,13 +25,13 @@ export class GrindPage implements OnInit {
   private topLimit: number = 15;
   public dataList: any = [];
   navCtrl: any;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(private modalController: ModalController, private router: Router, private dataService: DataService, private alertController: AlertController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
   ngOnInit() {
 
 
-    this.dataService.getAllGroups(this.id).subscribe(res => {
+    this.dataService.getAllGroups(this.id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.groups = res.message;
       this.dataList = this.groups.slice(0, this.topLimit);
 
@@ -65,7 +67,7 @@ export class GrindPage implements OnInit {
       "group_id": group,
       "tag": tag
     };
-    this.http.post('https://ggs.tv/api/v1/settag.php', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/settag.php', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.presentAlert(group_name);
 
       this.closeModal();
@@ -90,5 +92,8 @@ export class GrindPage implements OnInit {
     await alert.present();
 
     const { role } = await alert.onDidDismiss();
+  }
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
 }

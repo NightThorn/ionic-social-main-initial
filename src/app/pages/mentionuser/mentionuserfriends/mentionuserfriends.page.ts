@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
@@ -19,9 +21,10 @@ export class MentionuserfriendsPage implements OnInit {
   public dataList: any = [];
   navCtrl: any;
   id;
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(private route: ActivatedRoute, private profileService: ProfileService, private router: Router) {
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.pipe(takeUntil(this.onDestroy$)).subscribe(params => {
       if (params && params.special) {
         this.data = JSON.parse(params.special);
       }
@@ -31,7 +34,7 @@ export class MentionuserfriendsPage implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
 
-    this.profileService.fetchFriends(this.data).subscribe(res => {
+    this.profileService.fetchFriends(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.friends = res.message;
       this.dataList = this.friends.slice(0, this.topLimit);
 
@@ -67,5 +70,9 @@ export class MentionuserfriendsPage implements OnInit {
     };
     this.router.navigate(['/user'], navigationExtras);
 
+  }
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
 }

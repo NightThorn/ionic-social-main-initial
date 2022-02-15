@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
 import moment from 'moment';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -23,9 +25,9 @@ import { ModalPage } from '../../modal/modal.page';
 export class GroupPage implements OnInit {
   data: any;
   tabType = 'posts';
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   group: any;
-  
+
   me: any;
   admin: any;
   joined: any;
@@ -47,11 +49,11 @@ export class GroupPage implements OnInit {
     this.me = localStorage.getItem("myID");
 
 
-    this.dataService.getRandomGroup().subscribe(res => {
+    this.dataService.getRandomGroup().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.group = res.message;
       this.group_id = this.group[0]['group_id'];
 
-      this.dataService.getGroupFeed(this.group_id).subscribe(res => {
+      this.dataService.getGroupFeed(this.group_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feed = res.message;
         console.log(this.feed);
         for (let i = 0; i < this.feed.length; i++) {
@@ -63,7 +65,7 @@ export class GroupPage implements OnInit {
 
       });
 
-      this.dataService.getGroupMedia(this.id).subscribe(res => {
+      this.dataService.getGroupMedia(this.id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.media = res.message;
 
       });
@@ -87,7 +89,7 @@ export class GroupPage implements OnInit {
     };
     this.joined = 2;
 
-    this.http.post('https://ggs.tv/api/v1/group.php?action=join&group=' + this.id, JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/group.php?action=join&group=' + this.id, JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
     });
   }
   leave(user) {
@@ -96,11 +98,13 @@ export class GroupPage implements OnInit {
     };
     this.joined = 0;
 
-    this.http.post('https://ggs.tv/api/v1/group.php?action=leave&group=' + this.id, JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/group.php?action=leave&group=' + this.id, JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
     });
   }
 
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   async apply(id) {
 
     const modal = await this.modalController.create({
@@ -116,11 +120,11 @@ export class GroupPage implements OnInit {
 
 
   doRefresh(event) {
-    this.dataService.getRandomGroup().subscribe(res => {
+    this.dataService.getRandomGroup().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.group = res.message;
       this.group_id = this.group[0]['group_id'];
 
-      this.dataService.getGroupFeed(this.group_id).subscribe(res => {
+      this.dataService.getGroupFeed(this.group_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feed = res.message;
         console.log(this.feed);
         for (let i = 0; i < this.feed.length; i++) {
@@ -132,7 +136,7 @@ export class GroupPage implements OnInit {
 
       });
 
-      this.dataService.getGroupMedia(this.id).subscribe(res => {
+      this.dataService.getGroupMedia(this.id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.media = res.message;
 
       });

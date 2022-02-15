@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -15,6 +17,7 @@ export class EditgroupPage implements OnInit {
 
   postForm: FormGroup;
   me: any;
+  private onDestroy$: Subject<void> = new Subject<void>();
   @Input() group_id: number;
   @Input() group_name: string;
   @Input() group_title: string;
@@ -62,7 +65,7 @@ export class EditgroupPage implements OnInit {
 
 
     };
-    this.http.post('https://ggs.tv/api/v1/group.php?action=edit', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/group.php?action=edit', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.presentAlert();
 
       this.closeModal();
@@ -70,6 +73,9 @@ export class EditgroupPage implements OnInit {
 
     });
 
+  }
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
   closeModal() {
     this.modalController.dismiss();

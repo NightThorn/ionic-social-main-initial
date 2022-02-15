@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -19,33 +21,36 @@ export class MerchPage implements OnInit {
   myXP: any;
   myWallet: number;
   noMoney: any;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(private authService: AuthenticationService, private modalController: ModalController, private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
 
     this.me = localStorage.getItem("myID");
 
-        this.dataService.getXP(this.me).subscribe(res => {
-          this.xp = res.message;
-          for (let i = 0; i < this.xp.length; i++) {
+    this.dataService.getXP(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.xp = res.message;
+      for (let i = 0; i < this.xp.length; i++) {
 
-            this.myXP = this.numFormatter(this.xp[i]['user_points']);
-            this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
-
-           
-          }
-        });
-        this.dataService.getMerch().subscribe(res => {
-          this.merch = res.message;
+        this.myXP = this.numFormatter(this.xp[i]['user_points']);
+        this.myWallet = this.numFormatter(this.xp[i]['user_wallet_balance']);
 
 
+      }
+    });
+    this.dataService.getMerch().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.merch = res.message;
 
-        });
-      
 
-  
 
+    });
+
+
+
+
+  }
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
   async openXPModal(xp) {
 

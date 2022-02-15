@@ -2,6 +2,8 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -15,6 +17,7 @@ export class XpmodalPage implements OnInit {
   xpForm: FormGroup;
   gg: number;
   me: any;
+  private onDestroy$: Subject<void> = new Subject<void>();
   result: Object;
 
   constructor(private modalController: ModalController, private http: HttpClient, private authService: AuthenticationService, private fb: FormBuilder) { }
@@ -35,11 +38,15 @@ export class XpmodalPage implements OnInit {
     await this.modalController.dismiss(result);
 
   }
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   convert(xp) {
     let data = {
       "xp": xp,
     };
-    this.http.post('https://ggs.tv/api/v1/xp.php?tab=convert&user=' + this.me, JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/xp.php?tab=convert&user=' + this.me, JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
     });
     this.result = "good";
 

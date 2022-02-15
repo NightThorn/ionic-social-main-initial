@@ -5,7 +5,8 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import moment from 'moment';
 import { now } from 'moment';
-import { interval } from 'rxjs';
+import { interval, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -31,10 +32,10 @@ export class ChatPage implements OnInit {
   lastMessageID: any;
   offset: number;
   username: any;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(private fb: FormBuilder, private http: HttpClient, private route: ActivatedRoute, private profileService: ProfileService, private authService: AuthenticationService, private dataService: DataService, private router: Router) {
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.pipe(takeUntil(this.onDestroy$)).subscribe(params => {
       if (params && params.chat) {
         this.id = JSON.parse(params.chat);
         this.username = JSON.parse(params.username)
@@ -46,39 +47,44 @@ export class ChatPage implements OnInit {
   }
 
   ngOnInit() {
-      
+
     this.me = localStorage.getItem("myID");
-      this.dataService.getChat(this.id).subscribe(res => {
-        this.chat = res.message;
-        for (let i = 0; i < this.chat.length; i++) {
-          this.offset = moment().utcOffset();
+    this.dataService.getChat(this.id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.chat = res.message;
+      for (let i = 0; i < this.chat.length; i++) {
+        this.offset = moment().utcOffset();
 
-          this.chat[i]['time'] = moment.utc(this.chat[i]['time']).fromNow();
-        }
-        this.currentUser = this.me;
-        setTimeout(() => {
-          this.updateScroll();
-        }, 500);
-      });
+        this.chat[i]['time'] = moment.utc(this.chat[i]['time']).fromNow();
+      }
+      this.currentUser = this.me;
+      setTimeout(() => {
+        this.updateScroll();
+      }, 500);
+    });
 
-      this.messageForm = this.fb.group({
-        message: [null],
-      });
+    this.messageForm = this.fb.group({
+      message: [null],
+    });
 
+  }
+
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
   updateScroll() {
     this.content.scrollToBottom();
   }
   getLastMessage(id) {
-    this.dataService.getLatestChat(id).subscribe(res => {
+    this.dataService.getLatestChat(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.latest = res.message;
-     
+
       var last = this.chat.find(message => message.message_id == this.latest[0]['message_id']);
-     
+
       if (last) {
       } else {
-        
-        this.dataService.getChat(this.id).subscribe(res => {
+
+        this.dataService.getChat(this.id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
           this.chat = res.message;
           for (let i = 0; i < this.chat.length; i++) {
             this.offset = moment().utcOffset();
@@ -89,7 +95,7 @@ export class ChatPage implements OnInit {
             this.updateScroll();
           }, 500);
         });
-}
+      }
     });
 
   }
@@ -102,7 +108,7 @@ export class ChatPage implements OnInit {
       "time": time
     };
 
-    this.http.post('https://ggs.tv/api/v1/sendmessage.php', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/sendmessage.php', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
     });
 
     this.messageForm.reset();
@@ -120,4 +126,5 @@ export class ChatPage implements OnInit {
     this.router.navigate(['/user'], navigationExtras);
 
   }
+  
 }

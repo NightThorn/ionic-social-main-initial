@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ModalController, AlertController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -13,7 +15,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class EditprofilePage implements OnInit {
 
   imgFile: string;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   postForm: FormGroup;
   me: any;
   private file: File;
@@ -42,7 +44,7 @@ export class EditprofilePage implements OnInit {
 
 
     };
-    this.http.post('https://ggs.tv/api/v1/edituser.php?action=profile', JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/edituser.php?action=profile', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.presentAlert();
 
       this.closeModal();
@@ -66,7 +68,9 @@ export class EditprofilePage implements OnInit {
 
     const { role } = await alert.onDidDismiss();
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   onFileChange(e) {
     const reader = new FileReader();
 

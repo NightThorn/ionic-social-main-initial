@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalController, AlertController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -24,7 +26,7 @@ export class TicketmodalPage implements OnInit {
   badges: any = [];
   user: any;
   pro: any;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(private modalController: ModalController, private dataService: DataService, private router: Router, public alertController: AlertController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
 
@@ -40,6 +42,10 @@ export class TicketmodalPage implements OnInit {
 
   }
 
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   buy(user) {
     let data = {
       "user_id": user,
@@ -50,7 +56,7 @@ export class TicketmodalPage implements OnInit {
 
 
     if (price < wallet) {
-      this.http.post('https://ggs.tv/api/v1/miscshop.php?item=ticket', JSON.stringify(data)).subscribe(res => {
+      this.http.post('https://ggs.tv/api/v1/miscshop.php?item=ticket', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       });
 
       this.ordered();

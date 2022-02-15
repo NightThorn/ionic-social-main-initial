@@ -1,6 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -11,14 +13,15 @@ import { DataService } from 'src/app/services/data.service';
 export class AllPage implements OnInit {
   streams: any = [];
   private topLimit: number = 15;
+  private onDestroy$: Subject<void> = new Subject<void>();
   public dataList: any = [];
   public dataL: Array<object> = [];
   constructor(private dataService: DataService, private router: Router,
-) { }
+  ) { }
 
 
   ngOnInit() {
-    this.dataService.getAllStreams().subscribe(res => {
+    this.dataService.getAllStreams().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.streams = res.message;
 
       this.dataList = this.streams.slice(0, this.topLimit);
@@ -36,9 +39,11 @@ export class AllPage implements OnInit {
     }, 500);
 
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   stream(twitch) {
     console.log(twitch);
-  window.open('twitch://stream/' + twitch);
+    window.open('twitch://stream/' + twitch);
   }
 }

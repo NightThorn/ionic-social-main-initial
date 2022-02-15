@@ -15,6 +15,8 @@ import {
   Token,
 } from '@capacitor/push-notifications';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -33,7 +35,7 @@ export class LoginPage implements OnInit {
   email: any;
   password: any;
   accessProviders: any;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   token: string;
 
   constructor(
@@ -94,7 +96,7 @@ export class LoginPage implements OnInit {
 
   }
 
-  
+
 
   async signIn() {
     let loading = await this.loadingController.create({
@@ -102,20 +104,21 @@ export class LoginPage implements OnInit {
     });
     await loading.present();
 
-    this.authService.signIn(this.loginForm.value).subscribe(user => {
-      loading.dismiss();
-      this.router.navigateByUrl('/tabs', { replaceUrl: true });
-    },
-      async err => {
+    this.authService.signIn(this.loginForm.value)
+      .pipe(takeUntil(this.onDestroy$)).subscribe(user => {
         loading.dismiss();
+        this.router.navigateByUrl('/tabs', { replaceUrl: true });
+      },
+        async err => {
+          loading.dismiss();
 
-        let alert = await this.alertCtrl.create({
-          header: 'Error',
-          message: err.message,
-          buttons: ['OK']
-        });
-        alert.present();
-      })
+          let alert = await this.alertCtrl.create({
+            header: 'Error',
+            message: err.message,
+            buttons: ['OK']
+          });
+          alert.present();
+        })
   }
 
   async presentToast(a) {
@@ -167,21 +170,24 @@ export class LoginPage implements OnInit {
         }, {
           text: 'Reset',
           handler: (data) => {
-            this.authService.sendPasswordReset(data.email).subscribe(async () => {
-              let alert = await this.alertCtrl.create({
-                header: 'Success',
-                message: 'Check your emails to complete your password reset!',
-                buttons: ['OK']
+            this.authService.sendPasswordReset(data.email)
+              .pipe(takeUntil(this.onDestroy$)).subscribe(async () => {
+                let alert = await this.alertCtrl.create({
+                  header: 'Success',
+                  message: 'Check your emails to complete your password reset!',
+                  buttons: ['OK']
+                });
+                alert.present();
               });
-              alert.present();
-            });
           }
         }
       ]
     });
     await alert.present();
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
 }
 
 

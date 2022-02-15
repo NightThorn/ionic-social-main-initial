@@ -8,6 +8,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { AddadminPage } from '../addadmin/addadmin.page';
 import { OverlayEventDetail } from '@ionic/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-groupadmins',
@@ -19,7 +21,7 @@ export class GroupadminsPage implements OnInit {
   @Input() group_id: number;
 
   res: any = [];
- 
+  private onDestroy$: Subject<void> = new Subject<void>();
   admins: any;
 
 
@@ -28,21 +30,24 @@ export class GroupadminsPage implements OnInit {
   }
 
   ngOnInit() {
-     
-    this.dataService.getGroupAdmins(this.group_id).subscribe(res => {
+
+    this.dataService.getGroupAdmins(this.group_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.admins = res.message;
     });
 
   }
-  
-  
 
+
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
 
   remove(user) {
     let data = {
       "user_id": user
     };
-    this.http.post('https://ggs.tv/api/v1/groupadmins.php?action=remove&group=' + this.group_id, JSON.stringify(data)).subscribe(res => {
+    this.http.post('https://ggs.tv/api/v1/groupadmins.php?action=remove&group=' + this.group_id, JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
       this.closeModal();
     });
@@ -52,7 +57,7 @@ export class GroupadminsPage implements OnInit {
     this.modalController.dismiss();
 
   }
-  
+
   user(id) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
@@ -75,7 +80,7 @@ export class GroupadminsPage implements OnInit {
 
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-      this.dataService.getGroupAdmins(this.group_id).subscribe(res => {
+      this.dataService.getGroupAdmins(this.group_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.admins = res.message;
       });
     });

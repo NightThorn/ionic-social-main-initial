@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 
@@ -26,14 +28,14 @@ export class AddadminPage implements OnInit {
   private topLimit: number = 15;
   public dataList: any = [];
   admins: any;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
 
 
   constructor(private modalController: ModalController, private router: Router, private dataService: DataService, private alertController: AlertController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
 
   ngOnInit() {
-    this.dataService.getGroupMembersNotAdmin(this.group_id).subscribe(res => {
+    this.dataService.getGroupMembersNotAdmin(this.group_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.admins = res.message;
       this.joined = Array.from({ length: this.admins.length }).fill('Make Admin');
 
@@ -44,6 +46,9 @@ export class AddadminPage implements OnInit {
 
   }
 
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
 
   admin(user, index) {
     let data = {

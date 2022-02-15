@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -13,7 +15,7 @@ import { DataService } from 'src/app/services/data.service';
 export class DiscoverPage implements OnInit {
   me: any;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-
+  private onDestroy$: Subject<void> = new Subject<void>();
   public dataL: Array<object> = [];
   groups: any = [];
   public searchTerm: string = "";
@@ -26,15 +28,15 @@ export class DiscoverPage implements OnInit {
   ngOnInit() {
     this.me = localStorage.getItem("myID");
 
-    this.dataService.getDiscoverGroups(this.me).subscribe(res => {
+    this.dataService.getDiscoverGroups(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.groups = res.message;
       this.dataList = this.groups.slice(0, this.topLimit);
 
     });
 
-      this.setFilteredItems();
+    this.setFilteredItems();
 
-   
+
   }
   loadData(event) {
     if (this.searchTerm == "") {
@@ -48,10 +50,14 @@ export class DiscoverPage implements OnInit {
       }, 500);
 
     } else {
-      
+
       event.target.complete();
 
     }
+  }
+
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
   setFilteredItems() {
     this.dataList = this.filterItems(this.searchTerm);
@@ -63,7 +69,7 @@ export class DiscoverPage implements OnInit {
       return item.group_title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
 
     });
-    
+
   }
   goToGroup(id) {
 

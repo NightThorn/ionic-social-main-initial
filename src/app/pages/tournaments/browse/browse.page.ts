@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -8,7 +10,7 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./browse.page.scss'],
 })
 export class BrowsePage implements OnInit {
-  tournaments: any=[];
+  tournaments: any = [];
   date: Date;
   public dataL: Array<object> = [];
   public friends: any = [];
@@ -16,14 +18,15 @@ export class BrowsePage implements OnInit {
   data: any;
   public searchTerm: string = "";
   public items: any;
+  private onDestroy$: Subject<void> = new Subject<void>();
   private topLimit: number = 15;
   public dataList: any = [];
   constructor(private dataService: DataService, private router: Router) { }
 
   ngOnInit() {
-    this.dataService.getTournaments().subscribe(res => {
+    this.dataService.getTournaments().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.tournaments = res.message;
-      
+
       this.dataList = this.tournaments.slice(0, this.topLimit);
 
     });
@@ -41,7 +44,9 @@ export class BrowsePage implements OnInit {
     }, 500);
 
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   setFilteredItems() {
     this.dataList = this.filterItems(this.searchTerm);
   }
