@@ -21,6 +21,8 @@ const { Filesystem } = Plugins;
 })
 export class ExplorePage implements OnInit {
   @ViewChild('myvideo') myVideo: ElementRef;
+  @ViewChild('yt') yt: ElementRef;
+
   @ViewChildren('player') videoPlayers: QueryList<any>;
   @ViewChild(IonContent) content: IonContent;
   private onDestroy$: Subject<void> = new Subject<void>();
@@ -124,6 +126,7 @@ export class ExplorePage implements OnInit {
       }
     });
 
+    window.onbeforeunload = () => this.ionViewWillLeave();
 
 
   }
@@ -280,7 +283,12 @@ export class ExplorePage implements OnInit {
     }
   }
 
+  ionViewWillLeave() {
+    const iframe = (document.getElementById('youtube') as HTMLIFrameElement);
 
+    iframe.contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
+
+  }
   async openVideoModal(source) {
     const modal = await this.modalController.create({
       component: VideoModalPage,

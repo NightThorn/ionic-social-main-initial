@@ -120,7 +120,7 @@
     <div *ngIf="type === 'media'">
       <ion-item lines="none" *ngFor="let share of media">
         <ion-card *ngIf="external === 'youtube'" style="border: 2px solid green; width: 100%;">
-          <iframe frameborder="0" playsinline allowfullscreen width="100%" height="315" [src]="urls">
+          <iframe frameborder="0" #yt id="youtube" playsinline allowfullscreen width="100%" height="315" [src]="urls">
           </iframe>
         </ion-card>
 
@@ -182,7 +182,8 @@
             <div *ngIf="share.post_type === 'media'">
               <ion-item (click)="navigateToDetail(post_id)" *ngFor="let share of sharedmedia">
                 <ion-card *ngIf="external === 'youtube'">
-                  <iframe frameborder="0" playsinline allowfullscreen width="100%" height="315" [src]="urls">
+                  <iframe frameborder="0" #yt id="youtube" playsinline allowfullscreen width="100%" height="315"
+                    [src]="urls">
                   </iframe>
                 </ion-card>
                 <ion-card lines="none" *ngIf="external === 'twitch'">
