@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import moment from 'moment';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -35,6 +35,17 @@ export class AllPage implements OnInit {
 
         this.notifications[i]['time'] = moment.utc(this.notifications[i]['time']).fromNow();
       }
+    });
+   
+    Observable.interval(10000).pipe(takeUntil(this.onDestroy$)).subscribe(x => {
+      this.dataService.getNotis(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.notifications = res.message;
+        for (let i = 0; i < this.notifications.length; i++) {
+          this.offset = moment().utcOffset();
+
+          this.notifications[i]['time'] = moment.utc(this.notifications[i]['time']).fromNow();
+        }
+      });
     });
 
   }

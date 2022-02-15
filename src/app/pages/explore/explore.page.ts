@@ -276,14 +276,8 @@ export class ExplorePage implements OnInit {
 
       this.currentPlaying.pause();
       this.currentPlaying = null;
+
     }
-    this.videoPlayers.forEach(player => {
-    });
-
-
-
-
-
   }
 
 

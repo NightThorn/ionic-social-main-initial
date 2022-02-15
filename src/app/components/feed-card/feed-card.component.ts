@@ -206,7 +206,7 @@ export class FeedCardComponent implements OnInit {
           this.offset = moment().utcOffset();
           if (this.media[i]['source_url'].includes('tube')) {
             this.result = this.media[i]['source_url'].replace('watch?v=', 'embed/');
-            this.preurl = htmlDecode(this.result).replace('&feature=youtu.be', '');
+            this.preurl = htmlDecode(this.result).replace('&feature=youtu.be', '&enablejsapi=1');
 
             this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
             this.external = "youtube";
