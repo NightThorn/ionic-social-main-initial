@@ -14,6 +14,8 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Plugins } from '@capacitor/core';
 const { Filesystem } = Plugins;
 import { Directory, Encoding } from '@capacitor/filesystem';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 
 const CACHE_FOLDER = 'CACHED-IMG';
@@ -106,6 +108,7 @@ export class FeedCardComponent implements OnInit {
     centeredSlides: true,
   };
   urls: SafeResourceUrl;
+  private onDestroy$: Subject<void> = new Subject<void>();
 
   shared: any;
   offset: number;
@@ -144,7 +147,7 @@ export class FeedCardComponent implements OnInit {
 
 
       if (this.colored > 0) {
-        this.dataService.getColored(this.colored).subscribe(res => {
+        this.dataService.getColored(this.colored).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
           this.background = res.message;
           this.coloredpost = this.background[0]['background_image'];
           this.coloredtext = this.background[0]['text_color'];
@@ -163,7 +166,7 @@ export class FeedCardComponent implements OnInit {
       }
       if (this.type === 'shared') {
 
-        this.dataService.getPostDetails(this.origin).subscribe(res => {
+        this.dataService.getPostDetails(this.origin).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
           this.shared = res.message;
           for (let i = 0; i < this.shared.length; i++) {
             this.offset = moment().utcOffset();
@@ -172,7 +175,7 @@ export class FeedCardComponent implements OnInit {
           }
 
         });
-        this.dataService.getMediaPost(this.origin).subscribe(res => {
+        this.dataService.getMediaPost(this.origin).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
           this.sharedmedia = res.message;
           for (let i = 0; i < this.sharedmedia.length; i++) {
             this.offset = moment().utcOffset();
@@ -197,7 +200,7 @@ export class FeedCardComponent implements OnInit {
 
       if (this.type === 'media') {
 
-        this.dataService.getMediaPost(this.post_id).subscribe(res => {
+        this.dataService.getMediaPost(this.post_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
           this.media = res.message;
           for (let i = 0; i < this.media.length; i++) {
             this.offset = moment().utcOffset();
@@ -219,7 +222,7 @@ export class FeedCardComponent implements OnInit {
 
         });
       }
-      this.dataService.getLikes(this.post_id).subscribe(res => {
+    this.dataService.getLikes(this.post_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.reacted = res.message;
         var i_like = this.reacted.find(message => message.user_id == this.me)
         if (i_like) {
@@ -291,6 +294,9 @@ export class FeedCardComponent implements OnInit {
 
     });
   }
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   async share(id) {
     const modal = await this.modalController.create({
       component: SharemodalPage,
@@ -345,7 +351,7 @@ export class FeedCardComponent implements OnInit {
 
   getTagGroup(tag) {
 
-    this.dataService.getGroupFromTag(tag).subscribe(res => {
+    this.dataService.getGroupFromTag(tag).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.groups = res.message;
       let navigationExtras: NavigationExtras = {
         queryParams: {

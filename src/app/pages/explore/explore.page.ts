@@ -10,6 +10,8 @@ import { XpmodalPage } from '../xpmodal/xpmodal.page';
 import { Plugins } from '@capacitor/core';
 import { IonContent } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 const { Filesystem } = Plugins;
 @Component({
@@ -21,6 +23,7 @@ export class ExplorePage implements OnInit {
   @ViewChild('myvideo') myVideo: ElementRef;
   @ViewChildren('player') videoPlayers: QueryList<any>;
   @ViewChild(IonContent) content: IonContent;
+  private onDestroy$: Subject<void> = new Subject<void>();
 
   currentPlaying = null;
   feeds = [];
@@ -74,7 +77,7 @@ export class ExplorePage implements OnInit {
 
     console.log("idk ey", this.me);
     this.filter = localStorage.getItem("filter");
-    this.dataService.getXP(this.me).subscribe(res => {
+    this.dataService.getXP(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.xp = res.message;
       console.log(this.xp);
 
@@ -83,7 +86,7 @@ export class ExplorePage implements OnInit {
 
     });
     if (this.filter = "all") {
-      this.dataService.getAllPosts(this.me).subscribe(res => {
+      this.dataService.getAllPosts(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feeds = res.message;
 
         for (let i = 0; i < this.feeds.length; i++) {
@@ -95,7 +98,7 @@ export class ExplorePage implements OnInit {
       });
     } else {
 
-      this.dataService.getFeed(this.me).subscribe(res => {
+      this.dataService.getFeed(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feeds = res.message;
         for (let i = 0; i < this.feeds.length; i++) {
           this.offset = moment().utcOffset();
@@ -107,11 +110,11 @@ export class ExplorePage implements OnInit {
       });
 
     }
-    this.dataService.getLatestVid(this.me).subscribe(res => {
+    this.dataService.getLatestVid(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.latest = res.message;
       console.log(this.latest);
     });
-    this.dataService.getBoosted().subscribe(res => {
+    this.dataService.getBoosted().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.boost = res.message;
       for (let i = 0; i < this.boost.length; i++) {
         this.offset = moment().utcOffset();
@@ -163,7 +166,7 @@ export class ExplorePage implements OnInit {
     this.isShown = true;
   }
   doRefresh(event) {
-    this.dataService.getXP(this.me).subscribe(res => {
+    this.dataService.getXP(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.xp = res.message;
       console.log(this.xp);
 
@@ -172,7 +175,7 @@ export class ExplorePage implements OnInit {
 
     });
     if (this.filter = "all") {
-      this.dataService.getAllPosts(this.me).subscribe(res => {
+      this.dataService.getAllPosts(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feeds = res.message;
         for (let i = 0; i < this.feeds.length; i++) {
           this.offset = moment().utcOffset();
@@ -184,7 +187,7 @@ export class ExplorePage implements OnInit {
       });
     } else {
 
-      this.dataService.getFeed(this.me).subscribe(res => {
+      this.dataService.getFeed(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feeds = res.message;
         for (let i = 0; i < this.feeds.length; i++) {
           this.offset = moment().utcOffset();
@@ -194,7 +197,7 @@ export class ExplorePage implements OnInit {
         this.dataList = this.feeds.slice(0, this.topLimit);
       });
     };
-    this.dataService.getBoosted().subscribe(res => {
+    this.dataService.getBoosted().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.boosted = res.message;
       for (let i = 0; i < this.feeds.length; i++) {
         this.offset = moment().utcOffset();
@@ -264,7 +267,9 @@ export class ExplorePage implements OnInit {
     );
 
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   didScroll() {
     if (this.currentPlaying && this.isElementInViewport(this.currentPlaying)) return;
     else if (this.currentPlaying && !this.isElementInViewport(this.currentPlaying)) {
