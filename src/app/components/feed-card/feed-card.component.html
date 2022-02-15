@@ -5,7 +5,7 @@
         <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{avatar}}"></ion-img>
       </ion-avatar>
       <ion-label (click)="user(user_id)">
-        <h2 class="item-title" ><span *ngIf="grinding != 0">#</span><span *ngIf="tag"
+        <h2 class="item-title"><span *ngIf="grinding != 0">#</span><span *ngIf="tag"
             (click)="getTagGroup(tag)">{{tag}}|</span>{{ name }}</h2>
         <h3>{{feeling}} <span style="color: limegreen"> {{value}}</span></h3>
         <p class="item-subtitle">{{ date }}</p>
@@ -101,7 +101,14 @@
         </ion-skeleton-text>
       </ng-template>
     </ion-item>
+    <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'album'">
+      <ion-img [src]='_picture' *ngIf="_picture != ''; else loading"></ion-img>
+      <ng-template #loading>
+        <ion-skeleton-text animated>
 
+        </ion-skeleton-text>
+      </ng-template>
+    </ion-item>
     <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'group_picture'">
       <ion-img [src]='_picture' *ngIf="_picture != ''; else loading"></ion-img>
       <ng-template #loading>

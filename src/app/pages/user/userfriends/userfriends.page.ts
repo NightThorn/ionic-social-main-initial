@@ -44,13 +44,13 @@ export class UserfriendsPage implements OnInit {
   }
   loadData(event) {
     setTimeout(() => {
-      this.topLimit += 10;
+      this.topLimit += 20;
       this.dataList = this.friends.slice(0, this.topLimit);
       event.target.complete();
       if (this.dataList.length == this.dataL.length)
         event.target.disabled = true;
 
-    }, 500);
+    }, 100);
 
   }
 
