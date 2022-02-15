@@ -9,7 +9,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { SharemodalPage } from 'src/app/pages/sharemodal/sharemodal.page';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Plugins } from '@capacitor/core';
 const { Filesystem } = Plugins;
@@ -135,7 +135,7 @@ export class FeedCardComponent implements OnInit {
   background: any;
   coloredpost: any;
   coloredtext: any;
-  constructor(private router: Router, private modalController: ModalController, private sanitizer: DomSanitizer, private authService: AuthenticationService, private http: HttpClient, private dataService: DataService) {
+  constructor(private router: Router, private alertCtrl: AlertController, private modalController: ModalController, private sanitizer: DomSanitizer, private authService: AuthenticationService, private http: HttpClient, private dataService: DataService) {
 
 
   }
@@ -304,30 +304,9 @@ export class FeedCardComponent implements OnInit {
     });
     modal.present();
   }
-  deboost(id) {
-    let data = {
-      "post_id": id,
-      "user_id": this.me,
-    };
-    this.http.post('https://ggs.tv/api/v1/post.php?action=deboost', JSON.stringify(data)).subscribe(res => {
-    });
-  }
-  boost(id) {
-    let data = {
-      "post_id": id,
-      "user_id": this.me,
-    };
-    this.http.post('https://ggs.tv/api/v1/post.php?action=boost', JSON.stringify(data)).subscribe(res => {
-    });
-  }
-  report(id) {
-    let data = {
-      "post_id": id,
-      "user_id": this.me,
-    };
-    this.http.post('https://ggs.tv/api/v1/post.php?action=report', JSON.stringify(data)).subscribe(res => {
-    });
-  }
+
+
+
   unreact(id) {
 
     let data = {
@@ -356,6 +335,108 @@ export class FeedCardComponent implements OnInit {
 
     });
 
+  }
+  async boost(id) {
+
+    const alert = await this.alertCtrl.create({
+
+      header: 'Use a boost on this post?',
+      message: 'Are you sure you would like to BOOST this post?',
+
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Boost!',
+          handler: (test) => {
+            let data = {
+              "post_id": id,
+              "user_id": this.me,
+            };
+            this.http.post('https://ggs.tv/api/v1/post.php?action=boost', JSON.stringify(data))
+              .pipe(takeUntil(this.onDestroy$)).subscribe(async () => {
+                let alert = await this.alertCtrl.create({
+                  header: 'Success',
+                  message: 'You have boosted this post. A notification has been sent to the author!',
+                  buttons: ['OK']
+                });
+                alert.present();
+              });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+  async deboost(id) {
+
+    const alert = await this.alertCtrl.create({
+
+      header: 'Deboost this post?',
+      message: 'Are you sure you would like to deboost this post?',
+
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'deboost',
+          handler: (test) => {
+            let data = {
+              "post_id": id,
+              "user_id": this.me,
+            };
+            this.http.post('https://ggs.tv/api/v1/post.php?action=deboost', JSON.stringify(data))
+              .pipe(takeUntil(this.onDestroy$)).subscribe(async () => {
+                let alert = await this.alertCtrl.create({
+                  header: 'Success',
+                  message: 'You have deboosted this post.',
+                  buttons: ['OK']
+                });
+                alert.present();
+              });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+  async report(id) {
+
+    const alert = await this.alertCtrl.create({
+
+      header: 'Report post?',
+      message: 'Are you sure you would like to report this post?',
+
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Confirm',
+          handler: (test) => {
+            let data = {
+              "post_id": id,
+              "user_id": this.me,
+            };
+            this.http.post('https://ggs.tv/api/v1/post.php?action=report', JSON.stringify(data))
+              .pipe(takeUntil(this.onDestroy$)).subscribe(async () => {
+                let alert = await this.alertCtrl.create({
+                  header: 'Success',
+                  message: 'Thank you for reporting this content. Our staff will review it.',
+                  buttons: ['OK']
+                });
+                alert.present();
+              });
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }
 
