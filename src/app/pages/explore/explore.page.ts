@@ -79,6 +79,7 @@ export class ExplorePage implements OnInit {
     this.me = localStorage.getItem("myID");
 
     this.filter = localStorage.getItem("filter");
+    console.log(this.filter);
     this.dataService.getXP(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.xp = res.message;
 
@@ -86,7 +87,7 @@ export class ExplorePage implements OnInit {
       this.myWallet = this.numFormatter(this.xp[0]['user_wallet_balance']);
 
     });
-    if (this.filter = "all") {
+    if (this.filter === "all") {
       this.dataService.getAllPosts(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feeds = res.message;
 
@@ -102,7 +103,7 @@ export class ExplorePage implements OnInit {
       this.dataService.getFeed(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feeds = res.message;
         for (let i = 0; i < this.feeds.length; i++) {
-          
+
           this.offset = moment().utcOffset();
           this.feeds[i]['total'] = +this.feeds[i]['reaction_love_count'] + +this.feeds[i]['reaction_like_count'] + +this.feeds[i]['reaction_haha_count'] + +this.feeds[i]['reaction_wow_count'];
 
