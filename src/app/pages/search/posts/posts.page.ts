@@ -45,12 +45,6 @@ export class PostsPage implements OnInit {
     slidesPerView: 2.6,
   };
   searchQuery: any;
-
-
-
-
-
-
   constructor(private router: Router, private route: ActivatedRoute, private authService: AuthenticationService, private modalController: ModalController, private dataService: DataService) {
     this.route.queryParams.subscribe(params => {
       if (params && params.special) {

@@ -196,7 +196,15 @@ export class UserPage implements OnInit, OnDestroy {
 
     this.router.navigate(['/userfriends/' + id]);
   }
-
+  chat(item) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        user: item,
+        me: this.me
+      },
+    };
+    this.router.navigate(['newchat'], navigationExtras);
+  }
   loadData(event) {
     setTimeout(() => {
       this.topLimit += 10;

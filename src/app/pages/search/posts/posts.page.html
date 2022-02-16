@@ -1,20 +1,21 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <div>
-<ion-buttons slot="start">
-  <ion-back-button defaultHref="/tabs/explore" text=""></ion-back-button>
-</ion-buttons>      <ion-searchbar [(ngModel)]="searchQuery" (search)="search($event)" class="search" animated ></ion-searchbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/tabs/explore" text=""></ion-back-button>
+      </ion-buttons>
+      <ion-searchbar [(ngModel)]="searchQuery" (search)="search($event)" class="search" animated></ion-searchbar>
     </div>
 
-   
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [scrollEvents]="true" (ionScroll)="didScroll()" [fullscreen]="true" class="ion-padding-horizontal">
   <ion-grid>
 
-    
-    
+
+
 
     <ion-row style="width: 100%;" *ngFor="let item of dataList">
       <app-feed-card style="width: 100%;" [avatar]="item.user_picture" [name]="item.user_name" [post_id]="item.post_id"
