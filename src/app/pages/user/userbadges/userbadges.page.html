@@ -8,20 +8,15 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
+  <ion-list>
 
-      </ion-card-title>
+    <ion-item *ngFor="let i of badges">
+      <ion-avatar slot="start">
+        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ i.icon}}" />
+      </ion-avatar>
+      <ion-label> {{ i.name }} </ion-label>
 
-    </ion-card-header>
-    <ion-grid>
-      <ion-row>
-        <ion-col *ngFor="let i of badges">
-          <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ i.icon }}" width="80" height="80">
-          </ion-img>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
+    </ion-item>
+
+  </ion-list>
 </ion-content>
