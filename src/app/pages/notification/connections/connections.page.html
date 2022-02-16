@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/explore" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>Connections</ion-title>
+    <ion-title>Friend Requests</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +13,7 @@
       <ion-col class="ion-no-padding">
         <ion-item lines="none" class="section">
           <ion-text>
-            <h5 class="section-title">Connections</h5>
+            <h5 class="section-title">Friend Requests</h5>
           </ion-text>
         </ion-item>
       </ion-col>
@@ -21,9 +21,28 @@
     <ion-row>
       <ion-col class="ion-no-padding">
         <ion-list class="ion-no-padding">
-          <app-notification-item *ngFor="let item of notifications" [avatar]="item.user_picture"
-            [username]="item.user_name" [time]="item.time" [message]="item.message" (click)="notification(item.url)">
-          </app-notification-item>
+          <ion-item *ngFor="let i of requests">
+            <ion-avatar (click)="user(i.user_id)" slot="start">
+              <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ i.user_picture}}" />
+            </ion-avatar>
+            <ion-label (click)="user(i.user_id)"> {{ i.user_name }} <span *ngIf="i.user_verified > 0"
+                style="color: lime;">
+                <ion-icon name="checkmark-circle"></ion-icon>
+              </span>
+              <span *ngIf="i.user_staff > 0">
+                <ion-badge color="success">Staff</ion-badge>
+              </span>
+              <span *ngIf="i.user_sponsored > 0">
+                <ion-badge color="success">Sponsored</ion-badge>
+              </span>
+              <span *ngIf="i.user_mod > 0">
+                <ion-badge color="danger">Mod</ion-badge>
+              </span>
+            </ion-label>
+            <ion-button (click)="decline(i.user_id)" class="danger-btn">{{declined}}</ion-button>
+            <ion-button (click)="accept(i.user_id)" class="follow-btn">{{accepted}}</ion-button>
+
+          </ion-item>
         </ion-list>
       </ion-col>
     </ion-row>

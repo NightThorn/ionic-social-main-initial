@@ -35,7 +35,15 @@ export class FeedCardComponent implements OnInit {
   @Input() gif: string;
   @Input() link: string;
   @Input() likes: number;
+  @Input() ingroup: number;
+  @Input() group: number;
   @Input() shares: number;
+  @Input() user_subscribed: number;
+  @Input() user_mod: number;
+  @Input() user_staff: number;
+  @Input() user_sponsored: number;
+  @Input() user_verified: number;
+
   @Input() post_id: number;
   @Input() user_id: number;
   @Input() origin: string;
@@ -119,6 +127,7 @@ export class FeedCardComponent implements OnInit {
   decodedtext: any;
   sharedmedia: any;
   me: any;
+  groupname: any;
   reacts: any;
   liked: any;
   points: number;
@@ -151,7 +160,11 @@ export class FeedCardComponent implements OnInit {
         this.coloredtext = this.background[0]['text_color'];
       });
     }
-
+    if (this.ingroup > 0) {
+      this.dataService.getgroupname(this.group).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.groupname = res.message[0]['group_title'];
+      });
+    }
     if (this.text.includes('#')) {
       this.decodedtext = htmlDecode(this.text)
       this.text = this.hashtag(this.decodedtext);
@@ -166,9 +179,14 @@ export class FeedCardComponent implements OnInit {
 
       this.dataService.getPostDetails(this.origin).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.shared = res.message;
+
         for (let i = 0; i < this.shared.length; i++) {
           this.offset = moment().utcOffset();
-
+          if (this.shared[i]['in_group'] > 0) {
+            this.dataService.getgroupname(this.group).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+              this.groupname = res.message;
+            });
+          }
           this.shared[i]['time'] = moment.utc(this.shared[i]['time']).fromNow();
         }
 
@@ -188,6 +206,13 @@ export class FeedCardComponent implements OnInit {
 
             this.sharedmedia[i]['time'] = moment.utc(this.sharedmedia[i]['time']).fromNow();
             this.external = "twitch";
+
+          }
+          else if (this.sharedmedia[i]['source_url'].includes('giphy')) {
+            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
+
+            this.sharedmedia[i]['time'] = moment.utc(this.sharedmedia[i]['time']).fromNow();
+            this.external = "giphy";
 
           }
         }
@@ -214,6 +239,13 @@ export class FeedCardComponent implements OnInit {
 
             this.media[i]['time'] = moment.utc(this.media[i]['time']).fromNow();
             this.external = "twitch";
+
+          }
+          else if (this.media[i]['source_url'].includes('giphy')) {
+            this.urls = this.sanitizer.bypassSecurityTrustResourceUrl(this.preurl);
+
+            this.media[i]['time'] = moment.utc(this.media[i]['time']).fromNow();
+            this.external = "giphy";
 
           }
         }
@@ -303,7 +335,16 @@ export class FeedCardComponent implements OnInit {
     modal.present();
   }
 
+  gotogroup(id) {
 
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        special: JSON.stringify(id)
+      }
+    };
+
+    this.router.navigate(['group'], navigationExtras);
+  }
 
   unreact(id) {
 

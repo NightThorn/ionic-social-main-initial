@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import moment from 'moment';
@@ -22,30 +23,27 @@ export class ConnectionsPage implements OnInit {
   myDate: any;
   offset: number;
   me: any;
+  public accepted = "Accept";
+  public declined = "Decline";
   private onDestroy$: Subject<void> = new Subject<void>();
+  requests: any;
   constructor(private dataService: DataService, private router: Router,
-    private authService: AuthenticationService,
+    private authService: AuthenticationService, private http: HttpClient,
     private activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.me = localStorage.getItem("myID");
-
-    this.dataService.getConnectionsNotis(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-      this.notifications = res.message;
-      for (let i = 0; i < this.notifications.length; i++) {
-        this.offset = moment().utcOffset();
-
-        this.notifications[i]['time'] = moment.utc(this.notifications[i]['time']).fromNow();
-      }
+    this.dataService.getRequests(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.requests = res.message;
     });
-    Observable.interval(10000).pipe(takeUntil(this.onDestroy$)).subscribe(x => {
-      this.dataService.getConnectionsNotis(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-        this.notifications = res.message;
-        for (let i = 0; i < this.notifications.length; i++) {
-          this.offset = moment().utcOffset();
 
-          this.notifications[i]['time'] = moment.utc(this.notifications[i]['time']).fromNow();
-        }
+    Observable.interval(10000).pipe(takeUntil(this.onDestroy$)).subscribe(x => {
+      this.dataService.getRequests(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.requests = res.message;
+        this.declined = "Decline";
+
+        this.accepted = "Accept";
+
       });
     });
 
@@ -56,9 +54,31 @@ export class ConnectionsPage implements OnInit {
   public ngOnDestroy(): void {
     this.onDestroy$.next();
   }
-  notification(url) {
+  user(id) {
 
-    this.router.navigateByUrl('/' + url);
+    this.router.navigate(['/user/' + id]);
+  }
+  decline(user) {
+    let data = {
+      "user": user,
+      "me": this.me
+    };
+    this.declined = "Declined";
+    this.http.post('https://ggs.tv/api/v1/friendrequests.php?action=decline', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+
+    });
+
+  }
+  accept(user) {
+    let data = {
+      "user": user,
+      "me": this.me
+    };
+    this.accepted = "Accepted"
+    this.http.post('https://ggs.tv/api/v1/friendrequests.php?action=accept', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+
+    });
+
   }
 }
 

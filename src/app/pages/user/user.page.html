@@ -13,11 +13,13 @@
         <div class="profile ion-padding">
           <div class="profile-user">
             <ion-thumbnail>
-               <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}" ></ion-img>
+              <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}">
+              </ion-img>
             </ion-thumbnail>
             <ul class="profile-text ion-padding-horizontal" *ngIf="fetchedProfile">
-              <li><span (click)="goToGroup(fetchedProfile.grinding)" *ngIf="fetchedProfile.grinding != 0">#</span><span *ngIf="fetchedProfile.tag"
-                (click)="getTagGroup(fetchedProfile.tag)">{{fetchedProfile.tag}}|</span>{{ fetchedProfile.user_name}} <span *ngIf="fetchedProfile.user_verified === '1'" style="color: lime;">
+              <li><span (click)="goToGroup(fetchedProfile.grinding)" *ngIf="fetchedProfile.grinding != 0">#</span><span
+                  *ngIf="fetchedProfile.tag" (click)="getTagGroup(fetchedProfile.tag)">{{fetchedProfile.tag}}|</span>{{
+                fetchedProfile.user_name}} <span *ngIf="fetchedProfile.user_verified === '1'" style="color: lime;">
                   <ion-icon name="checkmark-circle"></ion-icon>
                 </span>
                 <span *ngIf="fetchedProfile.user_staff === '1'">
@@ -66,7 +68,7 @@
                 Earned</ion-label>
             </li>
           </ul>
-        
+
         </div>
         <ul *ngIf="blocked != 1">
 
@@ -135,16 +137,20 @@
               <app-feed-card style="width: 100%;" [avatar]="item.user_picture" [name]="item.user_name"
                 [post_id]="item.post_id" [date]="item.time" [text]="item.text" [origin]="item.origin_id"
                 [user_id]="item.user_id" [picture]="item.picture_source" [videosrc]="item.source"
-                [type]="item.post_type" [likes]="item.total" [comments]="item.comments"
-                [shares]="item.shares" [colored]="item.colored_pattern" [gif]="item.gif" [tag]="item.tag" [grinding]="item.grinding"  [separator]="true" [boosted]="item.boosted">
+                [type]="item.post_type" [likes]="item.total" [comments]="item.comments" [shares]="item.shares"
+                [ingroup]="item.in_group" [group]="item.group_id" [user_sponsored]="item.user_sponsored"
+                [user_staff]="item.user_staff" [user_mod]="item.user_mod" [user_subscribed]="item.user_subscribed"
+                [colored]="item.colored_pattern" [gif]="item.gif" [tag]="item.tag" [grinding]="item.grinding"
+                [separator]="true" [boosted]="item.boosted">
               </app-feed-card>
             </ion-row>
           </ion-row>
           <ion-row *ngSwitchCase="'photos'" class="ion-padding-vertical">
 
             <ion-col size="6" *ngFor="let pic of dataList">
-               <ion-img class="image-element" src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
-                (click)="openModal(pic.source)" ></ion-img>
+              <ion-img class="image-element"
+                src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{pic.source}}"
+                (click)="openModal(pic.source)"></ion-img>
             </ion-col>
 
           </ion-row>

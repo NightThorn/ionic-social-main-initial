@@ -4,9 +4,24 @@
       <ion-avatar (click)="user(user_id)" slot="start">
         <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{avatar}}"></ion-img>
       </ion-avatar>
-      <ion-label (click)="user(user_id)">
-        <h2 class="item-title"><span *ngIf="grinding != 0">#</span><span *ngIf="tag"
-            (click)="getTagGroup(tag)">{{tag}}|</span>{{ name }}</h2>
+      <ion-label>
+        <h2 (click)="user(user_id)" class="item-title"><span *ngIf="grinding != 0">#</span><span *ngIf="tag"
+            (click)="getTagGroup(tag)">{{tag}}|</span>{{ name }}<span *ngIf="user_verified > 0" style="color: lime;">
+            <ion-icon name="checkmark-circle"></ion-icon>
+          </span>
+          <span *ngIf="user_staff > 0">
+            <ion-badge color="success">Staff</ion-badge>
+          </span>
+          <span *ngIf="user_sponsored > 0">
+            <ion-badge color="success">Sponsored</ion-badge>
+          </span>
+          <span *ngIf="user_mod > 0">
+            <ion-badge color="danger">Mod</ion-badge>
+          </span>
+          <span *ngIf="user_subscribed > 0">
+            <ion-icon style="color: red;" name="flash"></ion-icon>
+          </span>
+        </h2><span style="color: lime;" (click)="gotogroup(group)" *ngIf="ingroup > 0">> {{groupname}}</span>
         <h3>{{feeling}} <span style="color: limegreen"> {{value}}</span></h3>
         <p class="item-subtitle">{{ date }}</p>
       </ion-label>
@@ -18,7 +33,7 @@
           <ion-fab-button style="max-width: 30px; max-height: 30px;">
             <ion-icon style="fill: yellow" (click)="report(post_id)" name="warning">Report</ion-icon>
           </ion-fab-button>
-          <ion-fab-button *ngIf="subscribed == 1 || mod == 1 || staff == 1" style="max-width: 30px; max-height: 30px;">
+          <ion-fab-button style="max-width: 30px; max-height: 30px;">
             <ion-icon *ngIf="boosted == 0; else unboost" style="fill: red;" name="battery-charging-outline"
               (click)="boost(post_id)">Block</ion-icon>
             <ng-template #unboost>
@@ -45,7 +60,7 @@
             </div>
           </div>
           <div *ngIf="!coloredpost" (click)="navigateToDetail(post_id)"
-            style="font-weight: 400; overflow: scroll; margin-bottom: 10px; " [innerHTML]="text">
+            style="font-weight: 400; max-height: 400px; overflow: scroll; margin-bottom: 10px; " [innerHTML]="text">
           </div>
         </ion-col>
       </ion-row>
@@ -69,6 +84,7 @@
     <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'gif'">
       <ion-img src="{{gif}}"></ion-img>
     </ion-item>
+
     <ion-item lines="none" (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_picture'">
       <ion-img [src]='_picture' *ngIf="_picture != ''; else loading"></ion-img>
       <ng-template #loading>
@@ -127,6 +143,14 @@
         <ion-card lines="none" *ngIf="external === 'twitch'">
           <a href="{{share.source_url}}"> {{share.source_url}}</a>
         </ion-card>
+        <ion-card lines="none" *ngIf="external === 'giphy'">
+          <ion-img src="{{share.source_url}}"></ion-img>
+          <ng-template #loading>
+            <ion-skeleton-text animated>
+
+            </ion-skeleton-text>
+          </ng-template>
+        </ion-card>
       </ion-item>
     </div>
     <div *ngIf="type === 'shared'">
@@ -149,7 +173,7 @@
           <ion-card-content class="ion-no-padding">
             <ion-item lines="none">
               <div (click)="navigateToDetail(share.post_id)"
-                style="max-width: 400px; max-height: 250px; font-weight: 400; overflow: scroll; margin-bottom: 10px;"
+                style="max-width: 400px; max-height: 250px; font-weight: 400; max-height: 400px; overflow: scroll; margin-bottom: 10px;"
                 [innerHTML]="share.text"></div>
             </ion-item>
             <ion-item lines="none" *ngIf="share.post_type === 'video'">
@@ -190,7 +214,14 @@
                   <iframe frameborder="0" playsinline allowfullscreen width="100%" height="315" [src]="urls">
                   </iframe>
                 </ion-card>
+                <ion-card lines="none" *ngIf="external === 'giphy'">
+                  <ion-img src="{{share.source_url}}"></ion-img>
+                  <ng-template #loading>
+                    <ion-skeleton-text animated>
 
+                    </ion-skeleton-text>
+                  </ng-template>
+                </ion-card>
               </ion-item>
             </div>
           </ion-card-content>

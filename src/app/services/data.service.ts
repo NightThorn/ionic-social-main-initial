@@ -176,6 +176,32 @@ export class DataService {
     );
 
   }
+  getgroupname(id) {
+    return this.http.get(`https://ggs.tv/api/v1/getgroupname.php?id=${id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
+  getRequests(me) {
+    return this.http.get(`https://ggs.tv/api/v1/friendrequests.php?action=get&id=${me}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
   getAllPosts(user) {
     return this.http.get(`https://ggs.tv/api/v1/feed.php?filter=all&user=${user}`).pipe(map((res: any) => {
 

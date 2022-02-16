@@ -69,6 +69,7 @@ export class ExplorePage implements OnInit {
   isShown: boolean;
 
   onDestroy$: Subject<void> = new Subject<void>();
+  groupid: any;
 
   constructor(private router: Router, private authService: AuthenticationService, public modalController: ModalController, private storage: Storage, private dataService: DataService) { }
 
@@ -101,6 +102,7 @@ export class ExplorePage implements OnInit {
       this.dataService.getFeed(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feeds = res.message;
         for (let i = 0; i < this.feeds.length; i++) {
+          
           this.offset = moment().utcOffset();
           this.feeds[i]['total'] = +this.feeds[i]['reaction_love_count'] + +this.feeds[i]['reaction_like_count'] + +this.feeds[i]['reaction_haha_count'] + +this.feeds[i]['reaction_wow_count'];
 
