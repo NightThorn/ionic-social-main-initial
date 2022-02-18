@@ -23,8 +23,8 @@
             [likes]="item.reaction_like_count" [gif]="item.gif" [grinding]="item.grinding" [tag]="item.tag"
             [comments]="item.comments" [ingroup]="item.in_group" [group]="item.group_id"
             [user_sponsored]="item.user_sponsored" [user_staff]="item.user_staff" [user_mod]="item.user_mod"
-            [user_subscribed]="item.user_subscribed" [colored]="item.colored_pattern" [shares]="item.shares"
-            [separator]="true">
+            [user_subscribed]="item.user_subscribed" [user_verified]="item.user_verified"
+            [colored]="item.colored_pattern" [shares]="item.shares" [separator]="true">
           </app-feed-card>
         </ion-col>
       </ion-row>
@@ -63,7 +63,8 @@
 
                 <ion-item lines="none">
 
-                  <ion-label (click)="showReply('toggleId_' + i, cm.comment_id)" style="font-size: small; color: gray;">
+                  <ion-label (click)="showReply('toggleId_' + i, cm.comment_id, '@' + cm.user_name)"
+                    style="font-size: small; color: gray;">
                     Reply</ion-label>
                 </ion-item>
                 <ion-list>
@@ -124,7 +125,7 @@
 
                           <ion-item lines="none">
 
-                            <ion-label (click)="showReplyReply('toggle' + i, cm.comment_id)"
+                            <ion-label (click)="showReplyReply('toggle' + i, cm.comment_id, '@' + reply.user_name)"
                               style="font-size: small; color: gray;">
                               Reply</ion-label>
                           </ion-item>
@@ -136,7 +137,8 @@
                                   <ion-col size="7">
                                     <input id="text" [mention]="items" contenteditable="true"
                                       [mentionConfig]="{triggerChar:'@',maxItems:10, labelKey: 'user_name', dropUp: true}"
-                                      type="text" placeholder="Write your comment" formControlName="text" />
+                                      type="text" placeholder="Write your comment" formControlName="text"
+                                      value="@{{reply.user_name}} " />
                                     <input id="commentID" type="hidden" formControlName="commentID">
 
                                   </ion-col>

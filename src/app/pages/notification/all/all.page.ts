@@ -36,7 +36,7 @@ export class AllPage implements OnInit {
         this.notifications[i]['time'] = moment.utc(this.notifications[i]['time']).fromNow();
       }
     });
-   
+
     Observable.interval(10000).pipe(takeUntil(this.onDestroy$)).subscribe(x => {
       this.dataService.getNotis(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.notifications = res.message;

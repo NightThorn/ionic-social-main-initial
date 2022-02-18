@@ -113,14 +113,16 @@ export class PostDetailPage implements OnInit {
   }
 
 
-  showReply(toggle, id) {
+  showReply(toggle, id, replyname) {
     document.getElementById(toggle).classList.toggle("showReplyForm");
     this.replyForm.get('commentID').setValue(id);
+    this.replyreplyForm.get('text').setValue(replyname);
 
   }
-  showReplyReply(toggler, id) {
+  showReplyReply(toggler, id, replyname) {
     document.getElementById(toggler).classList.toggle("showReplyForm");
     this.replyreplyForm.get('commentID').setValue(id);
+    this.replyreplyForm.get('text').setValue(replyname);
 
     console.log(id);
   }
