@@ -103,12 +103,8 @@ export class PeoplePage implements OnInit {
     });
   }
   user(id) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-    this.router.navigate(['user'], navigationExtras)
+
+    this.router.navigate(['/user/' + id]);
 
   }
   public ngOnDestroy(): void {
