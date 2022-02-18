@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import moment from 'moment';
 import { Observable, Subject } from 'rxjs';
@@ -12,7 +12,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './comments.page.html',
   styleUrls: ['./comments.page.scss'],
 })
-export class CommentsPage implements OnInit {
+export class CommentsPage implements OnInit, OnDestroy {
   notifications: any = [];
   date: string;
   time: any = [];

@@ -1,5 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalController, AlertController } from '@ionic/angular';
@@ -13,7 +13,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './grind.page.html',
   styleUrls: ['./grind.page.scss'],
 })
-export class GrindPage implements OnInit {
+export class GrindPage implements OnInit, OnDestroy {
   @Input() id: number;
   friends: any;
   public dataL: Array<object> = [];

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { IonInfiniteScroll, IonVirtualScroll } from '@ionic/angular';
 import { Subject } from 'rxjs';
@@ -10,7 +10,7 @@ import { ProfileService } from 'src/app/services/profile.service';
   templateUrl: './userfriends.page.html',
   styleUrls: ['./userfriends.page.scss'],
 })
-export class UserfriendsPage implements OnInit {
+export class UserfriendsPage implements OnInit, OnDestroy {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
 

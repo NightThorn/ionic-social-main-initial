@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './all.page.html',
   styleUrls: ['./all.page.scss'],
 })
-export class AllPage implements OnInit {
+export class AllPage implements OnInit, OnDestroy {
   streams: any = [];
   private topLimit: number = 15;
   private onDestroy$: Subject<void> = new Subject<void>();

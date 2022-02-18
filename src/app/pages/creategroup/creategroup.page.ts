@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ModalController, AlertController } from '@ionic/angular';
 import { Subject } from 'rxjs';
@@ -12,7 +12,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   templateUrl: './creategroup.page.html',
   styleUrls: ['./creategroup.page.scss'],
 })
-export class CreategroupPage implements OnInit {
+export class CreategroupPage implements OnInit, OnDestroy {
   private onDestroy$: Subject<void> = new Subject<void>();
   imgFile: string;
 

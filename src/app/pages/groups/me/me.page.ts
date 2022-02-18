@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Subject } from 'rxjs';
@@ -13,7 +13,7 @@ import { CreategroupPage } from '../../creategroup/creategroup.page';
   templateUrl: './me.page.html',
   styleUrls: ['./me.page.scss'],
 })
-export class MePage implements OnInit {
+export class MePage implements OnInit, OnDestroy {
   me: any;
   groups: any = [];
   private onDestroy$: Subject<void> = new Subject<void>();

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalController, AlertController } from '@ionic/angular';
@@ -14,7 +14,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './ticketmodal.page.html',
   styleUrls: ['./ticketmodal.page.scss'],
 })
-export class TicketmodalPage implements OnInit {
+export class TicketmodalPage implements OnInit, OnDestroy {
 
   @Input() id: number;
   @Input() price: number;

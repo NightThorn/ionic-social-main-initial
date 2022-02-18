@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './joined.page.html',
   styleUrls: ['./joined.page.scss'],
 })
-export class JoinedPage implements OnInit {
+export class JoinedPage implements OnInit, OnDestroy {
   me: any;
   groups: any = [];
   private onDestroy$: Subject<void> = new Subject<void>();

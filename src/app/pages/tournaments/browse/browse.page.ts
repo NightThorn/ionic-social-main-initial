@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './browse.page.html',
   styleUrls: ['./browse.page.scss'],
 })
-export class BrowsePage implements OnInit {
+export class BrowsePage implements OnInit, OnDestroy {
   tournaments: any = [];
   date: Date;
   public dataL: Array<object> = [];

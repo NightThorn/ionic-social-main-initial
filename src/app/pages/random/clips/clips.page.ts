@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
 import { GestureController, LoadingController, ModalController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
@@ -18,7 +18,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './clips.page.html',
   styleUrls: ['./clips.page.scss'],
 })
-export class ClipsPage implements OnInit {
+export class ClipsPage implements OnInit, OnDestroy {
   clip: any;
   private onDestroy$: Subject<void> = new Subject<void>();
   @ViewChild('video') myVideo: ElementRef;

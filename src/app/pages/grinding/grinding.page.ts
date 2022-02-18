@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { ModalController, AlertController } from '@ionic/angular';
@@ -14,7 +14,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './grinding.page.html',
   styleUrls: ['./grinding.page.scss'],
 })
-export class GrindingPage implements OnInit {
+export class GrindingPage implements OnInit, OnDestroy {
   me: any;
   @Input() group_id: number;
 

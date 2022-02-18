@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ModalController, AlertController } from '@ionic/angular';
 import { Subject } from 'rxjs';
@@ -12,7 +12,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   templateUrl: './editprofile.page.html',
   styleUrls: ['./editprofile.page.scss'],
 })
-export class EditprofilePage implements OnInit {
+export class EditprofilePage implements OnInit, OnDestroy {
 
   imgFile: string;
   private onDestroy$: Subject<void> = new Subject<void>();

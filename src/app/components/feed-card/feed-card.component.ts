@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NavigationExtras, Router } from '@angular/router';
 import moment from 'moment';
@@ -24,7 +24,7 @@ const CACHE_FOLDER = 'CACHED-IMG';
   templateUrl: './feed-card.component.html',
   styleUrls: ['./feed-card.component.scss'],
 })
-export class FeedCardComponent implements OnInit {
+export class FeedCardComponent implements OnInit, OnDestroy {
   _picture = '';
   upload = 'https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/';
   @Input() avatar: string;

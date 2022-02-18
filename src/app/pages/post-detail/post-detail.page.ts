@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
@@ -19,7 +19,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './post-detail.page.html',
   styleUrls: ['./post-detail.page.scss'],
 })
-export class PostDetailPage implements OnInit {
+export class PostDetailPage implements OnInit, OnDestroy {
 
   commentForm: FormGroup;
   replyForm: FormGroup;

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import moment from 'moment';
@@ -13,7 +13,7 @@ import { ModalPage } from '../../modal/modal.page';
   templateUrl: './posts.page.html',
   styleUrls: ['./posts.page.scss'],
 })
-export class PostsPage implements OnInit {
+export class PostsPage implements OnInit, OnDestroy {
   data: any;
   href: string;
   private onDestroy$: Subject<void> = new Subject<void>();

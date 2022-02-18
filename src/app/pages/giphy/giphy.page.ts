@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalController, AlertController } from '@ionic/angular';
@@ -13,7 +13,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './giphy.page.html',
   styleUrls: ['./giphy.page.scss'],
 })
-export class GiphyPage implements OnInit {
+export class GiphyPage implements OnInit, OnDestroy {
   public dataL: Array<object> = [];
   public friends: any = [];
   activatedroute: any;

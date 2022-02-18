@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { Subject } from 'rxjs';
@@ -12,7 +12,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './discover.page.html',
   styleUrls: ['./discover.page.scss'],
 })
-export class DiscoverPage implements OnInit {
+export class DiscoverPage implements OnInit, OnDestroy {
   me: any;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   private onDestroy$: Subject<void> = new Subject<void>();

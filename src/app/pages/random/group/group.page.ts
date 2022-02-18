@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
 import moment from 'moment';
@@ -22,7 +22,7 @@ import { ModalPage } from '../../modal/modal.page';
   templateUrl: './group.page.html',
   styleUrls: ['./group.page.scss'],
 })
-export class GroupPage implements OnInit {
+export class GroupPage implements OnInit, OnDestroy {
   data: any;
   tabType = 'posts';
   private onDestroy$: Subject<void> = new Subject<void>();

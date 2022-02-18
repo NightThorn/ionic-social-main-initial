@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { ProfileService } from 'src/app/services/profile.service';
   templateUrl: './applicant.page.html',
   styleUrls: ['./applicant.page.scss'],
 })
-export class ApplicantPage implements OnInit {
+export class ApplicantPage implements OnInit, OnDestroy {
   data: any;
   apps: any;
   groupid: any;
@@ -74,12 +74,12 @@ export class ApplicantPage implements OnInit {
       "userid": user,
     };
     this.http.post('https://ggs.tv/api/v1/group.php?action=accept&group=' + this.groupid, JSON.stringify(data)).subscribe(res => {
-      });
+    });
   }
   public ngOnDestroy(): void {
     this.onDestroy$.next();
   }
- 
+
   badges(id) {
     let navigationExtras: NavigationExtras = {
       queryParams: {

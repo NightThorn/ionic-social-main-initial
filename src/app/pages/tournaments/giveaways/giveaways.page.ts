@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Subject } from 'rxjs';
@@ -14,7 +14,7 @@ import { MiscmodalPage } from '../../miscmodal/miscmodal.page';
   templateUrl: './giveaways.page.html',
   styleUrls: ['./giveaways.page.scss'],
 })
-export class GiveawaysPage implements OnInit {
+export class GiveawaysPage implements OnInit, OnDestroy {
   giveaways: any;
   me: any;
   private onDestroy$: Subject<void> = new Subject<void>();

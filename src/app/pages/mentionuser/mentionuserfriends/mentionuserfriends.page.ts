@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { ProfileService } from 'src/app/services/profile.service';
   templateUrl: './mentionuserfriends.page.html',
   styleUrls: ['./mentionuserfriends.page.scss'],
 })
-export class MentionuserfriendsPage implements OnInit {
+export class MentionuserfriendsPage implements OnInit, OnDestroy {
   res: any = [];
   public dataL: Array<object> = [];
   public friends: any = [];

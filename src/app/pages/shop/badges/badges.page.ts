@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { id } from 'date-fns/locale';
@@ -15,7 +15,7 @@ import { XpmodalPage } from '../../xpmodal/xpmodal.page';
   templateUrl: './badges.page.html',
   styleUrls: ['./badges.page.scss'],
 })
-export class BadgesPage implements OnInit {
+export class BadgesPage implements OnInit, OnDestroy {
   badges: any = [];
   pro: any;
   me: any;

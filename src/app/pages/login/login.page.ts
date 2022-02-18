@@ -22,7 +22,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, OnDestroy {
   loginForm: FormGroup;
   loading: any;
 

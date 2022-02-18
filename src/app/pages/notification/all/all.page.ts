@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import moment from 'moment';
 import { Observable, Subject } from 'rxjs';
@@ -12,7 +12,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './all.page.html',
   styleUrls: ['./all.page.scss'],
 })
-export class AllPage implements OnInit {
+export class AllPage implements OnInit, OnDestroy {
   notifications: any = [];
   date: string;
   time: any = [];

@@ -1,4 +1,4 @@
-import { Component, OnInit, ɵsetCurrentInjector } from '@angular/core';
+import { Component, OnDestroy, OnInit, ɵsetCurrentInjector } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
@@ -20,7 +20,7 @@ import { XpmodalPage } from '../xpmodal/xpmodal.page';
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
 })
-export class SettingsPage implements OnInit {
+export class SettingsPage implements OnInit, OnDestroy {
   storage: any;
   value: string;
   me: any;

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router, NavigationExtras } from '@angular/router';
 import { ModalController, AlertController } from '@ionic/angular';
@@ -16,7 +16,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './groupadmins.page.html',
   styleUrls: ['./groupadmins.page.scss'],
 })
-export class GroupadminsPage implements OnInit {
+export class GroupadminsPage implements OnInit, OnDestroy {
   me: number;
   @Input() group_id: number;
 

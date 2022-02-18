@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
@@ -14,7 +14,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './buymerchmodal.page.html',
   styleUrls: ['./buymerchmodal.page.scss'],
 })
-export class BuymerchmodalPage implements OnInit {
+export class BuymerchmodalPage implements OnInit, OnDestroy {
   @Input() id: number;
   @Input() wallet: number;
 
@@ -29,13 +29,13 @@ export class BuymerchmodalPage implements OnInit {
   }
 
   ngOnInit() {
-     
+
     this.me = localStorage.getItem("myID");
 
 
     this.dataService.getMerchItem(this.id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-        this.merchItem = res.message;
-      });
+      this.merchItem = res.message;
+    });
     this.postForm = this.fb.group({
       name: [null],
       street: [null],
@@ -65,7 +65,7 @@ export class BuymerchmodalPage implements OnInit {
 
       this.ordered();
 
-      
+
 
 
     } else {

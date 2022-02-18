@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Subject } from 'rxjs';
@@ -14,7 +14,7 @@ import { XpmodalPage } from '../../xpmodal/xpmodal.page';
   templateUrl: './merch.page.html',
   styleUrls: ['./merch.page.scss'],
 })
-export class MerchPage implements OnInit {
+export class MerchPage implements OnInit, OnDestroy {
   me: any;
   merch: any = [];
   xp: any;

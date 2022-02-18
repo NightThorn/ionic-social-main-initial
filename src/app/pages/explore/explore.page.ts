@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { ModalController } from '@ionic/angular';
@@ -19,7 +19,7 @@ const { Filesystem } = Plugins;
   templateUrl: './explore.page.html',
   styleUrls: ['./explore.page.scss'],
 })
-export class ExplorePage implements OnInit {
+export class ExplorePage implements OnInit, OnDestroy {
   @ViewChild('myvideo') myVideo: ElementRef;
   @ViewChild('yt') yt: ElementRef;
 

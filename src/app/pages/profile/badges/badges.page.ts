@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { ProfileService } from 'src/app/services/profile.service';
   templateUrl: './badges.page.html',
   styleUrls: ['./badges.page.scss'],
 })
-export class BadgesPage implements OnInit {
+export class BadgesPage implements OnInit, OnDestroy {
   res: any = [];
   public badges: any = [];
   activatedroute: any;

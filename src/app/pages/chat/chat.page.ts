@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
@@ -17,7 +17,7 @@ import { ProfileService } from 'src/app/services/profile.service';
   templateUrl: './chat.page.html',
   styleUrls: ['./chat.page.scss'],
 })
-export class ChatPage implements OnInit {
+export class ChatPage implements OnInit, OnDestroy {
   @ViewChild("scrollElement") content: IonContent;
 
   messageForm: FormGroup;
@@ -126,5 +126,5 @@ export class ChatPage implements OnInit {
     this.router.navigate(['/user'], navigationExtras);
 
   }
-  
+
 }

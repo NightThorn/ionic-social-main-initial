@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import moment from 'moment';
 import { Subject } from 'rxjs';
@@ -11,7 +11,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './people.page.html',
   styleUrls: ['./people.page.scss'],
 })
-export class PeoplePage implements OnInit {
+export class PeoplePage implements OnInit, OnDestroy {
   data: any;
   href: string;
   results: any;

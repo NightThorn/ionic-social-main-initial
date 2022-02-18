@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Subject } from 'rxjs';
@@ -13,7 +13,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './sharemodal.page.html',
   styleUrls: ['./sharemodal.page.scss'],
 })
-export class SharemodalPage implements OnInit {
+export class SharemodalPage implements OnInit, OnDestroy {
   @Input() id: number;
 
   postForm: FormGroup;

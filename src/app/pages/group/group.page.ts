@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import moment from 'moment';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -21,7 +22,7 @@ import { ModalPage } from '../modal/modal.page';
   templateUrl: './group.page.html',
   styleUrls: ['./group.page.scss'],
 })
-export class GroupPage implements OnInit {
+export class GroupPage implements OnInit, OnDestroy {
   data: any;
   tabType = 'posts';
 
@@ -45,6 +46,9 @@ export class GroupPage implements OnInit {
   group_tag: any;
   private onDestroy$: Subject<void> = new Subject<void>();
   constructor(private activeRoute: ActivatedRoute, private http: HttpClient, private router: Router, private authService: AuthenticationService, private modalController: ModalController, private dataService: DataService) { }
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe(params => {
@@ -56,7 +60,7 @@ export class GroupPage implements OnInit {
     this.me = localStorage.getItem("myID");
 
 
-    this.dataService.getGroup(this.data).subscribe(res => {
+    this.dataService.getGroup(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.group = res.message;
       console.log(this.group);
       this.group_picture = res.message[0]['group_picture'];

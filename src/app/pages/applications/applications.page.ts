@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
@@ -14,7 +14,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './applications.page.html',
   styleUrls: ['./applications.page.scss'],
 })
-export class ApplicationsPage implements OnInit {
+export class ApplicationsPage implements OnInit, OnDestroy {
   me: any;
   @Input() group_id: number;
   @Input() user_id: number;
@@ -29,12 +29,12 @@ export class ApplicationsPage implements OnInit {
 
   ngOnInit() {
     this.me = localStorage.getItem("myID");
-      
+
     this.dataService.getApps(this.group_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
-        this.apps = res.message;
-        console.log(this.apps);
-      });
+      this.apps = res.message;
+      console.log(this.apps);
+    });
   }
   closeModal() {
     this.modalController.dismiss();

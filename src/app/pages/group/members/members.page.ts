@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { ProfileService } from 'src/app/services/profile.service';
   templateUrl: './members.page.html',
   styleUrls: ['./members.page.scss'],
 })
-export class MembersPage implements OnInit {
+export class MembersPage implements OnInit, OnDestroy {
   data: any;
   members: any;
   private onDestroy$: Subject<void> = new Subject<void>();

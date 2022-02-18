@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Subject } from 'rxjs';
@@ -12,7 +12,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   templateUrl: './editgroup.page.html',
   styleUrls: ['./editgroup.page.scss'],
 })
-export class EditgroupPage implements OnInit {
+export class EditgroupPage implements OnInit, OnDestroy {
   imgFile: string;
 
   postForm: FormGroup;

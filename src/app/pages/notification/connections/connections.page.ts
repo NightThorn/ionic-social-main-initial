@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import moment from 'moment';
 import { Observable, Subject } from 'rxjs';
@@ -13,7 +13,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './connections.page.html',
   styleUrls: ['./connections.page.scss'],
 })
-export class ConnectionsPage implements OnInit {
+export class ConnectionsPage implements OnInit, OnDestroy {
 
   notifications: any = [];
 

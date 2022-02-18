@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
@@ -13,7 +13,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './addadmin.page.html',
   styleUrls: ['./addadmin.page.scss'],
 })
-export class AddadminPage implements OnInit {
+export class AddadminPage implements OnInit, OnDestroy {
 
   me: number;
   @Input() group_id: number;

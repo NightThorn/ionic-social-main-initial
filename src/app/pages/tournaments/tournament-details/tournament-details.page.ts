@@ -1,6 +1,8 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -11,7 +13,7 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./tournament-details.page.scss'],
 })
 
-export class TournamentDetailsPage implements OnInit {
+export class TournamentDetailsPage implements OnInit, OnDestroy {
 
   data: any;
   events: any;
@@ -25,10 +27,11 @@ export class TournamentDetailsPage implements OnInit {
   tournamentjoin: any;
   tournamentschedule: any;
   iJoined = false;
+  private onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(private route: ActivatedRoute, private authService: AuthenticationService, private http: HttpClient, private dataService: DataService,
-    private router: Router) { 
-    
+    private router: Router) {
+
   }
   ngOnInit() {
 
@@ -39,25 +42,25 @@ export class TournamentDetailsPage implements OnInit {
     });
     this.me = localStorage.getItem("myID");
 
-        this.dataService.getTournamentDetails(this.data).subscribe(res => {
-          this.tournaments = res.message;
-          this.tournamentpic = this.tournaments[0]['thumbnail'];
-          this.tournamentinfo = this.tournaments[0]['about'];
-          this.tournamentrules = this.tournaments[0]['rules'];
-          this.tournamenttitle = this.tournaments[0]['title'];
-          this.tournamentprice = this.tournaments[0]['price'];
-          this.tournamentjoin = this.tournaments[0]['join_cost'];
-          this.tournamentschedule = this.tournaments[0]['schedule'];
-          let data = this.tournaments.find(message => message['user_id'] == this.me);
-          console.log(data);
-          if (data) {
-            this.iJoined = true;
-          } else {
-            this.iJoined = false;
-          }
+    this.dataService.getTournamentDetails(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.tournaments = res.message;
+      this.tournamentpic = this.tournaments[0]['thumbnail'];
+      this.tournamentinfo = this.tournaments[0]['about'];
+      this.tournamentrules = this.tournaments[0]['rules'];
+      this.tournamenttitle = this.tournaments[0]['title'];
+      this.tournamentprice = this.tournaments[0]['price'];
+      this.tournamentjoin = this.tournaments[0]['join_cost'];
+      this.tournamentschedule = this.tournaments[0]['schedule'];
+      let data = this.tournaments.find(message => message['user_id'] == this.me);
+      console.log(data);
+      if (data) {
+        this.iJoined = true;
+      } else {
+        this.iJoined = false;
+      }
 
-        });
-    
+    });
+
 
   }
   user(id) {
@@ -69,14 +72,17 @@ export class TournamentDetailsPage implements OnInit {
     this.router.navigate(['user'], navigationExtras)
 
   }
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   register(id) {
-      let data = {
-        
-      };
+    let data = {
+
+    };
 
 
-        this.http.post('https://ggs.tv/api/v1/tournaments.php?view=register&id=' + id + '&user=' + this.me, JSON.stringify(data)).subscribe(res => {
-          window.location.reload();
-        });
-}
+    this.http.post('https://ggs.tv/api/v1/tournaments.php?view=register&id=' + id + '&user=' + this.me, JSON.stringify(data)).subscribe(res => {
+      window.location.reload();
+    });
+  }
 }

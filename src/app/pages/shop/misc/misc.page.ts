@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Subject } from 'rxjs';
@@ -16,7 +16,7 @@ import { XpmodalPage } from '../../xpmodal/xpmodal.page';
   templateUrl: './misc.page.html',
   styleUrls: ['./misc.page.scss'],
 })
-export class MiscPage implements OnInit {
+export class MiscPage implements OnInit, OnDestroy {
 
   me: any;
   info: any;

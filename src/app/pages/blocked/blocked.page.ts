@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
@@ -14,7 +14,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './blocked.page.html',
   styleUrls: ['./blocked.page.scss'],
 })
-export class BlockedPage implements OnInit {
+export class BlockedPage implements OnInit, OnDestroy {
   me: any;
   @Input() id: number;
   blocked: any;
@@ -25,14 +25,14 @@ export class BlockedPage implements OnInit {
   }
 
   ngOnInit() {
-  
+
     this.me = localStorage.getItem("myID");
     this.dataService.getBlocked(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
-          this.blocked = res.message;
-        });
-      
-   
+      this.blocked = res.message;
+    });
+
+
   }
   user(id) {
     let navigationExtras: NavigationExtras = {

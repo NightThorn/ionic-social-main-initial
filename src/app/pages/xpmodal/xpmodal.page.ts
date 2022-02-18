@@ -1,5 +1,5 @@
 import { HttpClient, HttpRequest } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Subject } from 'rxjs';
@@ -12,7 +12,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   templateUrl: './xpmodal.page.html',
   styleUrls: ['./xpmodal.page.scss'],
 })
-export class XpmodalPage implements OnInit {
+export class XpmodalPage implements OnInit, OnDestroy {
   @Input() xp: number;
   xpForm: FormGroup;
   gg: number;

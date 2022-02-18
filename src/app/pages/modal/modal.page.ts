@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 import { FormBuilder } from '@angular/forms';
@@ -16,7 +16,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './modal.page.html',
   styleUrls: ['./modal.page.scss'],
 })
-export class ModalPage implements OnInit {
+export class ModalPage implements OnInit, OnDestroy {
   postForm: FormGroup;
   me: any;
   imgFile: string;
