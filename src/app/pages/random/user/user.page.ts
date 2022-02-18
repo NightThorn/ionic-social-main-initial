@@ -76,10 +76,8 @@ export class UserPage implements OnInit {
 
     this.dataService.getRandomUser(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.user = res.message;
-      console.log("khdsgfasfasdfsfdasdfkasfd", this.user);
 
       this.data = this.user['0']['user_id'];
-      console.log("khdsgfkasfd", this.data);
 
 
       this.profileService.fetchUser(this.data);
