@@ -122,7 +122,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/groups/groups.module').then(m => m.GroupsPageModule)
   },
   {
-    path: 'group',
+    path: 'group/:id',
     loadChildren: () => import('./pages/group/group.module').then(m => m.GroupPageModule)
   },
   {
@@ -134,7 +134,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/search/search.module').then(m => m.SearchPageModule)
   },
   {
-    path: 'members',
+    path: 'members/:id',
     loadChildren: () => import('./pages/group/members/members.module').then(m => m.MembersPageModule)
   },
   {

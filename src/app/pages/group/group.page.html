@@ -55,6 +55,7 @@
             <ion-button style="color: white;" (click)="admins(group_id)" class="follow-btn">Group Admins
 
             </ion-button>
+
           </ion-buttons>
           <ion-button *ngIf="admin == 0 && group.group_category != 19 && joined == 0 && group.group_category != 20"
             (click)="join(group.group_id)" class="follow-btn">Join

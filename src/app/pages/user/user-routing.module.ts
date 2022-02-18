@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     component: UserPage,
     children: [
-      {
+      { 
         path: ':id',
         component: UserPage,
         children: [

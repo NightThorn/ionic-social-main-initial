@@ -31,13 +31,11 @@ export class JoinedPage implements OnInit, OnDestroy {
   }
   goToGroup(id) {
 
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
 
-    this.router.navigate(['group'], navigationExtras);
+
+
+
+    this.router.navigate(['/group/' + id]);
   }
 
 }

@@ -9,14 +9,14 @@
 <ion-content padding>
   <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
   <ion-list>
-    <ion-item (click)="user(item.user_id)" *ngFor="let item of dataList">
+    <ion-item *ngFor="let item of dataList">
 
       <ion-thumbnail item-left>
-         <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}"></ion-img>
+        <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ item.user_picture }}"></ion-img>
 
       </ion-thumbnail>
 
-      <ion-label>
+      <ion-label (click)="user(item.user_id)">
         {{ item.user_name }} <span *ngIf="item.user_verified === '1'" style="color: lime;">
           <ion-icon name="checkmark-circle"></ion-icon>
         </span>
@@ -30,7 +30,8 @@
           <ion-badge color="danger">Mod</ion-badge>
         </span>
       </ion-label>
-
+      <button *ngIf="iAdmin" style="background-color: red;" (click)="kick(item.user_id)" class="unfollow-btn">Kick
+      </button>
     </ion-item>
   </ion-list>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">

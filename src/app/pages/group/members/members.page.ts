@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DataService } from 'src/app/services/data.service';
@@ -22,21 +24,33 @@ export class MembersPage implements OnInit, OnDestroy {
   public items: any;
   private topLimit: number = 15;
   public dataList: any = [];
+  admins: any;
+  iAdmin: boolean;
+  me: string;
+  id: string;
 
-  constructor(private route: ActivatedRoute, private dataService: DataService, private router: Router) {
+  constructor(private route: ActivatedRoute, private alertctrl: AlertController, private http: HttpClient, private dataService: DataService, private router: Router) {
 
-    this.route.queryParams.pipe(takeUntil(this.onDestroy$)).subscribe(params => {
-      if (params && params.special) {
-        this.data = JSON.parse(params.special);
-      }
-    });
+
 
   }
 
   ngOnInit() {
-    this.dataService.getGroupMembers(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+    this.me = localStorage.getItem("myID");
+    this.id = this.route.snapshot.paramMap.get('id');
+
+    this.dataService.getGroupMembers(this.id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.members = res.message;
       this.dataList = this.members.slice(0, this.topLimit);
+
+    });
+    this.dataService.getGroupAdmins(this.id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.admins = res.message;
+      var iAdmin = this.admins.find(message => message.user_id == this.me)
+
+      if (iAdmin) {
+        this.iAdmin = true;
+      }
 
     });
   }
@@ -64,12 +78,48 @@ export class MembersPage implements OnInit, OnDestroy {
     });
   }
   user(id) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-    this.router.navigate(['user'], navigationExtras)
 
+    this.router.navigate(['/user/' + id]);
+
+  }
+  async kick(id) {
+
+
+    const alert = await this.alertctrl.create({
+
+      header: 'Kick this member?',
+      message: 'They will be removed from the group.',
+
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Kick',
+          handler: (test) => {
+            let data = {
+              "user": id,
+              "group": this.id,
+            };
+            this.http.post('https://ggs.tv/api/v1/removemember.php', JSON.stringify(data))
+              .pipe(takeUntil(this.onDestroy$)).subscribe(async () => {
+                let alert = await this.alertctrl.create({
+                  header: 'User Kicked',
+                  message: 'You have kicked this user.',
+                  buttons: ['OK']
+                });
+                alert.present();
+                this.dataService.getGroupMembers(this.id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+                  this.members = res.message;
+                  this.dataList = this.members.slice(0, this.topLimit);
+
+                });
+              });
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }

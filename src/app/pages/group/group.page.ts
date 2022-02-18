@@ -51,16 +51,12 @@ export class GroupPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.activeRoute.queryParams.subscribe(params => {
-      if (params && params.special) {
-        this.data = JSON.parse(params.special);
-      }
-    });
+    const id = this.activeRoute.snapshot.paramMap.get('id');
 
     this.me = localStorage.getItem("myID");
 
 
-    this.dataService.getGroup(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+    this.dataService.getGroup(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.group = res.message;
       console.log(this.group);
       this.group_picture = res.message[0]['group_picture'];
@@ -95,7 +91,7 @@ export class GroupPage implements OnInit, OnDestroy {
 
     });
 
-    this.dataService.getGroupFeed(this.data).subscribe(res => {
+    this.dataService.getGroupFeed(id).subscribe(res => {
       this.feed = res.message;
       for (let i = 0; i < this.feed.length; i++) {
         this.offset = moment().utcOffset();
@@ -106,7 +102,7 @@ export class GroupPage implements OnInit, OnDestroy {
 
     });
 
-    this.dataService.getGroupMedia(this.data).subscribe(res => {
+    this.dataService.getGroupMedia(id).subscribe(res => {
       this.media = res.message;
 
     });
@@ -115,14 +111,10 @@ export class GroupPage implements OnInit, OnDestroy {
 
   groupmembers(id) {
 
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-    this.router.navigate(['/members'], navigationExtras).then(() => {
-      window.location.reload();
-    });
+
+
+    this.router.navigate(['/members/' + id]);
+
   }
   join(user) {
     let data = {
@@ -143,13 +135,14 @@ export class GroupPage implements OnInit, OnDestroy {
     });
   }
   async openModalPost() {
+    const id = this.activeRoute.snapshot.paramMap.get('id');
 
     const modal = await this.modalController.create({
       component: GrouppostPage,
       cssClass: 'modal',
       backdropDismiss: false,
       componentProps: {
-        'group': this.data
+        'group': id
       },
 
     });
