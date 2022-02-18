@@ -144,7 +144,25 @@ export class PostDetailPage implements OnInit {
     };
     this.http.post('https://ggs.tv/api/v1/post.php?action=reply', JSON.stringify(data), { headers: headers }).pipe(takeUntil(this.onDestroy$)).subscribe(
       () => { // If POST is success
-        window.location.reload();
+        this.dataService.getPostComments(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+          this.comments = res.message;
+          this.commentReplies = res.replies;
+          console.log(this.comments);
+          for (let i = 0; i < this.comments.length; i++) {
+
+            this.offset = moment().utcOffset();
+            this.comments[i]['time'] = moment.utc(this.comments[i]['time']).fromNow();
+
+
+          }
+          for (let i = 0; i < this.commentReplies.length; i++) {
+
+            this.offset = moment().utcOffset();
+            this.commentReplies[i]['time'] = moment.utc(this.commentReplies[i]['time']).fromNow();
+
+
+          }
+        });
       },
       (_error) => { // If POST is failed
         "Error occurred";
@@ -167,7 +185,25 @@ export class PostDetailPage implements OnInit {
     };
     this.http.post('https://ggs.tv/api/v1/post.php?action=reply', JSON.stringify(data), { headers: headers }).pipe(takeUntil(this.onDestroy$)).subscribe(
       () => { // If POST is success
-        window.location.reload();
+        this.dataService.getPostComments(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+          this.comments = res.message;
+          this.commentReplies = res.replies;
+          console.log(this.comments);
+          for (let i = 0; i < this.comments.length; i++) {
+
+            this.offset = moment().utcOffset();
+            this.comments[i]['time'] = moment.utc(this.comments[i]['time']).fromNow();
+
+
+          }
+          for (let i = 0; i < this.commentReplies.length; i++) {
+
+            this.offset = moment().utcOffset();
+            this.commentReplies[i]['time'] = moment.utc(this.commentReplies[i]['time']).fromNow();
+
+
+          }
+        });
       },
       (_error) => { // If POST is failed
         "Error occurred";
@@ -192,7 +228,25 @@ export class PostDetailPage implements OnInit {
 
     this.http.post('https://ggs.tv/api/v1/post.php?action=comment', JSON.stringify(data), { headers: headers }).pipe(takeUntil(this.onDestroy$)).subscribe(
       () => { // If POST is success
-        window.location.reload();
+        this.dataService.getPostComments(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+          this.comments = res.message;
+          this.commentReplies = res.replies;
+          console.log(this.comments);
+          for (let i = 0; i < this.comments.length; i++) {
+
+            this.offset = moment().utcOffset();
+            this.comments[i]['time'] = moment.utc(this.comments[i]['time']).fromNow();
+
+
+          }
+          for (let i = 0; i < this.commentReplies.length; i++) {
+
+            this.offset = moment().utcOffset();
+            this.commentReplies[i]['time'] = moment.utc(this.commentReplies[i]['time']).fromNow();
+
+
+          }
+        });
       },
       (_error) => { // If POST is failed
         "Error occurred";

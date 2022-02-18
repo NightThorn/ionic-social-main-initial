@@ -47,8 +47,8 @@
     </ion-row>
     <ion-row style="width: 100%; padding-bottom: 10px;" *ngFor="let item of boost">
       <p style="font-size: xx-small; color: gold; margin: 0;">Boosted</p>
-      <app-feed-card style="width: 100%; border: 3px solid gold;" [avatar]="item.user_picture" [name]="item.user_name"
-        [post_id]="item.post_id" [date]="item.time" [text]="item.text" [origin]="item.origin_id"
+      <app-feed-card style="width: 100%; border-radius: 10px; border: 3px solid gold;" [avatar]="item.user_picture"
+        [name]="item.user_name" [post_id]="item.post_id" [date]="item.time" [text]="item.text" [origin]="item.origin_id"
         [user_id]="item.user_id" [feeling]="item.feeling_action" [value]="item.feeling_value"
         [picture]="item.picture_source" [gif]="item.gif" [ingroup]="item.in_group" [group]="item.group_id"
         [user_sponsored]="item.user_sponsored" [user_staff]="item.user_staff" [user_mod]="item.user_mod"
