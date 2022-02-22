@@ -118,12 +118,8 @@ export class ChatPage implements OnInit, OnDestroy {
     this.lastMessageID.unsubscribe();
   }
   user(id) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-    this.router.navigate(['/user'], navigationExtras);
+
+    this.router.navigate(['/user/' + id]);
 
   }
 

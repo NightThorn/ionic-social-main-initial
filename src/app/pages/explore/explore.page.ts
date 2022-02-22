@@ -79,7 +79,6 @@ export class ExplorePage implements OnInit, OnDestroy {
     this.me = localStorage.getItem("myID");
 
     this.filter = localStorage.getItem("filter");
-    console.log(this.filter);
     this.dataService.getXP(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.xp = res.message;
 
@@ -90,7 +89,6 @@ export class ExplorePage implements OnInit, OnDestroy {
     if (this.filter === "all") {
       this.dataService.getAllPosts(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feeds = res.message;
-        console.log(this.feeds);
         for (let i = 0; i < this.feeds.length; i++) {
           this.offset = moment().utcOffset();
           this.feeds[i]['total'] = +this.feeds[i]['reaction_love_count'] + +this.feeds[i]['reaction_like_count'] + +this.feeds[i]['reaction_haha_count'] + +this.feeds[i]['reaction_wow_count'];
