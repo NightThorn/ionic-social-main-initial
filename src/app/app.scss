@@ -194,7 +194,10 @@ height: 50px;
   box-shadow: 0px 1px 12px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
 }
+ion-button{
 
+  padding: 0;
+}
 .avatars {
   display: flex;
   list-style-type: none;

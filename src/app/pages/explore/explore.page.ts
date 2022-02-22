@@ -70,6 +70,7 @@ export class ExplorePage implements OnInit, OnDestroy {
 
   onDestroy$: Subject<void> = new Subject<void>();
   groupid: any;
+  myTickets: any;
 
   constructor(private router: Router, private authService: AuthenticationService, public modalController: ModalController, private storage: Storage, private dataService: DataService) { }
 
@@ -84,6 +85,7 @@ export class ExplorePage implements OnInit, OnDestroy {
 
       this.userXP = this.xp[0]['user_points'];
       this.myWallet = this.numFormatter(this.xp[0]['user_wallet_balance']);
+      this.myTickets = this.numFormatter(this.xp[0]['tickets']);
 
     });
     if (this.filter === "all") {
