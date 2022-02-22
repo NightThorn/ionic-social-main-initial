@@ -155,6 +155,9 @@ export class ExplorePage implements OnInit, OnDestroy {
   goToSettings() {
     this.router.navigate(['settings']);
   }
+  giveaways() {
+    this.router.navigate(['tournaments/giveaways']);
+  }
   gotoSearch() {
     this.router.navigate(['search/posts']);
   }

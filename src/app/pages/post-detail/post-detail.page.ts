@@ -368,6 +368,7 @@ export class PostDetailPage implements OnInit, OnDestroy {
   }
   commentlike(id, toggle) {
     let data = {
+      "post_id": this.data,
       "comment_id": id,
       "user_id": this.me,
     };

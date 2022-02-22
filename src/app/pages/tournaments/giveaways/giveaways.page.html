@@ -5,9 +5,9 @@
     </ion-buttons>
     <ion-title>Giveaways</ion-title>
     <ion-buttons slot="end">
+      <ion-label style="font-size: small;">{{myTickets}}</ion-label>
 
       <ion-img style="width: 30px; margin: 10px;" src="./assets/images/ticket.jpg"></ion-img>
-      <ion-label style="font-size: small;">{{myTickets}}</ion-label>
     </ion-buttons>
   </ion-toolbar>
 
@@ -41,8 +41,9 @@
         Enter Giveaway!
         <ion-icon slot="icon-only" name="arrow-redo"></ion-icon>
       </ion-button>
+      <span style="vertical-align: -webkit-baseline-middle;"> Entries: {{item.entries}}
+      </span>
     </div>
     <div></div>
   </ion-card>
-
 </ion-content>
