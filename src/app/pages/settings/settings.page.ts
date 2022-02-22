@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ɵsetCurrentInjector } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
@@ -45,16 +46,19 @@ export class SettingsPage implements OnInit, OnDestroy {
   searching: number;
   current: any;
   private onDestroy$: Subject<void> = new Subject<void>();
+  live: string;
   constructor(
     private router: Router,
     private authService: AuthenticationService,
     private dataService: DataService,
     private modalController: ModalController,
+    private http: HttpClient,
     private fcm: FcmService
   ) { }
 
   ngOnInit() {
     this.me = localStorage.getItem("myID");
+    this.live = localStorage.getItem("live");
 
     this.dataService.getUser(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.user = res.message;
@@ -62,7 +66,6 @@ export class SettingsPage implements OnInit, OnDestroy {
       this.location = this.user[0]['user_current_city'];
       this.gender = this.user[0]['user_gender'];
       this.current = this.user[0]['user_name'];
-
       this.username = this.user[0]['user_name'];
       this.relationship = this.user[0]['user_relationship'];
       this.birthdate = this.user[0]['user_birthdate'];
@@ -77,6 +80,33 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
   gotoShop() {
     this.router.navigate(['shop']);
+  }
+  goinglive() {
+    let time = new Date(Date.now());
+    let data = {
+      "user": this.me,
+    };
+    localStorage.setItem("live", "true");
+
+    document.getElementById("livebutton").style.color = "black";
+    document.getElementById("livebutton").classList.add('unfollow-btn');
+    document.getElementById("livebutton").innerHTML = "Streaming!";
+
+    this.http.post('https://ggs.tv/api/v1/user.php?action=live', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+    });
+  }
+  notlive() {
+    let time = new Date(Date.now());
+    let data = {
+      "user": this.me,
+    };
+    localStorage.setItem("live", "false");
+    document.getElementById("unlivebutton").style.color = "black";
+    document.getElementById("unlivebutton").classList.add('follow-btn');
+    document.getElementById("unlivebutton").innerHTML = "Going Live!";
+
+    this.http.post('https://ggs.tv/api/v1/user.php?action=unlive', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+    });
   }
 
   following() {

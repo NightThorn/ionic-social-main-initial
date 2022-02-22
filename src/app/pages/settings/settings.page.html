@@ -108,6 +108,19 @@
             </div>
 
           </ion-item>
+          <ion-button id="livebutton" *ngIf="live === 'false'; else unlive" style="width: 90%;" lines="none"
+            (click)="goinglive()">
+            <ion-label style="text-align: center;">
+              <h2 style="color: rgb(8, 8, 8);">Going Live!</h2>
+            </ion-label>
+          </ion-button>
+          <ng-template #unlive>
+            <ion-button id="unlivebutton" class="unfollow-btn" style="width: 90%;" lines="none" (click)="notlive()">
+              <ion-label style="text-align: center;">
+                <h2 style="color: rgb(10, 10, 10);">Streaming!</h2>
+              </ion-label>
+            </ion-button>
+          </ng-template>
           <ion-row>
             <ion-list class="ion-no-padding">
               <ion-list-header>
