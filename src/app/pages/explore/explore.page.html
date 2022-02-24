@@ -25,7 +25,10 @@
 <ion-content [scrollEvents]="true" (ionScroll)="didScroll()" (ionScrollStart)="scrollStart($event)"
   (ionScrollEnd)="scrollStop($event)" [fullscreen]="true" class="ion-padding-horizontal">
   <ion-grid>
-
+    <ion-row style="width: 100%;" *ngIf="live === 'true'">
+      <ion-text style="color: red;">You are currently Live! Change this in settings
+      </ion-text>
+    </ion-row>
     <ion-row>
       <ion-col class="ion-no-padding half-padding">
         <ion-item lines="none" class="section">

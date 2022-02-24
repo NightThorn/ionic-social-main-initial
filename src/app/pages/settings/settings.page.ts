@@ -103,6 +103,8 @@ export class SettingsPage implements OnInit, OnDestroy {
     localStorage.setItem("live", "false");
     document.getElementById("unlivebutton").style.color = "black";
     document.getElementById("unlivebutton").classList.add('follow-btn');
+    document.getElementById("unlivebutton").classList.remove('unfollow-btn');
+
     document.getElementById("unlivebutton").innerHTML = "Going Live!";
 
     this.http.post('https://ggs.tv/api/v1/user.php?action=unlive', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {

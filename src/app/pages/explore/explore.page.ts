@@ -71,6 +71,7 @@ export class ExplorePage implements OnInit, OnDestroy {
   onDestroy$: Subject<void> = new Subject<void>();
   groupid: any;
   myTickets: any;
+  live: string;
 
   constructor(private router: Router, private authService: AuthenticationService, public modalController: ModalController, private storage: Storage, private dataService: DataService) { }
 
@@ -78,6 +79,7 @@ export class ExplorePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.me = localStorage.getItem("myID");
+    this.live = localStorage.getItem("live");
 
     this.filter = localStorage.getItem("filter");
     this.dataService.getXP(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
@@ -173,6 +175,7 @@ export class ExplorePage implements OnInit, OnDestroy {
   doRefresh(event) {
     this.dataService.getXP(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.xp = res.message;
+      this.live = localStorage.getItem("live");
 
       this.userXP = this.xp[0]['user_points'];
       this.myWallet = this.numFormatter(this.xp[0]['user_wallet_balance']);
