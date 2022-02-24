@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { environment } from './../../environments/environment';
 import { StoredUser } from '../models/stored-user';
 import { Storage } from '@capacitor/storage';
+import { Filesystem, FilesystemDirectory } from '@capacitor/filesystem';
 
 const TOKEN_KEY = 'my-token';
 
@@ -54,6 +55,16 @@ export class AuthenticationService {
 
   async destroy(): Promise<void> {
     this.isAuthenticated.next(false);
+    const fileEntries = await Filesystem.readdir({
+      directory: FilesystemDirectory.Cache,
+      path: 'CACHED-IMG',
+    });
+    fileEntries.files.map(async f => {
+      await Filesystem.deleteFile({
+        directory: FilesystemDirectory.Cache,
+        path: `CACHED-IMG/${f}`,
+      });
+    });
     this.router.navigateByUrl('/login');
     return Storage.remove({ key: TOKEN_KEY });
   }
@@ -70,15 +81,15 @@ export class AuthenticationService {
     )
   }
 
- 
-  sendPasswordReset(email) {
-    
-      let data = {
-        "email": email,
-        
-      };
-    return this.http.post('https://ggs.tv/api/v1/password.php?action=change', JSON.stringify(data));
-        
 
-    }
+  sendPasswordReset(email) {
+
+    let data = {
+      "email": email,
+
+    };
+    return this.http.post('https://ggs.tv/api/v1/password.php?action=change', JSON.stringify(data));
+
+
+  }
 }
