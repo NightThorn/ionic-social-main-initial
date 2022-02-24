@@ -146,6 +146,8 @@ export class PostDetailPage implements OnInit, OnDestroy {
     };
     this.http.post('https://ggs.tv/api/v1/post.php?action=reply', JSON.stringify(data), { headers: headers }).pipe(takeUntil(this.onDestroy$)).subscribe(
       () => { // If POST is success
+        this.replyForm.reset();
+
         this.dataService.getPostComments(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
           this.comments = res.message;
           this.commentReplies = res.replies;
@@ -187,6 +189,8 @@ export class PostDetailPage implements OnInit, OnDestroy {
     };
     this.http.post('https://ggs.tv/api/v1/post.php?action=reply', JSON.stringify(data), { headers: headers }).pipe(takeUntil(this.onDestroy$)).subscribe(
       () => { // If POST is success
+        this.replyreplyForm.reset();
+
         this.dataService.getPostComments(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
           this.comments = res.message;
           this.commentReplies = res.replies;
@@ -230,6 +234,8 @@ export class PostDetailPage implements OnInit, OnDestroy {
 
     this.http.post('https://ggs.tv/api/v1/post.php?action=comment', JSON.stringify(data), { headers: headers }).pipe(takeUntil(this.onDestroy$)).subscribe(
       () => { // If POST is success
+        this.commentForm.reset();
+
         this.dataService.getPostComments(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
           this.comments = res.message;
           this.commentReplies = res.replies;
