@@ -159,14 +159,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.router.navigate(['friends'], navigationExtras);
   }
   goToGroup(id) {
-
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-
-    this.router.navigate(['group'], navigationExtras);
+    this.router.navigate(['/group/' + id]);
   }
 
   loadData(event) {

@@ -192,14 +192,7 @@ export class MentionuserPage implements OnInit {
     this.router.navigate(['/mentionuserbadges'], navigationExtras);
   }
   goToGroup(id) {
-
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-    this.router.navigate(['group'], navigationExtras);
-
+    this.router.navigate(['/group/' + id]);
   }
   friends(id) {
 

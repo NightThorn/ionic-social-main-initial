@@ -177,14 +177,7 @@ export class UserPage implements OnInit, OnDestroy {
     this.onDestroy$.next();
   }
   goToGroup(id) {
-
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-
-    this.router.navigate(['group'], navigationExtras);
+    this.router.navigate(['/group/' + id]);
   }
   friends(id) {
     let navigationExtras: NavigationExtras = {
