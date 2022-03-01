@@ -176,6 +176,11 @@ export class FeedCardComponent implements OnInit, OnDestroy {
       this.text = this.at(this.decodedtext);
 
     }
+    if (this.text.includes('https')) {
+      this.decodedtext = htmlDecode(this.text)
+      this.text = this.href(this.decodedtext);
+
+    }
     if (this.type === 'shared') {
 
       this.dataService.getPostDetails(this.origin).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
@@ -291,6 +296,11 @@ export class FeedCardComponent implements OnInit, OnDestroy {
   }
   hashtag(text) {
     var repl = text.replace(/#(\w+)/g, '<a href="search/#$1">#$1</a>');
+
+    return repl;
+  }
+  href(text) {
+    var repl = text.replace(/(https?:\/\/.*?)[.!?;,]?(\s+|"|$)/, '<a href="$1">$1</a>');
 
     return repl;
   }

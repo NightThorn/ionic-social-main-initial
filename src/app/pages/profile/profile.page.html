@@ -19,7 +19,7 @@
               </ion-img>
             </ion-thumbnail>
             <ul class="profile-text ion-padding-horizontal" *ngIf="fetchedProfile">
-              <li><span *ngIf="fetchedProfile.grinding != 0">#</span><span
+              <li><span *ngIf="fetchedProfile.grinding != 0">#</span><span *ngIf="fetchedProfile.tag"
                   (click)="group(fetchedProfile.tag)">{{fetchedProfile.tag}}|</span>{{ fetchedProfile.user_name }}
                 <span *ngIf="fetchedProfile.user_verified === '1'" style="color: lime;">
                   <ion-icon name="checkmark-circle"></ion-icon>
