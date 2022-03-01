@@ -82,6 +82,7 @@ export class UserPage implements OnInit, OnDestroy {
   subscription13$: Subscription;
   subscription14$: Subscription;
   private onDestroy$: Subject<void> = new Subject<void>();
+  groupID: any;
   constructor(
     private dataService: DataService,
     private profileService: ProfileService,
@@ -211,18 +212,16 @@ export class UserPage implements OnInit, OnDestroy {
   }
   getTagGroup(tag) {
 
-    this.dataService.getGroupFromTag(tag).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-      this.groups = res.message;
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          special: JSON.stringify(this.groups[0]['group_id'])
-        }
-      };
-      this.router.navigate(['group'], navigationExtras);
+      this.dataService.getGroupFromTag(tag).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.groups = res.message;
+        this.groupID = this.groups[0]['group_id'];
 
-    });
 
-  }
+
+        this.router.navigate(['/group/' + this.groupID]);
+      });
+
+    }
   add(id) {
 
     let data = {

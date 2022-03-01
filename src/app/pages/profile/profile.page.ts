@@ -14,6 +14,7 @@ import moment from 'moment';
 import { EditprofilePage } from '../editprofile/editprofile.page';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { id } from 'date-fns/locale';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -52,6 +53,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   userFriends: any;
   offset: number;
   me: any;
+  groupID: any;
   constructor(
     private dataService: DataService,
     private profileService: ProfileService,
@@ -189,13 +191,11 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     this.dataService.getGroupFromTag(tag).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.groups = res.message;
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          special: JSON.stringify(this.groups[0]['group_id'])
-        }
-      };
-      this.router.navigate(['group'], navigationExtras);
+      this.groupID = this.groups[0]['group_id'];
 
+
+
+      this.router.navigate(['/group/' + this.groupID]);
     });
 
   }

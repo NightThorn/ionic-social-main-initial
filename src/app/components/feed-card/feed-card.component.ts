@@ -56,6 +56,7 @@ export class FeedCardComponent implements OnInit, OnDestroy {
   @Input() tag: string;
   @Input() grinding: number;
   @Input() colored: any;
+  groupID: any;
   @Input()
   set picture(pic) {
     const imageName = pic.split('/').pop();
@@ -335,15 +336,9 @@ export class FeedCardComponent implements OnInit, OnDestroy {
     modal.present();
   }
 
-  gotogroup(id) {
+  goToGroup(id) {
 
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-
-    this.router.navigate(['group'], navigationExtras);
+    this.router.navigate(['/group/' + id]);
   }
 
   unreact(id) {
@@ -363,15 +358,14 @@ export class FeedCardComponent implements OnInit, OnDestroy {
 
   getTagGroup(tag) {
 
+
     this.dataService.getGroupFromTag(tag).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.groups = res.message;
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          special: JSON.stringify(this.groups[0]['group_id'])
-        }
-      };
-      this.router.navigate(['group'], navigationExtras);
+      this.groupID = this.groups[0]['group_id'];
 
+
+
+      this.router.navigate(['/group/' + this.groupID]);
     });
 
   }

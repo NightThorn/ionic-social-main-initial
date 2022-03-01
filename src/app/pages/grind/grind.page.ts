@@ -79,7 +79,15 @@ export class GrindPage implements OnInit, OnDestroy {
 
   }
   none() {
-    this.closeModal();
+    let data = {
+      "me": this.id,
+      "group_id": "",
+      "tag": ""
+    };
+    this.http.post('https://ggs.tv/api/v1/settag.php', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+
+      this.closeModal();
+    });
 
   }
   async presentAlert(name) {
