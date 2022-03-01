@@ -56,7 +56,7 @@ export class LoginPage implements OnInit, OnDestroy {
 
 
     this.loginForm = this.formBuilder.group({
-      email: [null, [Validators.required, emailValidator]],
+      email: [null],
       password: [null, [Validators.required, passwordValidator]],
     });
 
