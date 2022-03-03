@@ -19,7 +19,7 @@
             <ion-badge color="danger">Mod</ion-badge>
           </span>
           <span *ngIf="user_subscribed > 0">
-            <ion-icon style="color: red;" name="flash"></ion-icon>
+            <ion-badge color="danger">Pro</ion-badge>
           </span>
         </h2><span style="color: lime;" (click)="goToGroup(group)" *ngIf="ingroup > 0">> {{groupname}}</span>
         <h3>{{feeling}} <span style="color: limegreen"> {{value}}</span></h3>
