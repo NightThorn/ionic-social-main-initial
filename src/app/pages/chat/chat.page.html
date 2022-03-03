@@ -18,18 +18,20 @@
   <ion-grid>
     <ion-row *ngFor="let message of chat">
       <ion-col size="9" *ngIf="currentUser != message.user_id" class="message left-bubble">
-        <ion-thumbnail (click)="user(message.user_id)">
-          <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{message.user_picture}}"></ion-img>
-        </ion-thumbnail>
-        <ion-label (click)="message.user_id">{{message.user_name}}</ion-label><span
-          *ngIf="message.user_verified === '1'" style="color: lime;">
-          <ion-icon name="checkmark-circle"></ion-icon>
-        </span>
-        <div [innerHTML]="message.message"></div>
+        <ion-row class="userlabel">
+          <ion-thumbnail (click)="user(message.user_id)">
+            <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{message.user_picture}}"></ion-img>
+          </ion-thumbnail>
+          <ion-label style="padding-left: 7px; align-self: center;" (click)="message.user_id">{{message.user_name}}
+          </ion-label><span *ngIf="message.user_verified === '1'" style="color: lime;">
+            <ion-icon name="checkmark-circle"></ion-icon>
+          </span>
+        </ion-row>
+        <div style="margin: 7px;" [innerHTML]="message.message"></div>
         <p class="time">{{ message.time }}</p>
       </ion-col>
       <ion-col size="9" offset="3" *ngIf="currentUser == message.user_id" class="message right-bubble">
-        <div [innerHTML]="message.message"></div>
+        <div style="margin: 7px;" [innerHTML]="message.message"></div>
         <p class="time">{{ message.time }}</p>
       </ion-col>
     </ion-row>

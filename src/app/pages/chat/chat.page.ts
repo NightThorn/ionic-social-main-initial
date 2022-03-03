@@ -93,7 +93,7 @@ export class ChatPage implements OnInit, OnDestroy {
           }
           setTimeout(() => {
             this.updateScroll();
-          }, 500);
+          }, 100);
         });
       }
     });

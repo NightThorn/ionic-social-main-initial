@@ -115,11 +115,7 @@ export class ProfileService {
     );
   }
   fetchFriends(user_id: any) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(user_id)
-      }
-    };
+    
     return this.httpClient.get(`https://ggs.tv/api/v1/friends.php?user=${user_id}`).pipe(map((res: any) => {
 
       return res;

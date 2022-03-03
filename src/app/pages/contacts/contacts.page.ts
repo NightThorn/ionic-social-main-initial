@@ -29,33 +29,27 @@ export class ContactPage implements OnInit, OnDestroy {
   me: any;
   constructor(private route: ActivatedRoute, private authService: AuthenticationService, private profileService: ProfileService, private router: Router) {
 
-    this.route.queryParams.subscribe(params => {
-      if (params && params.special) {
-        this.data = JSON.parse(params.special);
-      }
-    });
+  
 
   }
   ngOnInit() {
     this.me = localStorage.getItem("myID");
-
     this.profileService.fetchFriends(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.friends = res.message;
       this.dataList = this.friends.slice(0, this.topLimit);
-
     });
     this.setFilteredItems();
 
   }
   loadData(event) {
     setTimeout(() => {
-      this.topLimit += 10;
+      this.topLimit += 20;
       this.dataList = this.friends.slice(0, this.topLimit);
       event.target.complete();
       if (this.dataList.length == this.dataL.length)
         event.target.disabled = true;
 
-    }, 500);
+    }, 100);
 
   }
 
@@ -67,9 +61,6 @@ export class ContactPage implements OnInit, OnDestroy {
       return item.user_name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
     });
   }
-
-
-
   public ngOnDestroy(): void {
     this.onDestroy$.next();
   }

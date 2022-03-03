@@ -50,7 +50,7 @@ ion-col ion-item {
 .message {
   padding-left: 7px;
     padding-right: 7px;
-  font-size: 16px;
+  font-size: 14px;
   color: #fff;
   margin-bottom: 5px;
 
@@ -58,19 +58,26 @@ ion-col ion-item {
   .time {
     text-align: right;
     height: 5px;
+    color: grey;
   }
 }
-
+.userlabel{
+padding-bottom: 10px;
+}
 .left-bubble {
   border-radius: 0 14px 14px 14px;
-background-color: #4a4a4a;
-
-}
+    background: rgb(2 24 6);
+  }
 
 .right-bubble {
-  background: limegreen;
+  background: rgb(113, 114, 113);
   border-radius: 14px 0 14px 14px;
   max-height: fit-content;
+  .time {
+    text-align: right;
+    height: 5px;
+    color: rgb(175, 174, 174);
+  }
 }
 ion-thumbnail{
  width: 40px;
