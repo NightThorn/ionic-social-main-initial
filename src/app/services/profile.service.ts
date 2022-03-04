@@ -115,7 +115,7 @@ export class ProfileService {
     );
   }
   fetchFriends(user_id: any) {
-    
+
     return this.httpClient.get(`https://ggs.tv/api/v1/friends.php?user=${user_id}`).pipe(map((res: any) => {
 
       return res;
@@ -129,7 +129,18 @@ export class ProfileService {
 
   }
 
+  getProfile(user_id: any) {
 
+    return this.httpClient.get(`https://ggs.tv/api/v1/userprofile.php?user=${user_id}`).pipe(map((res: any) => {
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   public fetchPosts(user_id: any) {
     this.httpClient.get(`https://ggs.tv/api/v1/timeline.php?timeline=profile&user=${user_id}`).subscribe(response => {
 

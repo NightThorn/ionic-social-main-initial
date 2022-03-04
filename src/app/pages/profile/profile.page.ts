@@ -5,16 +5,12 @@ import { DataService } from 'src/app/services/data.service';
 import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ProfileService } from 'src/app/services/profile.service';
 import { AuthenticationService } from "../../services/authentication.service";
-import { StoredUser } from "../../models/stored-user";
-import { ProfileModel } from "../../models/profile-model";
-import { Post } from 'src/app/models/post';
 import { PostsService } from 'src/app/services/posts.service';
 import { ModalPage } from '../modal/modal.page';
 import moment from 'moment';
 import { EditprofilePage } from '../editprofile/editprofile.page';
-import { Subject } from 'rxjs';
+import { interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { id } from 'date-fns/locale';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -40,9 +36,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   pictures: any = [];
   profile: any;
   storage: any;
-  fetchedProfileSubscription$;
-  fetchedProfile: ProfileModel;
-  fetchedPosts: any = [];
+
   bday: string;
   fetchedPostsSub;
   user_id: any;
@@ -54,15 +48,18 @@ export class ProfilePage implements OnInit, OnDestroy {
   offset: number;
   me: any;
   groupID: any;
+  posts: any;
+  media: any;
+  userinfo: any;
+  friendslist: any;
+  badgeslist: any;
+  postsRefresh: any;
   constructor(
     private dataService: DataService,
     private profileService: ProfileService,
-    private postsService: PostsService,
     private modalController: ModalController,
     private router: Router,
     public nav: NavController,
-    private authService: AuthenticationService,
-    private activeRoute: ActivatedRoute
   ) {
 
   }
@@ -70,47 +67,37 @@ export class ProfilePage implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.me = localStorage.getItem("myID");
-    console.log("this me on profile", this.me);
-    this.profileService.fetchProfile(this.me);
-    this.profileService.fetchPosts(this.me);
 
-    this.profileService.fetchGroups(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-      this.groups = res.message;
 
-    });
-    this.profileService.fetchFriends(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-      this.userFriends = res.message;
-      this.friendCount = this.userFriends.length;
-    });
-    this.profileService.fetchBadges(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-      this.userBadges = res.message;
-      this.badgeCount = this.userBadges.length;
-    });
-    this.profileService.fetchPictures(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-      this.pictures = res.message;
-      this.dataList = this.pictures.slice(0, this.topLimit);
+    this.profileService.getProfile(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      console.log(res);
+      this.groups = res.groups;
+      this.badgeslist = res.badges;
+      this.badgeCount = this.badgeslist.length;
 
-    });
-    this.profileService.fetchedProfile.pipe(takeUntil(this.onDestroy$)).subscribe((profile: ProfileModel) => {
-      this.fetchedProfile = profile;
-      console.log(this.fetchedProfile);
-      const newDate = new Date(this.fetchedProfile.user_birthdate);
-      this.bday = newDate.toDateString();
-    });
-
-    this.fetchedPostsSub = this.profileService.fetchedPosts.pipe(takeUntil(this.onDestroy$)).subscribe((data: Post) => {
-      this.fetchedPosts = data;
-      for (let i = 0; i < this.fetchedPosts.length; i++) {
+      this.posts = res.posts;
+      for (let i = 0; i < this.posts.length; i++) {
         this.offset = moment().utcOffset();
-        this.fetchedPosts[i]['total'] = +this.fetchedPosts[i]['reaction_love_count'] + +this.fetchedPosts[i]['reaction_like_count'] + +this.fetchedPosts[i]['reaction_haha_count'] + +this.fetchedPosts[i]['reaction_wow_count'];
+        this.posts[i]['total'] = +this.posts[i]['reaction_love_count'] + +this.posts[i]['reaction_like_count'] + +this.posts[i]['reaction_haha_count'] + +this.posts[i]['reaction_wow_count'];
 
-        this.fetchedPosts[i]['time'] = moment.utc(this.fetchedPosts[i]['time']).fromNow();
+        this.posts[i]['time'] = moment.utc(this.posts[i]['time']).fromNow();
       }
+      this.pictures = res.media;
+      this.dataList = this.pictures.slice(0, this.topLimit);
+      this.userinfo = res.userinfo[0];
 
-    })
-    // this.data = this.profileService.fetchProfile(this.x);
+      this.friendslist = res.friends;
+      this.friendCount = this.friendslist.length;
+      const newDate = new Date(this.userinfo.user_birthdate);
+      this.bday = newDate.toDateString();
+
+
+
+    });
+
 
   };
+
 
 
 

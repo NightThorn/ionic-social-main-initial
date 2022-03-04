@@ -1,6 +1,6 @@
-<ion-content [fullscreen]="true" *ngIf="fetchedProfile">
+<ion-content [fullscreen]="true" *ngIf="userinfo">
   <ion-grid class="ion-no-padding ion-no-margin background-opts"
-    style.background-image="url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_cover }}')">
+    style.background-image="url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ userinfo.user_cover }}')">
     <ion-row>
       <ion-col class="header-container">
         <ion-header class="ion-no-border">
@@ -15,25 +15,25 @@
         <div class="profile ion-padding">
           <div class="profile-user">
             <ion-thumbnail>
-              <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ fetchedProfile.user_picture }}">
+              <ion-img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ userinfo.user_picture }}">
               </ion-img>
             </ion-thumbnail>
-            <ul class="profile-text ion-padding-horizontal" *ngIf="fetchedProfile">
-              <li><span *ngIf="fetchedProfile.grinding != 0">#</span><span *ngIf="fetchedProfile.tag"
-                  (click)="group(fetchedProfile.tag)">{{fetchedProfile.tag}}|</span>{{ fetchedProfile.user_name }}
-                <span *ngIf="fetchedProfile.user_verified === '1'" style="color: lime;">
+            <ul class="profile-text ion-padding-horizontal" *ngIf="userinfo">
+              <li><span *ngIf="userinfo.grinding != 0">#</span><span *ngIf="userinfo.tag"
+                  (click)="group(userinfo.tag)">{{userinfo.tag}}|</span>{{ userinfo.user_name }}
+                <span *ngIf="userinfo.user_verified === '1'" style="color: lime;">
                   <ion-icon name="checkmark-circle"></ion-icon>
                 </span>
-                <span *ngIf="fetchedProfile.user_staff === '1'">
+                <span *ngIf="userinfo.user_staff === '1'">
                   <ion-badge color="success">Staff</ion-badge>
                 </span>
-                <span *ngIf="fetchedProfile.user_sponsored === '1'">
+                <span *ngIf="userinfo.user_sponsored === '1'">
                   <ion-badge color="success">Sponsored</ion-badge>
                 </span>
-                <span *ngIf="fetchedProfile.user_mod === '1'">
+                <span *ngIf="userinfo.user_mod === '1'">
                   <ion-badge color="danger">Mod</ion-badge>
                 </span>
-                <span *ngIf="fetchedProfile.user_subscribed === '1'">
+                <span *ngIf="userinfo.user_subscribed === '1'">
             <ion-badge color="danger">Pro</ion-badge>
                 </span>
               </li>
@@ -48,14 +48,14 @@
     <ion-row class="">
       <ion-col>
         <div class="numbers">
-          <ul (click)="friends(fetchedProfile.user_id)">
+          <ul (click)="friends(userinfo.user_id)">
             <li>{{friendCount}}</li>
             <li>
               <ion-icon style="vertical-align: middle; color: green;" name="people"></ion-icon>
               Friends
             </li>
           </ul>
-          <ul (click)="badges(fetchedProfile.user_id)">
+          <ul (click)="badges(userinfo.user_id)">
             <li>{{badgeCount}}</li>
             <li>
               <ion-icon style="vertical-align: middle; color: green;" name="ribbon-outline"></ion-icon>
@@ -63,7 +63,7 @@
             </li>
           </ul>
           <ul>
-            <li>{{ fetchedProfile.total_xp }}</li>
+            <li>{{ userinfo.total_xp }}</li>
             <li>
               <img style="width: 20px; vertical-align: middle;" src="assets/images/XP.png" />
               <ion-label style="vertical-align: middle;" text-center text-wrap>
@@ -106,7 +106,7 @@
         </ion-segment>
         <div [ngSwitch]="tabType">
           <ion-row *ngSwitchCase="'posts'" class="ion-no-padding">
-            <ion-row style="width: 100%;" *ngFor="let item of fetchedPosts">
+            <ion-row style="width: 100%;" *ngFor="let item of posts">
               <app-feed-card style="width: 100%;" [avatar]="item.user_picture" [name]="item.user_name"
                 [post_id]="item.post_id" [date]="item.time" [text]="item.text" [origin]="item.origin_id"
                 [user_id]="item.user_id" [gif]="item.gif" [picture]="item.picture_source" [videosrc]="item.source"
@@ -144,36 +144,36 @@
                 </ion-card-header>
 
                 <ion-card-content>
-                  {{ fetchedProfile.user_biography }}
+                  {{ userinfo.user_biography }}
                   <ul class="aboutLI">
                     <li>
-                      <ion-icon name="home" style="color: green;"></ion-icon> {{ fetchedProfile.user_hometown }}
+                      <ion-icon name="home" style="color: green;"></ion-icon> {{ userinfo.user_hometown }}
                     </li>
-                    <li *ngIf="fetchedProfile.user_gender == 1">
+                    <li *ngIf="userinfo.user_gender == 1">
                       <ion-icon name="male-female" style="color: white;"></ion-icon> Male
                     </li>
-                    <li *ngIf="fetchedProfile.user_gender == 2">
+                    <li *ngIf="userinfo.user_gender == 2">
                       <ion-icon name="male-female" style="color: white;"></ion-icon> Female
                     </li>
-                    <li *ngIf="fetchedProfile.user_gender == 3">
+                    <li *ngIf="userinfo.user_gender == 3">
                       <ion-icon name="male-female" style="color: white;"></ion-icon> Other
                     </li>
-                    <li *ngIf="fetchedProfile.user_gender == 4">
+                    <li *ngIf="userinfo.user_gender == 4">
                       <ion-icon name="male-female" style="color: white;"></ion-icon> Non-Binary
                     </li>
-                    <li *ngIf="fetchedProfile.user_gender == 5">
+                    <li *ngIf="userinfo.user_gender == 5">
                       <ion-icon name="male-female" style="color: white;"></ion-icon> Fluid
                     </li>
                     <li>
                       <ion-icon name="heart-circle" style="color: red;"></ion-icon> {{
-                      fetchedProfile.user_relationship}}
+                      userinfo.user_relationship}}
                     </li>
                     <li>
                       <ion-icon name="arrow-up-circle" style="color: gold;"></ion-icon> {{ bday }}
                     </li>
-                    <li *ngIf="fetchedProfile.user_website">
+                    <li *ngIf="userinfo.user_website">
                       <ion-icon name="earth" style="color: whitesmoke;"></ion-icon> <a
-                        href="{{ fetchedProfile.user_website }}">{{ fetchedProfile.user_website }}</a>
+                        href="{{ userinfo.user_website }}">{{ userinfo.user_website }}</a>
                     </li>
                   </ul>
                 </ion-card-content>
@@ -184,68 +184,68 @@
                 </ion-card-header>
 
                 <ion-card-content>
-                  <span *ngIf="fetchedProfile.user_social_twitch">
-                    <a href="{{ fetchedProfile.user_social_twitch }}">
+                  <span *ngIf="userinfo.user_social_twitch">
+                    <a href="{{ userinfo.user_social_twitch }}">
                       <ion-icon name="logo-twitch" style="color: purple;"></ion-icon>
                     </a>
                   </span>
-                  <span *ngIf="fetchedProfile.user_social_instagram">
+                  <span *ngIf="userinfo.user_social_instagram">
 
-                    <a href="{{ fetchedProfile.user_social_instagram }}">
+                    <a href="{{ userinfo.user_social_instagram }}">
                       <ion-icon name="logo-instagram" style="color: rgb(226, 60, 151);"></ion-icon>
                     </a>
                   </span>
-                  <span *ngIf="fetchedProfile.user_social_twitter">
+                  <span *ngIf="userinfo.user_social_twitter">
 
-                    <a href="{{ fetchedProfile.user_social_twitter }}">
+                    <a href="{{ userinfo.user_social_twitter }}">
                       <ion-icon name="logo-twitter" style="color: blue;"></ion-icon>
                     </a>
                   </span>
-                  <span *ngIf="fetchedProfile.user_social_tiktok">
+                  <span *ngIf="userinfo.user_social_tiktok">
 
-                    <a href="{{ fetchedProfile.user_social_tiktok }}">
+                    <a href="{{ userinfo.user_social_tiktok }}">
                       <ion-icon name="logo-tiktok" style="color: red;"></ion-icon>
                     </a>
                   </span>
 
-                  <span *ngIf="fetchedProfile.user_social_facebook">
+                  <span *ngIf="userinfo.user_social_facebook">
 
-                    <a href="{{ fetchedProfile.user_social_facebook }}">
+                    <a href="{{ userinfo.user_social_facebook }}">
                       <ion-icon name="logo-facebook" style="color: blue;"></ion-icon>
                     </a>
                   </span>
 
-                  <span *ngIf="fetchedProfile.user_social_youtube">
+                  <span *ngIf="userinfo.user_social_youtube">
 
-                    <a href="{{ fetchedProfile.user_social_youtube}}">
+                    <a href="{{ userinfo.user_social_youtube}}">
                       <ion-icon name="logo-youtube" style="color: crimson;"></ion-icon>
                     </a>
                   </span>
                   <li>
-                    <span *ngIf="fetchedProfile.user_social_discord">
+                    <span *ngIf="userinfo.user_social_discord">
 
                       <ion-icon name="logo-discord" style="color: cornflowerblue;"></ion-icon> {{
-                      fetchedProfile.user_social_discord }}
+                      userinfo.user_social_discord }}
                     </span>
                   </li>
                   <li>
-                    <span *ngIf="fetchedProfile.user_social_playstation">
+                    <span *ngIf="userinfo.user_social_playstation">
 
                       <ion-icon name="logo-playstation" style="color: blue;"></ion-icon> {{
-                      fetchedProfile.user_social_playstation }}
+                      userinfo.user_social_playstation }}
                     </span>
                   </li>
                   <li>
-                    <span *ngIf="fetchedProfile.user_social_xbox">
+                    <span *ngIf="userinfo.user_social_xbox">
 
-                      <ion-icon name="logo-xbox" style="color: green;"></ion-icon> {{ fetchedProfile.user_social_xbox
+                      <ion-icon name="logo-xbox" style="color: green;"></ion-icon> {{ userinfo.user_social_xbox
                       }}
                     </span>
                   </li>
                   <li>
-                    <span *ngIf="fetchedProfile.user_social_steam">
+                    <span *ngIf="userinfo.user_social_steam">
 
-                      <ion-icon name="logo-steam"></ion-icon> {{ fetchedProfile.user_social_steam }}
+                      <ion-icon name="logo-steam"></ion-icon> {{ userinfo.user_social_steam }}
                     </span>
                   </li>
                 </ion-card-content>
