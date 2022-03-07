@@ -408,7 +408,7 @@ export class FeedCardComponent implements OnInit, OnDestroy {
           role: 'cancel',
           cssClass: 'secondary'
         }, {
-          text: 'Boost!',
+          text: 'Delete',
           handler: (test) => {
             let data = {
               "post_id": id,
