@@ -73,11 +73,11 @@
                       (ngSubmit)="reply(me, replyForm.value)">
                       <ion-row style="width: 100%; align-items: center;">
                         <ion-col size="8">
-                          <input id="text" [mention]="items" contenteditable="true"
+                          <textarea style="margin-left: 0; min-height: 60px;" id="text" [mention]="items"
+                            contenteditable="true"
                             [mentionConfig]="{triggerChar:'@',maxItems:10, labelKey: 'user_name', dropUp: true}"
-                            type="text" placeholder="Write your comment" formControlName="text" />
+                            type="text" placeholder="Write your comment" formControlName="text"></textarea>
                           <input id="commentID" type="hidden" formControlName="commentID">
-
                         </ion-col>
                         <ion-col style="text-align: center; vertical-align: middle;" size="2">
                           <div id="gifid" class="image-upload">
@@ -135,12 +135,12 @@
                                 (ngSubmit)="replyreply(me, replyreplyForm.value)">
                                 <ion-row style="width: 100%; align-items: center;">
                                   <ion-col size="7">
-                                    <input id="text" [mention]="items" contenteditable="true"
+                                    <textarea style="margin-left: 0; min-height: 60px;" id="text" [mention]="items"
+                                      contenteditable="true"
                                       [mentionConfig]="{triggerChar:'@',maxItems:10, labelKey: 'user_name', dropUp: true}"
                                       type="text" placeholder="Write your comment" formControlName="text"
-                                      value="@{{reply.user_name}} " />
+                                      value="@{{reply.user_name}} "></textarea>
                                     <input id="commentID" type="hidden" formControlName="commentID">
-
                                   </ion-col>
                                   <ion-col style="padding-left: 2px; text-align: center; vertical-align: middle;"
                                     size="3">
