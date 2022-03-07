@@ -248,7 +248,11 @@ const routes: Routes = [
   {
     path: 'introduction',
     loadChildren: () => import('./pages/introduction/introduction.module').then(m => m.IntroductionPageModule)
+  },  {
+    path: 'editpostmodal',
+    loadChildren: () => import('./pages/editpostmodal/editpostmodal.module').then( m => m.EditpostmodalPageModule)
   }
+
 
 
 ];

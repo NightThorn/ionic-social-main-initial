@@ -16,6 +16,7 @@ const { Filesystem } = Plugins;
 import { Directory, Encoding } from '@capacitor/filesystem';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { EditpostmodalPage } from 'src/app/pages/editpostmodal/editpostmodal.page';
 
 
 const CACHE_FOLDER = 'CACHED-IMG';
@@ -346,6 +347,20 @@ export class FeedCardComponent implements OnInit, OnDestroy {
     modal.present();
   }
 
+  async edit(id, text) {
+    const modal = await this.modalController.create({
+      component: EditpostmodalPage,
+      cssClass: 'modal',
+      backdropDismiss: false,
+      componentProps: {
+        'id': id,
+        'text': text
+
+      }
+
+    });
+    modal.present();
+  }
   goToGroup(id) {
 
     this.router.navigate(['/group/' + id]);
@@ -379,6 +394,43 @@ export class FeedCardComponent implements OnInit, OnDestroy {
     });
 
   }
+
+  async delete(id) {
+
+    const alert = await this.alertCtrl.create({
+
+      header: 'Delete this post?',
+      message: 'Are you sure you would like to delete this post?',
+
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Boost!',
+          handler: (test) => {
+            let data = {
+              "post_id": id,
+              "user_id": this.me,
+            };
+            this.http.post('https://ggs.tv/api/v1/post.php?action=delete', JSON.stringify(data))
+              .pipe(takeUntil(this.onDestroy$)).subscribe(async () => {
+                let alert = await this.alertCtrl.create({
+                  header: 'Success',
+                  message: 'You have deleted this post.',
+                  buttons: ['OK']
+                });
+                alert.present();
+              });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+
   async boost(id) {
 
     const alert = await this.alertCtrl.create({

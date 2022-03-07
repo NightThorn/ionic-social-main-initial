@@ -1,0 +1,26 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons (click)="closeModal()" slot="end">
+      <ion-icon name="close-outline"></ion-icon>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Make a Post</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <form [formGroup]="postForm" (ngSubmit)="post(me, postForm.value)">
+          <ion-item>
+            <textarea [mention]="items" [mentionConfig]="{triggerChar:'@',maxItems:5, labelKey: 'user_name'}"
+              formControlName="text" placeholder="{{text}}"></textarea>
+          </ion-item>
+          
+          <ion-button type="submit" ion-button full>Update Post</ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
