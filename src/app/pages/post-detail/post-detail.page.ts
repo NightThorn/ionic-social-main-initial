@@ -307,8 +307,8 @@ export class PostDetailPage implements OnInit, OnDestroy {
         elem.setAttribute("width", "100%");
         elem.setAttribute("alt", "IMG");
 
-        document.getElementById("text").appendChild(elem);
-        document.getElementById("gifid").style.border = "thick solid lime";
+        document.getElementById("replytext").appendChild(elem);
+        document.getElementById("rgifid").style.border = "thick solid lime";
         document.getElementById("imageid").style.border = "none";
         document.getElementById("videoid").style.border = "none";
 
@@ -336,8 +336,8 @@ export class PostDetailPage implements OnInit, OnDestroy {
         elem.setAttribute("width", "100%");
         elem.setAttribute("alt", "IMG");
 
-        document.getElementById("text").appendChild(elem);
-        document.getElementById("gifid").style.border = "thick solid lime";
+        document.getElementById("rrtext").appendChild(elem);
+        document.getElementById("rrgifid").style.border = "thick solid lime";
         document.getElementById("imageid").style.border = "none";
         document.getElementById("videoid").style.border = "none";
 

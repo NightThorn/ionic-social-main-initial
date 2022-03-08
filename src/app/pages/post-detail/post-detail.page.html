@@ -73,14 +73,14 @@
                       (ngSubmit)="reply(me, replyForm.value)">
                       <ion-row style="width: 100%; align-items: center;">
                         <ion-col size="8">
-                          <textarea style="margin-left: 0; min-height: 60px;" id="text" [mention]="items"
-                            contenteditable="true"
+                          <textarea id="replytext" style="margin-left: 0; min-height: 60px; border: 1px solid;"
+                            [mention]="items" contenteditable="true"
                             [mentionConfig]="{triggerChar:'@',maxItems:10, labelKey: 'user_name', dropUp: true}"
                             type="text" placeholder="Write your comment" formControlName="text"></textarea>
                           <input id="commentID" type="hidden" formControlName="commentID">
                         </ion-col>
                         <ion-col style="text-align: center; vertical-align: middle;" size="2">
-                          <div id="gifid" class="image-upload">
+                          <div id="rgifid" class="image-upload">
                             <label (click)="replyGif($event)" for="gif-input">
                               <img src="./assets/images/giphy.png" />
                             </label>
@@ -114,6 +114,10 @@
 
                             <span class="user-comment-text">
                               <div [innerHTML]="reply.text"></div>
+                              <ion-img *ngIf="reply.image"
+                                src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{reply.image}}"></ion-img>
+                              <ion-img *ngIf="reply.gifsrc" src="{{reply.gifsrc}}"></ion-img>
+
                             </span>
                           </ion-col>
                           <ion-col style="text-align: center;" size="3">
@@ -135,16 +139,15 @@
                                 (ngSubmit)="replyreply(me, replyreplyForm.value)">
                                 <ion-row style="width: 100%; align-items: center;">
                                   <ion-col size="7">
-                                    <textarea style="margin-left: 0; min-height: 60px;" id="text" [mention]="items"
-                                      contenteditable="true"
+                                    <textarea id="rrtext" style="margin-left: 0; min-height: 60px; border: 1px solid;"
+                                      [mention]="items" contenteditable="true"
                                       [mentionConfig]="{triggerChar:'@',maxItems:10, labelKey: 'user_name', dropUp: true}"
-                                      type="text" placeholder="Write your comment" formControlName="text"
-                                      value="@{{reply.user_name}} "></textarea>
+                                      placeholder="Write your comment" formControlName="text"></textarea>
                                     <input id="commentID" type="hidden" formControlName="commentID">
                                   </ion-col>
                                   <ion-col style="padding-left: 2px; text-align: center; vertical-align: middle;"
                                     size="3">
-                                    <div id="gifid" class="image-upload">
+                                    <div id="rrgifid" class="image-upload">
                                       <label (click)="replyreplyGif($event)" for="gif-input">
                                         <img src="./assets/images/giphy.png" />
                                       </label>
