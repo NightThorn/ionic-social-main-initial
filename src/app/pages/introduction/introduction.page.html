@@ -3,31 +3,51 @@
 
     <!-- Slide 1 -->
     <ion-slide>
-      <ion-text color="light" class="intro-text ion-margin-bottom">
-        <h1>Welcome to our App!</h1>
-        <p>Ready to get stuff done?</p>
+      <ion-text color="dark" class="intro-text ion-margin-bottom">
+        <h1>Welcome Gamer!</h1>
+        <p>Ready to get started?</p>
       </ion-text>
-      <ion-button color="secondary" class="ion-margin-top" (click)="next()">Next</ion-button>
+      <ion-button color="primary" class="ion-margin-top" (click)="next()">Next</ion-button>
     </ion-slide>
 
     <!-- Slide 2 -->
-    <ion-slide>
-      <ion-text color="light" class="intro-text ion-margin-bottom">
+    <ion-slide style="background: url('./assets/images/home.PNG'); background-size: cover;">
+      <ion-text style="background-color: #11be2e" color=" light" class="intro-text ion-margin-bottom">
         <!-- Perhaps add an image? -->
         <!-- <img src="assets/imgs/intro.png"> -->
-        <h1>Feature 1</h1>
-        <p>Description of my the app feature.</p>
+        <h1>Earn XP</h1>
+        <p>Comments, Posts, and Reactions earn you XP.</p>
       </ion-text>
-      <ion-button color="secondary" class="ion-margin-top" (click)="next()">Next</ion-button>
+      <ion-button color="primary" class="ion-margin-top" (click)="next()">Next</ion-button>
     </ion-slide>
 
+    <ion-slide style="background: url('./assets/images/convert.PNG'); background-size: cover;">
+      <ion-text style="background-color: #11be2e" color=" light" class="intro-text ion-margin-bottom">
+        <!-- Perhaps add an image? -->
+        <!-- <img src="assets/imgs/intro.png"> -->
+        <h1>Convert</h1>
+        <p>Convert your XP into GG coins for use in the shop!</p>
+      </ion-text>
+      <ion-button color="primary" class="ion-margin-top" (click)="next()">Next</ion-button>
+    </ion-slide>
+
+
+    <ion-slide style="background: url('./assets/images/redeem.PNG'); background-size: cover;">
+      <ion-text style="background-color: #11be2e" color=" light" class="intro-text ion-margin-bottom">
+        <!-- Perhaps add an image? -->
+        <!-- <img src="assets/imgs/intro.png"> -->
+        <h1>Redeem</h1>
+        <p>Use your GG Coins to purchase badges, merch, and more!</p>
+      </ion-text>
+      <ion-button color="primary" class="ion-margin-top" (click)="next()">Next</ion-button>
+    </ion-slide>
     <!-- Slide 3 -->
     <ion-slide>
-      <ion-text color="light" class="intro-text ion-margin-bottom">
-        <h1>Feature 2</h1>
-        <p>Description of my the app feature.</p>
+      <ion-text color="dark" class="intro-text ion-margin-bottom">
+        <h1>Rinse, Repeat!</h1>
+        <p>Earn while networking with other gamers!</p>
       </ion-text>
-      <ion-button color="secondary" class="ion-margin-top" (click)="finish()">Enjoy the App</ion-button>
+      <ion-button color="primary" class="ion-margin-top" (click)="finish()">Take me to the app</ion-button>
     </ion-slide>
 
   </ion-slides>
