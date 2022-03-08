@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@capacitor/storage';
-export const INTRO_KEY = 'intro-seen';
+export const INTRO = 'introseen';
 
 @Component({
   selector: 'app-introduction',
@@ -23,7 +23,7 @@ export class IntroductionPage implements OnInit {
   }
 
   async finish() {
-    await Storage.set({ key: INTRO_KEY, value: 'true' });
+    await Storage.set({ key: INTRO, value: 'true' });
     this.router.navigateByUrl('/login')
   }
 
