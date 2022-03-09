@@ -141,10 +141,14 @@ export class ProfileService {
       })
     );
   }
-  public fetchPosts(user_id: any) {
-    this.httpClient.get(`https://ggs.tv/api/v1/timeline.php?timeline=profile&user=${user_id}`).subscribe(response => {
+fetchPosts(user_id: any) {
+  return this.httpClient.get(`https://ggs.tv/api/v1/timeline.php?timeline=profile&user=${user_id}`).pipe(map((res: any) => {
+    return res;
+  }),
+    filter((res: any) => {
 
-      this.fetchedPosts.next(response['message']);
-    });
+      return true;
+    })
+    );
   }
 }

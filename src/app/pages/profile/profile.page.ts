@@ -75,13 +75,7 @@ export class ProfilePage implements OnInit, OnDestroy {
       this.badgeslist = res.badges;
       this.badgeCount = this.badgeslist.length;
 
-      this.posts = res.posts;
-      for (let i = 0; i < this.posts.length; i++) {
-        this.offset = moment().utcOffset();
-        this.posts[i]['total'] = +this.posts[i]['reaction_love_count'] + +this.posts[i]['reaction_like_count'] + +this.posts[i]['reaction_haha_count'] + +this.posts[i]['reaction_wow_count'];
-
-        this.posts[i]['time'] = moment.utc(this.posts[i]['time']).fromNow();
-      }
+    
       this.pictures = res.media;
       this.dataList = this.pictures.slice(0, this.topLimit);
       this.userinfo = res.userinfo[0];
@@ -94,7 +88,16 @@ export class ProfilePage implements OnInit, OnDestroy {
 
 
     });
+    this.profileService.fetchPosts(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.posts = res.message;
+      for (let i = 0; i < this.posts.length; i++) {
+        this.offset = moment().utcOffset();
+        this.posts[i]['total'] = +this.posts[i]['reaction_love_count'] + +this.posts[i]['reaction_like_count'] + +this.posts[i]['reaction_haha_count'] + +this.posts[i]['reaction_wow_count'];
 
+        this.posts[i]['time'] = moment.utc(this.posts[i]['time']).fromNow();
+      }
+
+    });
 
   };
 

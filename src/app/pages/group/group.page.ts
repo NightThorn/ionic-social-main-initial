@@ -5,7 +5,6 @@ import { ModalController } from '@ionic/angular';
 import moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { ApplicationsPage } from '../applications/applications.page';
@@ -15,7 +14,6 @@ import { GrindingPage } from '../grinding/grinding.page';
 import { GroupadminsPage } from '../groupadmins/groupadmins.page';
 import { GrouppostPage } from '../grouppost/grouppost.page';
 import { ImageModalPage } from '../image-modal/image-modal.page';
-import { ModalPage } from '../modal/modal.page';
 
 @Component({
   selector: 'app-group',
@@ -46,9 +44,8 @@ export class GroupPage implements OnInit, OnDestroy {
   group_tag: any;
   private onDestroy$: Subject<void> = new Subject<void>();
   constructor(private activeRoute: ActivatedRoute, private http: HttpClient, private router: Router, private authService: AuthenticationService, private modalController: ModalController, private dataService: DataService) { }
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
+
+
 
   ngOnInit() {
     const id = this.activeRoute.snapshot.paramMap.get('id');
@@ -57,17 +54,8 @@ export class GroupPage implements OnInit, OnDestroy {
 
 
     this.dataService.getGroup(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-      this.group = res.message;
-      console.log(this.group);
-      this.group_picture = res.message[0]['group_picture'];
-      this.group_cover = res.message[0]['group_cover'];
-      this.group_description = res.message[0]['group_description'];
-      this.group_title = res.message[0]['group_title'];
-      this.group_admin = res.message[0]['group_admin'];
-      this.group_name = res.message[0]['group_name'];
-      this.group_privacy = res.message[0]['group_privacy'];
-      this.group_id = res.message[0]['group_id'];
-      this.group_tag = res.message[0]['group_tag'];
+      this.group = res.message[0];
+
 
       if (this.me == res.message[0]['group_admin']) {
         this.admin = 1;
@@ -108,7 +96,9 @@ export class GroupPage implements OnInit, OnDestroy {
     });
 
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
   groupmembers(id) {
 
 

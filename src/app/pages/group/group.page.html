@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true" *ngFor="let group of group">
+<ion-content [fullscreen]="true" *ngIf="group">
   <ion-grid class="ion-no-padding ion-no-margin background-opts"
     style.background-image="url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ group.group_cover }}')">
     <ion-row>

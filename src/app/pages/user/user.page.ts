@@ -101,59 +101,66 @@ export class UserPage implements OnInit, OnDestroy {
   // x = localStorage.getItem("user_id");
 
   ngOnInit() {
+
     const id = this.activeRoute.snapshot.paramMap.get('id');
 
     this.me = localStorage.getItem("myID");
+    if (this.me === id) {
+  
+      this.router.navigate(['/tabs/profile']);
 
-    this.subscription1$ = this.profileService.checkFollow(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-      this.following = res.message;
-      var follow = this.following.find(message => message.following_id == id)
+    } else {
+      this.subscription1$ = this.profileService.checkFollow(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.following = res.message;
+        var follow = this.following.find(message => message.following_id == id)
 
-      if (follow) {
-        this.isFollowing = true;
-      }
+        if (follow) {
+          this.isFollowing = true;
+        }
 
-    });
-
-
-
-
-
-    this.profileService.getProfile(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-      console.log(res);
-      this.groups = res.groups;
-      this.badgeslist = res.badges;
-      this.badgeCount = this.badgeslist.length;
-
-      this.posts = res.posts;
-      for (let i = 0; i < this.posts.length; i++) {
-        this.offset = moment().utcOffset();
-        this.posts[i]['total'] = +this.posts[i]['reaction_love_count'] + +this.posts[i]['reaction_like_count'] + +this.posts[i]['reaction_haha_count'] + +this.posts[i]['reaction_wow_count'];
-
-        this.posts[i]['time'] = moment.utc(this.posts[i]['time']).fromNow();
-      }
-      this.pictures = res.media;
-      this.dataList = this.pictures.slice(0, this.topLimit);
-      this.userinfo = res.userinfo[0];
-
-      this.friendslist = res.friends;
-      this.friendCount = this.friendslist.length;
-      var target = this.friendslist.find(message => message.user_id == this.me)
-
-      if (target) {
-        this.isFriends = "1";
-      } else {
-
-        this.isFriends = "0";
-      }
-      const newDate = new Date(this.userinfo.user_birthdate);
-      this.bday = newDate.toDateString();
+      });
 
 
 
-    });
 
 
+      this.profileService.getProfile(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        console.log(res);
+        this.groups = res.groups;
+        this.badgeslist = res.badges;
+        this.badgeCount = this.badgeslist.length;
+
+        this.pictures = res.media;
+        this.dataList = this.pictures.slice(0, this.topLimit);
+        this.userinfo = res.userinfo[0];
+
+        this.friendslist = res.friends;
+        this.friendCount = this.friendslist.length;
+        var target = this.friendslist.find(message => message.user_id == this.me)
+
+        if (target) {
+          this.isFriends = "1";
+        } else {
+
+          this.isFriends = "0";
+        }
+        const newDate = new Date(this.userinfo.user_birthdate);
+        this.bday = newDate.toDateString();
+
+
+
+      });
+      this.profileService.fetchPosts(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.posts = res.message;
+        for (let i = 0; i < this.posts.length; i++) {
+          this.offset = moment().utcOffset();
+          this.posts[i]['total'] = +this.posts[i]['reaction_love_count'] + +this.posts[i]['reaction_like_count'] + +this.posts[i]['reaction_haha_count'] + +this.posts[i]['reaction_wow_count'];
+
+          this.posts[i]['time'] = moment.utc(this.posts[i]['time']).fromNow();
+        }
+
+      });
+    }
   };
 
   async openModal(source) {
