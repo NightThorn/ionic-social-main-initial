@@ -350,12 +350,8 @@ export class PostDetailPage implements OnInit, OnDestroy {
 
   };
   user(id) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        special: JSON.stringify(id)
-      }
-    };
-    this.router.navigate(['/user'], navigationExtras);
+
+    this.router.navigate(['/user/' + id]);
 
   }
 

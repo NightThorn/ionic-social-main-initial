@@ -100,13 +100,13 @@ export class UserPage implements OnInit, OnDestroy {
   }
   // x = localStorage.getItem("user_id");
 
-  ngOnInit() {
+  async ngOnInit() {
 
     const id = this.activeRoute.snapshot.paramMap.get('id');
 
     this.me = localStorage.getItem("myID");
     if (this.me === id) {
-  
+
       this.router.navigate(['/tabs/profile']);
 
     } else {
@@ -124,7 +124,7 @@ export class UserPage implements OnInit, OnDestroy {
 
 
 
-      this.profileService.getProfile(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      await this.profileService.getProfile(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         console.log(res);
         this.groups = res.groups;
         this.badgeslist = res.badges;
@@ -150,7 +150,7 @@ export class UserPage implements OnInit, OnDestroy {
 
 
       });
-      this.profileService.fetchPosts(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      await this.profileService.fetchPosts(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.posts = res.message;
         for (let i = 0; i < this.posts.length; i++) {
           this.offset = moment().utcOffset();
