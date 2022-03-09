@@ -4,12 +4,10 @@ import { ModalController, NavController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { ImageModalPage } from '../image-modal/image-modal.page';
 import { ProfileService } from 'src/app/services/profile.service';
-import { AuthenticationService } from "../../services/authentication.service";
-import { PostsService } from 'src/app/services/posts.service';
 import { ModalPage } from '../modal/modal.page';
 import moment from 'moment';
 import { EditprofilePage } from '../editprofile/editprofile.page';
-import { interval, Subject } from 'rxjs';
+import { async, forkJoin, interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-profile',
@@ -68,38 +66,39 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     this.me = localStorage.getItem("myID");
 
+    let userProfile = this.profileService.getProfile(this.me);
+    let userPosts = this.profileService.fetchPosts(this.me);
+    forkJoin([userProfile, userPosts]).subscribe(res => {
+      
+      this.posts = res[1].message;
 
-    this.profileService.getProfile(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-      console.log(res);
-      this.groups = res.groups;
-      this.badgeslist = res.badges;
+
+      this.groups = res[0].groups;
+      this.badgeslist = res[0].badges;
       this.badgeCount = this.badgeslist.length;
 
-    
-      this.pictures = res.media;
+      this.pictures = res[0].media;
       this.dataList = this.pictures.slice(0, this.topLimit);
-      this.userinfo = res.userinfo[0];
+      this.userinfo = res[0].userinfo[0];
 
-      this.friendslist = res.friends;
+      this.friendslist = res[0].friends;
       this.friendCount = this.friendslist.length;
+
       const newDate = new Date(this.userinfo.user_birthdate);
       this.bday = newDate.toDateString();
 
 
-
-    });
-    this.profileService.fetchPosts(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-      this.posts = res.message;
       for (let i = 0; i < this.posts.length; i++) {
         this.offset = moment().utcOffset();
         this.posts[i]['total'] = +this.posts[i]['reaction_love_count'] + +this.posts[i]['reaction_like_count'] + +this.posts[i]['reaction_haha_count'] + +this.posts[i]['reaction_wow_count'];
 
         this.posts[i]['time'] = moment.utc(this.posts[i]['time']).fromNow();
       }
-
     });
 
-  };
+
+  }
+
 
 
 
@@ -202,7 +201,44 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
 
+  doRefresh(event) {
 
+    let userProfile = this.profileService.getProfile(this.me);
+    let userPosts = this.profileService.fetchPosts(this.me);
+    forkJoin([userProfile, userPosts]).subscribe(res => {
+
+      this.posts = res[1].message;
+
+
+      this.groups = res[0].groups;
+      this.badgeslist = res[0].badges;
+      this.badgeCount = this.badgeslist.length;
+
+      this.pictures = res[0].media;
+      this.dataList = this.pictures.slice(0, this.topLimit);
+      this.userinfo = res[0].userinfo[0];
+
+      this.friendslist = res[0].friends;
+      this.friendCount = this.friendslist.length;
+
+      const newDate = new Date(this.userinfo.user_birthdate);
+      this.bday = newDate.toDateString();
+
+
+      for (let i = 0; i < this.posts.length; i++) {
+        this.offset = moment().utcOffset();
+        this.posts[i]['total'] = +this.posts[i]['reaction_love_count'] + +this.posts[i]['reaction_like_count'] + +this.posts[i]['reaction_haha_count'] + +this.posts[i]['reaction_wow_count'];
+
+        this.posts[i]['time'] = moment.utc(this.posts[i]['time']).fromNow();
+      }
+    });
+
+
+
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+  }
 
 }
 

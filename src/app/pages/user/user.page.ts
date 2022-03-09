@@ -10,7 +10,7 @@ import { ProfileModel } from "../../models/profile-model";
 import { PostsService } from 'src/app/services/posts.service';
 import { HttpClient } from '@angular/common/http';
 import moment from 'moment';
-import { Subject, Subscription } from 'rxjs';
+import { async, forkJoin, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-user',
@@ -100,7 +100,7 @@ export class UserPage implements OnInit, OnDestroy {
   }
   // x = localStorage.getItem("user_id");
 
-  async ngOnInit() {
+  ngOnInit() {
 
     const id = this.activeRoute.snapshot.paramMap.get('id');
 
@@ -119,22 +119,22 @@ export class UserPage implements OnInit, OnDestroy {
         }
 
       });
+      let userProfile = this.profileService.getProfile(id);
+      let userPosts = this.profileService.fetchPosts(id);
+      forkJoin([userProfile, userPosts]).subscribe(res => {
+
+        this.posts = res[1].message;
 
 
-
-
-
-      await this.profileService.getProfile(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-        console.log(res);
-        this.groups = res.groups;
-        this.badgeslist = res.badges;
+        this.groups = res[0].groups;
+        this.badgeslist = res[0].badges;
         this.badgeCount = this.badgeslist.length;
 
-        this.pictures = res.media;
+        this.pictures = res[0].media;
         this.dataList = this.pictures.slice(0, this.topLimit);
-        this.userinfo = res.userinfo[0];
+        this.userinfo = res[0].userinfo[0];
 
-        this.friendslist = res.friends;
+        this.friendslist = res[0].friends;
         this.friendCount = this.friendslist.length;
         var target = this.friendslist.find(message => message.user_id == this.me)
 
@@ -148,20 +148,18 @@ export class UserPage implements OnInit, OnDestroy {
         this.bday = newDate.toDateString();
 
 
-
-      });
-      await this.profileService.fetchPosts(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-        this.posts = res.message;
         for (let i = 0; i < this.posts.length; i++) {
           this.offset = moment().utcOffset();
           this.posts[i]['total'] = +this.posts[i]['reaction_love_count'] + +this.posts[i]['reaction_like_count'] + +this.posts[i]['reaction_haha_count'] + +this.posts[i]['reaction_wow_count'];
 
           this.posts[i]['time'] = moment.utc(this.posts[i]['time']).fromNow();
         }
-
       });
+
+
     }
-  };
+  }
+
 
   async openModal(source) {
     const modal = await this.modalController.create({
@@ -311,6 +309,45 @@ export class UserPage implements OnInit, OnDestroy {
     });
   }
 
+  doRefresh(event) {
+    const id = this.activeRoute.snapshot.paramMap.get('id');
+
+    let userProfile = this.profileService.getProfile(id);
+    let userPosts = this.profileService.fetchPosts(id);
+    forkJoin([userProfile, userPosts]).subscribe(res => {
+
+      this.posts = res[1].message;
+
+
+      this.groups = res[0].groups;
+      this.badgeslist = res[0].badges;
+      this.badgeCount = this.badgeslist.length;
+
+      this.pictures = res[0].media;
+      this.dataList = this.pictures.slice(0, this.topLimit);
+      this.userinfo = res[0].userinfo[0];
+
+      this.friendslist = res[0].friends;
+      this.friendCount = this.friendslist.length;
+
+      const newDate = new Date(this.userinfo.user_birthdate);
+      this.bday = newDate.toDateString();
+
+
+      for (let i = 0; i < this.posts.length; i++) {
+        this.offset = moment().utcOffset();
+        this.posts[i]['total'] = +this.posts[i]['reaction_love_count'] + +this.posts[i]['reaction_like_count'] + +this.posts[i]['reaction_haha_count'] + +this.posts[i]['reaction_wow_count'];
+
+        this.posts[i]['time'] = moment.utc(this.posts[i]['time']).fromNow();
+      }
+    });
+
+
+
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+  }
 
 }
 
