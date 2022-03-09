@@ -96,7 +96,7 @@ export class MiscmodalPage implements OnInit, OnDestroy {
     const success = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Success',
-      message: 'Enjoy your new badge! GGs!',
+      message: 'You are now a Pro Member! GGs!',
       buttons: [{
         text: 'OK', handler: () => {
           this.router.navigate(['shop']);
