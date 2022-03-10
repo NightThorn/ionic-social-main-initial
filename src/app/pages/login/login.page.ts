@@ -129,6 +129,7 @@ export class LoginPage implements OnInit, OnDestroy {
 
         return;
       }
+      localStorage.setItem("live", this.response.live);
 
       localStorage.setItem("myID", this.response.id);
       loading.dismiss();
