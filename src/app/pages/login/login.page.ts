@@ -5,8 +5,7 @@ import { AlertController, LoadingController, ToastController } from '@ionic/angu
 import { emailValidator } from 'src/app/validators/email.validators';
 import { passwordValidator } from 'src/app/validators/password.validator';
 import { AccessProviders } from '../../providers/access-providers';
-import { Storage } from '@ionic/storage-angular';
-import { StoredUser } from "../../models/stored-user";
+import { Storage } from '@capacitor/storage';
 import { FcmService } from 'src/app/services/fcm.service';
 import {
   ActionPerformed,
@@ -15,8 +14,10 @@ import {
   Token,
 } from '@capacitor/push-notifications';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, from, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+const TOKEN_KEY = 'my-token';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -30,13 +31,16 @@ export class LoginPage implements OnInit, OnDestroy {
     backgroundImage:
       'url(https://images.unsplash.com/photo-1511988617509-a57c8a288659?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1051&q=80)',
   };
+  isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  token = '';
   alert: any;
   toastctrl: any;
   email: any;
   password: any;
   accessProviders: any;
   private onDestroy$: Subject<void> = new Subject<void>();
-  token: string;
+  login: any;
+  response: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -104,21 +108,36 @@ export class LoginPage implements OnInit, OnDestroy {
     });
     await loading.present();
 
-    this.authService.signIn(this.loginForm.value)
-      .pipe(takeUntil(this.onDestroy$)).subscribe(user => {
-        loading.dismiss();
-        this.router.navigateByUrl('/tabs', { replaceUrl: true });
-      },
-        async err => {
-          loading.dismiss();
+    this.authService.doLogin(this.email, this.password).subscribe((data: any) => {
+      this.login = data.success;
+      this.response = data.message;
 
-          let alert = await this.alertCtrl.create({
-            header: 'Error',
-            message: err.message,
-            buttons: ['OK']
-          });
-          alert.present();
-        })
+      if (this.login !== true) {
+        let msg = '';
+        if (data['message'] !== '') {
+          msg = data['message'];
+        } else if (data['errors'].length > 0) {
+          msg = data['errors'][0];
+        }
+
+        if (msg !== '') {
+          msg = 'Could not log in, please try again';
+        }
+
+        this.presentToast(msg);
+        loading.dismiss();
+
+        return;
+      }
+
+      localStorage.setItem("myID", this.response.id);
+      loading.dismiss();
+      this.authService.isAuthenticated.next(true);
+
+      Storage.set({ key: TOKEN_KEY, value: this.response.token });
+      this.router.navigate(['/tabs']);
+
+    });
   }
 
   async presentToast(a) {

@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, from, BehaviorSubject } from 'rxjs';
-import { map, tap, switchMap } from 'rxjs/operators';
+import { map, tap, switchMap, filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { environment } from './../../environments/environment';
-import { StoredUser } from '../models/stored-user';
 import { Storage } from '@capacitor/storage';
 import { Filesystem, FilesystemDirectory } from '@capacitor/filesystem';
 
@@ -40,9 +38,11 @@ export class AuthenticationService {
 
   signIn(credentials: { email, password }): Observable<any> {
     return this.http.post(`https://ggs.tv/applogin.php`, credentials).pipe(
-      map((data: any) => data.message),
+      map((res: any) => res.message),
       switchMap(token => {
         localStorage.setItem("myID", token.id);
+        localStorage.setItem("live", token.live);
+
         return from(Storage.set({ key: TOKEN_KEY, value: token.token }));
       }),
 
@@ -53,6 +53,23 @@ export class AuthenticationService {
     )
   }
 
+  doLogin(email, password) {
+    return this.http.post(`https://ggs.tv/applogin.php`, {
+      email: email,
+      password: password
+    }).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
   async destroy(): Promise<void> {
     this.isAuthenticated.next(false);
     const fileEntries = await Filesystem.readdir({
@@ -66,7 +83,10 @@ export class AuthenticationService {
       });
     });
     this.router.navigateByUrl('/login');
+    localStorage.removeItem("myID");
+
     return Storage.remove({ key: TOKEN_KEY });
+
   }
 
   signUp(credentials) {
