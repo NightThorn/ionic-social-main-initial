@@ -60,27 +60,27 @@ export class FeedCardComponent implements OnInit, OnDestroy {
   groupID: any;
   @Input()
   set picture(pic) {
-    const imageName = pic.split('/').pop();
-    const fileType = imageName.split('.').pop();
+    if (pic != null) {
+      const imageName = pic.split('/').pop();
 
-    Filesystem.readFile({
-
-      directory: Directory.Cache,
-      path: `${CACHE_FOLDER}/${imageName}`
-    }).then(readFile => {
-      this._picture = `data:image/${fileType};base64,${readFile.data}`;
-    }).catch(async e => {
-      await this.storeImage(pic, imageName);
+      const fileType = imageName.split('.').pop();
       Filesystem.readFile({
         directory: Directory.Cache,
         path: `${CACHE_FOLDER}/${imageName}`
       }).then(readFile => {
-
         this._picture = `data:image/${fileType};base64,${readFile.data}`;
+      }).catch(async e => {
+        await this.storeImage(pic, imageName);
+        Filesystem.readFile({
+          directory: Directory.Cache,
+          path: `${CACHE_FOLDER}/${imageName}`
+        }).then(readFile => {
 
-      })
-    });
+          this._picture = `data:image/${fileType};base64,${readFile.data}`;
 
+        })
+      });
+    }
   };
   async storeImage(url, path) {
     const response = await fetch(`https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/${url}`);
