@@ -28,6 +28,8 @@ export class ExplorePage implements OnInit, OnDestroy {
 
   currentPlaying = null;
   feeds = [];
+  feed: any;
+
   latest: any;
   storiesConfig = {
     initialSlide: 0,
@@ -80,7 +82,6 @@ export class ExplorePage implements OnInit, OnDestroy {
   ngOnInit() {
     this.me = localStorage.getItem("myID");
     this.live = localStorage.getItem("live");
-
     this.filter = localStorage.getItem("filter");
     this.dataService.getXP(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.xp = res.message;
@@ -90,34 +91,51 @@ export class ExplorePage implements OnInit, OnDestroy {
       this.myTickets = this.numFormatter(this.xp[0]['tickets']);
 
     });
-    if (this.filter === "all") {
-      this.dataService.getAllPosts(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-        this.feeds = res.message;
-        for (let i = 0; i < this.feeds.length; i++) {
-          this.offset = moment().utcOffset();
-          this.feeds[i]['total'] = +this.feeds[i]['reaction_love_count'] + +this.feeds[i]['reaction_like_count'] + +this.feeds[i]['reaction_haha_count'] + +this.feeds[i]['reaction_wow_count'];
-          this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
-        }
-        this.dataList = this.feeds.slice(0, this.topLimit);
-      });
+    if (localStorage.getItem('feeds')) {
+      this.feed = JSON.parse(localStorage.getItem('feeds'));
+
     } else {
+      if (this.filter === "all") {
+        this.dataService.getAllPosts(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+          this.feeds = res.message;
 
-      this.dataService.getFeed(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-        this.feeds = res.message;
-        for (let i = 0; i < this.feeds.length; i++) {
+          for (let i = 0; i < this.feeds.length; i++) {
+            this.offset = moment().utcOffset();
+            this.feeds[i]['total'] = +this.feeds[i]['reaction_love_count'] + +this.feeds[i]['reaction_like_count'] + +this.feeds[i]['reaction_haha_count'] + +this.feeds[i]['reaction_wow_count'];
+            this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
+          }
+          this.dataList = this.feeds.slice(0, this.topLimit);
+          localStorage.setItem("feeds", JSON.stringify(this.dataList));
+ 
+        });
 
-          this.offset = moment().utcOffset();
-          this.feeds[i]['total'] = +this.feeds[i]['reaction_love_count'] + +this.feeds[i]['reaction_like_count'] + +this.feeds[i]['reaction_haha_count'] + +this.feeds[i]['reaction_wow_count'];
+      } else {
 
-          this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
-        }
-        this.dataList = this.feeds.slice(0, this.topLimit);
-      });
+        this.dataService.getFeed(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+          this.feeds = res.message;
 
+          for (let i = 0; i < this.feeds.length; i++) {
+
+            this.offset = moment().utcOffset();
+            this.feeds[i]['total'] = +this.feeds[i]['reaction_love_count'] + +this.feeds[i]['reaction_like_count'] + +this.feeds[i]['reaction_haha_count'] + +this.feeds[i]['reaction_wow_count'];
+
+            this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
+          }
+          this.dataList = this.feeds.slice(0, this.topLimit);
+          localStorage.setItem("feeds", JSON.stringify(this.dataList));
+
+        });
+
+      }
     }
+
+
     this.dataService.getLatestVid(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.latest = res.message;
+      localStorage.setItem("latestvids", JSON.stringify(this.latest));
+
     });
+
     this.dataService.getBoosted().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.boost = res.message;
       for (let i = 0; i < this.boost.length; i++) {
@@ -181,6 +199,9 @@ export class ExplorePage implements OnInit, OnDestroy {
       this.myWallet = this.numFormatter(this.xp[0]['user_wallet_balance']);
 
     });
+    this.dataService.getLatestVid(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.latest = res.message;
+    });
     if (this.filter = "all") {
       this.dataService.getAllPosts(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feeds = res.message;
@@ -190,6 +211,8 @@ export class ExplorePage implements OnInit, OnDestroy {
           this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
         }
         this.dataList = this.feeds.slice(0, this.topLimit);
+        localStorage.setItem("feeds", JSON.stringify(this.dataList));
+        this.feed = JSON.parse(localStorage.getItem('feeds'));
 
       });
     } else {
@@ -202,6 +225,9 @@ export class ExplorePage implements OnInit, OnDestroy {
           this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
         }
         this.dataList = this.feeds.slice(0, this.topLimit);
+        localStorage.setItem("feeds", JSON.stringify(this.dataList));
+        this.feed = JSON.parse(localStorage.getItem('feeds'));
+
       });
     };
     this.dataService.getBoosted().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
