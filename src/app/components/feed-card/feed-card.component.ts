@@ -83,7 +83,7 @@ export class FeedCardComponent implements OnInit, OnDestroy {
     }
   };
   async storeImage(url, path) {
-    const response = await fetch(`https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/${url}`);
+    const response = await fetch('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/${url}');
     // convert to a Blob
     const blob = await response.blob();
     // convert to base64 data, which the Filesystem plugin requires
@@ -167,20 +167,22 @@ export class FeedCardComponent implements OnInit, OnDestroy {
         this.groupname = res.message[0]['group_title'];
       });
     }
-    if (this.text.includes('#')) {
-      this.decodedtext = htmlDecode(this.text)
-      this.text = this.hashtag(this.decodedtext);
+    if (this.text != null) {
+      if (this.text.includes('#')) {
+        this.decodedtext = htmlDecode(this.text)
+        this.text = this.hashtag(this.decodedtext);
 
-    }
-    if (this.text.includes('@')) {
-      this.decodedtext = htmlDecode(this.text)
-      this.text = this.at(this.decodedtext);
+      }
+      if (this.text.includes('@')) {
+        this.decodedtext = htmlDecode(this.text)
+        this.text = this.at(this.decodedtext);
 
-    }
-    if (this.text.includes('https')) {
-      this.decodedtext = htmlDecode(this.text)
-      this.text = this.href(this.decodedtext);
+      }
+      if (this.text.includes('https')) {
+        this.decodedtext = htmlDecode(this.text)
+        this.text = this.href(this.decodedtext);
 
+      }
     }
     if (this.type === 'shared') {
 

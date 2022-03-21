@@ -93,7 +93,7 @@ export class ExplorePage implements OnInit, OnDestroy {
     });
     if (localStorage.getItem('feeds')) {
       this.feed = JSON.parse(localStorage.getItem('feeds'));
-
+      console.log(this.feed);
     } else {
       if (this.filter === "all") {
         this.dataService.getAllPosts(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
@@ -105,8 +105,8 @@ export class ExplorePage implements OnInit, OnDestroy {
             this.feeds[i]['time'] = moment.utc(this.feeds[i]['time']).fromNow();
           }
           this.dataList = this.feeds.slice(0, this.topLimit);
-          localStorage.setItem("feeds", JSON.stringify(this.dataList));
- 
+          localStorage.setItem("feeds", JSON.stringify(this.feeds));
+
         });
 
       } else {
