@@ -83,7 +83,7 @@ export class FeedCardComponent implements OnInit, OnDestroy {
     }
   };
   async storeImage(url, path) {
-    const response = await fetch('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/${url}');
+    const response = await fetch(`https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/${url}`);
     // convert to a Blob
     const blob = await response.blob();
     // convert to base64 data, which the Filesystem plugin requires
