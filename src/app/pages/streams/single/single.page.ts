@@ -35,4 +35,6 @@ export class SinglePage implements OnInit {
     player.setVolume(0.5);
   }
 
+ 
+
 }

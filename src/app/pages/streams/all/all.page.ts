@@ -1,4 +1,5 @@
 
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -16,14 +17,17 @@ export class AllPage implements OnInit, OnDestroy {
   private onDestroy$: Subject<void> = new Subject<void>();
   public dataList: any = [];
   public dataL: Array<object> = [];
-  constructor(private dataService: DataService, private router: Router,
+  me: string;
+  constructor(private dataService: DataService, private router: Router, private http: HttpClient
   ) { }
 
 
   ngOnInit() {
+    this.me = localStorage.getItem("myID");
+
     this.dataService.getAllStreams().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.streams = res.message;
-
+      console.log(this.streams);
       this.dataList = this.streams.slice(0, this.topLimit);
 
     });
@@ -42,8 +46,20 @@ export class AllPage implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.onDestroy$.next();
   }
-  stream(twitch) {
+  stream(twitch, userID, username) {
     console.log(twitch);
     window.open('twitch://stream/' + twitch);
+
+      let data = {
+        "username": username,
+        "userID": userID,
+        "me": this.me
+
+      };
+      
+      this.http.post('https://ggs.tv/api/v1/visit.php', JSON.stringify(data)).subscribe(res => {
+
+      });
+    
   }
 }

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -15,10 +16,12 @@ export class ProPage implements OnInit, OnDestroy {
   private topLimit: number = 15;
   public dataList: any = [];
   public dataL: Array<object> = [];
-  constructor(private dataService: DataService, private router: Router) { }
+  me: string;
+  constructor(private dataService: DataService, private http: HttpClient, private router: Router) { }
 
 
   ngOnInit() {
+    this.me = localStorage.getItem("myID");
     this.dataService.getProStreams().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.streams = res.message;
 
@@ -41,8 +44,19 @@ export class ProPage implements OnInit, OnDestroy {
     }, 500);
 
   }
-  stream(twitch) {
+  stream(twitch, userID, username) {
     console.log(twitch);
     window.open('twitch://stream/' + twitch);
+
+    let data = {
+      "username": username,
+      "userID": userID,
+      "me": this.me
+
+    };
+
+    this.http.post('https://ggs.tv/api/v1/visit.php', JSON.stringify(data)).subscribe(res => {
+
+    });
   }
 }
