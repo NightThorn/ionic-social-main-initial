@@ -36,8 +36,8 @@
           <ion-fab-button *ngIf="me == user_id" style="max-width: 30px; max-height: 30px;">
             <ion-icon style="fill: rgb(128, 128, 128)" (click)="delete(post_id)" name="trash">Delete</ion-icon>
           </ion-fab-button>
-          <ion-fab-button  style="max-width: 30px; max-height: 30px;">
-            <ion-icon  (click)="mute(user_id)" name="volume-mute">Mute</ion-icon>
+          <ion-fab-button style="max-width: 30px; max-height: 30px;">
+            <ion-icon (click)="mute(user_id)" name="volume-mute">Mute</ion-icon>
           </ion-fab-button>
           <ion-fab-button *ngIf="me != user_id" style="max-width: 30px; max-height: 30px;">
             <ion-icon style="fill: yellow" (click)="report(post_id)" name="warning">Report</ion-icon>
@@ -93,7 +93,28 @@
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'gif'">
       <ion-img src="{{gif}}"></ion-img>
     </ion-item>
+    <ion-card-subtitle style="margin-left: 10px;" *ngIf="type === 'article'">Article</ion-card-subtitle>
 
+    <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'article'">
+      <ion-card (click)="navigateToDetail(post_id)" *ngFor="let item of article">
+        <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{item.cover}}" /><br>
+        <ion-card-subtitle style="color: white;" [innerHTML]="item.title"></ion-card-subtitle>
+        <ion-icon name="eye"></ion-icon> {{item.views}}
+      </ion-card>
+    </ion-item>
+    <ion-item *ngIf="type === 'poll'">
+      <ion-list>
+        <ion-item *ngFor="let option of poll">
+          <ion-label>{{option.text}}</ion-label>
+          <ion-checkbox *ngIf="voted == 0" (click)="vote(option.poll_id, option.option_id)" slot="end">
+          </ion-checkbox>
+          <ion-checkbox *ngIf="voted == 1" disabled="true" slot="end">
+            <ion-label>{{option.totals}}</ion-label>
+
+          </ion-checkbox>
+        </ion-item>
+      </ion-list>
+    </ion-item>
     <ion-item (click)="navigateToDetail(post_id)" *ngIf="type === 'profile_picture'">
       <ion-img [src]='_picture' *ngIf="_picture != ''; else loading"></ion-img>
       <ng-template #loading>

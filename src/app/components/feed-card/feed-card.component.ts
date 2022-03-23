@@ -58,6 +58,14 @@ export class FeedCardComponent implements OnInit, OnDestroy {
   @Input() grinding: number;
   @Input() colored: any;
   groupID: any;
+  poll: any;
+  voted = 0;
+  votetotal: Object;
+  article: any;
+  articlepic: any;
+  articletitle: any;
+  articleviews: any;
+  totals: any;
   @Input()
   set picture(pic) {
     if (pic != null) {
@@ -184,6 +192,25 @@ export class FeedCardComponent implements OnInit, OnDestroy {
 
       }
     }
+    if (this.type === 'poll') { 
+
+      this.dataService.getpoll(this.post_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.poll = res.message;
+        this.totals = res.totals;
+      });
+
+
+    }
+    if (this.type === 'article') {
+
+      this.dataService.getarticle(this.post_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.article = res.message;
+        
+
+      });
+
+
+    }
     if (this.type === 'shared') {
 
       this.dataService.getPostDetails(this.origin).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
@@ -297,6 +324,7 @@ export class FeedCardComponent implements OnInit, OnDestroy {
     this.router.navigate(['post-detail'], navigationExtras);
 
   }
+  
   hashtag(text) {
     var repl = text.replace(/#(\w+)/g, '<a href="search/#$1">#$1</a>');
 
@@ -382,6 +410,19 @@ export class FeedCardComponent implements OnInit, OnDestroy {
 
     });
   }
+  vote(poll, option) {
+
+    let data = {
+      "poll_id":poll,
+      "user_id": this.me,
+      "option": option
+    };
+    this.voted = 1;
+    this.http.post('https://ggs.tv/api/v1/votepoll.php', JSON.stringify(data)).subscribe(res => {
+
+
+    });
+  }
 
   getTagGroup(tag) {
 
@@ -448,7 +489,7 @@ export class FeedCardComponent implements OnInit, OnDestroy {
           text: 'Mute',
           handler: (test) => {
             let data = {
-              "user_id": id,
+              "user": id,
               "me": this.me,
             };
             this.http.post('https://ggs.tv/api/v1/user.php?action=mute', JSON.stringify(data))

@@ -28,7 +28,8 @@ export class PostDetailPage implements OnInit, OnDestroy {
 
   liked: any;
 
-
+  result = '';
+  html = '';
   data: any;
   post: any;
   comments: any;
@@ -42,6 +43,9 @@ export class PostDetailPage implements OnInit, OnDestroy {
   names: String[] = [];
   commentReplies: any;
   private onDestroy$: Subject<void> = new Subject<void>();
+  posttype: any;
+  article: any;
+  articletext: any;
   constructor(private fb: FormBuilder, private http: HttpClient, private profileService: ProfileService, private authService: AuthenticationService, private route: ActivatedRoute, private modalController: ModalController, private dataService: DataService, private router: Router) {
     this.route.queryParams.pipe(takeUntil(this.onDestroy$)).subscribe(params => {
       if (params && params.special) {
@@ -58,8 +62,21 @@ export class PostDetailPage implements OnInit, OnDestroy {
 
     this.dataService.getPostDetails(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.post = res.message;
+      this.posttype = this.post[0]['post_type'];
+      if (this.posttype == "article") {
+        this.dataService.getarticle(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+          this.article = res.message;
+          this.articletext = this.article[0]['text'];
 
-      console.log(this.post);
+          var temporalDivElement = document.createElement("div");
+          // Set the HTML content with the providen
+          temporalDivElement.innerHTML = this.articletext;
+          // Retrieve the text property of the element (cross-browser support)
+          this.result = temporalDivElement.textContent || temporalDivElement.innerText || "";
+
+        });
+
+      }
       for (let i = 0; i < this.post.length; i++) {
         this.offset = moment().utcOffset();
 
@@ -69,7 +86,6 @@ export class PostDetailPage implements OnInit, OnDestroy {
     this.dataService.getPostComments(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.comments = res.message;
       this.commentReplies = res.replies;
-      console.log(this.comments);
       for (let i = 0; i < this.comments.length; i++) {
 
         this.offset = moment().utcOffset();

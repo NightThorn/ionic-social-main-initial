@@ -26,9 +26,13 @@
             [user_subscribed]="item.user_subscribed" [user_verified]="item.user_verified"
             [colored]="item.colored_pattern" [shares]="item.shares" [separator]="true">
           </app-feed-card>
+          <ion-row *ngIf="posttype == 'article'">
+            <ion-row style="width: 100%; font-size: small;" [innerHTML]="result"></ion-row>
+          </ion-row>
         </ion-col>
       </ion-row>
     </ion-row>
+
     <ion-row>
       <ion-col>
 

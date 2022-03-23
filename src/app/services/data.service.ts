@@ -603,6 +603,30 @@ export class DataService {
       })
     );
   }
+  getpoll(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/getpoll.php?post=${id}`).pipe(map((res: any) => {
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  getarticle(id) {
+
+    return this.http.get(`https://ggs.tv/api/v1/getarticle.php?id=${id}`).pipe(map((res: any) => {
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   getBlocked(user_id) {
 
     return this.http.get(`https://ggs.tv/api/v1/getblocked.php?user=${user_id}`).pipe(map((res: any) => {
