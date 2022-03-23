@@ -66,6 +66,7 @@ export class FeedCardComponent implements OnInit, OnDestroy {
   articletitle: any;
   articleviews: any;
   totals: any;
+  checkpoll: any;
   @Input()
   set picture(pic) {
     if (pic != null) {
@@ -196,9 +197,19 @@ export class FeedCardComponent implements OnInit, OnDestroy {
 
       this.dataService.getpoll(this.post_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.poll = res.message;
-        this.totals = res.totals;
       });
+      this.dataService.checkvote(this.post_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.checkpoll = res.message;
+        console.log(this.checkpoll);
+        var target = this.checkpoll.find(message => message.user_id == this.me)
 
+        if (target) {
+          this.voted = 1;
+        } else {
+
+          this.voted = 0;
+        }
+      });
 
     }
     if (this.type === 'article') {

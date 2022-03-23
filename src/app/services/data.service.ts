@@ -22,6 +22,21 @@ export class DataService {
     );
 
   }
+  checkvote(id) {
+
+
+    return this.http.get(`https://ggs.tv/api/v1/checkpollvote.php?post=${id}`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+
+  }
   getColored(id) {
 
 

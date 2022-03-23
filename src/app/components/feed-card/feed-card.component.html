@@ -103,15 +103,14 @@
       </ion-card>
     </ion-item>
     <ion-item *ngIf="type === 'poll'">
-      <ion-list>
+      <ion-list style="width: 100%;">
         <ion-item *ngFor="let option of poll">
           <ion-label>{{option.text}}</ion-label>
           <ion-checkbox *ngIf="voted == 0" (click)="vote(option.poll_id, option.option_id)" slot="end">
           </ion-checkbox>
           <ion-checkbox *ngIf="voted == 1" disabled="true" slot="end">
-            <ion-label>{{option.totals}}</ion-label>
-
           </ion-checkbox>
+          <ion-card-subtitle slot="end">{{option.total}}</ion-card-subtitle>
         </ion-item>
       </ion-list>
     </ion-item>
