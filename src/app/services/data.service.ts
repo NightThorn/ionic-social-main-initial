@@ -615,7 +615,18 @@ export class DataService {
       })
     );
   }
+  getMuted(user_id) {
 
+    return this.http.get(`https://ggs.tv/api/v1/getmuted.php?user=${user_id}`).pipe(map((res: any) => {
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
   getGiveaways() {
 
     return this.http.get(`https://ggs.tv/api/v1/giveaways.php?action=get`).pipe(map((res: any) => {

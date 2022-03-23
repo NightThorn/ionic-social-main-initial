@@ -252,7 +252,11 @@ const routes: Routes = [
   {
     path: 'editpostmodal',
     loadChildren: () => import('./pages/editpostmodal/editpostmodal.module').then(m => m.EditpostmodalPageModule)
+  },  {
+    path: 'muted',
+    loadChildren: () => import('./pages/muted/muted.module').then( m => m.MutedPageModule)
   }
+
 
 
 

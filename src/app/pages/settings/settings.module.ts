@@ -10,6 +10,7 @@ import { SettingsPage } from './settings.page';
 import { EditPageModule } from '../edit/edit.module';
 import { PasswordPageModule } from '../password/password.module';
 import { BlockedPageModule } from '../blocked/blocked.module';
+import { MutedPageModule } from '../muted/muted.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { BlockedPageModule } from '../blocked/blocked.module';
     SettingsPageRoutingModule,
     EditPageModule,
     PasswordPageModule,
-    BlockedPageModule
+    BlockedPageModule,
+    MutedPageModule
   ],
   declarations: [SettingsPage]
 })

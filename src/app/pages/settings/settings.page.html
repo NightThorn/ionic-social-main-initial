@@ -75,6 +75,15 @@
               <p>View/Unblock users</p>
             </ion-label>
           </ion-item>
+          <ion-item (click)="muted(me)" lines="none">
+            <ion-avatar slot="start" class="icon-bg">
+              <ion-icon name="volume-mute-outline"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2>Manage Muted Users</h2>
+              <p>View muted users</p>
+            </ion-label>
+          </ion-item>
           <ion-item (click)="grind(me)" lines="none">
             <ion-avatar slot="start" class="icon-bg">
               <ion-icon name="barbell-outline"></ion-icon>
@@ -108,7 +117,7 @@
             </div>
 
           </ion-item>
-          <ion-button id="livebutton" *ngIf="live === 'false'; else unlive" style="width: 90%;" lines="none"
+          <ion-button id="livebutton" *ngIf="live == '0'; else unlive" style="width: 90%;" lines="none"
             (click)="goinglive()">
             <ion-label style="text-align: center;">
               <h2>Going Live!</h2>

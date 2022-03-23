@@ -13,6 +13,7 @@ import { BlockedPage } from '../blocked/blocked.page';
 import { EditPage } from '../edit/edit.page';
 import { GrindPage } from '../grind/grind.page';
 import { ModalPage } from '../modal/modal.page';
+import { MutedPage } from '../muted/muted.page';
 import { PasswordPage } from '../password/password.page';
 import { VideoModalPage } from '../video-modal/video-modal.page';
 import { XpmodalPage } from '../xpmodal/xpmodal.page';
@@ -58,13 +59,14 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.me = localStorage.getItem("myID");
-    this.live = localStorage.getItem("live");
 
     this.dataService.getUser(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.user = res.message;
       this.bio = this.user[0]['user_biography'];
       this.location = this.user[0]['user_current_city'];
       this.gender = this.user[0]['user_gender'];
+      this.live = this.user[0]['live'];
+
       this.current = this.user[0]['user_name'];
       this.username = this.user[0]['user_name'];
       this.relationship = this.user[0]['user_relationship'];
@@ -86,7 +88,6 @@ export class SettingsPage implements OnInit, OnDestroy {
     let data = {
       "user": this.me,
     };
-    localStorage.setItem("live", "true");
 
     document.getElementById("livebutton").style.color = "black";
     document.getElementById("livebutton").classList.add('unfollow-btn');
@@ -100,7 +101,6 @@ export class SettingsPage implements OnInit, OnDestroy {
     let data = {
       "user": this.me,
     };
-    localStorage.setItem("live", "false");
     document.getElementById("unlivebutton").style.color = "black";
     document.getElementById("unlivebutton").classList.add('follow-btn');
     document.getElementById("unlivebutton").classList.remove('unfollow-btn');
@@ -160,6 +160,20 @@ export class SettingsPage implements OnInit, OnDestroy {
   async blocked(id) {
     const modal = await this.modalController.create({
       component: BlockedPage,
+      cssClass: 'modal',
+      backdropDismiss: false,
+      componentProps: {
+        'me': id,
+
+      }
+
+    });
+    modal.present();
+  }
+
+  async muted(id) {
+    const modal = await this.modalController.create({
+      component: MutedPage,
       cssClass: 'modal',
       backdropDismiss: false,
       componentProps: {

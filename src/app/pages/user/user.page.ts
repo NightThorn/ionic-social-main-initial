@@ -110,7 +110,7 @@ export class UserPage implements OnInit, OnDestroy {
       this.router.navigate(['/tabs/profile']);
 
     } else {
-      
+
       let userProfile = this.profileService.getProfile(id);
       let userPosts = this.profileService.fetchPosts(id);
       forkJoin([userProfile, userPosts]).subscribe(res => {
