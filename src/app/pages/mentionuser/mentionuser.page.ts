@@ -109,16 +109,7 @@ export class MentionuserPage implements OnInit {
 
       this.me = localStorage.getItem("myID");
 
-      this.subscription1$ = this.profileService.checkFollow(this.me).subscribe(res => {
-        this.following = res.message;
-        var follow = this.following.find(message => message.following_id == this.data)
-
-        if (follow) {
-          this.isFollowing = true;
-        }
-
-      });
-
+     
 
       this.subscription2$ = this.profileService.fetchFriends(this.data).subscribe(res => {
         this.userFriends = res.message;
@@ -296,30 +287,7 @@ export class MentionuserPage implements OnInit {
 
     });
   }
-  _follow(id) {
 
-    let data = {
-      "user": id,
-      "me": this.me,
-    };
-    this.subscription13$ = this.http.post('https://ggs.tv/api/v1/user.php?action=follow', JSON.stringify(data)).subscribe(res => {
-
-      this.ifollow = "Following";
-
-    });
-  }
-  unfollow(id) {
-
-    let data = {
-      "user": id,
-      "me": this.me,
-    };
-    this.subscription14$ = this.http.post('https://ggs.tv/api/v1/user.php?action=unfollow', JSON.stringify(data)).subscribe(res => {
-
-      this.iunfollow = "Follow";
-
-    });
-  }
 
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())

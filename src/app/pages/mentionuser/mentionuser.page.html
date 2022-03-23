@@ -78,12 +78,7 @@
             <ion-button id="friend-button" (click)="add(fetchedProfile.user_id)" class="follow-btn">{{addfriend}}
             </ion-button>
           </ng-template>
-          <ion-button *ngIf="isFollowing == 1; else follow" (click)="unfollow(fetchedProfile.user_id)"
-            class="unfollow-btn">{{iunfollow}}
-          </ion-button>
-          <ng-template #follow>
-            <ion-button (click)="_follow(fetchedProfile.user_id)" class="follow-btn">{{ifollow}}</ion-button>
-          </ng-template>
+          
           <ion-fab horizontal="end" edge slot="fixed">
             <ion-fab-button>
               <ion-icon style="fill: black;" name="ellipsis-vertical-outline"></ion-icon>

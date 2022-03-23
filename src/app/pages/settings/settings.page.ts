@@ -112,8 +112,8 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   following() {
-    localStorage.setItem("filter", "following");
-    this.value = "following";
+    localStorage.setItem("filter", "friends");
+    this.value = "friends";
   }
 
   all() {

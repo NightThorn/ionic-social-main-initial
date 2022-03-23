@@ -110,15 +110,7 @@ export class UserPage implements OnInit, OnDestroy {
       this.router.navigate(['/tabs/profile']);
 
     } else {
-      this.subscription1$ = this.profileService.checkFollow(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-        this.following = res.message;
-        var follow = this.following.find(message => message.following_id == id)
-
-        if (follow) {
-          this.isFollowing = true;
-        }
-
-      });
+      
       let userProfile = this.profileService.getProfile(id);
       let userPosts = this.profileService.fetchPosts(id);
       forkJoin([userProfile, userPosts]).subscribe(res => {
