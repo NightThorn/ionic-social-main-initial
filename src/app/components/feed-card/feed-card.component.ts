@@ -432,7 +432,40 @@ export class FeedCardComponent implements OnInit, OnDestroy {
     await alert.present();
   }
 
+  async mute(id) {
 
+    const alert = await this.alertCtrl.create({
+
+      header: 'Mute this user?',
+      message: 'Are you sure you would like to mute this user? Their posts will no longer show on your newsfeed.',
+
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Mute',
+          handler: (test) => {
+            let data = {
+              "user_id": id,
+              "me": this.me,
+            };
+            this.http.post('https://ggs.tv/api/v1/user.php?action=mute', JSON.stringify(data))
+              .pipe(takeUntil(this.onDestroy$)).subscribe(async () => {
+                let alert = await this.alertCtrl.create({
+                  header: 'Success',
+                  message: 'You have muted this user. To unmute, go to Settings.',
+                  buttons: ['OK']
+                });
+                alert.present();
+              });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
   async boost(id) {
 
     const alert = await this.alertCtrl.create({

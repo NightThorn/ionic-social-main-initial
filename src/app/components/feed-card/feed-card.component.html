@@ -29,12 +29,15 @@
         <ion-fab-button style="max-width: 30px; background-color: transparent; max-height: 30px;">
           <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
         </ion-fab-button>
-        <ion-fab-list style="display: flex; align-items: end;" side="start">
+        <ion-fab-list style="display: flex;" side="start">
           <ion-fab-button *ngIf="me == user_id" style="max-width: 30px; max-height: 30px;">
             <ion-icon style="fill: yellow" (click)="edit(post_id, text)" name="pencil">Edit</ion-icon>
           </ion-fab-button>
           <ion-fab-button *ngIf="me == user_id" style="max-width: 30px; max-height: 30px;">
-            <ion-icon style="fill: rgb(128, 128, 128)" (click)="delete(post_id)" name="trash">Edit</ion-icon>
+            <ion-icon style="fill: rgb(128, 128, 128)" (click)="delete(post_id)" name="trash">Delete</ion-icon>
+          </ion-fab-button>
+          <ion-fab-button  style="max-width: 30px; max-height: 30px;">
+            <ion-icon  (click)="mute(user_id)" name="volume-mute">Mute</ion-icon>
           </ion-fab-button>
           <ion-fab-button *ngIf="me != user_id" style="max-width: 30px; max-height: 30px;">
             <ion-icon style="fill: yellow" (click)="report(post_id)" name="warning">Report</ion-icon>
