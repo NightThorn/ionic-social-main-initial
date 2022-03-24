@@ -42,7 +42,7 @@
       <ion-col>
         <ion-slides [options]="storiesConfig">
           <ion-slide style="background-color: #010f04; border-radius: 10px;" (click)="openVideoModal(item.source)"
-            *ngFor="let item of latest">
+            *ngFor="let item of latestvid">
             <app-story-card [source]="item.source" [avatar]="item.user_picture" [name]="item.author" [date]="item.date"
               [id]="item.user_id">
             </app-story-card>

@@ -21,14 +21,15 @@ ion-card {
         list-style: none;
         padding: 0;
         margin: 0;
-        text-align: left;
-        line-height: 14px;
+        width: 100%;
+        background-color: grey;
+        text-align: center;
       }
   
       .text {
         font-size: 12px;
         font-weight: 500;
-        color: #ffffff;
+        color: #f8faf9;
         margin-bottom: 4px;
       }
   

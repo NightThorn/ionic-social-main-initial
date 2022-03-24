@@ -49,8 +49,8 @@ export class ExplorePage implements OnInit, OnDestroy {
   public dataList: any = [];
   followConfig = {
     initialSlide: 0,
-    spaceBetween: 10,
-    slidesPerView: 2.6,
+    spaceBetween: 5,
+    slidesPerView: 3.6,
   };
   offset: number;
   xp: any;
@@ -74,6 +74,7 @@ export class ExplorePage implements OnInit, OnDestroy {
   groupid: any;
   myTickets: any;
   live: string;
+  latestvid: any;
 
   constructor(private router: Router, private authService: AuthenticationService, public modalController: ModalController, private storage: Storage, private dataService: DataService) { }
 
@@ -91,9 +92,14 @@ export class ExplorePage implements OnInit, OnDestroy {
       this.myTickets = this.numFormatter(this.xp[0]['tickets']);
 
     });
+    this.dataService.getLatestVid(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.latestvid = res.message;
+      console.log(this.latestvid);
+    });
+
     if (localStorage.getItem('feeds')) {
       this.feed = JSON.parse(localStorage.getItem('feeds'));
-      console.log(this.feed);
+
     } else {
       if (this.filter === "all") {
         this.dataService.getAllPosts(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
@@ -130,11 +136,7 @@ export class ExplorePage implements OnInit, OnDestroy {
     }
 
 
-    this.dataService.getLatestVid(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-      this.latest = res.message;
-      localStorage.setItem("latestvids", JSON.stringify(this.latest));
-
-    });
+   
 
     this.dataService.getBoosted().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.boost = res.message;
@@ -146,7 +148,7 @@ export class ExplorePage implements OnInit, OnDestroy {
       }
     });
 
-
+    
 
   }
   loadData(event) {
