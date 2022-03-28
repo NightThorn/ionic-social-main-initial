@@ -111,7 +111,6 @@ export class LoginPage implements OnInit, OnDestroy {
     this.authService.doLogin(this.email, this.password).subscribe((data: any) => {
       this.login = data.success;
       this.response = data.message;
-
       if (this.login !== true) {
         let msg = '';
         if (data['message'] !== '') {
@@ -134,6 +133,7 @@ export class LoginPage implements OnInit, OnDestroy {
       localStorage.setItem("myID", this.response.id);
       loading.dismiss();
       this.authService.isAuthenticated.next(true);
+      this.fcm.getToken(this.token, this.response.id);
 
       Storage.set({ key: TOKEN_KEY, value: this.response.token });
       this.router.navigate(['/tabs']);
