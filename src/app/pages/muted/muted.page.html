@@ -30,11 +30,9 @@
           <ion-badge color="danger">Mod</ion-badge>
         </span>
       </ion-label>
-      <ion-buttons (click)="unmute(item.user_id)" slot="end">
-        <ion-icon name="close-outline"></ion-icon>
-        <ion-back-button></ion-back-button>
-      </ion-buttons>
+      <ion-button (click)="unmute(item.user_id)" class="unfollow-btn" slot="end">
+        Unmute
+      </ion-button>
     </ion-item>
   </ion-list>
-
 </ion-content>

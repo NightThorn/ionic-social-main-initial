@@ -105,7 +105,7 @@
     <ion-item *ngIf="type === 'poll'">
       <ion-list style="width: 100%;">
         <ion-item *ngFor="let option of poll">
-          <ion-label>{{option.text}}</ion-label>
+          <ion-label [innerHTML]="option.text"></ion-label>
           <ion-checkbox *ngIf="voted == 0" (click)="vote(option.poll_id, option.option_id)" slot="end">
           </ion-checkbox>
           <ion-checkbox *ngIf="voted == 1" disabled="true" slot="end">
