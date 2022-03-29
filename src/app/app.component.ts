@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 import { Directory } from '@capacitor/filesystem';
@@ -7,6 +7,9 @@ import moment from 'moment';
 const { Filesystem } = Plugins;
 import { SwUpdate } from '@angular/service-worker';
 import { ToastController } from '@ionic/angular';
+import { takeUntil } from 'rxjs/operators';
+import { DataService } from './services/data.service';
+import { Subject } from 'rxjs';
 
 
 @Component({
@@ -14,9 +17,13 @@ import { ToastController } from '@ionic/angular';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
+  challenges: any;
+  done: any;
+  private onDestroy$: Subject<void> = new Subject<void>();
+
   constructor(
-    private storage: Storage, private router: Router, private swUpdate: SwUpdate, private toastController: ToastController,
+    private storage: Storage, private router: Router, private dataService: DataService, private swUpdate: SwUpdate, private toastController: ToastController,
 
 
   ) {
@@ -75,6 +82,14 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     // initialize storage right away because why not
     await this.storage.create();
+    this.dataService.challenges().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.challenges = res.message;
 
+    });
+    
+
+  }
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
 }

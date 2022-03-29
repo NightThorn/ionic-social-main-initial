@@ -411,6 +411,33 @@ export class DataService {
       })
     );
   }
+  leaderboard() {
+
+    return this.http.get(`https://ggs.tv/api/v1/leaderboard.php`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  challenges() {
+
+    return this.http.get(`https://ggs.tv/api/v1/challenges.php`).pipe(map((res: any) => {
+
+
+      return res;
+    }),
+      filter((res: any) => {
+
+        return true;
+      })
+    );
+  }
+  
   getLatestVid(id) {
 
     return this.http.get(`https://ggs.tv/api/v1/followingvids.php?user=${id}`).pipe(map((res: any) => {

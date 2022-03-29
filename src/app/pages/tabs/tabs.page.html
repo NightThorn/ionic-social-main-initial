@@ -33,7 +33,41 @@
     <img class="custom-icon-image" style="max-width: 90%;" />
   </ion-fab-button>
   <ion-fab-list style="margin-bottom: 140px;" side="top">
-    <div class="fab-backdrop"></div>
+    <div class="fab-backdrop">
+      <ion-card color="primary">
+        <ion-card-header>
+          <ion-card-title>Monthly Leaderboard</ion-card-title>
+          <ion-card-subtitle>Earn XP, Get Discovered!</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-list>
+            <ion-item (click)="user(lead.user_id)" *ngFor="let lead of leaders; let i=index;">
+              <ion-label> {{ i + 1 }}. </ion-label>
+              <ion-avatar slot="start">
+                <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ lead.user_picture}}" />
+              </ion-avatar>
+              <ion-label> {{ lead.user_name }} <span *ngIf="lead.user_verified > 0" style="color: lime;">
+                  <ion-icon name="checkmark-circle"></ion-icon>
+                </span>
+                <span *ngIf="lead.user_staff > 0">
+                  <ion-badge color="success">Staff</ion-badge>
+                </span>
+                <span *ngIf="lead.user_sponsored > 0">
+                  <ion-badge color="success">Sponsored</ion-badge>
+                </span>
+                <span *ngIf="lead.user_mod > 0">
+                  <ion-badge color="danger">Mod</ion-badge>
+                </span>
+              </ion-label>
+              <ion-label slot="end"> {{lead.xp}}</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+
+
+      </ion-card>
+    </div>
     <ion-fab-list side="top">
       <ion-fab-button>
         <ion-icon style="fill: rgb(223, 170, 36);" tab="tournaments" name="trophy-sharp" (click)="goToTournaments()">

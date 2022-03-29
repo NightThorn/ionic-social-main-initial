@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs/Rx';
 import { Plugins } from '@capacitor/core';
+import { takeUntil } from 'rxjs/operators';
 
 const { Storage } = Plugins;
 @Component({
@@ -11,10 +12,13 @@ const { Storage } = Plugins;
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss'],
 })
-export class TabsPage {
+export class TabsPage implements OnDestroy {
   isClicked = false;
   count: any;
+  position = 1;
   me = localStorage.getItem("myID");
+  leaders: any;
+  private onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(private router: Router, private authService: AuthenticationService, private dataService: DataService) {
 
@@ -26,9 +30,16 @@ export class TabsPage {
         this.count = res.message;
       });
     });
+    this.dataService.leaderboard().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+      this.leaders = res.message;
+
+    });
+  }
+  user(id) {
+
+    this.router.navigate(['/user/' + id]);
 
   }
-
   remove() {
     this.dataService.resetCounter(this.me).subscribe(res => {
     });
@@ -51,5 +62,8 @@ export class TabsPage {
   }
   onClick($event) {
     this.isClicked = !this.isClicked;
+  }
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
 }
