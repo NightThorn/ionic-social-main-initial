@@ -36,7 +36,9 @@
     <div class="fab-backdrop">
       <ion-card color="primary">
         <ion-card-header>
-          <ion-card-title>Monthly Leaderboard</ion-card-title>
+          <ion-card-title>Monthly <img style="width: 30px; margin: 10px; vertical-align: middle;"
+              src="assets/images/XP.png" /> Leaderboard
+          </ion-card-title>
           <ion-card-subtitle>Earn XP, Get Discovered!</ion-card-subtitle>
         </ion-card-header>
 
@@ -44,9 +46,8 @@
           <ion-list>
             <ion-item (click)="user(lead.user_id)" *ngFor="let lead of leaders; let i=index;">
               <span slot="start"> {{ i + 1 }}. </span>
-              <ion-avatar >
-                 <img
-                  src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ lead.user_picture}}" />
+              <ion-avatar>
+                <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ lead.user_picture}}" />
               </ion-avatar>
               <ion-label> {{ lead.user_name }} <span *ngIf="lead.user_verified > 0" style="color: lime;">
                   <ion-icon name="checkmark-circle"></ion-icon>
