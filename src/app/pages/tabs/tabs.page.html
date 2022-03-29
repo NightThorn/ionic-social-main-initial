@@ -43,9 +43,10 @@
         <ion-card-content>
           <ion-list>
             <ion-item (click)="user(lead.user_id)" *ngFor="let lead of leaders; let i=index;">
-              <ion-label> {{ i + 1 }}. </ion-label>
-              <ion-avatar slot="start">
-                <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ lead.user_picture}}" />
+              <span slot="start"> {{ i + 1 }}. </span>
+              <ion-avatar >
+                 <img
+                  src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ lead.user_picture}}" />
               </ion-avatar>
               <ion-label> {{ lead.user_name }} <span *ngIf="lead.user_verified > 0" style="color: lime;">
                   <ion-icon name="checkmark-circle"></ion-icon>
@@ -60,7 +61,7 @@
                   <ion-badge color="danger">Mod</ion-badge>
                 </span>
               </ion-label>
-              <ion-label slot="end"> {{lead.xp}}</ion-label>
+              <ion-label slot="end"> {{lead.monthly}}</ion-label>
             </ion-item>
           </ion-list>
         </ion-card-content>
