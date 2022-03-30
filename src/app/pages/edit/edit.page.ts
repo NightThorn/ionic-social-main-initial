@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { passwordValidator } from 'src/app/validators/password.validator';
+import { urlValidator } from 'src/app/validators/url.validators';
 
 @Component({
   selector: 'app-edit',
@@ -68,19 +70,19 @@ export class EditPage implements OnInit, OnDestroy {
       battle: [this.battle],
       discord: [this.discord],
       epic: [this.epic],
-      facebook: [this.facebook],
-      instagram: [this.instagram],
+      facebook: [this.facebook, [Validators.required, urlValidator]],
+      instagram: [this.instagram, [Validators.required, urlValidator]],
       origin: [this.origin],
       playstation: [this.playstation],
       steam: [this.steam],
       nswitch: [this.nswitch],
       tiktok: [this.tiktok],
       trovo: [this.trovo],
-      twitch: [this.twitch],
-      twitter: [this.twitter],
+      twitch: [this.twitch, [Validators.required, urlValidator]],
+      twitter: [this.twitter, [Validators.required, urlValidator]],
       xbox: [this.xbox],
-      youtube: [this.youtube],
-     
+      youtube: [this.youtube, [Validators.required, urlValidator]],
+
 
     });
   }
