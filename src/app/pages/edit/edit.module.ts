@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { EditPageRoutingModule } from './edit-routing.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { EditPage } from './edit.page';
 
@@ -14,6 +15,7 @@ import { EditPage } from './edit.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    FontAwesomeModule,
     EditPageRoutingModule
   ],
   declarations: [EditPage]

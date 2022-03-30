@@ -26,6 +26,22 @@ export class EditPage implements OnInit, OnDestroy {
   @Input() relationship: number;
   @Input() searching: number;
   @Input() current: string;
+  @Input() activision: string;
+  @Input() battle: string;
+  @Input() discord: string;
+  @Input() epic: string;
+  @Input() facebook: string;
+  @Input() instagram: string;
+  @Input() origin: string;
+  @Input() playstation: string;
+  @Input() steam: string;
+  @Input() nswitch: string;
+  @Input() tiktok: string;
+  @Input() trovo: string;
+  @Input() twitch: string;
+  @Input() twitter: string;
+  @Input() xbox: string;
+  @Input() youtube: string;
   private onDestroy$: Subject<void> = new Subject<void>();
 
 
@@ -48,6 +64,23 @@ export class EditPage implements OnInit, OnDestroy {
       searching: [this.searching],
       birthdate: [this.birthdate],
       current: [this.current],
+      activision: [this.activision],
+      battle: [this.battle],
+      discord: [this.discord],
+      epic: [this.epic],
+      facebook: [this.facebook],
+      instagram: [this.instagram],
+      origin: [this.origin],
+      playstation: [this.playstation],
+      steam: [this.steam],
+      nswitch: [this.nswitch],
+      tiktok: [this.tiktok],
+      trovo: [this.trovo],
+      twitch: [this.twitch],
+      twitter: [this.twitter],
+      xbox: [this.xbox],
+      youtube: [this.youtube],
+     
 
     });
   }
@@ -62,7 +95,23 @@ export class EditPage implements OnInit, OnDestroy {
       "gender": message.gender,
       "relationship": message.relationship,
       "username": message.username,
-      "searching": message.searching
+      "searching": message.searching,
+      'activision': message.activision,
+      'battle': message.battle,
+      'discord': message.discord,
+      'epic': message.epic,
+      'facebook': message.facebook,
+      'instagram': message.instagram,
+      'origin': message.origin,
+      'playstation': message.playstation,
+      'steam': message.steam,
+      'nswitch': message.nswitch,
+      'tiktok': message.tiktok,
+      'trovo': message.trovo,
+      'twitch': message.twitch,
+      'twitter': message.twitter,
+      'xbox': message.xbox,
+      'youtube': message.youtube
     };
     this.http.post('https://ggs.tv/api/v1/edituser.php?action=edit', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
     });

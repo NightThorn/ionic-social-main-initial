@@ -48,6 +48,22 @@ export class SettingsPage implements OnInit, OnDestroy {
   current: any;
   private onDestroy$: Subject<void> = new Subject<void>();
   live: string;
+  activision: any;
+  discord: any;
+  battle: any;
+  instagram: any;
+  epic: any;
+  facebook: any;
+  origin: any;
+  playstation: any;
+  steam: any;
+  tiktok: any;
+  youtube: any;
+  xbox: any;
+  twitter: any;
+  trovo: any;
+  nswitch: any;
+  twitch: any;
   constructor(
     private router: Router,
     private authService: AuthenticationService,
@@ -62,6 +78,7 @@ export class SettingsPage implements OnInit, OnDestroy {
 
     this.dataService.getUser(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.user = res.message;
+      console.log(this.user);
       this.bio = this.user[0]['user_biography'];
       this.location = this.user[0]['user_current_city'];
       this.gender = this.user[0]['user_gender'];
@@ -72,6 +89,23 @@ export class SettingsPage implements OnInit, OnDestroy {
       this.relationship = this.user[0]['user_relationship'];
       this.birthdate = this.user[0]['user_birthdate'];
       this.searching = this.user[0]['searching'];
+      this.activision = this.user[0]['user_social_activision'];
+      this.battle = this.user[0]['user_social_battle'];
+      this.discord = this.user[0]['user_social_discord'];
+      this.epic = this.user[0]['user_social_epic'];
+      this.facebook = this.user[0]['user_social_facebook'];
+      this.instagram = this.user[0]['user_social_instagram'];
+      this.origin = this.user[0]['user_social_origin'];
+      this.playstation = this.user[0]['user_social_playstation'];
+      this.steam = this.user[0]['user_social_steam'];
+      this.nswitch = this.user[0]['user_social_switch'];
+      this.tiktok = this.user[0]['user_social_tiktok'];
+      this.trovo = this.user[0]['user_social_trovo'];
+      this.twitch = this.user[0]['user_social_twitch'];
+      this.twitter = this.user[0]['user_social_twitter'];
+      this.xbox = this.user[0]['user_social_xbox'];
+      this.youtube = this.user[0]['user_social_youtube'];
+
 
       this.email = this.user[0]['user_email'];
 
@@ -202,7 +236,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
 
-  async edit(id, current, bio, location, username, email, gender, relationship, birthdate, searching) {
+  async edit(id, current, bio, location, username, email, gender, relationship, birthdate, searching, activision, battle, discord, epic, facebook, instagram, origin, playstation, steam, nswitch, tiktok, trovo, twitch, twitter, xbox, youtube) {
 
     const modal = await this.modalController.create({
       component: EditPage,
@@ -217,7 +251,23 @@ export class SettingsPage implements OnInit, OnDestroy {
         'gender': gender,
         'relationship': relationship,
         'birthdate': birthdate,
-        'searching': searching
+        'searching': searching,
+        'activision': activision,
+        'battle': battle,
+        'discord': discord,
+        'epic': epic,
+        'facebook': facebook,
+        'instagram': instagram,
+        'origin': origin,
+        'playstation': playstation,
+        'steam': steam,
+        'nswitch': nswitch,
+        'tiktok': tiktok,
+        'trovo': trovo,
+        'twitch': twitch,
+        'twitter': twitter,
+        'xbox': xbox,
+        'youtube': youtube
 
       }
 

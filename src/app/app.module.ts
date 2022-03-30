@@ -16,7 +16,10 @@ import { Firebase } from '@ionic-native/firebase/ngx';
 import { environment } from './../environments/environment';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
-
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 const firebaseConfig = {
   apiKey: "AIzaSyCddHyUNEHKoKtqcdlgbhKSQsIjJHtpjIs",
   authDomain: "greasy-gamer-267521.firebaseapp.com",
@@ -43,6 +46,7 @@ const firebaseConfig = {
     IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
+    FontAwesomeModule, 
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),],
 
   providers: [
@@ -55,4 +59,7 @@ const firebaseConfig = {
     AppComponent
   ],
 })
-export class AppModule { }
+export class AppModule {
+    constructor(library: FaIconLibrary) {
+      library.addIconPacks(fas, fab, far);
+    } }
