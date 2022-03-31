@@ -77,7 +77,7 @@
                       (ngSubmit)="reply(me, replyForm.value)">
                       <ion-row style="width: 100%; align-items: center;">
                         <ion-col size="8">
-                          <textarea id="replytext" style="margin-left: 0; min-height: 60px; border: 1px solid;"
+                          <textarea id="replytext" style="margin-left: 0; border-radius: 10px; min-height: 60px;"
                             [mention]="items" contenteditable="true"
                             [mentionConfig]="{triggerChar:'@',maxItems:10, labelKey: 'user_name', dropUp: true}"
                             type="text" placeholder="Write your comment" formControlName="text"></textarea>
@@ -142,23 +142,21 @@
                               <form style="display: flex; width: 100%;" [formGroup]="replyreplyForm"
                                 (ngSubmit)="replyreply(me, replyreplyForm.value)">
                                 <ion-row style="width: 100%; align-items: center;">
-                                  <ion-col size="7">
-                                    <textarea id="rrtext" style="margin-left: 0; min-height: 60px; border: 1px solid;"
+                                  <ion-col size="10">
+                                    <textarea id="rrtext" style="margin-left: 2px; border-radius: 10px; min-height: 60px;"
                                       [mention]="items" contenteditable="true"
                                       [mentionConfig]="{triggerChar:'@',maxItems:10, labelKey: 'user_name', dropUp: true}"
                                       placeholder="Write your comment" formControlName="text"></textarea>
                                     <input id="commentID" type="hidden" formControlName="commentID">
                                   </ion-col>
-                                  <ion-col style="padding-left: 2px; text-align: center; vertical-align: middle;"
-                                    size="3">
-                                    <div id="rrgifid" class="image-upload">
+                                  
+                                  <ion-col size="2">
+                                    <div style="text-align: center;" id="rrgifid" class="image-upload">
                                       <label (click)="replyreplyGif($event)" for="gif-input">
                                         <img src="./assets/images/giphy.png" />
                                       </label>
                                       <input id="gif-input" class="form-control">
                                     </div>
-                                  </ion-col>
-                                  <ion-col size="2">
                                     <button style="padding-inline-start: 0;" class="circle-btn" fill="clear"
                                       size="small" shape="round" color="primary" type="submit">
                                       <ion-icon style="font-size: 18px;" slot="icon-only" name="paper-plane"></ion-icon>

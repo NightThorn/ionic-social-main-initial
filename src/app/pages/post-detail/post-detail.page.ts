@@ -132,15 +132,12 @@ export class PostDetailPage implements OnInit, OnDestroy {
   showReply(toggle, id, replyname) {
     document.getElementById(toggle).classList.toggle("showReplyForm");
     this.replyForm.get('commentID').setValue(id);
-    this.replyreplyForm.get('text').setValue(replyname);
 
   }
   showReplyReply(toggler, id, replyname) {
     document.getElementById(toggler).classList.toggle("showReplyForm");
     this.replyreplyForm.get('commentID').setValue(id);
-    this.replyreplyForm.get('text').setValue(replyname);
 
-    console.log(id);
   }
 
   public ngOnDestroy(): void {
