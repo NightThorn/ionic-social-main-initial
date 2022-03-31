@@ -65,7 +65,6 @@ export class ProfilePage implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.me = localStorage.getItem("myID");
-    this.me = localStorage.getItem("myID");
 
     let userProfile = this.profileService.getProfile(this.me);
     let userPosts = this.profileService.fetchPosts(this.me);

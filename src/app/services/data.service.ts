@@ -424,9 +424,9 @@ export class DataService {
       })
     );
   }
-  challenges() {
+  challenges(id) {
 
-    return this.http.get(`https://ggs.tv/api/v1/challenges.php`).pipe(map((res: any) => {
+    return this.http.get(`https://ggs.tv/api/v1/challenges.php?user=${id}`).pipe(map((res: any) => {
 
 
       return res;
@@ -437,7 +437,7 @@ export class DataService {
       })
     );
   }
-  
+
   getLatestVid(id) {
 
     return this.http.get(`https://ggs.tv/api/v1/followingvids.php?user=${id}`).pipe(map((res: any) => {

@@ -21,6 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
   challenges: any;
   done: any;
   private onDestroy$: Subject<void> = new Subject<void>();
+  me: string;
 
   constructor(
     private storage: Storage, private router: Router, private dataService: DataService, private swUpdate: SwUpdate, private toastController: ToastController,
@@ -80,13 +81,15 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.navigate(['shop']);
   }
   async ngOnInit() {
+    this.me = localStorage.getItem("myID");
+
     // initialize storage right away because why not
     await this.storage.create();
-    this.dataService.challenges().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+    this.dataService.challenges(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.challenges = res.message;
 
     });
-    
+
 
   }
   public ngOnDestroy(): void {
