@@ -36,8 +36,8 @@
     <div class="fab-backdrop">
       <ion-card color="primary">
         <ion-card-header>
-          <ion-card-title>Monthly <img style="width: 30px; margin: 10px; vertical-align: middle;"
-              src="assets/images/XP.png" /> Leaderboard
+          <ion-card-title style="font-size: 16px;">Monthly <img
+              style="width: 30px; margin: 10px; vertical-align: middle;" src="assets/images/XP.png" /> Leaderboard
           </ion-card-title>
           <ion-card-subtitle>Earn XP, Get Discovered!</ion-card-subtitle>
         </ion-card-header>
@@ -49,18 +49,11 @@
               <ion-avatar>
                 <img src="https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{ lead.user_picture}}" />
               </ion-avatar>
-              <ion-label> {{ lead.user_name }} <span *ngIf="lead.user_verified > 0" style="color: lime;">
+              <ion-label style="font-size: 13px; margin: 2px;"> {{ lead.user_name }} <span
+                  *ngIf="lead.user_verified > 0" style="color: lime;">
                   <ion-icon name="checkmark-circle"></ion-icon>
                 </span>
-                <span *ngIf="lead.user_staff > 0">
-                  <ion-badge color="success">Staff</ion-badge>
-                </span>
-                <span *ngIf="lead.user_sponsored > 0">
-                  <ion-badge color="success">Sponsored</ion-badge>
-                </span>
-                <span *ngIf="lead.user_mod > 0">
-                  <ion-badge color="danger">Mod</ion-badge>
-                </span>
+
               </ion-label>
               <ion-label slot="end"> {{lead.monthly}}</ion-label>
             </ion-item>
