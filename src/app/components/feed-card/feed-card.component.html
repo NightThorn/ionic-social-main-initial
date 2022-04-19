@@ -63,7 +63,7 @@
         </ion-col>
         <ion-col size="12">
           <div *ngIf="coloredpost" (click)="navigateToDetail(post_id)"
-            style="height: 300px; background-size: cover; background-repeat: no-repeat; background: url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{coloredpost}}'); overflow: scroll; margin-bottom: 10px;">
+            style="height: 300px; background-size: cover; overflow: scroll; background-repeat: no-repeat; background: url('https://ggspace.nyc3.cdn.digitaloceanspaces.com/uploads/{{coloredpost}}'); overflow: scroll; margin-bottom: 10px;">
             <div [ngStyle]="{'color': coloredtext}"
               style="font-weight: 700;  font-size: larger; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); "
               [innerHTML]="text">
