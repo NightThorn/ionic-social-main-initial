@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import moment from 'moment';
 import { DataService } from 'src/app/services/data.service';
 import { ImageModalPage } from '../image-modal/image-modal.page';
@@ -46,7 +46,7 @@ export class PostDetailPage implements OnInit, OnDestroy {
   posttype: any;
   article: any;
   articletext: any;
-  constructor(private fb: FormBuilder, private http: HttpClient, private profileService: ProfileService, private authService: AuthenticationService, private route: ActivatedRoute, private modalController: ModalController, private dataService: DataService, private router: Router) {
+  constructor(private fb: FormBuilder, private http: HttpClient, public loadingController: LoadingController, private profileService: ProfileService, private authService: AuthenticationService, private route: ActivatedRoute, private modalController: ModalController, private dataService: DataService, private router: Router) {
     this.route.queryParams.pipe(takeUntil(this.onDestroy$)).subscribe(params => {
       if (params && params.special) {
         this.data = JSON.parse(params.special);
@@ -143,7 +143,12 @@ export class PostDetailPage implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.onDestroy$.next();
   }
-  reply(me, text) {
+  async reply(me, text) {
+    let loading = await this.loadingController.create({
+      message: 'Loading...'
+    });
+    await loading.present();
+
     var headers = new HttpHeaders();
     headers.append("Accept", 'application/json');
     headers.append('Content-Type', 'application/json');
@@ -160,6 +165,7 @@ export class PostDetailPage implements OnInit, OnDestroy {
     this.http.post('https://ggs.tv/api/v1/post.php?action=reply', JSON.stringify(data), { headers: headers }).pipe(takeUntil(this.onDestroy$)).subscribe(
       () => { // If POST is success
         this.replyForm.reset();
+        loading.dismiss();
 
         this.dataService.getPostComments(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
           this.comments = res.message;
@@ -182,11 +188,17 @@ export class PostDetailPage implements OnInit, OnDestroy {
         });
       },
       (_error) => { // If POST is failed
+        loading.dismiss();
+
         "Error occurred";
       }
     );
   }
-  replyreply(me, text) {
+  async replyreply(me, text) {
+    let loading = await this.loadingController.create({
+      message: 'Loading...'
+    });
+    await loading.present();
     var headers = new HttpHeaders();
     headers.append("Accept", 'application/json');
     headers.append('Content-Type', 'application/json');
@@ -203,6 +215,7 @@ export class PostDetailPage implements OnInit, OnDestroy {
     this.http.post('https://ggs.tv/api/v1/post.php?action=reply', JSON.stringify(data), { headers: headers }).pipe(takeUntil(this.onDestroy$)).subscribe(
       () => { // If POST is success
         this.replyreplyForm.reset();
+        loading.dismiss();
 
         this.dataService.getPostComments(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
           this.comments = res.message;
@@ -225,11 +238,17 @@ export class PostDetailPage implements OnInit, OnDestroy {
         });
       },
       (_error) => { // If POST is failed
+        loading.dismiss();
+
         "Error occurred";
       }
     );
   }
-  submitComment(id, user, text) {
+  async submitComment(id, user, text) {
+    let loading = await this.loadingController.create({
+      message: 'Loading...'
+    });
+    await loading.present();
     var headers = new HttpHeaders();
     headers.append("Accept", 'application/json');
     headers.append('Content-Type', 'application/json');
@@ -248,6 +267,7 @@ export class PostDetailPage implements OnInit, OnDestroy {
     this.http.post('https://ggs.tv/api/v1/post.php?action=comment', JSON.stringify(data), { headers: headers }).pipe(takeUntil(this.onDestroy$)).subscribe(
       () => { // If POST is success
         this.commentForm.reset();
+        loading.dismiss();
 
         this.dataService.getPostComments(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
           this.comments = res.message;
@@ -269,7 +289,9 @@ export class PostDetailPage implements OnInit, OnDestroy {
           }
         });
       },
-      (_error) => { // If POST is failed
+      (_error) => {
+        loading.dismiss();
+        // If POST is failed
         "Error occurred";
       }
     );
@@ -320,10 +342,9 @@ export class PostDetailPage implements OnInit, OnDestroy {
         elem.setAttribute("width", "100%");
         elem.setAttribute("alt", "IMG");
 
-        document.getElementById("replytext").appendChild(elem);
+        document.getElementById("test").appendChild(elem);
         document.getElementById("rgifid").style.border = "thick solid lime";
-        document.getElementById("imageid").style.border = "none";
-        document.getElementById("videoid").style.border = "none";
+        
 
         this.replyForm.patchValue({
           gif: this.gif
@@ -343,16 +364,15 @@ export class PostDetailPage implements OnInit, OnDestroy {
       if (detail !== null) {
         this.gif = detail.data;
 
-        var elem = document.createElement("img");
-        elem.setAttribute("src", this.gif);
-        elem.setAttribute("height", "200");
-        elem.setAttribute("width", "100%");
-        elem.setAttribute("alt", "IMG");
+        let imag = document.createElement("img");
+        imag.setAttribute("src", this.gif);
+        imag.setAttribute("height", "200");
+        imag.setAttribute("width", "100%");
+        imag.setAttribute("alt", "IMG");
 
-        document.getElementById("rrtext").appendChild(elem);
+        document.getElementById("test").appendChild(imag);
         document.getElementById("rrgifid").style.border = "thick solid lime";
-        document.getElementById("imageid").style.border = "none";
-        document.getElementById("videoid").style.border = "none";
+
 
         this.replyreplyForm.patchValue({
           gif: this.gif

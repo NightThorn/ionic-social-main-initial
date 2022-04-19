@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { FormBuilder } from '@angular/forms';
 import { StoredUser } from 'src/app/models/stored-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -28,7 +28,7 @@ export class ModalPage implements OnInit, OnDestroy {
   names: String[] = [];
   respo: { user_id: any; message: any; time: Date; picture: any; video: any; gif: any; };
   private onDestroy$: Subject<void> = new Subject<void>();
-  constructor(private modalController: ModalController, private profileService: ProfileService, private alertController: AlertController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
+  constructor(private modalController: ModalController, public loadingController: LoadingController, private profileService: ProfileService, private alertController: AlertController, private authService: AuthenticationService, private http: HttpClient, private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -49,7 +49,12 @@ export class ModalPage implements OnInit, OnDestroy {
     });
   }
 
-  post(user, message) {
+  async post(user, message) {
+    let loading = await this.loadingController.create({
+      message: 'Loading...'
+    });
+    await loading.present();
+
     let time = new Date(Date.now());
     let data = {
       "user_id": user,
@@ -68,15 +73,15 @@ export class ModalPage implements OnInit, OnDestroy {
       observe: 'response' as 'response'
     };
 
-    return this.http.post('https://ggs.tv/api/v1/post.php?action=post', JSON.stringify(data), httpOptions).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-      console.log(res);
-      console.log(res['status']);
-
+    return this.http.post('https://ggs.tv/api/v1/post.php?action=post', JSON.stringify(data), httpOptions).pipe(takeUntil(this.onDestroy$)).subscribe(async res => {
+      
       if (res['status'] = 200) {
+        loading.dismiss();
+
         this.presentAlert();
         this.closeModal();
       } else {
-
+        loading.dismiss();
         this.presentError();
         this.closeModal();
 
