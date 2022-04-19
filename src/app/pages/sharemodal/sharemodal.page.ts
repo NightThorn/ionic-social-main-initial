@@ -34,7 +34,6 @@ export class SharemodalPage implements OnInit, OnDestroy {
     this.dataService.getPostDetails(this.id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.share = res.message;
       this.origin = this.share[0]['origin_id'];
-      console.log(this.share);
     });
     this.postForm = this.fb.group({
       text: [null],

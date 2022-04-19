@@ -27,10 +27,8 @@ export class UserbadgesPage implements OnInit, OnDestroy {
   }
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    console.log(id);
     this.profileService.fetchBadges(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.badges = res.message;
-      console.log(this.badges);
     });
   }
   public ngOnDestroy(): void {

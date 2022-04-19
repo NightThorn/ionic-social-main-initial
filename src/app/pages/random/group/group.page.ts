@@ -55,7 +55,6 @@ export class GroupPage implements OnInit, OnDestroy {
 
       this.dataService.getGroupFeed(this.group_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feed = res.message;
-        console.log(this.feed);
         for (let i = 0; i < this.feed.length; i++) {
           this.offset = moment().utcOffset();
           this.feed[i]['total'] = +this.feed[i]['reaction_love_count'] + +this.feed[i]['reaction_like_count'] + +this.feed[i]['reaction_haha_count'] + +this.feed[i]['reaction_wow_count'];
@@ -126,7 +125,6 @@ export class GroupPage implements OnInit, OnDestroy {
 
       this.dataService.getGroupFeed(this.group_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feed = res.message;
-        console.log(this.feed);
         for (let i = 0; i < this.feed.length; i++) {
           this.offset = moment().utcOffset();
           this.feed[i]['total'] = +this.feed[i]['reaction_love_count'] + +this.feed[i]['reaction_like_count'] + +this.feed[i]['reaction_haha_count'] + +this.feed[i]['reaction_wow_count'];

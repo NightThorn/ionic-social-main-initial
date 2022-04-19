@@ -33,7 +33,6 @@ export class ApplicationsPage implements OnInit, OnDestroy {
     this.dataService.getApps(this.group_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
 
       this.apps = res.message;
-      console.log(this.apps);
     });
   }
   closeModal() {

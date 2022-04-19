@@ -94,14 +94,12 @@ export class ExplorePage implements OnInit, OnDestroy {
     });
     this.dataService.getLatestVid(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.latestvid = res.message;
-      console.log(this.latestvid);
     });
 
 
     if (this.filter === "all") {
       this.dataService.getAllPosts(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feeds = res.message;
-        console.log(this.feeds);
 
         for (let i = 0; i < this.feeds.length; i++) {
           this.offset = moment().utcOffset();
@@ -116,7 +114,6 @@ export class ExplorePage implements OnInit, OnDestroy {
 
       this.dataService.getFeed(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.feeds = res.message;
-        console.log(this.feeds);
 
         for (let i = 0; i < this.feeds.length; i++) {
 

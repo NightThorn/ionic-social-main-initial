@@ -34,7 +34,6 @@ export class GiphyPage implements OnInit, OnDestroy {
 
     this.dataService.giphy(query).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.giphy = res.data;
-      console.log(this.giphy);
     });
   }
   choose(gif) {

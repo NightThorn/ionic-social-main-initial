@@ -61,8 +61,7 @@ export class EditpostmodalPage implements OnInit {
     };
 
     return this.http.post('https://ggs.tv/api/v1/post.php?action=edit', JSON.stringify(data), httpOptions).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-      console.log(res);
-      console.log(res['status']);
+     
 
       if (res['status'] = 200) {
         this.presentAlert();

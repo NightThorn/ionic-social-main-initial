@@ -34,7 +34,6 @@ export class FcmService {
 
 
         this.http.post('https://ggs.tv/savetoken.php', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-            console.log(res);
         });
 
 
@@ -57,7 +56,6 @@ export class FcmService {
 
 
         this.http.post('https://ggs.tv/savetoken.php', JSON.stringify(data)).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-            console.log(res);
         });
     }
     onNotifications() {

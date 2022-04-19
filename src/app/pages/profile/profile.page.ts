@@ -71,7 +71,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     if (localStorage.getItem('profileposts')) {
       this.posts = JSON.parse(localStorage.getItem('profileposts'));
       this.profileService.getProfile(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
-        console.log(res);
         this.userinfo = res.userinfo[0];
         this.groups = res.groups;
         this.badgeslist = res.badges;

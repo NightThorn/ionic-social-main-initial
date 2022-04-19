@@ -69,7 +69,6 @@ export class LoginPage implements OnInit, OnDestroy {
         // Register with Apple / Google to receive push via APNS/FCM
         PushNotifications.register();
       } else {
-        console.log("hmmmm");
       }
     });
 

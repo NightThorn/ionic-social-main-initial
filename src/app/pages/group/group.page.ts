@@ -43,6 +43,7 @@ export class GroupPage implements OnInit, OnDestroy {
   group_privacy: any;
   group_tag: any;
   private onDestroy$: Subject<void> = new Subject<void>();
+  category: any;
   constructor(private activeRoute: ActivatedRoute, private http: HttpClient, private router: Router, private authService: AuthenticationService, private modalController: ModalController, private dataService: DataService) { }
 
 
@@ -55,7 +56,7 @@ export class GroupPage implements OnInit, OnDestroy {
 
     this.dataService.getGroup(id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.group = res.message[0];
-
+      this.category = res.message[0]['group_category'];
 
       if (this.me == res.message[0]['group_admin']) {
         this.admin = 1;
@@ -67,15 +68,15 @@ export class GroupPage implements OnInit, OnDestroy {
 
     this.dataService.getJoinedGroups(this.me).subscribe(res => {
       this.joinedGroups = res.message;
-      var target = this.joinedGroups.find(message => message.group_id == this.group_id)
+      var target = this.joinedGroups.find(message => message.group_id == id);
 
+      
       if (target) {
         this.joined = 1;
       } else {
 
         this.joined = 0;
       }
-
 
     });
 

@@ -32,7 +32,6 @@ export class TabsPage implements OnDestroy {
     });
     this.dataService.leaderboard().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.leaders = res.message;
-      console.log(this.leaders);
     });
     Observable.interval(10000).subscribe(x => {
       this.dataService.leaderboard().pipe(takeUntil(this.onDestroy$)).subscribe(res => {

@@ -38,7 +38,6 @@ export class GrindingPage implements OnInit, OnDestroy {
 
     this.dataService.grinding(this.group_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.grinders = res.message;
-      console.log(this.grinders);
       this.dataList = this.grinders.slice(0, this.topLimit);
 
     });

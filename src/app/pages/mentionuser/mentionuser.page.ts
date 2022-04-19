@@ -105,7 +105,6 @@ export class MentionuserPage implements OnInit {
 
     this.dataService.getUserID(this.username).subscribe(res => {
       this.data = res.message[0]['user_id'];
-      console.log(this.data);
 
       this.me = localStorage.getItem("myID");
 

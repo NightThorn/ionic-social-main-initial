@@ -38,7 +38,6 @@ export class FriendsPage implements OnInit, OnDestroy {
     this.profileService.fetchFriends(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.friends = res.message;
       this.dataList = this.friends.slice(0, this.topLimit);
-      console.log(this.dataList);
     });
     this.setFilteredItems();
 

@@ -45,7 +45,6 @@ export class ProPage implements OnInit, OnDestroy {
 
   }
   stream(twitch, userID, username) {
-    console.log(twitch);
     window.open('twitch://stream/' + twitch);
 
     let data = {

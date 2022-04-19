@@ -46,10 +46,12 @@
             <ion-button style="color: white;"
               (click)="editgroup(group_id, group_picture, group_cover, group_title, group_name, group_admin, group_privacy, group_description, group_tag)"
               class="follow-btn">Edit Group</ion-button>
-            <ion-button style="color: white;" (click)="applications(group_id)" class="follow-btn">Applications
+            <ion-button *ngIf="group.group_category == 20 || group.group_category == 19" style="color: white;"
+              (click)="applications(group_id)" class="follow-btn">Applications
             </ion-button>
 
-            <ion-button style="color: white;" (click)="grinding(group_id)" class="follow-btn">Grinders
+            <ion-button *ngIf="group.group_category == 20 || group.group_category == 19" style="color: white;"
+              (click)="grinding(group_id)" class="follow-btn">Grinders
 
             </ion-button>
             <ion-button style="color: white;" (click)="admins(group_id)" class="follow-btn">Group Admins

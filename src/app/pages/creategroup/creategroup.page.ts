@@ -28,7 +28,6 @@ export class CreategroupPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.admin);
     this.postForm = this.fb.group({
       group_cover: [''],
       group_title: [''],

@@ -78,7 +78,6 @@ export class SettingsPage implements OnInit, OnDestroy {
 
     this.dataService.getUser(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.user = res.message;
-      console.log(this.user);
       this.bio = this.user[0]['user_biography'];
       this.location = this.user[0]['user_current_city'];
       this.gender = this.user[0]['user_gender'];

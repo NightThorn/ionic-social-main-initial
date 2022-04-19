@@ -72,7 +72,6 @@ export class UserPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.me = localStorage.getItem("myID");
 
-    console.log("khdsgfasfasdfsfdasdfkasfd", this.me);
 
     this.dataService.getRandomUser(this.me).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.user = res.message;
@@ -133,7 +132,6 @@ export class UserPage implements OnInit, OnDestroy {
     });
   }
   report(id) {
-    console.log("testttt");
     let data = {
       "user": id,
       "me": this.me,
@@ -143,7 +141,6 @@ export class UserPage implements OnInit, OnDestroy {
     });
   }
   block(id) {
-    console.log("testttt");
     let data = {
       "user": id,
       "me": this.me,

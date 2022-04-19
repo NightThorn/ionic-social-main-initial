@@ -107,7 +107,6 @@ export class PostDetailPage implements OnInit, OnDestroy {
       this.items = res.message;
       this.myObj = Object.values(this.items)[0];
       this.names = [this.myObj["user_name"]];
-      console.log(this.names);
     });
     this.commentForm = this.fb.group({
       text: [null],
@@ -170,7 +169,6 @@ export class PostDetailPage implements OnInit, OnDestroy {
         this.dataService.getPostComments(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
           this.comments = res.message;
           this.commentReplies = res.replies;
-          console.log(this.comments);
           for (let i = 0; i < this.comments.length; i++) {
 
             this.offset = moment().utcOffset();
@@ -220,7 +218,6 @@ export class PostDetailPage implements OnInit, OnDestroy {
         this.dataService.getPostComments(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
           this.comments = res.message;
           this.commentReplies = res.replies;
-          console.log(this.comments);
           for (let i = 0; i < this.comments.length; i++) {
 
             this.offset = moment().utcOffset();
@@ -272,7 +269,6 @@ export class PostDetailPage implements OnInit, OnDestroy {
         this.dataService.getPostComments(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
           this.comments = res.message;
           this.commentReplies = res.replies;
-          console.log(this.comments);
           for (let i = 0; i < this.comments.length; i++) {
 
             this.offset = moment().utcOffset();

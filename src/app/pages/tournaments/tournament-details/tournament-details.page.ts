@@ -52,7 +52,6 @@ export class TournamentDetailsPage implements OnInit, OnDestroy {
       this.tournamentjoin = this.tournaments[0]['join_cost'];
       this.tournamentschedule = this.tournaments[0]['schedule'];
       let data = this.tournaments.find(message => message['user_id'] == this.me);
-      console.log(data);
       if (data) {
         this.iJoined = true;
       } else {

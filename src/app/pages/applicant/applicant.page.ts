@@ -36,7 +36,6 @@ export class ApplicantPage implements OnInit, OnDestroy {
 
       this.apps = res.message;
       this.xp = this.apps[0]['total_xp']
-      console.log(this.apps);
     });
     this.profileService.fetchFriends(this.data).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.userFriends = res.message;

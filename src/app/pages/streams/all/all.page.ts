@@ -27,7 +27,6 @@ export class AllPage implements OnInit, OnDestroy {
 
     this.dataService.getAllStreams().pipe(takeUntil(this.onDestroy$)).subscribe(res => {
       this.streams = res.message;
-      console.log(this.streams);
       this.dataList = this.streams.slice(0, this.topLimit);
 
     });
@@ -47,7 +46,6 @@ export class AllPage implements OnInit, OnDestroy {
     this.onDestroy$.next();
   }
   stream(twitch, userID, username) {
-    console.log(twitch);
     window.open('twitch://stream/' + twitch);
 
       let data = {

@@ -209,7 +209,6 @@ export class FeedCardComponent implements OnInit, OnDestroy {
       });
       this.dataService.checkvote(this.post_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.checkpoll = res.message;
-        console.log(this.checkpoll);
         var target = this.checkpoll.find(message => message.user_id == this.me)
 
         if (target) {
