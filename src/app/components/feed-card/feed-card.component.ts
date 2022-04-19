@@ -44,7 +44,8 @@ export class FeedCardComponent implements OnInit, OnDestroy {
   @Input() user_staff: number;
   @Input() user_sponsored: number;
   @Input() user_verified: number;
-
+  @Input() wall_id: number;
+  @Input() in_wall: number;
   @Input() post_id: number;
   @Input() user_id: number;
   @Input() origin: string;
@@ -67,6 +68,7 @@ export class FeedCardComponent implements OnInit, OnDestroy {
   articleviews: any;
   totals: any;
   checkpoll: any;
+  wallname: any;
   @Input()
   set picture(pic) {
     if (pic != null) {
@@ -176,6 +178,13 @@ export class FeedCardComponent implements OnInit, OnDestroy {
         this.groupname = res.message[0]['group_title'];
       });
     }
+
+    if (this.in_wall > 0) {
+      this.dataService.getUser(this.wall_id).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
+        this.wallname = res.message[0]['user_name'];
+      });
+    }
+    
     if (this.text != null) {
       if (this.text.includes('#')) {
         this.decodedtext = htmlDecode(this.text)

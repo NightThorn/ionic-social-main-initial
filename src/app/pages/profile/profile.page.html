@@ -28,7 +28,7 @@
                   <ion-badge color="success">Staff</ion-badge>
                 </span>
                 <span *ngIf="userinfo.user_sponsored === '1'">
-                  <ion-badge color="success">Sponsored</ion-badge>
+                  <ion-badge color="success">Partner</ion-badge>
                 </span>
                 <span *ngIf="userinfo.user_mod === '1'">
                   <ion-badge color="danger">Mod</ion-badge>
@@ -114,7 +114,7 @@
                 [colored]="item.colored_pattern" [user_verified]="item.user_verified" [ingroup]="item.in_group"
                 [group]="item.group_id" [user_sponsored]="item.user_sponsored" [user_staff]="item.user_staff"
                 [user_mod]="item.user_mod" [user_subscribed]="item.user_subscribed" [tag]="item.tag"
-                [grinding]="item.grinding" [separator]="true">
+                [grinding]="item.grinding" [separator]="true" [wall_id]="item.wall_id" [in_wall]="item.in_wall">
               </app-feed-card>
             </ion-row>
           </ion-row>

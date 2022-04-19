@@ -13,7 +13,7 @@
             <ion-badge color="success">Staff</ion-badge>
           </span>
           <span *ngIf="user_sponsored > 0">
-            <ion-badge color="success">Sponsored</ion-badge>
+            <ion-badge color="success">Partner</ion-badge>
           </span>
           <span *ngIf="user_mod > 0">
             <ion-badge color="danger">Mod</ion-badge>
@@ -22,6 +22,7 @@
             <ion-badge color="danger">Pro</ion-badge>
           </span>
         </h2><span style="color: lime;" (click)="goToGroup(group)" *ngIf="ingroup > 0">> {{groupname}}</span>
+        <span style="color: lime;" (click)="user(wall_id)" *ngIf="in_wall > 0">> {{wallname}}</span>
         <h3>{{feeling}} <span style="color: limegreen"> {{value}}</span></h3>
         <p class="item-subtitle">{{ date }}</p>
       </ion-label>
